@@ -6,13 +6,21 @@ import { REPO_ROOT } from './env.ts';
 export const USER_AGENT =
   'apprenticeship-finder/0.1 (+https://github.com/alexslater1/apprenticeship-finder; personal non-commercial)';
 
+/** Strip credentials from URLs before they reach logs, run stats or data/last-run.json. */
+export function redactUrl(url: string): string {
+  return url.replace(
+    /([?&](?:app_key|app_id|api_key|apikey|key|token|access_token)=)[^&#\s]+/gi,
+    '$1…',
+  );
+}
+
 export class HttpError extends Error {
   constructor(
     readonly status: number,
     readonly url: string,
     body: string,
   ) {
-    super(`HTTP ${status} for ${url}: ${body.slice(0, 200)}`);
+    super(`HTTP ${status} for ${redactUrl(url)}: ${body.slice(0, 200)}`);
   }
 }
 
@@ -22,7 +30,7 @@ export class BlockedError extends Error {
     readonly url: string,
     readonly reason: string,
   ) {
-    super(`Blocked at ${url}: ${reason}`);
+    super(`Blocked at ${redactUrl(url)}: ${reason}`);
   }
 }
 
@@ -59,6 +67,7 @@ const HOST_GAPS: Array<[RegExp, number]> = [
   [/\.csod\.com$/, 10_000],
   [/^api\.apprenticeships\.education\.gov\.uk$/, 2_000],
   [/^api\.postcodes\.io$/, 200],
+  [/^api\.adzuna\.com$/, 3_000], // 25 hits/minute limit
 ];
 
 function gapFor(host: string): number {

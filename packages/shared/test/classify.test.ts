@@ -221,3 +221,35 @@ describe('internal-only penalty', () => {
     expect(s.penaltyLabels).toContain('internal only');
   });
 });
+
+describe('role hints from source categories', () => {
+  it('a generic title in a data category counts as a data role', () => {
+    const c = classify({ title: 'Degree Apprenticeships 2027', roleHint: 'Data analysis' });
+    expect(c.roleType).toBe('data_analyst');
+    expect(c.roleVia).toBe('category');
+    expect(c.relevant).toBe(true);
+  });
+  it('the title still wins over the category', () => {
+    expect(
+      classify({ title: 'AI Engineer Degree Apprenticeship', roleHint: 'Data analysis' }).roleType,
+    ).toBe('ml_ai');
+  });
+});
+
+describe('level from description text', () => {
+  it('finds "Level 4 Data Analyst standard"', () => {
+    const c = classify({
+      title: 'Data Analyst Apprentice',
+      descriptionText: 'working towards the Level 4 Data Analyst standard.',
+    });
+    expect(c).toMatchObject({ level: 4, levelSource: 'text' });
+  });
+  it('ignores unrelated levels', () => {
+    expect(
+      classify({
+        title: 'Data Analyst Apprentice',
+        descriptionText: 'Office on level 3. Great team.',
+      }).level,
+    ).toBeNull();
+  });
+});

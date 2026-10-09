@@ -29,6 +29,8 @@ export interface SourceResult {
 /** An aggregator (FAA, Higherin, Reed…), PLAN.md §6.1. */
 export interface Source {
   id: string;
+  /** Only returns recent ads (e.g. last 3 days), so absence never means closed. */
+  incremental?: boolean;
   enabled(env: Env): boolean;
   run(ctx: Ctx): Promise<SourceResult>;
 }

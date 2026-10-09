@@ -46,6 +46,7 @@ const k = keywordsJson as unknown as {
     leadCap: number;
   };
   personal: { preferredLevel: number; preferredRole: number; withinDistance: number };
+  providers: { names: string[] };
 };
 
 export const rules = {
@@ -70,6 +71,8 @@ export const rules = {
   })),
   points: k.points,
   personal: k.personal,
+  /** Normalised training-provider names (see normaliseEmployerName). */
+  providerNames: k.providers.names,
 };
 
 export const standards: Standard[] = (standardsJson as { standards: Standard[] }).standards;

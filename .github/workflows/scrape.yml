@@ -71,6 +71,10 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
 
+      - name: Email on failure
+        if: failure() && env.DRY_RUN != 'true'
+        run: npm run cli -w packages/scraper -- notify-failure
+
       # GitHub disables cron in public repos after 60 days without activity; a tiny daily
       # commit keeps it alive (PLAN.md §9.1). No private data in this file.
       - name: Keepalive commit
