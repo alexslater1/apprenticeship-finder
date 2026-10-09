@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { Navigate } from 'react-router';
+import { Navigate, useLocation, type Location } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -16,6 +16,8 @@ function takeRedirectError(): string | null {
 
 export default function Login() {
   const { session, loading } = useAuth();
+  // Links from the digest (#/listing/…) bounce through here when signed out; go back after.
+  const from = (useLocation().state as { from?: Location } | null)?.from;
   const [mode, setMode] = useState<'signin' | 'reset'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +25,9 @@ export default function Login() {
   const [error, setError] = useState<string | null>(() => configError ?? takeRedirectError());
   const [info, setInfo] = useState<string | null>(null);
 
-  if (!loading && session) return <Navigate to="/" replace />;
+  if (!loading && session) {
+    return <Navigate to={from ? { pathname: from.pathname, search: from.search } : '/'} replace />;
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();

@@ -4,7 +4,15 @@ import type { Derived } from '@/lib/derive';
 import { formatSalary, locationLabel, milesLabel } from '@/lib/format';
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
-import { ClosingBadge, LevelBadge, MatchChip, NewDot, SourceBadges } from './badges';
+import {
+  AdzunaAttribution,
+  ClosingBadge,
+  LevelBadge,
+  MatchChip,
+  NewDot,
+  PreRegisterBadge,
+  SourceBadges,
+} from './badges';
 import { useOpenListing } from '@/lib/useOpenListing';
 import { StatusSelect } from './StatusSelect';
 
@@ -24,6 +32,7 @@ export function ListingCard({ d }: { d: Derived }) {
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
         <MatchChip score={d.score} />
         <LevelBadge level={r.level} isDegree={r.is_degree} />
+        {r.pre_register && <PreRegisterBadge />}
         {d.isNew && <NewDot />}
         {!r.is_active && <span className="text-xs text-muted-foreground">Closed</span>}
       </div>
@@ -51,6 +60,7 @@ export function ListingCard({ d }: { d: Derived }) {
       <div className="relative z-10 mt-3 flex items-center gap-2">
         <StatusSelect row={r} compact />
         <SourceBadges sources={r.sources} />
+        <AdzunaAttribution sources={r.sources} />
         <span className="ml-auto flex items-center gap-1">
           {r.notes_count > 0 && (
             <span className="flex items-center gap-1 text-xs text-muted-foreground" title="Notes">
