@@ -1,0 +1,47 @@
+{
+ "id": 7244,
+ "title": "Apprentice Software Developer",
+ "apprenticeshipLevel": 3,
+ "slug": "apprentice-software-developer-7244",
+ "slugTrans": "prentis-datblygwr-meddalwedd-7244",
+ "pay": "Apprenticeship rates",
+ "closingDate": "2026-10-15T00:00:00Z",
+ "hours": 2,
+ "positions": 1,
+ "about": {
+  "duties": "Join an established company with an enviable reputation for supplying a market leading business systems solution into builders/timbers/plumbing merchants. Your role will be to assist on a variety of projects including development of new functionality as well as maintain existing systems. You will be exposed to a broad range of technologies and the full product development lifecycle.<br/><br/>This a very exciting time to join us as we move from a traditional server application to a cloud-based solution. You will report to a senior developer who will provide the mentoring and support to help develop your career in software development. This is a fantastic opportunity to join a well-established business that believes in working hard and having fun at the same time.<br/><br/>Responsibilities include (with training and full support): Developing applications, managing support requests, bug tracing and fixing, managing personal tasks unaided when required, monitoring scheduled processes, and maintaining a relaxed but professional relationship with colleagues. <br/>",
+  "additionalInformation": "Benefits<br/>In addition to your formal Apprenticeship, we may also train you in:<br/>Progress 4GL<br/>Java<br/>PostGres<br/>Docker<br/>Other web technologies and tools<br/><br/>"
+ },
+ "requirements": {
+  "desirableQualifications": "-\tAbility to communicate effectively both verbally and in writing<br/>-\tAbility to work flexibly in a changing work environment,<br/>-\tAccuracy<br/>-\tPrevious development experience in any language an advantage<br/>-\tLogical mind and good problem-solving skills<br/>-\tAbility to work on several complex tasks at one time.<br/>-\tA real enthusiasm for software development (you do it in your spare time!)  and good interpersonal skills<br/>-\tDisplay a positive attitude and a willingness to learn<br/>-\tSensible, works well as a team, but equally well on own<br/>-\tWorking to changing deadlines and requirements<br/>-\tAbility to treat colleagues and visitors with respect<br/>-\tThe commitment to complete the Apprenticeship programme<br/>-\tTo use initiative and take responsibility for daily decision making<br/>-\tTo have an innovative approach to problem solving<br/>",
+  "requiredQualifications": "•\tGCSE (or equivalent) English – Grade A*–C / Level 2 (required) <br/>•\tGCSE IT or related subject (desirable) <br/>",
+  "skills": "-\tAbility to communicate effectively both verbally and in writing<br/>-\tAbility to work flexibly in a changing work environment,<br/>-\tAccuracy<br/>-\tPrevious development experience in any language an advantage<br/>-\tLogical mind and good problem-solving skills<br/>-\tAbility to work on several complex tasks at one time.<br/>-\tA real enthusiasm for software development (you do it in your spare time!)  and good interpersonal skills<br/>-\tDisplay a positive attitude and a willingness to learn<br/>-\tSensible, works well as a team, but equally well on own<br/>-\tWorking to changing deadlines and requirements<br/>-\tAbility to treat colleagues and visitors with respect<br/>-\tThe commitment to complete the Apprenticeship programme<br/>-\tTo use initiative and take responsibility for daily decision making<br/>-\tTo have an innovative approach to problem solving<br/>",
+  "welshLanguage": [],
+  "welshSpoken": false,
+  "welshWritten": false
+ },
+ "training": {
+  "trainingProvider": "Catapwlt",
+  "trainingProviderCourse": "Apprenticeship Level 4 – Software Developer"
+ },
+ "apprenticeshipDisabilityConfident": false,
+ "employerDetails": {
+  "name": "Border Merchant Systems Ltd",
+  "address": {
+   "locality": "Monmouth",
+   "postCode": "NP25 5JA",
+   "addressLine1": "Singleton Court Business Park",
+   "addressLine2": "Wonastow Road West"
+  },
+  "mapLink": "https://www.google.com/maps/search/?api=1&query=51.807350561053,-2.7302295760574"
+ },
+ "apply": {
+  "additionalInstructions": "This role is not suitable for candidates with an existing IT degree. Border Merchant Systems is part of the Hermitage Innovation Group – a successful business that’s been in existence for 38 years. Border focuses on builders/timber and plumbing merchants and we’re proud that we’re a place where people want to come and work with us and feel motivated and challenged everyday. We also like eating bacon sandwiches and cake!",
+  "url": null,
+  "email": "apply@example.com",
+  "format": "email"
+ },
+ "interview": "If shortlisted you will be contacted by our Apprenticeship specialists, Salad Skills, by phone. If  successful you will be invited to a friendly group assessment session at Borders, with a max of 8 candidates. If unsuccessful after this stage you will receive personalised feedback with your strengths and tips to improve your chances at future interviews/assessments.  ",
+ "requirementsWelshSpoken": false,
+ "requirementsWelshWritten": false
+}
