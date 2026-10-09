@@ -1,0 +1,166 @@
+{
+  "$comment": "Classification rules (PLAN.md §7). Patterns are case-insensitive regex source strings unless given as {\"re\": ..., \"cs\": true}. Edit freely; tests in packages/shared/test pin the behaviour.",
+  "apprenticeship": ["apprentic", "graduate apprenticeship(?!s? scheme)", "\\blevel [3-7]\\b"],
+  "noise": {
+    "title": [
+      "\\b(coach|assessor|tutor|trainer|lecturer|IQA|internal quality|recruiter|mentor|skills coach|programme manager|apprenticeship manager|apprenticeship officer|apprenticeship co-?ordinator)\\b",
+      "apprenticeship (levy|funding|sales|advisor|adviser)"
+    ],
+    "graduateOnly": "graduate scheme|graduates only|for graduates|graduate programme"
+  },
+  "roles": [
+    {
+      "role": "data_science",
+      "patterns": ["data scien"]
+    },
+    {
+      "role": "ml_ai",
+      "patterns": [
+        "machine learning",
+        {
+          "re": "\\b(ML|AI|GenAI)\\b",
+          "cs": true
+        },
+        "artificial intelligence",
+        "deep learning"
+      ]
+    },
+    {
+      "role": "data_engineering",
+      "patterns": ["data engineer"]
+    },
+    {
+      "role": "data_analyst",
+      "patterns": [
+        "data analy",
+        "analytics",
+        "insights? analyst",
+        "business intelligence",
+        {
+          "re": "\\bBI\\b",
+          "cs": true
+        },
+        "data technician",
+        "statistic",
+        "operational research"
+      ]
+    },
+    {
+      "role": "software_tech",
+      "patterns": [
+        "software",
+        "developer",
+        "digital (and|&) technology",
+        {
+          "re": "\\bDTS\\b",
+          "cs": true
+        },
+        "technology solutions",
+        "computer science",
+        "cyber",
+        "devops"
+      ]
+    }
+  ],
+  "weakTitle": {
+    "$comment": "A bare 'data' in the title (e.g. 'HR Data & Systems Apprentice') counts as data_analyst with fewer points and no specificity bonus.",
+    "role": "data_analyst",
+    "patterns": ["\\bdata\\b"],
+    "exclude": "data (centre|center|entry|input)"
+  },
+  "dataWords": "data|analytics|machine learning|artificial intelligence|\\bAI\\b|statistic|insight",
+  "level": {
+    "title": [
+      {
+        "re": "\\blevel\\s*([2-7])\\b",
+        "group": 1
+      },
+      {
+        "re": "\\bL([2-7])\\b",
+        "group": 1,
+        "cs": true
+      },
+      {
+        "re": "master'?s|\\bMSc\\b",
+        "level": 7
+      },
+      {
+        "re": "degree|graduate apprenticeship|\\bBSc\\b|bachelor",
+        "level": 6
+      },
+      {
+        "re": "\\bhigher\\b",
+        "level": 4
+      },
+      {
+        "re": "\\badvanced\\b",
+        "level": 3
+      },
+      {
+        "re": "\\bintermediate\\b",
+        "level": 2
+      }
+    ],
+    "text": [
+      {
+        "re": "\\blevel\\s*([2-7])\\s*(apprenticeship|standard|qualification|degree)",
+        "group": 1
+      },
+      {
+        "re": "degree apprenticeship",
+        "level": 6
+      }
+    ]
+  },
+  "degree": {
+    "title": "degree apprenticeship|graduate apprenticeship|\\bBSc\\b|\\bBA\\b|bachelor|\\bdegree\\b",
+    "text": "\\bBSc\\b|bachelor'?s degree|degree apprenticeship|\\(hons\\)|honours degree|integrated degree"
+  },
+  "penalties": [
+    {
+      "re": "data entry|data administrator|data administration|data centre|data center",
+      "points": -40,
+      "label": "admin/data-centre role"
+    },
+    {
+      "re": "existing (employees|staff|colleagues)|internal (applicants|candidates) only|internal only",
+      "points": -60,
+      "label": "internal only"
+    }
+  ],
+  "points": {
+    "role": {
+      "data_science": 45,
+      "ml_ai": 40,
+      "data_analyst": 38,
+      "data_engineering": 32,
+      "software_tech_data": 22,
+      "software_tech": 12,
+      "business_analyst": 12,
+      "other": 0
+    },
+    "weakTitleRole": 25,
+    "descriptionRoleFactor": 0.5,
+    "level": {
+      "2": 0,
+      "3": 6,
+      "4": 18,
+      "5": 22,
+      "6": 25,
+      "7": 10,
+      "null": 10
+    },
+    "degree": 8,
+    "titleSpecific": 10,
+    "larsKnown": 5,
+    "freshDays": 7,
+    "fresh": 4,
+    "closingPassed": -100,
+    "leadCap": 60
+  },
+  "personal": {
+    "preferredLevel": 10,
+    "preferredRole": 10,
+    "withinDistance": 8
+  }
+}
