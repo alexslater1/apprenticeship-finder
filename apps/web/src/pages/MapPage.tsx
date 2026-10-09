@@ -107,17 +107,14 @@ export default function MapPage() {
               <CircleMarker
                 center={[home.lat, home.lon]}
                 radius={7}
-                pathOptions={{
-                  color: 'var(--primary)',
-                  fillColor: 'var(--primary)',
-                  fillOpacity: 1,
-                }}
+                // SVG attributes can't use CSS variables: the app's primary blue.
+                pathOptions={{ color: '#ffffff', weight: 2, fillColor: '#2563eb', fillOpacity: 1 }}
               />
               {radius && (
                 <Circle
                   center={[home.lat, home.lon]}
                   radius={radius * 1609.34}
-                  pathOptions={{ color: 'var(--primary)', fillOpacity: 0.04, weight: 1 }}
+                  pathOptions={{ color: '#2563eb', fillOpacity: 0.05, weight: 1 }}
                 />
               )}
             </>
