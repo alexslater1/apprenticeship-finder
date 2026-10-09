@@ -1,6 +1,7 @@
 import { BriefcaseBusiness, EyeOff, ListChecks, Settings } from 'lucide-react';
 import { NavLink, Outlet } from 'react-router';
 import { cn } from '@/lib/utils';
+import { DetailHost } from './DetailHost';
 
 const NAV = [
   { to: '/', label: 'Listings', icon: BriefcaseBusiness, end: true },
@@ -38,6 +39,7 @@ export function Layout() {
       </header>
 
       <Outlet />
+      <DetailHost />
 
       <nav
         aria-label="Main"
