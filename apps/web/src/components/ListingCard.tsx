@@ -1,4 +1,4 @@
-import { EyeOff, Eye, MessageSquare } from 'lucide-react';
+import { EyeOff, Eye, GraduationCap, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Derived } from '@/lib/derive';
 import { formatSalary, locationLabel, milesLabel } from '@/lib/format';
@@ -53,6 +53,12 @@ export function ListingCard({ d }: { d: Derived }) {
         {r.employer_name} · {locationLabel(r)}
         {miles && ` · ${miles}`}
       </p>
+      {r.university && (
+        <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+          <GraduationCap className="size-4 shrink-0" aria-label="University" />
+          <span className="min-w-0 break-words">{r.university}</span>
+        </p>
+      )}
       <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
         {salary && <span>{salary}</span>}
         <ClosingBadge days={d.daysToClose} />

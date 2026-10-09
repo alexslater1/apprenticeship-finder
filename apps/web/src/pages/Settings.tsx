@@ -1,6 +1,17 @@
-import { normalisePostcode, ROLE_LABELS, ROLE_TYPES, type RoleType } from '@af/shared';
+import {
+  DEFAULT_LEVEL_PREFS,
+  DEFAULT_ROLE_PREFS,
+  LEVELS,
+  normalisePostcode,
+  PREF_LABELS,
+  PREFS,
+  ROLE_LABELS,
+  ROLE_TYPES,
+  type LevelPrefs,
+  type Pref,
+} from '@af/shared';
 import { Activity, ChevronRight } from 'lucide-react';
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router';
 import { toast } from 'sonner';
 import { Page } from '@/components/Layout';
@@ -16,33 +27,54 @@ import { useSettings, useUpdateSettings } from '@/lib/queries';
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 
-function toggle<T>(list: T[], v: T): T[] {
-  return list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
-}
+const PREF_STYLE: Record<Pref, string> = {
+  high: 'bg-match-high text-white',
+  maybe: 'bg-match-medium text-black',
+  no: 'bg-muted-foreground text-background',
+};
 
-function Chip({
-  on,
-  onClick,
-  children,
+/** One row of High / Maybe / No buttons (a radio group). */
+function PrefRow({
+  label,
+  value,
+  onChange,
 }: {
-  on: boolean;
-  onClick: () => void;
-  children: ReactNode;
+  label: string;
+  value: Pref;
+  onChange: (v: Pref) => void;
 }) {
   return (
-    <button
-      type="button"
-      aria-pressed={on}
-      onClick={onClick}
-      className={cn(
-        'h-9 rounded-full border px-3 text-sm sm:h-8',
-        on ? 'border-primary bg-primary text-primary-foreground' : 'hover:bg-muted',
-      )}
-    >
-      {children}
-    </button>
+    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+      <span className="text-sm leading-tight">{label}</span>
+      <div role="radiogroup" aria-label={label} className="flex rounded-lg border p-0.5">
+        {PREFS.map((p) => (
+          <button
+            key={p}
+            type="button"
+            role="radio"
+            aria-checked={value === p}
+            onClick={() => onChange(p)}
+            className={cn(
+              'h-9 min-w-14 rounded-md px-2 text-sm transition-colors sm:h-8 sm:min-w-16',
+              value === p ? PREF_STYLE[p] : 'text-muted-foreground hover:bg-muted',
+            )}
+          >
+            {PREF_LABELS[p]}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
+
+const PREF_ROLES = ROLE_TYPES.filter((r) => r !== 'other');
+
+const LEVEL_NAMES: Record<number, string> = {
+  7: 'Level 7 (master’s)',
+  6: 'Level 6 (degree)',
+  5: 'Level 5 (foundation degree)',
+  4: 'Level 4 (higher)',
+};
 
 function HomePostcode({ initial }: { initial: string }) {
   const update = useUpdateSettings();
@@ -140,46 +172,45 @@ export default function Settings() {
         <Card>
           <CardHeader>
             <CardTitle>What you’re looking for</CardTitle>
-            <CardDescription>These boost the match score. Shared by both accounts.</CardDescription>
+            <CardDescription>
+              High comes first, Maybe after, No is hidden everywhere (including the email). Shared
+              by both accounts.
+            </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-5">
             {!s ? (
               <Skeleton className="h-32" />
             ) : (
               <>
-                <fieldset className="grid gap-2">
-                  <legend className="mb-1 text-sm font-medium">Preferred levels</legend>
-                  <div className="flex flex-wrap gap-2">
-                    {[7, 6, 5, 4, 3].map((l) => (
-                      <Chip
-                        key={l}
-                        on={s.preferred_levels.includes(l)}
-                        onClick={() =>
-                          update.mutate({
-                            preferred_levels: toggle(s.preferred_levels, l).sort((a, b) => b - a),
-                          })
-                        }
-                      >
-                        Level {l}
-                      </Chip>
-                    ))}
-                  </div>
+                <fieldset className="grid gap-2.5">
+                  <legend className="mb-1 text-sm font-medium">Roles</legend>
+                  {PREF_ROLES.map((r) => (
+                    <PrefRow
+                      key={r}
+                      label={ROLE_LABELS[r]}
+                      value={s.role_prefs[r] ?? DEFAULT_ROLE_PREFS[r]}
+                      onChange={(v) => update.mutate({ role_prefs: { ...s.role_prefs, [r]: v } })}
+                    />
+                  ))}
                 </fieldset>
-                <fieldset className="grid gap-2">
-                  <legend className="mb-1 text-sm font-medium">Preferred roles</legend>
-                  <div className="flex flex-wrap gap-2">
-                    {ROLE_TYPES.filter((r) => r !== 'other').map((r) => (
-                      <Chip
-                        key={r}
-                        on={s.preferred_roles.includes(r)}
-                        onClick={() =>
-                          update.mutate({ preferred_roles: toggle<RoleType>(s.preferred_roles, r) })
+                <fieldset className="grid gap-2.5">
+                  <legend className="mb-1 text-sm font-medium">Levels</legend>
+                  {[...LEVELS].reverse().map((l) => {
+                    const key = String(l) as keyof LevelPrefs;
+                    return (
+                      <PrefRow
+                        key={l}
+                        label={LEVEL_NAMES[l] ?? `Level ${l}`}
+                        value={s.level_prefs[key] ?? DEFAULT_LEVEL_PREFS[key]}
+                        onChange={(v) =>
+                          update.mutate({ level_prefs: { ...s.level_prefs, [key]: v } })
                         }
-                      >
-                        {ROLE_LABELS[r]}
-                      </Chip>
-                    ))}
-                  </div>
+                      />
+                    );
+                  })}
+                  <p className="text-xs text-muted-foreground">
+                    Levels 2–3 aren’t collected. Listings with no stated level always show.
+                  </p>
                 </fieldset>
                 <div className="grid gap-1.5">
                   <Label htmlFor="distance">Happy to travel up to</Label>

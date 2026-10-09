@@ -147,6 +147,9 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                     <span className="text-xs text-muted-foreground"> · LARS {r.lars_code}</span>
                   ) : null}
                 </Fact>
+                <Fact label="University">
+                  {r.university ?? (r.is_degree ? 'Not named in the advert' : '—')}
+                </Fact>
                 <Fact label="Training provider">{r.provider_name ?? '—'}</Fact>
                 <Fact label="Duration">{(det.duration as string) ?? '—'}</Fact>
                 <Fact label="Hours">{det.hoursPerWeek ? `${det.hoursPerWeek} a week` : '—'}</Fact>

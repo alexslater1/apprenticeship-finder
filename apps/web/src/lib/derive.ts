@@ -1,5 +1,7 @@
 import {
+  MIN_LEVEL,
   daysBetween,
+  excludedByPrefs,
   londonToday,
   nearestMiles,
   personalScore,
@@ -18,12 +20,14 @@ export interface Derived {
   distance: number | null;
   daysToClose: number | null;
   isNew: boolean;
+  /** Hidden by a 'No' role or level in Settings (or a level we no longer collect). */
+  excluded: 'role' | 'level' | null;
 }
 
 export function prefsFrom(s: SettingsRow | undefined): PersonalPrefs {
   return {
-    preferredLevels: s?.preferred_levels ?? [6, 5, 4],
-    preferredRoles: s?.preferred_roles ?? ['data_science', 'data_analyst', 'ml_ai'],
+    roles: s?.role_prefs ?? {},
+    levels: s?.level_prefs ?? {},
     defaultDistanceMiles: s?.default_distance_miles ?? 50,
   };
 }
@@ -48,28 +52,24 @@ export function derive(
       rank: personalScore(row, prefs, distance, { clamp: false }),
       daysToClose: row.closing_date ? daysBetween(today, row.closing_date) : null,
       isNew: daysBetween(row.first_seen_at.slice(0, 10), today) <= 3,
+      excluded: row.level !== null && row.level < MIN_LEVEL ? 'level' : excludedByPrefs(row, prefs),
     };
   });
 }
 
-const LOW_LEVELS = new Set([2, 3]);
-
 export function matches(d: Derived, f: Filters, today = londonToday()): boolean {
   const r = d.row;
+  if (d.excluded) return false;
   if (!f.includeHidden && r.hidden) return false;
   if (!f.includeClosed && !r.is_active) return false;
   if (f.search) {
     const q = f.search.toLowerCase();
     const hay =
-      `${r.title} ${r.employer_name} ${r.primary_city ?? ''} ${r.standard_title ?? ''} ${r.provider_name ?? ''}`.toLowerCase();
+      `${r.title} ${r.employer_name} ${r.primary_city ?? ''} ${r.standard_title ?? ''} ${r.provider_name ?? ''} ${r.university ?? ''}`.toLowerCase();
     if (!q.split(/\s+/).every((w) => hay.includes(w))) return false;
   }
   if (f.roles.length && !f.roles.includes(r.role_type)) return false;
-  if (f.levels.length) {
-    if (r.level === null || !f.levels.includes(r.level)) return false;
-  } else if (!f.includeLowLevels && r.level !== null && LOW_LEVELS.has(r.level)) {
-    return false;
-  }
+  if (f.levels.length && (r.level === null || !f.levels.includes(r.level))) return false;
   if (f.nations.length && !f.nations.includes(r.nation)) return false;
   if (f.region && r.region !== f.region && !(r.locations ?? []).some((l) => l.region === f.region))
     return false;

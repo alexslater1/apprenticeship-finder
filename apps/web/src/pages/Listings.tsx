@@ -1,18 +1,19 @@
 import { RefreshCw } from 'lucide-react';
 import { useMemo } from 'react';
+import { Link } from 'react-router';
 import { FilterBar } from '@/components/FilterBar';
 import { Page } from '@/components/Layout';
 import { ListingCard } from '@/components/ListingCard';
 import { ListingTable } from '@/components/ListingTable';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { matches, sortDerived } from '@/lib/derive';
+import { matches, prefsFrom, sortDerived } from '@/lib/derive';
 import { useListingData } from '@/lib/useListingData';
 import { useMediaQuery } from '@/lib/useMediaQuery';
 import { useFilters } from '@/store/filters';
 
 export default function Listings() {
-  const { derived, rows, home, isLoading, error, refetch, isFetching } = useListingData();
+  const { derived, rows, home, settings, isLoading, error, refetch, isFetching } = useListingData();
   const filters = useFilters();
   const wide = useMediaQuery('(min-width: 1024px)');
 
@@ -24,13 +25,9 @@ export default function Listings() {
       ),
     [derived, filters],
   );
-  const lowLevelHidden = useMemo(
-    () =>
-      filters.includeLowLevels || filters.levels.length
-        ? 0
-        : derived.filter((d) => matches(d, { ...filters, includeLowLevels: true })).length -
-          visible.length,
-    [derived, filters, visible.length],
+  const prefsHidden = useMemo(
+    () => derived.filter((d) => d.excluded && matches({ ...d, excluded: null }, filters)).length,
+    [derived, filters],
   );
   const activeCount = useMemo(() => derived.filter((d) => d.row.is_active).length, [derived]);
 
@@ -49,7 +46,13 @@ export default function Listings() {
         </Button>
       }
     >
-      <FilterBar rows={rows} shown={visible.length} total={activeCount} hasHome={!!home} />
+      <FilterBar
+        rows={rows}
+        shown={visible.length}
+        total={activeCount}
+        hasHome={!!home}
+        prefs={prefsFrom(settings)}
+      />
 
       {error ? (
         <p
@@ -68,16 +71,12 @@ export default function Listings() {
         <>
           <p className="mb-3 text-sm text-muted-foreground" aria-live="polite">
             {visible.length} {visible.length === 1 ? 'apprenticeship' : 'apprenticeships'}
-            {lowLevelHidden > 0 && (
+            {prefsHidden > 0 && (
               <>
                 {' · '}
-                <button
-                  type="button"
-                  className="text-primary underline-offset-2 hover:underline"
-                  onClick={() => filters.set({ includeLowLevels: true })}
-                >
-                  show {lowLevelHidden} more at level 2–3
-                </button>
+                <Link to="/settings" className="text-primary underline-offset-2 hover:underline">
+                  {prefsHidden} hidden by your “No” preferences
+                </Link>
               </>
             )}
           </p>
