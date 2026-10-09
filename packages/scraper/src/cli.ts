@@ -1,12 +1,14 @@
 import { parseArgs } from 'node:util';
 import { migrate } from './migrate.ts';
+import { runDigest, sendFailureEmail } from './notify/digest.ts';
 import { runScrape } from './run.ts';
 
 const USAGE = `usage: cli <command> [options]
 
 commands:
   scrape [--source faa ...] [--dry-run] [--record]   run sources, write listings to Supabase
-  digest [--dry-run]                                  send the daily email (Phase 2)
+  digest [--dry-run]                                  send the daily email (dry run writes logs/digest.html)
+  notify-failure                                      email both of you that the workflow failed
   migrate [--dry-run]                                 apply supabase/migrations/*.sql
 `;
 
@@ -38,7 +40,10 @@ async function main(): Promise<number> {
       return summary.status === 'failed' ? 1 : 0;
     }
     case 'digest':
-      console.log('digest: not implemented yet (PLAN.md Phase 2); nothing sent');
+      await runDigest({ dryRun });
+      return 0;
+    case 'notify-failure':
+      await sendFailureEmail();
       return 0;
     case 'migrate':
       await migrate({ dryRun });
