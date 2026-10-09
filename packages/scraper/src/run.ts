@@ -6,10 +6,20 @@ import { Http } from './http.ts';
 import { logger, startLogFile } from './log.ts';
 import { geocodeAll } from './pipeline/geocode.ts';
 import { mergeWithinRun, normalise, type NormalisedListing } from './pipeline/normalise.ts';
-import { knownSourceIds, markMissing, persist } from './pipeline/persist.ts';
+import { assignKeys } from './pipeline/dedupe.ts';
+import {
+  expireStale,
+  knownSourceIds,
+  loadMatchables,
+  markMissing,
+  persist,
+} from './pipeline/persist.ts';
 import { SOURCES } from './sources/index.ts';
 import { StateStore } from './state.ts';
 import type { Ctx, SourceResult } from './types.ts';
+
+const STALE_DAYS = 30;
+const INCREMENTAL = SOURCES.filter((s) => s.incremental).map((s) => s.id);
 
 export interface RunOptions {
   sources?: string[];
@@ -93,7 +103,26 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
   try {
     await geocodeAll(raw, ctx);
     const kept = raw.map(normalise).filter((l): l is NormalisedListing => l !== null);
+    // Same vacancy on several sources (or re-titled since yesterday) → one listing.
+    const existing = await loadMatchables(); // read-only, so dry runs show real merges too
+    const keys = assignKeys(
+      kept.map((l) => ({
+        dedupeKey: l.dedupeKey,
+        employerNorm: l.employerNameNorm,
+        title: l.title,
+        cities: l.locations.map((x) => x.city).filter((c): c is string => !!c),
+      })),
+      existing,
+    );
+    const existingKeys = new Set(existing.map((x) => x.dedupeKey));
+    const matchedExisting = kept.filter(
+      (l, i) => keys[i] !== l.dedupeKey && existingKeys.has(keys[i]!),
+    ).length;
+    kept.forEach((l, i) => (l.dedupeKey = keys[i]!));
     const merged = mergeWithinRun(kept);
+    const multiSource = merged.filter(
+      (l) => new Set(l.sources.map((s) => s.source)).size > 1,
+    ).length;
     const saved = await persist(merged, ctx);
     newListingIds = saved.newIds;
     let deactivated = 0;
@@ -101,9 +130,11 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
       for (const { source, result } of results) {
         // A "complete" sync that returned nothing is more likely an outage than an empty market.
         if (result.complete && result.listings.length > 0) {
-          deactivated += await markMissing(source, startedAt.toISOString());
+          deactivated += await markMissing(source, startedAt.toISOString(), INCREMENTAL);
         }
       }
+      // Incremental sources (Adzuna) never report closures; retire what we haven't seen in a while.
+      deactivated += await expireStale(STALE_DAYS);
     }
     stats.total = {
       raw: raw.length,
@@ -112,10 +143,12 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
       inserted: saved.inserted,
       updated: saved.updated,
       deactivated,
+      matchedExisting,
+      multiSource,
       requests: ctx.http.requests,
     };
     log.info(
-      `pipeline: ${raw.length} raw → ${kept.length} relevant → ${merged.length} listings (${saved.inserted} new, ${saved.updated} updated, ${deactivated} deactivated)`,
+      `pipeline: ${raw.length} raw → ${kept.length} relevant → ${merged.length} listings (${saved.inserted} new, ${saved.updated} updated, ${deactivated} deactivated; ${multiSource} on several sources, ${matchedExisting} matched a stored listing)`,
     );
   } catch (err) {
     pipelineError = err instanceof Error ? err.message : String(err);
