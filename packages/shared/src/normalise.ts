@@ -52,7 +52,8 @@ export function displayCase(s: string): string {
   return t
     .toLowerCase()
     .replace(/\b([a-z])/g, (c) => c.toUpperCase())
-    .replace(/\b(Plc|Llp|Ltd|Uk|Nhs|Bt|Ai|It|Hr)\b/g, (w) => w.toUpperCase());
+    .replace(/\b(Plc|Llp|Ltd|Uk|Nhs|Bt|Ai|It|Hr)\b/g, (w) => w.toUpperCase())
+    .replace(/(?<=\S )(Of|And|The|For|In|At|On)\b/g, (w) => w.toLowerCase());
 }
 
 const EDGE_WORDS =

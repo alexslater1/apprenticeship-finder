@@ -70,6 +70,8 @@ describe('names and titles', () => {
   it('display case for SHOUTY names only', () => {
     expect(displayCase('FIRST RUNG LIMITED')).toBe('First Rung Limited');
     expect(displayCase('BAE Systems')).toBe('BAE Systems');
+    expect(displayCase('UNIVERSITY OF NOTTINGHAM')).toBe('University of Nottingham');
+    expect(displayCase('THE OPEN UNIVERSITY')).toBe('The Open University');
   });
   it('decodes entities', () =>
     expect(decodeEntities('A &amp; B &#163;5 &pound;6')).toBe('A & B £5 £6'));
