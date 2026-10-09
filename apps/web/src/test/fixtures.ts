@@ -49,6 +49,7 @@ export function listing(over: Partial<ListingRow> = {}): ListingRow {
     tracking_updated_at: null,
     sources: [{ source: 'faa', url: 'https://www.findapprenticeship.service.gov.uk/x' }],
     notes_count: 0,
+    pre_register: false,
     ...over,
   };
 }

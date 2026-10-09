@@ -18,7 +18,15 @@ import type { Derived } from '@/lib/derive';
 import { formatDate, formatSalary, locationLabel, milesLabel } from '@/lib/format';
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
-import { ClosingBadge, LevelBadge, MatchChip, NewDot, SourceBadges } from './badges';
+import {
+  AdzunaAttribution,
+  ClosingBadge,
+  LevelBadge,
+  MatchChip,
+  NewDot,
+  PreRegisterBadge,
+  SourceBadges,
+} from './badges';
 import { useOpenListing } from '@/lib/useOpenListing';
 import { StatusSelect } from './StatusSelect';
 
@@ -59,6 +67,7 @@ const columns = helper.columns([
         <div className="min-w-[16rem]">
           <div className="flex items-start gap-2">
             <span className="font-medium">{d.row.title}</span>
+            {d.row.pre_register && <PreRegisterBadge />}
             {d.isNew && <NewDot />}
           </div>
           <div className="text-xs text-muted-foreground">{d.row.employer_name}</div>
@@ -108,7 +117,12 @@ const columns = helper.columns([
   helper.accessor((d) => d.row.sources, {
     id: 'sources',
     header: 'Sources',
-    cell: (c) => <SourceBadges sources={c.getValue()} />,
+    cell: (c) => (
+      <div className="grid gap-1">
+        <SourceBadges sources={c.getValue()} />
+        <AdzunaAttribution sources={c.getValue()} />
+      </div>
+    ),
   }),
   helper.display({
     id: 'status',
