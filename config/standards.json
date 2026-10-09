@@ -1,0 +1,212 @@
+{
+  "$comment": "LARS standard codes we care about (research/gov-api.md §2). Key on LARS code, not title: titles change between versions. degree = integrated degree awarded.",
+  "standards": [
+    {
+      "lars": 337,
+      "ref": "ST0585",
+      "title": "Data scientist (integrated degree)",
+      "level": 6,
+      "degree": true,
+      "role": "data_science",
+      "core": true
+    },
+    {
+      "lars": 25,
+      "ref": "ST0119",
+      "title": "Digital and technology solutions professional",
+      "level": 6,
+      "degree": true,
+      "role": "software_tech",
+      "core": true
+    },
+    {
+      "lars": 795,
+      "ref": "ST1398",
+      "title": "Machine learning engineer",
+      "level": 6,
+      "degree": false,
+      "role": "ml_ai",
+      "core": true
+    },
+    {
+      "lars": 746,
+      "ref": "ST1386",
+      "title": "Data engineer",
+      "level": 5,
+      "degree": false,
+      "role": "data_engineering",
+      "core": true
+    },
+    {
+      "lars": 80,
+      "ref": "ST0118",
+      "title": "Data analyst",
+      "level": 4,
+      "degree": false,
+      "role": "data_analyst",
+      "core": true
+    },
+    {
+      "lars": 828,
+      "ref": "ST1512",
+      "title": "AI and automation practitioner",
+      "level": 4,
+      "degree": false,
+      "role": "ml_ai",
+      "core": true
+    },
+    {
+      "lars": 165,
+      "ref": "ST0117",
+      "title": "Business analyst",
+      "level": 4,
+      "degree": false,
+      "role": "business_analyst",
+      "core": true
+    },
+    {
+      "lars": 2,
+      "ref": "ST0116",
+      "title": "Software developer",
+      "level": 4,
+      "degree": false,
+      "role": "software_tech",
+      "core": true
+    },
+    {
+      "lars": 576,
+      "ref": "ST0795",
+      "title": "Data technician",
+      "level": 3,
+      "degree": false,
+      "role": "data_analyst",
+      "core": true
+    },
+    {
+      "lars": 154,
+      "ref": "ST0128",
+      "title": "Software development technician",
+      "level": 3,
+      "degree": false,
+      "role": "software_tech",
+      "core": true
+    },
+    {
+      "lars": 561,
+      "ref": "ST0763",
+      "title": "AI data specialist (AI technologist from Apr 2027)",
+      "level": 7,
+      "degree": false,
+      "role": "ml_ai",
+      "core": true
+    },
+    {
+      "lars": 327,
+      "ref": "ST0482",
+      "title": "Digital and technology solutions specialist (integrated degree)",
+      "level": 7,
+      "degree": true,
+      "role": "data_science",
+      "core": true
+    },
+    {
+      "lars": 756,
+      "ref": "ST0957",
+      "title": "Spatial data specialist",
+      "level": 7,
+      "degree": true,
+      "role": "data_science",
+      "core": false
+    },
+    {
+      "lars": 323,
+      "ref": "ST0603",
+      "title": "Professional economist (integrated degree)",
+      "level": 6,
+      "degree": true,
+      "role": "other",
+      "core": false
+    },
+    {
+      "lars": 38,
+      "ref": "ST0013",
+      "title": "High integrity software engineer",
+      "level": 6,
+      "degree": true,
+      "role": "software_tech",
+      "core": false
+    },
+    {
+      "lars": 17,
+      "ref": "ST0004",
+      "title": "Actuarial technician",
+      "level": 4,
+      "degree": false,
+      "role": "other",
+      "core": false
+    },
+    {
+      "lars": 91,
+      "ref": "ST0129",
+      "title": "Software tester",
+      "level": 4,
+      "degree": false,
+      "role": "software_tech",
+      "core": false
+    },
+    {
+      "lars": 548,
+      "ref": "ST0825",
+      "title": "DevOps engineer",
+      "level": 4,
+      "degree": false,
+      "role": "software_tech",
+      "core": false
+    },
+    {
+      "lars": 382,
+      "ref": "ST0516",
+      "title": "Intelligence analyst",
+      "level": 4,
+      "degree": false,
+      "role": "other",
+      "core": false
+    },
+    {
+      "lars": 669,
+      "ref": "ST0892",
+      "title": "Medical statistician",
+      "level": 7,
+      "degree": true,
+      "role": "data_analyst",
+      "core": false
+    },
+    {
+      "lars": 406,
+      "ref": "ST0649",
+      "title": "Bioinformatics scientist",
+      "level": 7,
+      "degree": false,
+      "role": "data_science",
+      "core": false
+    },
+    {
+      "lars": 600,
+      "ref": "ST0884",
+      "title": "Operational research specialist",
+      "level": 7,
+      "degree": false,
+      "role": "data_analyst",
+      "core": false
+    },
+    {
+      "lars": 255,
+      "ref": "ST0502",
+      "title": "Actuary",
+      "level": 7,
+      "degree": false,
+      "role": "other",
+      "core": false
+    }
+  ]
+}

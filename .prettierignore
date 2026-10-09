@@ -1,0 +1,6 @@
+research/
+*.md
+package-lock.json
+config/uk-places.json
+packages/scraper/test/fixtures/
+dist/
