@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from '@/lib/auth';
 import Listings from '@/pages/Listings';
 import Login from '@/pages/Login';
 import SetPassword from '@/pages/SetPassword';
+import Health from '@/pages/Health';
 import Hidden from '@/pages/Hidden';
 import Settings from '@/pages/Settings';
 import Tracker from '@/pages/Tracker';
@@ -35,9 +36,11 @@ export default function App() {
               <Route element={<RequireAuth />}>
                 <Route element={<Layout />}>
                   <Route index element={<Listings />} />
+                  <Route path="/listing/:id" element={<Listings />} />
                   <Route path="/tracker" element={<Tracker />} />
                   <Route path="/hidden" element={<Hidden />} />
                   <Route path="/settings" element={<Settings />} />
+                  <Route path="/health" element={<Health />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Route>
               </Route>
