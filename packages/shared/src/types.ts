@@ -90,6 +90,8 @@ export interface Location {
   city?: string;
   region?: string;
   nation?: Nation;
+  /** Country as the source gives it ('GB', 'United Kingdom', 'France'); non-UK jobs are dropped. */
+  country?: string;
 }
 
 /** What every source/connector returns before normalisation (PLAN.md §6.1). */
@@ -119,6 +121,8 @@ export interface RawListing {
   details?: Record<string, unknown>;
   /** Source says this is an apprenticeship regardless of title (FAA, Scot GA…). */
   knownApprenticeship?: boolean;
+  /** Source says this is a degree apprenticeship (Scottish Graduate Apprenticeships). */
+  isDegree?: boolean;
   /** Page-hash leads get their score capped. */
   isLead?: boolean;
   /** A source's own category, e.g. Higherin 'Data analysis'; used for role when the title says nothing. */

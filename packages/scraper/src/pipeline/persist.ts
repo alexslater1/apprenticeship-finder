@@ -19,6 +19,7 @@ export interface ExistingRow {
   lars_code?: number | null;
   standard_title?: string | null;
   provider_name?: string | null;
+  employer_id?: string | null;
   university?: string | null;
   salary_min?: number | null;
   salary_max?: number | null;
@@ -32,7 +33,7 @@ export interface ExistingRow {
 }
 
 const EXISTING_COLUMNS =
-  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,university,salary_min,salary_max,salary_text,start_date,locations,primary_city,region,nation,details';
+  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,employer_id,university,salary_min,salary_max,salary_text,start_date,locations,primary_city,region,nation,details';
 
 const chunk = <T>(xs: T[], n: number): T[][] =>
   Array.from({ length: Math.ceil(xs.length / n) }, (_, i) => xs.slice(i * n, i * n + n));
@@ -98,6 +99,7 @@ export function toRow(
     is_degree: c.isDegree ?? ex?.is_degree ?? null,
     lars_code: l.larsCode ?? ex?.lars_code ?? null,
     standard_title: l.standardTitle ?? ex?.standard_title ?? null,
+    employer_id: l.employerId ?? ex?.employer_id ?? null,
     provider_name: l.providerName ?? ex?.provider_name ?? null,
     university: l.university ?? ex?.university ?? null,
     role_type: c.roleType,
@@ -265,4 +267,26 @@ export async function knownSourceIds(source: string): Promise<Set<string>> {
     if (rows.length < 1000) break;
   }
   return ids;
+}
+
+/** Stored job ids for every employer connector, keyed by source (`employer:{id}`). */
+export async function knownEmployerIds(): Promise<Map<string, Set<string>>> {
+  const out = new Map<string, Set<string>>();
+  for (let from = 0; ; from += 1000) {
+    const rows = must<Array<{ source: string; source_id: string }>>(
+      await db()
+        .from('listing_sources')
+        .select('source,source_id')
+        .like('source', 'employer:%')
+        .range(from, from + 999),
+      'known employer ids',
+    );
+    for (const r of rows) {
+      let set = out.get(r.source);
+      if (!set) out.set(r.source, (set = new Set()));
+      set.add(r.source_id);
+    }
+    if (rows.length < 1000) break;
+  }
+  return out;
 }
