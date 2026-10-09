@@ -63,3 +63,13 @@ export function milesLabel(d: number | null): string | null {
   if (d === null) return null;
   return d < 1 ? '<1 mi' : `${Math.round(d)} mi`;
 }
+
+/** "today", "yesterday", "3 days ago", else a date. */
+export function ago(iso: string | null | undefined): string {
+  if (!iso) return 'never';
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 14) return `${days} days ago`;
+  return formatDate(iso);
+}

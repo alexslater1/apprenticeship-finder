@@ -1,6 +1,7 @@
 import { STATUS_LABELS, type TrackStatus } from '@af/shared';
-import { AlarmClock, Download } from 'lucide-react';
+import { AlarmClock, Download, EyeOff } from 'lucide-react';
 import { useMemo } from 'react';
+import { Link } from 'react-router';
 import { ClosingBadge, LevelBadge } from '@/components/badges';
 import { STATUS_DOT } from '@/lib/status';
 import { useOpenListing } from '@/lib/useOpenListing';
@@ -116,11 +117,18 @@ export default function Tracker() {
     <Page
       title="Tracker"
       actions={
-        tracked.length > 0 && (
-          <Button variant="outline" size="sm" onClick={() => exportCsv(tracked)}>
-            <Download /> Export CSV
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/hidden">
+              <EyeOff /> Hidden
+            </Link>
           </Button>
-        )
+          {tracked.length > 0 && (
+            <Button variant="outline" size="sm" onClick={() => exportCsv(tracked)}>
+              <Download /> Export CSV
+            </Button>
+          )}
+        </div>
       }
     >
       {isLoading ? (

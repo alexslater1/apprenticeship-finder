@@ -469,7 +469,8 @@ describe('Not Going To Uni', () => {
 
   it('only fetches detail pages that look like data/tech roles', () => {
     const skipped = search.items.filter((i) => !itemLooksRelevant(i)).map((i) => i.id);
-    expect(skipped).toEqual(['12789']); // 'Level 4 Data Centre Operations – Uxbridge College'
+    // 11359 is a level 2 course: out of scope since levels 2–3 were dropped.
+    expect(skipped).toEqual(['12789', '11359']); // 'Level 4 Data Centre Operations – Uxbridge College'
   });
 
   it('maps JSON-LD plus the opportunity record to a listing', () => {

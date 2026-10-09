@@ -1,5 +1,16 @@
 import { avature } from './avature.ts';
-import { cgJobstream, entainApi, lidl, skycareers } from './custom.ts';
+import {
+  amazon,
+  brassring,
+  cgJobstream,
+  cornerstone,
+  entainApi,
+  gsHigher,
+  jibe,
+  lidl,
+  skycareers,
+  wpJobs,
+} from './custom.ts';
 import { eightfold } from './eightfold.ts';
 import { jsonld, manual, pagehash } from './generic.ts';
 import { oleeo } from './oleeo.ts';
@@ -42,6 +53,12 @@ export const CONNECTORS: Connector<never>[] = [
   cgJobstream,
   entainApi,
   lidl,
+  amazon,
+  gsHigher,
+  wpJobs,
+  jibe,
+  brassring,
+  cornerstone,
   jsonld,
   pagehash,
   manual,

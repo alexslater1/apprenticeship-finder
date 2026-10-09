@@ -213,6 +213,8 @@ export interface ListingRow {
   notes_count: number;
   /** Higherin "Register your interest" advert: not open for applications yet. */
   pre_register: boolean;
+  /** A line on a careers page ("applications open in November"), not a job advert. */
+  is_lead: boolean;
 }
 
 export interface SettingsRow {
@@ -225,5 +227,78 @@ export interface SettingsRow {
   default_distance_miles: number;
   digest_min_score: number;
   digest_enabled: boolean;
+  updated_at: string;
+}
+
+export const EMPLOYER_STATUSES = ['unknown', 'open', 'closed', 'blocked', 'error', 'manual'] as const;
+export type EmployerStatus = (typeof EMPLOYER_STATUSES)[number];
+
+/** Row shape of the `v_employers` view (Companies page). */
+export interface EmployerRow {
+  id: string;
+  name: string;
+  aliases: string[];
+  origin: 'seed' | 'discovered' | 'manual';
+  sector: string | null;
+  relevance: 'core' | 'adjacent' | null;
+  confidence: string | null;
+  early_careers_url: string | null;
+  job_search_url: string | null;
+  ats_family: string | null;
+  connector: string | null;
+  manual_url: string | null;
+  manual_reason: string | null;
+  data_schemes: string[] | null;
+  typical_window: string | null;
+  opens_month: number | null;
+  closes_month: number | null;
+  locations: string[] | null;
+  training_provider: string | null;
+  watch: boolean;
+  status: EmployerStatus;
+  last_checked_at: string | null;
+  last_ok_at: string | null;
+  last_error: string | null;
+  last_total_jobs: number | null;
+  last_apprentice_jobs: number | null;
+  last_relevant_jobs: number | null;
+  opened_at: string | null;
+  notes_md: string | null;
+  active_listings: number;
+  next_closing: string | null;
+  last_season_first_seen: string | null;
+  last_season_closed: string | null;
+  notes_count: number;
+}
+
+export const SUGGESTION_STATUSES = ['pending', 'approved', 'dismissed', 'added'] as const;
+export type SuggestionStatus = (typeof SUGGESTION_STATUSES)[number];
+
+export interface SuggestionEvidence {
+  source: string;
+  url?: string;
+  title?: string;
+  listing_id?: string;
+  seen_at?: string;
+  note?: string;
+}
+
+/** `employer_suggestions` (discovery queue, PLAN.md §6.5). */
+export interface SuggestionRow {
+  id: string;
+  name: string | null;
+  name_norm: string | null;
+  careers_url: string | null;
+  origin: 'listing' | 'google_jobs' | 'web_search' | 'lists' | 'ai' | 'manual';
+  evidence: SuggestionEvidence[];
+  detected_connector: string | null;
+  detected_config: Record<string, unknown> | null;
+  status: SuggestionStatus;
+  auto: boolean;
+  dismiss_reason: string | null;
+  decided_by: string | null;
+  decided_at: string | null;
+  employer_id: string | null;
+  created_at: string;
   updated_at: string;
 }

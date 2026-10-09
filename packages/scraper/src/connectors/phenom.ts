@@ -42,7 +42,10 @@ const Body = z
     refineSearch: z
       .object({
         totalHits: z.number().nullish(),
-        data: z.object({ jobs: z.array(z.unknown()).nullish() }).loose().nullish(),
+        data: z
+          .object({ jobs: z.array(z.unknown()).nullish() })
+          .loose()
+          .nullish(),
       })
       .loose(),
   })
@@ -50,7 +53,11 @@ const Body = z
 
 function jobLocations(j: Job): Location[] {
   const all = j.multi_location?.length ? j.multi_location : j.location ? [j.location] : [];
-  return all.map((text) => ({ text, country: /,\s*([^,]+)$/.exec(text)?.[1]?.trim() }));
+  // 'London, England, United Kingdom' names its country; 'Crawley, West Sussex, RH10 9HA' doesn't.
+  return all.map((text) => {
+    const last = /,\s*([A-Za-z][A-Za-z .&'-]+)$/.exec(text)?.[1]?.trim();
+    return { text, country: all.length === 1 ? (j.country ?? last) : last };
+  });
 }
 
 export const phenom = defineConnector({
@@ -85,7 +92,9 @@ export const phenom = defineConnector({
         }),
       );
       if (page === 0) total = body.refineSearch.totalHits ?? null;
-      const batch = (body.refineSearch.data?.jobs ?? []).map((j) => Job.safeParse(j)).filter((r) => r.success);
+      const batch = (body.refineSearch.data?.jobs ?? [])
+        .map((j) => Job.safeParse(j))
+        .filter((r) => r.success);
       jobs.push(...batch.map((r) => r.data));
       if (batch.length < SIZE || (total !== null && jobs.length >= total)) {
         full = true;
@@ -120,7 +129,9 @@ export const phenom = defineConnector({
       },
       fallback: base,
     });
-    const uk = listings.filter((l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false));
+    const uk = listings.filter(
+      (l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false),
+    );
     return {
       jobs: uk,
       total,

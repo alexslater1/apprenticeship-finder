@@ -9,11 +9,23 @@ import { mergeWithinRun, normalise, type NormalisedListing } from './pipeline/no
 import { assignKeys } from './pipeline/dedupe.ts';
 import {
   expireStale,
+  knownEmployerIds,
   knownSourceIds,
   loadMatchables,
   markMissing,
   persist,
 } from './pipeline/persist.ts';
+import type { Employer } from './connectors/types.ts';
+import {
+  employerMatcher,
+  loadEmployerConfig,
+  loadEmployers,
+  runEmployers,
+  saveEmployerStatus,
+  statusFor,
+  syncEmployers,
+  type EmployerRun,
+} from './employers.ts';
 import { SOURCES } from './sources/index.ts';
 import { StateStore } from './state.ts';
 import type { Ctx, SourceResult } from './types.ts';
@@ -22,9 +34,30 @@ const STALE_DAYS = 30;
 const INCREMENTAL = SOURCES.filter((s) => s.incremental).map((s) => s.id);
 
 export interface RunOptions {
+  /** Aggregator ids to run; 'employers' runs every watched employer. Default: everything. */
   sources?: string[];
+  /** Only these employer ids (implies no aggregators unless `sources` names some). */
+  employers?: string[];
   dryRun: boolean;
   record: boolean;
+}
+
+/** Employers to check this run: config merged with stored status (dry runs don't sync). */
+async function employersForRun(o: RunOptions): Promise<Employer[]> {
+  const stored = new Map((await loadEmployers()).map((e) => [e.id, e]));
+  const all: Employer[] = o.dryRun
+    ? [
+        ...loadEmployerConfig().map((c) => ({
+          ...stored.get(c.id),
+          ...c,
+          connector: c.connector ?? null,
+        })),
+        ...[...stored.values()].filter((e) => e.origin !== 'seed'),
+      ]
+    : [...stored.values()];
+  return all.filter(
+    (e) => e.connector && (o.employers ? o.employers.includes(e.id) : e.watch !== false),
+  );
 }
 
 export interface RunSummary {
@@ -75,25 +108,61 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
   let ran = 0;
   let failed = 0;
 
-  for (const source of SOURCES) {
-    if (o.sources && !o.sources.includes(source.id)) continue;
-    if (!source.enabled(e)) {
-      stats[source.id] = { skipped: 'not configured' };
-      log.info(`${source.id}: skipped (not configured)`);
-      continue;
+  const wantSources = o.sources ?? (o.employers ? [] : undefined);
+  const wantEmployers = o.employers?.length || !o.sources || o.sources.includes('employers');
+
+  async function runSources() {
+    for (const source of SOURCES) {
+      if (wantSources && !wantSources.includes(source.id)) continue;
+      if (!source.enabled(e)) {
+        stats[source.id] = { skipped: 'not configured' };
+        log.info(`${source.id}: skipped (not configured)`);
+        continue;
+      }
+      ran++;
+      const t0 = Date.now();
+      try {
+        const result = await source.run({ ...ctx, log: log.child(source.id) });
+        results.push({ source: source.id, result });
+        stats[source.id] = {
+          ...result.stats,
+          fetched: result.listings.length,
+          ms: Date.now() - t0,
+        };
+        log.info(`${source.id}: ${result.listings.length} listings in ${Date.now() - t0} ms`);
+      } catch (err) {
+        failed++;
+        const msg = err instanceof Error ? err.message : String(err);
+        stats[source.id] = { error: msg, ms: Date.now() - t0 };
+        log.error(`${source.id}: ${msg}`);
+      }
     }
-    ran++;
+  }
+
+  // Employer careers sites run alongside the aggregators (different hosts, so no contention).
+  let employerRuns: EmployerRun[] = [];
+  async function runAllEmployers() {
+    if (!wantEmployers) return;
+    if (!o.dryRun) log.info(`employers: synced ${await syncEmployers()} from config`);
+    const employers = await employersForRun(o);
+    const known = o.dryRun ? new Map<string, Set<string>>() : await knownEmployerIds();
     const t0 = Date.now();
-    try {
-      const result = await source.run({ ...ctx, log: log.child(source.id) });
-      results.push({ source: source.id, result });
-      stats[source.id] = { ...result.stats, fetched: result.listings.length, ms: Date.now() - t0 };
-      log.info(`${source.id}: ${result.listings.length} listings in ${Date.now() - t0} ms`);
-    } catch (err) {
-      failed++;
-      const msg = err instanceof Error ? err.message : String(err);
-      stats[source.id] = { error: msg, ms: Date.now() - t0 };
-      log.error(`${source.id}: ${msg}`);
+    employerRuns = await runEmployers(ctx, employers, known);
+    log.info(`employers: ${employerRuns.length} checked in ${Date.now() - t0} ms`);
+  }
+
+  await Promise.all([runSources(), runAllEmployers()]);
+  for (const r of employerRuns) {
+    if (r.result) {
+      results.push({
+        source: `employer:${r.employer.id}`,
+        result: {
+          listings: r.result.jobs,
+          complete: r.result.complete,
+          stats: r.result.stats ?? {},
+          total: r.result.total,
+        },
+      });
     }
   }
 
@@ -103,6 +172,14 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
   try {
     await geocodeAll(raw, ctx);
     const kept = raw.map(normalise).filter((l): l is NormalisedListing => l !== null);
+    // Which watchlist employer each listing belongs to (FAA's 'BARCLAYS BANK UK PLC' → barclays).
+    const matchEmployer = employerMatcher(await loadEmployers().catch(() => []));
+    for (const l of kept) l.employerId ??= matchEmployer(l.employerNameNorm);
+    const relevantBySource = new Map<string, number>();
+    for (const l of kept)
+      for (const s of l.sources)
+        if (s.source.startsWith('employer:'))
+          relevantBySource.set(s.source, (relevantBySource.get(s.source) ?? 0) + 1);
     // Same vacancy on several sources (or re-titled since yesterday) → one listing.
     const existing = await loadMatchables(); // read-only, so dry runs show real merges too
     const keys = assignKeys(
@@ -128,14 +205,25 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
     let deactivated = 0;
     if (!o.dryRun) {
       for (const { source, result } of results) {
-        // A "complete" sync that returned nothing is more likely an outage than an empty market.
-        if (result.complete && result.listings.length > 0) {
+        // A "complete" sync that returned nothing is more likely an outage than an empty market
+        // (employer boards also count as healthy when they list other jobs).
+        if (result.complete && (result.listings.length > 0 || (result.total ?? 0) > 0)) {
           deactivated += await markMissing(source, startedAt.toISOString(), INCREMENTAL);
         }
       }
       // Incremental sources (Adzuna) never report closures; retire what we haven't seen in a while.
       deactivated += await expireStale(STALE_DAYS);
+      if (employerRuns.length) {
+        const { opened } = await saveEmployerStatus(
+          employerRuns,
+          relevantBySource,
+          new Date().toISOString(),
+        );
+        if (opened.length) log.info(`employers opened: ${opened.join(', ')}`);
+        stats.openedEmployers = opened;
+      }
     }
+    if (employerRuns.length) stats.employers = employerSummary(employerRuns, relevantBySource);
     stats.total = {
       raw: raw.length,
       relevant: kept.length,
@@ -182,6 +270,25 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
   writeLastRun({ date: today, finished_at: new Date().toISOString(), status, trigger, stats });
   log.info(`run finished: ${status}`);
   return { status, stats, newListingIds };
+}
+
+function employerSummary(runs: EmployerRun[], relevantBySource: Map<string, number>) {
+  const counts: Record<string, number> = {};
+  const byId: Record<string, unknown> = {};
+  for (const r of runs) {
+    const relevant = relevantBySource.get(`employer:${r.employer.id}`) ?? 0;
+    const status = statusFor(r, relevant);
+    counts[status] = (counts[status] ?? 0) + 1;
+    byId[r.employer.id] = {
+      status,
+      total: r.result?.total ?? null,
+      candidates: r.result?.jobs.length ?? 0,
+      relevant,
+      ms: r.ms,
+      ...(r.error ? { error: r.error.slice(0, 200) } : {}),
+    };
+  }
+  return { checked: runs.length, ...counts, byId };
 }
 
 /** Public, non-private summary committed by the workflow (keeps the cron alive, PLAN.md §9.1). */

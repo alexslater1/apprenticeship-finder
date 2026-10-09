@@ -1,4 +1,5 @@
 import {
+  POSTCODE_RE,
   collapseSpaces,
   decodeEntities,
   isApprenticeshipTitle,
@@ -29,12 +30,16 @@ const ABROAD_IN_TEXT =
  */
 export function isUk(loc: { text?: string; country?: string }): boolean | null {
   const c = loc.country?.trim();
-  if (c) return UK_COUNTRY.test(c);
+  if (c) {
+    if (UK_COUNTRY.test(c)) return true;
+    // A country code or name for somewhere else; anything odd (a postcode) falls through.
+    if (/^[A-Z]{2,3}$/.test(c) || ABROAD_IN_TEXT.test(c)) return false;
+  }
   const t = loc.text ?? '';
   if (!t) return null;
   if (UK_WORDS.test(t) || UK_CODES.test(t)) return true;
   if (ABROAD_IN_TEXT.test(t.replace(/northern ireland/gi, ''))) return false;
-  return findPlace(t) ? true : null;
+  return findPlace(t) || POSTCODE_RE.test(t) ? true : null;
 }
 
 /** Keep jobs with at least one UK (or unknown) location. */
@@ -66,6 +71,7 @@ function parseLenient(src: string): unknown {
     const cleaned = src
       .replace(/^\s*\/\/.*$/gm, '')
       .replace(/\/\*[\s\S]*?\*\//g, '')
+      // eslint-disable-next-line no-control-regex -- raw control characters are the problem here
       .replace(/[\u0000-\u001f]+/g, ' ');
     try {
       return JSON.parse(cleaned);
@@ -135,7 +141,7 @@ export function parseJobPosting(html: string): PostingFields | null {
   )) {
     const j = parseLenient(m[1]!.trim());
     if (!j) continue;
-    const nodes: unknown[] = Array.isArray(j) ? j : ((j as Json)['@graph'] as unknown[]) ?? [j];
+    const nodes: unknown[] = Array.isArray(j) ? j : (((j as Json)['@graph'] as unknown[]) ?? [j]);
     const found = nodes.find(isJobPosting);
     if (found) return fromJsonLd(found);
   }
@@ -210,23 +216,34 @@ export function parseSitemap(xml: string): { urls: SitemapEntry[]; sitemaps: str
   return { urls, sitemaps };
 }
 
+/** Some boards (Tesco) answer the first sitemap request with an empty 200 while they build it. */
+async function sitemapText(ctx: EmployerCtx, url: string): Promise<string> {
+  const first = await ctx.http.text(url, { robots: true });
+  return first.trim() ? first : ctx.http.text(url, { robots: true });
+}
+
 /** Every URL in a sitemap, following up to `maxChildren` child sitemaps of an index. */
 export async function sitemapUrls(
   ctx: EmployerCtx,
   url: string,
   o: { maxChildren?: number; childFilter?: (u: string) => boolean } = {},
 ): Promise<SitemapEntry[]> {
-  const first = parseSitemap(await ctx.http.text(url, { robots: true }));
+  const first = parseSitemap(await sitemapText(ctx, url));
   const out = [...first.urls];
-  const children = first.sitemaps.filter(o.childFilter ?? (() => true)).slice(0, o.maxChildren ?? 10);
-  for (const child of children) out.push(...parseSitemap(await ctx.http.text(child, { robots: true })).urls);
+  const children = first.sitemaps
+    .filter(o.childFilter ?? (() => true))
+    .slice(0, o.maxChildren ?? 10);
+  for (const child of children) out.push(...parseSitemap(await sitemapText(ctx, child)).urls);
   return out;
 }
 
 /** The words in a URL slug: '/job/Glasgow-Data-Analyst-Apprentice/123/' → 'Glasgow Data Analyst Apprentice'. */
 export function slugWords(url: string): string {
   const path = decodeURIComponent(new URL(url, 'https://x').pathname);
-  return path.replace(/[-_/+]+/g, ' ').replace(/\s+/g, ' ').trim();
+  return path
+    .replace(/[-_/+]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 export function stripHtml(html: string | undefined): string | undefined {
@@ -294,7 +311,9 @@ export async function withDetails<T>(
         listing = await o.detail(item);
         next[id] = {
           sig,
-          listing: listing ? { ...listing, descriptionHtml: undefined, descriptionText: undefined, raw: undefined } : null,
+          listing: listing
+            ? { ...listing, descriptionHtml: undefined, descriptionText: undefined, raw: undefined }
+            : null,
         };
       } catch (err) {
         errors++;

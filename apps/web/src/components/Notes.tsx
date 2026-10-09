@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useAuth } from '@/lib/auth';
 import { formatDateTime } from '@/lib/format';
-import { useAddNote, useDeleteNote, useNotes } from '@/lib/queries';
+import { useAddNote, useDeleteNote, useNotes, type NoteTarget } from '@/lib/queries';
 
-export function Notes({ listingId }: { listingId: string }) {
+export function Notes({ target }: { target: NoteTarget }) {
   const { session } = useAuth();
-  const { data: notes, isLoading } = useNotes(listingId);
-  const add = useAddNote(listingId);
-  const del = useDeleteNote(listingId);
+  const { data: notes, isLoading } = useNotes(target);
+  const add = useAddNote(target);
+  const del = useDeleteNote(target);
   const [body, setBody] = useState('');
 
   function onSubmit(e: FormEvent) {

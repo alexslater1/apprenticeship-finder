@@ -94,6 +94,7 @@ export function matches(d: Derived, f: Filters, today = londonToday()): boolean 
   if (f.sources.length && !r.sources.some((s) => f.sources.includes(sourceKey(s.source))))
     return false;
   if (f.degreeOnly && !r.is_degree) return false;
+  if (f.employerId && r.employer_id !== f.employerId) return false;
   return true;
 }
 
@@ -143,6 +144,11 @@ export const SOURCE_LABELS: Record<string, string> = {
   employer: 'Employer site',
   google_jobs: 'Google Jobs',
   web_search: 'Web search',
+  scot: 'apprenticeships.scot',
+  wales: 'Careers Wales',
+  ni: 'JobApplyNI',
+  amazing: 'Amazing Apprenticeships',
+  ngtu: 'Not Going To Uni',
 };
 
 export const SOURCE_SHORT: Record<string, string> = {
@@ -153,4 +159,9 @@ export const SOURCE_SHORT: Record<string, string> = {
   employer: 'Employer',
   google_jobs: 'Google',
   web_search: 'Web',
+  scot: 'Scotland',
+  wales: 'Wales',
+  ni: 'NI',
+  amazing: 'Amazing',
+  ngtu: 'NGTU',
 };

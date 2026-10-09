@@ -478,5 +478,9 @@ describe('bot-wall detection', () => {
     expect(detectBotWall('<h1>Quick check needed</h1>', new Headers())).not.toBeNull();
     expect(detectBotWall('ok', new Headers({ 'cf-mitigated': 'challenge' }))).not.toBeNull();
     expect(detectBotWall('<h1>Jobs</h1>', new Headers())).toBeNull();
+    // Cloudflare's script on an ordinary page isn't a wall; on a 403 it is.
+    const cf = '<h1>Jobs</h1><script src="/cdn-cgi/challenge-platform/scripts/jsd/main.js"></script>';
+    expect(detectBotWall(cf, new Headers(), 200)).toBeNull();
+    expect(detectBotWall(cf, new Headers(), 403)).not.toBeNull();
   });
 });

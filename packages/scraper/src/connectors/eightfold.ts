@@ -68,7 +68,10 @@ const V2Page = z
   })
   .loose();
 
-async function list(c: Config, ctx: EmployerCtx): Promise<{ positions: Position[]; total: number | null; full: boolean }> {
+async function list(
+  c: Config,
+  ctx: EmployerCtx,
+): Promise<{ positions: Position[]; total: number | null; full: boolean }> {
   const out: Position[] = [];
   let total: number | null = null;
   const loc = c.omitLocation ? '' : '&location=United%20Kingdom';
@@ -87,9 +90,14 @@ async function list(c: Config, ctx: EmployerCtx): Promise<{ positions: Position[
         id: p.id,
         title: p.name,
         // "London, England, GB" is the reliable country; the free-text list is for display.
-        locations: (p.standardizedLocations?.length ? p.standardizedLocations : (p.locations ?? [])).map(
-          (text) => ({ text, country: /,\s*([A-Z]{2})$/.exec(text)?.[1] ?? (/^[A-Z]{2}$/.test(text) ? text : undefined) }),
-        ),
+        locations: (p.standardizedLocations?.length
+          ? p.standardizedLocations
+          : (p.locations ?? [])
+        ).map((text) => ({
+          text,
+          country:
+            /,\s*([A-Z]{2})$/.exec(text)?.[1] ?? (/^[A-Z]{2}$/.test(text) ? text : undefined),
+        })),
         posted: ts(p.postedTs),
         url: `https://${c.host}${p.positionUrl ?? `/careers/job/${p.id}`}`,
       }));
@@ -110,12 +118,19 @@ async function list(c: Config, ctx: EmployerCtx): Promise<{ positions: Position[
       }));
     }
     out.push(...batch);
-    if (batch.length < 10 || (total !== null && out.length >= total)) return { positions: out, total, full: true };
+    if (batch.length < 10 || (total !== null && out.length >= total))
+      return { positions: out, total, full: true };
   }
   return { positions: out, total, full: false };
 }
 
-const PcsxDetail = z.object({ data: z.object({ jobDescription: z.string().nullish(), publicUrl: z.string().nullish() }).loose() }).loose();
+const PcsxDetail = z
+  .object({
+    data: z
+      .object({ jobDescription: z.string().nullish(), publicUrl: z.string().nullish() })
+      .loose(),
+  })
+  .loose();
 const V2Detail = z.object({ job_description: z.string().nullish() }).loose();
 
 export const eightfold = defineConnector({
@@ -123,7 +138,9 @@ export const eightfold = defineConnector({
   config: Config,
   async run(c, ctx) {
     const { positions, total, full } = await list(c, ctx);
-    const ukJobs = positions.filter((p) => !p.locations.length || p.locations.some((l) => isUk(l) !== false));
+    const ukJobs = positions.filter(
+      (p) => !p.locations.length || p.locations.some((l) => isUk(l) !== false),
+    );
     const candidates = ukJobs.filter((p) => isCandidateTitle(p.title));
     const base = (p: Position) =>
       employerListing(ctx, {
@@ -147,11 +164,18 @@ export const eightfold = defineConnector({
                 ),
               ).data.jobDescription
             : V2Detail.parse(
-                await ctx.http.json(`https://${c.host}/api/apply/v2/jobs/${p.id}?domain=${encodeURIComponent(c.domain)}`, {
-                  robots: true,
-                }),
+                await ctx.http.json(
+                  `https://${c.host}/api/apply/v2/jobs/${p.id}?domain=${encodeURIComponent(c.domain)}`,
+                  {
+                    robots: true,
+                  },
+                ),
               ).job_description;
-        return { ...base(p), descriptionHtml: html ?? undefined, descriptionText: stripHtml(html ?? undefined) };
+        return {
+          ...base(p),
+          descriptionHtml: html ?? undefined,
+          descriptionText: stripHtml(html ?? undefined),
+        };
       },
       fallback: base,
     });
@@ -159,13 +183,19 @@ export const eightfold = defineConnector({
       jobs: listings,
       total,
       complete: full && errors === 0,
-      stats: { listed: positions.length, uk: ukJobs.length, candidates: candidates.length, detailed },
+      stats: {
+        listed: positions.length,
+        uk: ukJobs.length,
+        candidates: candidates.length,
+        detailed,
+      },
     };
   },
   detect(url, html) {
     const m = /\/\/([\w-]+\.eightfold\.ai)\b/.exec(url);
     if (m) return { host: m[1] };
-    if (/eightfold/i.test(html ?? '') && /\/careers(\/job\/\d+)?/.test(url)) return { host: new URL(url).host };
+    if (/eightfold/i.test(html ?? '') && /\/careers(\/job\/\d+)?/.test(url))
+      return { host: new URL(url).host };
     return null;
   },
 });

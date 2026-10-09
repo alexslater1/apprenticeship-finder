@@ -72,7 +72,9 @@ export async function loadEmployers(): Promise<Employer[]> {
   return must<Employer[]>(
     await db()
       .from('employers')
-      .select('id,name,aliases,connector,connector_config,early_careers_url,job_search_url,watch,status,last_total_jobs,page_hash,origin'),
+      .select(
+        'id,name,aliases,connector,connector_config,early_careers_url,job_search_url,watch,status,last_total_jobs,page_hash,origin',
+      ),
     'load employers',
   );
 }
@@ -141,7 +143,13 @@ export async function runEmployers(
       const cfg = connector.config.parse(employer.connector_config ?? {});
       let timer: NodeJS.Timeout | undefined;
       const result = await Promise.race([
-        connector.run(cfg as never, { ...ctx, log, employer, source, known: known.get(source) ?? new Set() }),
+        connector.run(cfg as never, {
+          ...ctx,
+          log,
+          employer,
+          source,
+          known: known.get(source) ?? new Set(),
+        }),
         new Promise<never>((_, rej) => {
           timer = setTimeout(() => rej(new Error('timed out')), EMPLOYER_TIMEOUT_MS);
         }),
@@ -152,7 +160,12 @@ export async function runEmployers(
       );
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      runs.push({ employer, error: msg, blocked: err instanceof BlockedError, ms: Date.now() - t0 });
+      runs.push({
+        employer,
+        error: msg,
+        blocked: err instanceof BlockedError,
+        ms: Date.now() - t0,
+      });
       log.warn(msg);
     }
   });

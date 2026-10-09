@@ -41,9 +41,7 @@ const ListBody = z
         .object({
           TotalJobsCount: z.number().nullish(),
           requisitionList: z.array(z.unknown()).nullish(),
-          locationsFacet: z
-            .array(z.object({ Id: z.number(), Name: z.string() }).loose())
-            .nullish(),
+          locationsFacet: z.array(z.object({ Id: z.number(), Name: z.string() }).loose()).nullish(),
         })
         .loose(),
     ),
@@ -79,7 +77,9 @@ function listUrl(c: z.infer<typeof Config>, offset: number, ukId?: number): stri
     `offset=${offset}`,
     'sortBy=POSTING_DATES_DESC',
     ukId ? `locationId=${ukId}` : null,
-    c.selectedOrganizationsFacet ? `selectedOrganizationsFacet=${c.selectedOrganizationsFacet}` : null,
+    c.selectedOrganizationsFacet
+      ? `selectedOrganizationsFacet=${c.selectedOrganizationsFacet}`
+      : null,
   ]
     .filter(Boolean)
     .join(',');
@@ -89,7 +89,8 @@ function listUrl(c: z.infer<typeof Config>, offset: number, ukId?: number): stri
 
 function reqLocations(r: Req): Location[] {
   const out: Location[] = [];
-  if (r.PrimaryLocation) out.push({ text: r.PrimaryLocation, country: r.PrimaryLocationCountry ?? undefined });
+  if (r.PrimaryLocation)
+    out.push({ text: r.PrimaryLocation, country: r.PrimaryLocationCountry ?? undefined });
   for (const s of r.secondaryLocations ?? [])
     if (s.Name) out.push({ text: s.Name, country: s.CountryCode ?? undefined });
   return out;
@@ -119,7 +120,9 @@ export const oracle = defineConnector({
         }
       }
       total ??= item.TotalJobsCount ?? null;
-      const list = (item.requisitionList ?? []).map((r) => Req.safeParse(r)).filter((r) => r.success);
+      const list = (item.requisitionList ?? [])
+        .map((r) => Req.safeParse(r))
+        .filter((r) => r.success);
       reqs.push(...list.map((r) => r.data));
       if (list.length < LIMIT || (total !== null && reqs.length >= total)) {
         full = true;
@@ -148,7 +151,11 @@ export const oracle = defineConnector({
             `${api(c.host)}/recruitingCEJobRequisitionDetails?expand=all&onlyData=true&finder=ById;Id=%22${r.Id}%22,siteNumber=${c.siteNumber}`,
           ),
         ).items[0];
-        const html = [d?.ExternalDescriptionStr, d?.ExternalResponsibilitiesStr, d?.ExternalQualificationsStr]
+        const html = [
+          d?.ExternalDescriptionStr,
+          d?.ExternalResponsibilitiesStr,
+          d?.ExternalQualificationsStr,
+        ]
           .filter(Boolean)
           .join('\n');
         return {
@@ -162,7 +169,9 @@ export const oracle = defineConnector({
       fallback: base,
     });
     // Without a UK location id the board is global.
-    const uk = listings.filter((l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false));
+    const uk = listings.filter(
+      (l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false),
+    );
     return {
       jobs: uk,
       total,
@@ -171,7 +180,10 @@ export const oracle = defineConnector({
     };
   },
   detect(url) {
-    const m = /\/\/([\w.-]+\.oraclecloud\.com)\/hcmUI\/CandidateExperience\/[\w-]+\/sites\/([\w-]+)/.exec(url);
+    const m =
+      /\/\/([\w.-]+\.oraclecloud\.com)\/hcmUI\/CandidateExperience\/[\w-]+\/sites\/([\w-]+)/.exec(
+        url,
+      );
     return m ? { host: m[1], siteNumber: m[2] } : null;
   },
 });

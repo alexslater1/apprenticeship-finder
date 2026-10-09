@@ -19,6 +19,8 @@ export interface Filters {
   postedWithinDays: number | null;
   sources: string[];
   degreeOnly: boolean;
+  /** Set from the Companies page ("View listings"). */
+  employerId: string | null;
   includeHidden: boolean;
   includeClosed: boolean;
   sort: SortKey;
@@ -38,6 +40,7 @@ export const DEFAULT_FILTERS: Filters = {
   postedWithinDays: null,
   sources: [],
   degreeOnly: false,
+  employerId: null,
   includeHidden: false,
   includeClosed: false,
   sort: 'score',
@@ -101,6 +104,7 @@ export function activeFilterCount(f: Filters): number {
   if (f.postedWithinDays !== null) n++;
   if (f.sources.length) n++;
   if (f.degreeOnly) n++;
+  if (f.employerId) n++;
   if (f.includeHidden) n++;
   if (f.includeClosed) n++;
   if (f.onlyKnownLocation) n++;

@@ -24,6 +24,8 @@ export interface SourceResult {
    */
   complete: boolean;
   stats: Record<string, number | string>;
+  /** Employer boards: every job listed (not just apprenticeships), so 0 candidates isn't an outage. */
+  total?: number | null;
 }
 
 /** An aggregator (FAA, Higherin, Reed…), PLAN.md §6.1. */

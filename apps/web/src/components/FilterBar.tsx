@@ -432,6 +432,12 @@ export function FilterBar({
       </div>
 
       <div className="mt-2 flex items-center gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none]">
+        {f.employerId && (
+          <Chip on onClick={() => f.set({ employerId: null })}>
+            {rows.find((r) => r.employer_id === f.employerId)?.employer_name ?? 'One company'}{' '}
+            <X className="inline size-3.5" aria-label="Clear company filter" />
+          </Chip>
+        )}
         {QUICK_ROLES.filter((r) => roles.includes(r)).map((r) => (
           <Chip
             key={r}

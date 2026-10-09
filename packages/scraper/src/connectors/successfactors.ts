@@ -47,7 +47,8 @@ export interface SfJob {
   location?: string;
 }
 
-export const sfJobId = (url: string) => /\/job\/[^/]+\/([\w-]+?)(?:-[a-z]{2}_[A-Z]{2})?\/?$/.exec(url)?.[1] ?? url;
+export const sfJobId = (url: string) =>
+  /\/job\/[^/]+\/([\w-]+?)(?:-[a-z]{2}_[A-Z]{2})?\/?$/.exec(url)?.[1] ?? url;
 
 export function jobsFromSitemap(entries: SitemapEntry[], prefix?: string): SfJob[] {
   const out = new Map<string, SfJob>();
@@ -64,10 +65,14 @@ export function jobsFromSitemap(entries: SitemapEntry[], prefix?: string): SfJob
 /** Rows from the search page: classic `tr.data-row` and the `li.job-tile` layout. */
 export function parseSfSearch(html: string, host: string): { jobs: SfJob[]; total: number | null } {
   const jobs: SfJob[] = [];
-  for (const m of html.matchAll(/<a[^>]*class=["'][^"']*jobTitle-link[^"']*["'][^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+  for (const m of html.matchAll(
+    /<a[^>]*class=["'][^"']*jobTitle-link[^"']*["'][^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi,
+  )) {
     const url = new URL(decodeEntities(m[1]!), `https://${host}`).toString();
     const after = html.slice(m.index, m.index + 3000);
-    const location = /class=["'][^"']*jobLocation[^"']*["'][^>]*>([\s\S]*?)<\/span>/i.exec(after)?.[1];
+    const location = /class=["'][^"']*jobLocation[^"']*["'][^>]*>([\s\S]*?)<\/span>/i.exec(
+      after,
+    )?.[1];
     jobs.push({
       id: sfJobId(url),
       url,
@@ -86,12 +91,17 @@ export function parseSfSearch(html: string, host: string): { jobs: SfJob[]; tota
   return { jobs: unique, total: total ? Number(total.replace(/,/g, '')) : null };
 }
 
-async function searchAll(c: Config, ctx: EmployerCtx): Promise<{ jobs: SfJob[]; total: number | null; full: boolean }> {
+async function searchAll(
+  c: Config,
+  ctx: EmployerCtx,
+): Promise<{ jobs: SfJob[]; total: number | null; full: boolean }> {
   const all = new Map<string, SfJob>();
   let total: number | null = null;
   const prefix = c.pathPrefix ?? c.basePath ?? '';
   for (let page = 0, start = 0; page < 40; page++) {
-    const loc = c.noLocationFilter ? '' : `&locationsearch=${encodeURIComponent(c.locationsearch ?? 'United Kingdom')}`;
+    const loc = c.noLocationFilter
+      ? ''
+      : `&locationsearch=${encodeURIComponent(c.locationsearch ?? 'United Kingdom')}`;
     const html = await ctx.http.text(
       `https://${c.host}${prefix}/search/?q=${loc}&startrow=${start}&sortColumn=referencedate&sortDirection=desc`,
       { robots: true },
@@ -101,13 +111,15 @@ async function searchAll(c: Config, ctx: EmployerCtx): Promise<{ jobs: SfJob[]; 
     const fresh = r.jobs.filter((j) => !all.has(j.id));
     for (const j of fresh) all.set(j.id, j);
     start += r.jobs.length;
-    if (!fresh.length || (total !== null && all.size >= total)) return { jobs: [...all.values()], total, full: true };
+    if (!fresh.length || (total !== null && all.size >= total))
+      return { jobs: [...all.values()], total, full: true };
   }
   return { jobs: [...all.values()], total, full: false };
 }
 
 /** "Location: Edinburgh" in Unify job text, when the template has no location field. */
-const textLocation = (text: string) => /\bLocations?:\s*([A-Z][\w' ,/-]{2,60}?)(?=\s{2,}|\s+[A-Z][a-z]+ [a-z]+:|\.|$)/m.exec(text)?.[1];
+const textLocation = (text: string) =>
+  /\bLocations?:\s*([A-Z][\w' ,/-]{2,60}?)(?=\s{2,}|\s+[A-Z][a-z]+ [a-z]+:|\.|$)/m.exec(text)?.[1];
 
 export const successfactors = defineConnector({
   id: 'successfactors',
@@ -144,12 +156,15 @@ export const successfactors = defineConnector({
         const html = await ctx.http.text(j.url, { robots: true });
         const p = parseJobPosting(html);
         const text = p?.descriptionHtml ? htmlToText(p.descriptionHtml) : undefined;
-        const loc =
-          p?.locations.length ? p.locations : j.location ? [{ text: j.location }] : textLocation(text ?? '')
-            ? [{ text: textLocation(text ?? '')! }]
-            : findPlace(j.slug)
-              ? [{ text: findPlace(j.slug)!.name }]
-              : [];
+        const loc = p?.locations.length
+          ? p.locations
+          : j.location
+            ? [{ text: j.location }]
+            : textLocation(text ?? '')
+              ? [{ text: textLocation(text ?? '')! }]
+              : findPlace(j.slug)
+                ? [{ text: findPlace(j.slug)!.name }]
+                : [];
         return employerListing(ctx, {
           sourceId: j.id,
           url: j.url,
@@ -170,7 +185,9 @@ export const successfactors = defineConnector({
           locations: j.location ? [{ text: j.location }] : [],
         }),
     });
-    const uk = listings.filter((l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false));
+    const uk = listings.filter(
+      (l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false),
+    );
     return {
       jobs: uk,
       total,
@@ -180,9 +197,13 @@ export const successfactors = defineConnector({
   },
   detect(url, html) {
     const u = new URL(url);
-    if (/jobs2web\.com|successfactors\.(eu|com)/.test(u.host) || /rmkcdn\.successfactors|jobTitle-link|data-careersite-propertyid/i.test(html ?? ''))
+    if (
+      /jobs2web\.com|successfactors\.(eu|com)/.test(u.host) ||
+      /rmkcdn\.successfactors|jobTitle-link|data-careersite-propertyid/i.test(html ?? '')
+    )
       return { host: u.host };
-    if (JOB_URL.test(u.pathname) && /\/job\/[^/]+\/\d{6,}\/?$/.test(u.pathname)) return { host: u.host };
+    if (JOB_URL.test(u.pathname) && /\/job\/[^/]+\/\d{6,}\/?$/.test(u.pathname))
+      return { host: u.host };
     return null;
   },
 });

@@ -32,13 +32,19 @@ export const jsonld = defineConnector({
     jobUrlPattern: z.string(),
     maxPages: z.number().optional(),
     lenientJson: z.boolean().optional(),
+    /** Sitemaps that list a blocked host for the same site (Motability's eploy.net). */
+    rewriteHost: z.object({ from: z.string(), to: z.string() }).optional(),
   }),
   async run(c, ctx) {
     const pattern = new RegExp(c.jobUrlPattern);
     const urls = new Map<string, { url: string; lastmod: string | null }>();
     if (c.sitemapUrl) {
-      for (const e of await sitemapUrls(ctx, c.sitemapUrl))
-        if (pattern.test(e.url)) urls.set(e.url.replace(/\/$/, ''), e);
+      for (const e of await sitemapUrls(ctx, c.sitemapUrl)) {
+        const url = c.rewriteHost
+          ? e.url.replace(`//${c.rewriteHost.from}/`, `//${c.rewriteHost.to}/`)
+          : e.url;
+        if (pattern.test(url)) urls.set(url.replace(/\/$/, ''), { ...e, url });
+      }
     }
     if (c.listUrl && !urls.size) {
       for (let page = 1; page <= (c.maxPages ?? 10); page++) {
@@ -81,7 +87,9 @@ export const jsonld = defineConnector({
       },
       cap: 30,
     });
-    const uk = listings.filter((l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false));
+    const uk = listings.filter(
+      (l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false),
+    );
     return {
       jobs: uk,
       total: urls.size,
@@ -105,7 +113,8 @@ export function pageText(html: string, selector?: string): string {
   const $ = cheerio.load(html);
   $('script, style, noscript, svg, nav, footer, header, iframe, form, [aria-hidden=true]').remove();
   $('[id*=cookie i], [class*=cookie i]').remove();
-  const root = selector && $(selector).length ? $(selector) : $('main').length ? $('main') : $('body');
+  const root =
+    selector && $(selector).length ? $(selector) : $('main').length ? $('main') : $('body');
   // One line per block element so diffs are by sentence/heading, not the whole page.
   root.find('br').replaceWith('\n');
   root.find('p, li, h1, h2, h3, h4, h5, h6, div, tr, dt, dd, section, article').each((_, el) => {
@@ -123,14 +132,31 @@ export function pageText(html: string, selector?: string): string {
 const LEAD_DATA = rules.dataWords;
 const PAST = /\b(201\d|202[0-5])\b|\b(now )?closed\b|no longer accepting/i;
 
-/** Lines that announce a data/tech apprenticeship (not last year's, not "closed"). */
-export function leadLines(text: string): string[] {
+/**
+ * Headline-like texts on the page (headings, links, list items, table cells of up to 14 words)
+ * that name a data/tech apprenticeship, skipping last year's and "closed" ones. Body sentences
+ * ("You are eligible to apply if…") are not leads.
+ */
+export function leadLines(html: string, selector?: string): string[] {
+  const $ = cheerio.load(html);
+  $('script, style, noscript, nav, footer, header, form').remove();
+  const root =
+    selector && $(selector).length ? $(selector) : $('main').length ? $('main') : $('body');
   const out = new Set<string>();
-  for (const line of text.split('\n')) {
-    if (line.length < 15 || line.length > 220) continue;
-    if (!/apprentic/i.test(line) || !LEAD_DATA.test(line) || PAST.test(line)) continue;
-    out.add(line);
-  }
+  root.find('h1, h2, h3, h4, h5, a, li, dt, th, td, strong, b').each((_, el) => {
+    const line = collapseSpaces($(el).text());
+    const words = line.split(' ').length;
+    if (words < 3 || words > 14 || line.length > 140) return;
+    if (!/apprentic/i.test(line) || !LEAD_DATA.test(line) || PAST.test(line)) return;
+    if (/^[a-z]/.test(line)) return;
+    if (
+      /\b(you|your|we|our|her|his|their|talking|meet|story|stories|blog|video|watch|read more)\b/i.test(
+        line,
+      )
+    )
+      return;
+    out.add(line.replace(/[.:]$/, ''));
+  });
   return [...out].slice(0, 5);
 }
 
@@ -143,7 +169,7 @@ export const pagehash = defineConnector({
     const hash = sha(text);
     const changed = !!ctx.employer.page_hash && ctx.employer.page_hash !== hash;
     if (changed) ctx.log.info(`page changed: ${c.url}`);
-    const jobs = leadLines(text).map((line) =>
+    const jobs = leadLines(html, c.selector).map((line) =>
       employerListing(ctx, {
         sourceId: sha(line).slice(0, 16),
         url: c.url,
@@ -155,7 +181,13 @@ export const pagehash = defineConnector({
         details: { lead: true },
       }),
     );
-    return { jobs, total: null, complete: true, pageHash: hash, stats: { leads: jobs.length, changed: changed ? 'yes' : 'no' } };
+    return {
+      jobs,
+      total: null,
+      complete: true,
+      pageHash: hash,
+      stats: { leads: jobs.length, changed: changed ? 'yes' : 'no' },
+    };
   },
 });
 
