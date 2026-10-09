@@ -1,5 +1,11 @@
 import { rules, standardFor } from './config.ts';
-import type { Classification, LevelSource, RoleType, RoleVia } from './types.ts';
+import {
+  MIN_LEVEL,
+  type Classification,
+  type LevelSource,
+  type RoleType,
+  type RoleVia,
+} from './types.ts';
 
 export interface ClassifyInput {
   title: string;
@@ -18,17 +24,34 @@ function roleFrom(text: string): RoleType | null {
   return null;
 }
 
-function levelFrom(rulesList: typeof rules.levelTitle, text: string): number | null {
+function levelFrom(
+  rulesList: typeof rules.levelTitle,
+  text: string,
+): { level: number; context: string } | null {
   for (const rule of rulesList) {
     const m = rule.re.exec(text);
     if (!m) continue;
-    if (rule.level) return rule.level;
+    // The match plus what follows it (text rules use a lookahead for 'apprenticeship' etc).
+    const context = text.slice(m.index, m.index + m[0].length + 60);
+    if (rule.level) return { level: rule.level, context };
     if (rule.group) {
       const n = Number(m[rule.group]);
-      if (n >= 2 && n <= 7) return n;
+      if (n >= 2 && n <= 7) return { level: n, context };
     }
   }
   return null;
+}
+
+/**
+ * A level read from the advert text. Below-minimum levels only count when the text says it's
+ * the apprenticeship's level: 'a Level 3 qualification' is usually an entry requirement.
+ */
+function textLevelFrom(text: string): number | null {
+  const hit = levelFrom(rules.levelText, text);
+  if (!hit) return null;
+  const what = /\b(apprenticeship|standard|qualification|degree)/i.exec(hit.context)?.[1];
+  if (hit.level < MIN_LEVEL && !/apprenticeship|standard/i.test(what ?? '')) return null;
+  return hit.level;
 }
 
 export function isApprenticeshipTitle(text: string): boolean {
@@ -57,8 +80,8 @@ export function classify(input: ClassifyInput): Classification {
     (!!standardTitle && isApprenticeshipTitle(standardTitle));
 
   // Level: source > LARS > title > description.
-  const titleLevel = levelFrom(rules.levelTitle, title);
-  const textLevel = levelFrom(rules.levelText, text);
+  const titleLevel = levelFrom(rules.levelTitle, title)?.level ?? null;
+  const textLevel = textLevelFrom(text);
   let level: number | null = null;
   let levelSource: LevelSource | null = null;
   if (input.level && input.level >= 2 && input.level <= 7) {
@@ -110,10 +133,14 @@ export function classify(input: ClassifyInput): Classification {
   else if ((level ?? 0) >= 6 && rules.degreeText.test(text)) isDegree = true;
   else if (standard) isDegree = false;
 
-  // Description-only role hits ("uses Google Analytics") aren't enough to keep a listing.
+  // Description-only role hits ("uses Google Analytics") aren't enough to keep a listing, and
+  // levels 2–3 are out of scope altogether.
   const noise = noiseReason(title);
   const relevant =
-    isApprenticeship && !noise && (!!standard || (roleVia !== null && roleVia !== 'description'));
+    isApprenticeship &&
+    !noise &&
+    (level === null || level >= MIN_LEVEL) &&
+    (!!standard || (roleVia !== null && roleVia !== 'description'));
 
   return {
     isApprenticeship,

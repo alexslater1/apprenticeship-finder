@@ -1,6 +1,15 @@
 import { rules } from './config.ts';
 import { daysBetween } from './dates.ts';
-import type { Classification, RoleType, ScoreBreakdown } from './types.ts';
+import {
+  DEFAULT_LEVEL_PREFS,
+  DEFAULT_ROLE_PREFS,
+  type Classification,
+  type LevelPrefs,
+  type Pref,
+  type RolePrefs,
+  type RoleType,
+  type ScoreBreakdown,
+} from './types.ts';
 
 export interface ScoreInput {
   title: string;
@@ -58,26 +67,68 @@ export function baseScore(input: ScoreInput): ScoreBreakdown {
 }
 
 export interface PersonalPrefs {
-  preferredLevels: number[];
-  preferredRoles: RoleType[];
+  roles: Partial<RolePrefs>;
+  levels: Partial<LevelPrefs>;
   defaultDistanceMiles: number;
 }
 
-/** Base score + boosts from the shared settings row. */
+export function rolePref(prefs: PersonalPrefs, role: RoleType): Pref {
+  return prefs.roles[role] ?? DEFAULT_ROLE_PREFS[role];
+}
+
+/** Null for an unknown level: those are never hidden or boosted. */
+export function levelPref(prefs: PersonalPrefs, level: number | null): Pref | null {
+  if (level === null) return null;
+  const key = String(level) as keyof LevelPrefs;
+  return prefs.levels[key] ?? DEFAULT_LEVEL_PREFS[key] ?? 'maybe';
+}
+
+/** Why a listing is hidden by the Settings preferences ('No' role or level), or null. */
+export function excludedByPrefs(
+  listing: { level: number | null; role_type: RoleType },
+  prefs: PersonalPrefs,
+): 'role' | 'level' | null {
+  if (rolePref(prefs, listing.role_type) === 'no') return 'role';
+  if (levelPref(prefs, listing.level) === 'no') return 'level';
+  return null;
+}
+
+/**
+ * The score shown to him: the base score with its role and level points swapped for ones from
+ * his Settings ('High' roles and levels outrank 'Maybe' ones), plus a bonus within his distance.
+ * Role points keep the base score's confidence (a title match counts more than a weak one).
+ */
 export function personalScore(
-  listing: { score: number; level: number | null; role_type: RoleType },
+  listing: {
+    score: number;
+    level: number | null;
+    role_type: RoleType;
+    score_breakdown?: ScoreBreakdown | null;
+  },
   prefs: PersonalPrefs,
   distanceMiles: number | null,
   opts: { clamp?: boolean } = {},
 ): number {
-  const b = rules.personal;
-  let s = listing.score;
   if (listing.score <= 0) return 0;
-  if (listing.level !== null && prefs.preferredLevels.includes(listing.level))
-    s += b.preferredLevel;
-  if (prefs.preferredRoles.includes(listing.role_type)) s += b.preferredRole;
-  if (distanceMiles !== null && distanceMiles <= prefs.defaultDistanceMiles) s += b.withinDistance;
-  // Unclamped values keep the ranking when boosts push several listings past 100.
+  const w = rules.personal;
+  const b = listing.score_breakdown;
+  let s = listing.score;
+  if (b) {
+    const p = rules.points;
+    const full =
+      listing.role_type === 'software_tech' ? p.role.software_tech_data : p.role[listing.role_type];
+    const confidence = full > 0 ? Math.min(1, b.role / full) : 0;
+    const lp = levelPref(prefs, listing.level);
+    const role = w.role[rolePref(prefs, listing.role_type) === 'high' ? 'high' : 'maybe'];
+    const level = lp === null ? (p.level.null ?? 0) : w.level[lp === 'high' ? 'high' : 'maybe'];
+    const raw = b.role + b.level + b.degree + b.specificity + b.freshness + b.penalties;
+    s = raw - b.role - b.level + Math.round(role * confidence) + level;
+    // A capped base score (leads) stays capped.
+    if (b.total < clamp(raw)) s = Math.min(s, b.total);
+    if (s <= 0) return 0;
+  }
+  if (distanceMiles !== null && distanceMiles <= prefs.defaultDistanceMiles) s += w.withinDistance;
+  // Unclamped values keep the ranking when several listings pass 100.
   return opts.clamp === false ? s : clamp(s);
 }
 

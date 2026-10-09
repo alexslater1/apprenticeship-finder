@@ -28,8 +28,6 @@ export const CATEGORIES: Array<[path: string, hint: string]> = [
   ['/search-jobs/higher-level-apprenticeship/data-analysis', 'Data analysis'],
   ['/search-jobs/higher-level-apprenticeship/artificial-intelligence', 'Artificial intelligence'],
   ['/search-jobs/higher-level-apprenticeship/software-engineering', 'Software engineering'],
-  ['/search-jobs/level-3-apprenticeship/data-analysis', 'Data analysis'],
-  ['/search-jobs/level-3-apprenticeship/artificial-intelligence', 'Artificial intelligence'],
 ];
 
 export interface CategoryItem {
@@ -332,6 +330,8 @@ export const higherin: Source = {
 
     // 4. Parse pages we haven't seen at this lastmod; reuse the cache for the rest.
     const cache = (await ctx.state.get<Cache>(STATE_KEY)) ?? {};
+    // Cached listings carry no description, so only reuse them for jobs already stored.
+    const known = await ctx.knownSourceIds('higherin');
     const nextCache: Cache = {};
     const listings: RawListing[] = [];
     let fetched = 0;
@@ -340,7 +340,7 @@ export const higherin: Source = {
     for (const c of candidates.values()) {
       const card = cards.get(c.id);
       const cached = cache[c.id];
-      if (cached && cached.lastmod === c.lastmod && c.lastmod !== null) {
+      if (cached && cached.lastmod === c.lastmod && c.lastmod !== null && known.has(c.id)) {
         nextCache[c.id] = cached;
         if (cached.listing)
           listings.push(card ? { ...cached.listing, ...refresh(card) } : cached.listing);

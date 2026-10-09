@@ -1,6 +1,34 @@
-import type { ListingRow, SettingsRow } from '@af/shared';
+import type { ListingRow, RoleType, ScoreBreakdown, SettingsRow } from '@af/shared';
+
+const ROLE_POINTS: Partial<Record<RoleType, number>> = {
+  data_science: 45,
+  ml_ai: 40,
+  data_analyst: 38,
+  data_engineering: 32,
+  software_tech: 12,
+};
+const LEVEL_POINTS: Record<string, number> = { '4': 18, '5': 22, '6': 25, '7': 10 };
+
+/** A breakdown that adds up to `total` with the usual role/level points. */
+function breakdown(total: number, role: RoleType, level: number | null): ScoreBreakdown {
+  const r = ROLE_POINTS[role] ?? 0;
+  const l = LEVEL_POINTS[String(level)] ?? 10;
+  return {
+    role: r,
+    level: l,
+    degree: 0,
+    specificity: total - r - l,
+    freshness: 0,
+    penalties: 0,
+    penaltyLabels: [],
+    total,
+  };
+}
 
 export function listing(over: Partial<ListingRow> = {}): ListingRow {
+  const score = over.score ?? 80;
+  const role = over.role_type ?? 'data_science';
+  const level = over.level === undefined ? 6 : over.level;
   return {
     id: over.id ?? 'id-1',
     dedupe_key: 'k',
@@ -15,9 +43,10 @@ export function listing(over: Partial<ListingRow> = {}): ListingRow {
     lars_code: 337,
     standard_title: 'Data scientist (integrated degree)',
     provider_name: 'University of Nottingham',
+    university: 'University of Nottingham',
     role_type: 'data_science',
-    score: 80,
-    score_breakdown: null,
+    score,
+    score_breakdown: breakdown(score, role, level),
     salary_min: 24000,
     salary_max: null,
     salary_text: '£24,000 a year',
@@ -59,8 +88,8 @@ export const settings: SettingsRow = {
   home_postcode: 'LS1 4BN',
   home_lat: 53.7948,
   home_lon: -1.5537,
-  preferred_levels: [6, 5, 4],
-  preferred_roles: ['data_science', 'data_analyst', 'ml_ai'],
+  role_prefs: { data_science: 'high', data_analyst: 'high', ml_ai: 'maybe', software_tech: 'no' },
+  level_prefs: { '4': 'maybe', '5': 'high', '6': 'high', '7': 'maybe' },
   default_distance_miles: 50,
   digest_min_score: 40,
   digest_enabled: true,

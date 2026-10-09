@@ -12,6 +12,7 @@ import {
 } from '@af/shared';
 import { decode as decodeHtml } from 'he';
 import { placeByName } from '@af/shared/places';
+import { findUniversity } from '@af/shared/universities';
 import sanitizeHtml from 'sanitize-html';
 import { dedupeKey } from './dedupe.ts';
 
@@ -80,6 +81,7 @@ export interface NormalisedListing {
   larsCode: number | null;
   standardTitle: string | null;
   providerName: string | null;
+  university: string | null;
   salaryMin: number | null;
   salaryMax: number | null;
   salaryText: string | null;
@@ -197,6 +199,11 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     larsCode: raw.larsCode ?? null,
     standardTitle: raw.standardTitle ?? classification.standard?.title ?? null,
     providerName,
+    university: findUniversity({
+      provider: providerName,
+      employer: employerName,
+      texts: [title, descriptionText],
+    }),
     salaryMin: salary.min,
     salaryMax: salary.max,
     salaryText: raw.salaryText ?? null,
@@ -234,6 +241,7 @@ export function mergeWithinRun(listings: NormalisedListing[]): NormalisedListing
     if (l.closingDate && (!prev.closingDate || l.closingDate > prev.closingDate))
       prev.closingDate = l.closingDate;
     prev.applyUrl ??= l.applyUrl;
+    prev.university ??= l.university;
     prev.salaryMin ??= l.salaryMin;
     prev.salaryMax ??= l.salaryMax;
     prev.salaryText ??= l.salaryText;

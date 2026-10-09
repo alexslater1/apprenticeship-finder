@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import {
+  MIN_LEVEL,
   daysBetween,
+  excludedByPrefs,
   londonToday,
   matchTier,
   nearestMiles,
@@ -21,6 +23,7 @@ export interface DigestItem {
   employer: string;
   place: string;
   level: string;
+  university: string | null;
   salary: string | null;
   closing: string | null;
   daysToClose: number | null;
@@ -70,6 +73,7 @@ function toItem(r: ListingRow, score: number, today: string, dashboard: string):
     employer: r.employer_name,
     place,
     level: r.level ? `L${r.level}${r.is_degree ? ' degree' : ''}` : r.is_degree ? 'Degree' : '',
+    university: r.university,
     salary:
       r.salary_min && r.salary_max
         ? `${gbp.format(r.salary_min)}–${gbp.format(r.salary_max)}`
@@ -121,8 +125,8 @@ export async function gatherDigest(
   const since = last[0]?.sent_at ?? null;
 
   const prefs = {
-    preferredLevels: settings.preferred_levels,
-    preferredRoles: settings.preferred_roles,
+    roles: settings.role_prefs ?? {},
+    levels: settings.level_prefs ?? {},
     defaultDistanceMiles: settings.default_distance_miles,
   };
   const home =
@@ -132,9 +136,9 @@ export async function gatherDigest(
   const scoreOf = (r: ListingRow) => personalScore(r, prefs, nearestMiles(home, r.locations ?? []));
   const rankOf = (r: ListingRow) =>
     personalScore(r, prefs, nearestMiles(home, r.locations ?? []), { clamp: false });
-  // Like the dashboard: levels 2–3 stay out unless they're a preferred level.
-  const levelOk = (r: ListingRow) =>
-    r.level === null || r.level >= 4 || settings.preferred_levels.includes(r.level);
+  // Like the dashboard: roles and levels set to 'No' in Settings stay out.
+  const wanted = (r: ListingRow) =>
+    !excludedByPrefs(r, prefs) && (r.level === null || r.level >= MIN_LEVEL);
 
   // First digest ever: the last week, so the very first email isn't the whole database.
   const newSince = since ?? new Date(now.getTime() - 7 * 86_400_000).toISOString();
@@ -150,7 +154,7 @@ export async function gatherDigest(
         .range(from, from + 999),
     'new listings',
   );
-  const scored = fresh.filter(levelOk).map((r) => ({ r, score: scoreOf(r), rank: rankOf(r) }));
+  const scored = fresh.filter(wanted).map((r) => ({ r, score: scoreOf(r), rank: rankOf(r) }));
   const newMatches = scored
     .filter((x) => x.score >= settings.digest_min_score)
     .sort((a, b) => b.rank - a.rank)
@@ -255,7 +259,9 @@ function closingText(i: DigestItem): string | null {
 }
 
 function facts(i: DigestItem): string[] {
-  return [i.employer, i.place, i.level, i.salary, closingText(i)].filter((x): x is string => !!x);
+  return [i.employer, i.place, i.level, i.university, i.salary, closingText(i)].filter(
+    (x): x is string => !!x,
+  );
 }
 
 const TIER_LABEL = { high: 'Strong matches', medium: 'Good matches', low: 'Worth a look' } as const;

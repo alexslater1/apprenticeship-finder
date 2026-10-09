@@ -159,8 +159,15 @@
     "leadCap": 60
   },
   "personal": {
-    "preferredLevel": 10,
-    "preferredRole": 10,
+    "$comment": "Settings preferences replace the base role and level points (scaled by how sure the role match is); 'No' hides the listing.",
+    "role": {
+      "high": 45,
+      "maybe": 25
+    },
+    "level": {
+      "high": 25,
+      "maybe": 12
+    },
     "withinDistance": 8
   },
   "providers": {

@@ -18,8 +18,9 @@ describe('FAA source', () => {
   it('keeps data roles and drops the rest', () => {
     const kept = vacancies.filter(isRelevantVacancy).map((v) => v.title);
     expect(kept).toContain('2027 Data Science Apprentice - Crawley');
-    expect(kept).toContain('Data Team Apprentice'); // weak "data" title, mis-filed standard
-    expect(kept).toContain('Data Analyst Apprenticeship Programme'); // Howden, filed under Insurance
+    // Level 3 (here a weak "data" title and Howden's data role filed under Insurance): out of scope.
+    expect(kept).not.toContain('Data Team Apprentice');
+    expect(kept).not.toContain('Data Analyst Apprenticeship Programme');
     expect(kept.some((t) => /Autocare|Sandwich|Childcare|Assessor/.test(t))).toBe(false);
   });
 

@@ -7,6 +7,7 @@ const item = (over: Partial<DigestItem> = {}): DigestItem => ({
   employer: 'Thales',
   place: 'Crawley',
   level: 'L6 degree',
+  university: 'University of Exeter',
   salary: '£24,000',
   closing: '2027-02-17',
   daysToClose: 131,

@@ -1,9 +1,13 @@
 import {
+  LEVELS,
+  levelPref,
   NATIONS,
   ROLE_LABELS,
   ROLE_TYPES,
+  rolePref,
   type ListingRow,
   type Nation,
+  type PersonalPrefs,
   type RoleType,
 } from '@af/shared';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
@@ -36,8 +40,8 @@ const SORTS: Array<[SortKey, string]> = [
   ['distance', 'Nearest'],
 ];
 
-const LEVELS = [7, 6, 5, 4, 3, 2];
 const QUICK_ROLES: RoleType[] = ['data_science', 'ml_ai', 'data_analyst', 'data_engineering'];
+const QUICK_LEVELS = [6, 5, 4];
 
 function toggle<T>(list: T[], v: T): T[] {
   return list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
@@ -136,13 +140,18 @@ export function FilterBar({
   shown,
   total,
   hasHome,
+  prefs,
 }: {
   rows: ListingRow[];
   shown: number;
   total: number;
   hasHome: boolean;
+  prefs: PersonalPrefs;
 }) {
   const f = useFilters();
+  // Roles and levels set to 'No' in Settings never show, so there's nothing to filter.
+  const roles = ROLE_TYPES.filter((r) => rolePref(prefs, r) !== 'no');
+  const levels: number[] = [...LEVELS].reverse().filter((l) => levelPref(prefs, l) !== 'no');
   const [open, setOpen] = useState(false);
   const active = activeFilterCount(f);
 
@@ -216,7 +225,7 @@ export function FilterBar({
             <div className="grid gap-6 px-4">
               <Section title="Role">
                 <div className="flex flex-wrap gap-2">
-                  {ROLE_TYPES.map((r) => (
+                  {roles.map((r) => (
                     <Chip
                       key={r}
                       on={f.roles.includes(r)}
@@ -230,7 +239,7 @@ export function FilterBar({
 
               <Section title="Level">
                 <div className="flex flex-wrap gap-2">
-                  {LEVELS.map((l) => (
+                  {levels.map((l) => (
                     <Chip
                       key={l}
                       on={f.levels.includes(l)}
@@ -246,14 +255,6 @@ export function FilterBar({
                   checked={f.degreeOnly}
                   onChange={(v) => f.set({ degreeOnly: v })}
                 />
-                {f.levels.length === 0 && (
-                  <Check
-                    id="f-low"
-                    label="Include levels 2–3"
-                    checked={f.includeLowLevels}
-                    onChange={(v) => f.set({ includeLowLevels: v })}
-                  />
-                )}
               </Section>
 
               <Section title="Where">
@@ -431,7 +432,7 @@ export function FilterBar({
       </div>
 
       <div className="mt-2 flex items-center gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none]">
-        {QUICK_ROLES.map((r) => (
+        {QUICK_ROLES.filter((r) => roles.includes(r)).map((r) => (
           <Chip
             key={r}
             on={f.roles.includes(r)}
@@ -441,7 +442,7 @@ export function FilterBar({
           </Chip>
         ))}
         <span className="mx-1 h-5 w-px shrink-0 bg-border" aria-hidden />
-        {[6, 5, 4].map((l) => (
+        {QUICK_LEVELS.filter((l) => levels.includes(l)).map((l) => (
           <Chip
             key={l}
             on={f.levels.includes(l)}

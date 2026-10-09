@@ -45,7 +45,11 @@ const k = keywordsJson as unknown as {
     closingPassed: number;
     leadCap: number;
   };
-  personal: { preferredLevel: number; preferredRole: number; withinDistance: number };
+  personal: {
+    role: { high: number; maybe: number };
+    level: { high: number; maybe: number };
+    withinDistance: number;
+  };
   providers: { names: string[] };
 };
 

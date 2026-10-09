@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { baseScore, classify, matchTier, noiseReason, personalScore } from '../src/index.ts';
+import {
+  baseScore,
+  classify,
+  excludedByPrefs,
+  matchTier,
+  noiseReason,
+  personalScore,
+} from '../src/index.ts';
 
 const today = '2026-10-09';
 
@@ -106,7 +113,6 @@ describe('classify: level', () => {
     ['Level 6 Data Science Degree Apprenticeship', 6, 'title'],
     ['Data Analyst Apprentice L4', 4, 'title'],
     ['Data Analyst Higher Apprenticeship', 4, 'title'],
-    ['Advanced Apprenticeship in Data', 3, 'title'],
     ['Data Science Degree Apprenticeship', 6, 'title'],
     ["Master's Degree Apprenticeship in AI", 7, 'title'],
   ])('%s → L%i (%s)', (title, level, src) => {
@@ -118,6 +124,31 @@ describe('classify: level', () => {
   it('source level beats LARS beats title', () => {
     expect(classify({ title: 'Level 3 Data', level: 4, larsCode: 337 }).levelSource).toBe('source');
     expect(classify({ title: 'Level 3 Data', larsCode: 337 }).level).toBe(6);
+  });
+
+  it('drops levels 2–3 altogether', () => {
+    expect(classify({ title: 'Advanced Apprenticeship in Data' })).toMatchObject({
+      level: 3,
+      relevant: false,
+    });
+    expect(classify({ title: 'Data Technician Apprentice', larsCode: 576 }).relevant).toBe(false);
+    expect(classify({ title: 'Data Analyst Apprentice', level: 3 }).relevant).toBe(false);
+    expect(classify({ title: 'Data Analyst Apprentice', level: 4 }).relevant).toBe(true);
+  });
+
+  it("doesn't read an entry requirement as the apprenticeship's level", () => {
+    const c = classify({
+      title: 'Data Science Apprentice',
+      descriptionText: 'You will need a Level 3 qualification such as A levels.',
+    });
+    expect(c.level).toBeNull();
+    expect(c.relevant).toBe(true);
+    expect(
+      classify({
+        title: 'Data Analyst Apprentice',
+        descriptionText: 'This is a Level 3 apprenticeship in data.',
+      }).relevant,
+    ).toBe(false);
   });
 
   it('ML engineer (L6) is not a degree', () => {
@@ -191,17 +222,51 @@ describe('baseScore', () => {
 
 describe('personalScore', () => {
   const prefs = {
-    preferredLevels: [6, 5, 4],
-    preferredRoles: ['data_science' as const],
+    roles: { data_science: 'maybe', data_analyst: 'high', software_tech: 'no' } as const,
+    levels: { '6': 'high', '5': 'high', '4': 'maybe', '7': 'no' } as const,
     defaultDistanceMiles: 50,
   };
-  it('adds level, role and distance boosts, capped at 100', () => {
-    expect(personalScore({ score: 60, level: 6, role_type: 'data_science' }, prefs, 10)).toBe(88);
-    expect(personalScore({ score: 95, level: 6, role_type: 'data_science' }, prefs, 10)).toBe(100);
-    expect(personalScore({ score: 60, level: 3, role_type: 'other' }, prefs, 80)).toBe(60);
+  const listing = (
+    title: string,
+    extra: Parameters<typeof classify>[0] extends infer T ? Partial<T> : never = {},
+  ) => {
+    const { c, s } = score(title, extra);
+    return { score: s.total, level: c.level, role_type: c.roleType, score_breakdown: s };
+  };
+  const ds6 = listing('Data Science Degree Apprenticeship', { larsCode: 337 });
+  const da6 = listing('Data Analyst Degree Apprenticeship', { level: 6 });
+  const da4 = listing('Data Analyst Apprentice', { larsCode: 80 });
+  const ds4 = listing('Data Science Apprentice', { level: 4 });
+
+  it('swaps the role and level points for the Settings ones', () => {
+    // Data science is only 'Maybe' here, so a High data-analyst role outranks it at the same level…
+    expect(personalScore(da6, prefs, null)).toBeGreaterThan(personalScore(ds6, prefs, null));
+    // …and a High role at a Maybe level still beats a Maybe role at the same level.
+    expect(personalScore(da4, prefs, null)).toBeGreaterThan(personalScore(ds4, prefs, null));
+  });
+  it('matches the base score when the preferences agree with the defaults', () => {
+    const all = {
+      roles: { data_science: 'high' },
+      levels: { '6': 'high' },
+      defaultDistanceMiles: 50,
+    } as const;
+    expect(personalScore(ds6, all, null)).toBe(ds6.score);
+  });
+  it('adds a bonus within the default distance and caps at 100', () => {
+    expect(personalScore(da4, prefs, 10)).toBe(personalScore(da4, prefs, 80) + 8);
+    const all = { roles: {}, levels: {}, defaultDistanceMiles: 50 };
+    expect(ds6.score + 8).toBeGreaterThan(100);
+    expect(personalScore(ds6, all, 1)).toBe(100);
+    expect(personalScore(ds6, all, 1, { clamp: false })).toBe(ds6.score + 8);
   });
   it('keeps zero-scored (closed) listings at zero', () => {
-    expect(personalScore({ score: 0, level: 6, role_type: 'data_science' }, prefs, 1)).toBe(0);
+    expect(personalScore({ ...ds6, score: 0 }, prefs, 1)).toBe(0);
+  });
+  it("hides 'No' roles and levels, never unknown levels", () => {
+    expect(excludedByPrefs({ level: 6, role_type: 'software_tech' }, prefs)).toBe('role');
+    expect(excludedByPrefs({ level: 7, role_type: 'data_science' }, prefs)).toBe('level');
+    expect(excludedByPrefs({ level: null, role_type: 'data_science' }, prefs)).toBeNull();
+    expect(excludedByPrefs({ level: 5, role_type: 'other' }, prefs)).toBeNull();
   });
 });
 

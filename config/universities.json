@@ -1,0 +1,507 @@
+{
+  "$comment": "UK universities for naming the degree partner of an apprenticeship. `aliases` match case-insensitively, `acronyms` case-sensitively as whole words; `caseSensitive` names only match with that capitalisation in advert text (training-provider names always match case-insensitively).",
+  "universities": [
+    {
+      "name": "Abertay University",
+      "aliases": ["University of Abertay"]
+    },
+    {
+      "name": "Aberystwyth University"
+    },
+    {
+      "name": "Anglia Ruskin University",
+      "acronyms": ["ARU"]
+    },
+    {
+      "name": "Arden University"
+    },
+    {
+      "name": "Arts University Bournemouth"
+    },
+    {
+      "name": "Aston University",
+      "aliases": ["Aston Business School"]
+    },
+    {
+      "name": "Bangor University"
+    },
+    {
+      "name": "Bath Spa University"
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "aliases": ["Birkbeck University of London", "Birkbeck College"]
+    },
+    {
+      "name": "Birmingham City University",
+      "acronyms": ["BCU"]
+    },
+    {
+      "name": "Bishop Grosseteste University"
+    },
+    {
+      "name": "Bournemouth University"
+    },
+    {
+      "name": "BPP University"
+    },
+    {
+      "name": "Brunel University London",
+      "aliases": ["Brunel University"]
+    },
+    {
+      "name": "Buckinghamshire New University",
+      "aliases": ["Bucks New University"]
+    },
+    {
+      "name": "Canterbury Christ Church University"
+    },
+    {
+      "name": "Cardiff Metropolitan University",
+      "aliases": ["Cardiff Met"]
+    },
+    {
+      "name": "Cardiff University"
+    },
+    {
+      "name": "City St George's, University of London",
+      "aliases": [
+        "City, University of London",
+        "City University of London",
+        "City University London",
+        "City St George's"
+      ]
+    },
+    {
+      "name": "Coventry University"
+    },
+    {
+      "name": "Cranfield University"
+    },
+    {
+      "name": "De Montfort University",
+      "acronyms": ["DMU"]
+    },
+    {
+      "name": "Durham University",
+      "aliases": ["University of Durham"]
+    },
+    {
+      "name": "Edge Hill University"
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "aliases": ["Napier University"]
+    },
+    {
+      "name": "Falmouth University"
+    },
+    {
+      "name": "Glasgow Caledonian University",
+      "acronyms": ["GCU"]
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "aliases": ["Goldsmiths University of London", "Goldsmiths College"]
+    },
+    {
+      "name": "Harper Adams University"
+    },
+    {
+      "name": "Hartpury University"
+    },
+    {
+      "name": "Heriot-Watt University",
+      "aliases": ["Heriot Watt University"]
+    },
+    {
+      "name": "Imperial College London",
+      "aliases": ["Imperial College"]
+    },
+    {
+      "name": "Keele University"
+    },
+    {
+      "name": "King's College London",
+      "aliases": ["Kings College London"],
+      "acronyms": ["KCL"]
+    },
+    {
+      "name": "Kingston University",
+      "aliases": ["Kingston University London"]
+    },
+    {
+      "name": "Lancaster University"
+    },
+    {
+      "name": "Leeds Arts University"
+    },
+    {
+      "name": "Leeds Beckett University"
+    },
+    {
+      "name": "Leeds Trinity University"
+    },
+    {
+      "name": "Liverpool Hope University"
+    },
+    {
+      "name": "Liverpool John Moores University",
+      "acronyms": ["LJMU"]
+    },
+    {
+      "name": "London Metropolitan University"
+    },
+    {
+      "name": "London School of Economics",
+      "aliases": ["London School of Economics and Political Science"],
+      "acronyms": ["LSE"]
+    },
+    {
+      "name": "London South Bank University",
+      "acronyms": ["LSBU"]
+    },
+    {
+      "name": "Loughborough University"
+    },
+    {
+      "name": "Manchester Metropolitan University",
+      "acronyms": ["MMU"]
+    },
+    {
+      "name": "Middlesex University"
+    },
+    {
+      "name": "Newcastle University",
+      "aliases": ["University of Newcastle"]
+    },
+    {
+      "name": "Newman University"
+    },
+    {
+      "name": "Northeastern University London"
+    },
+    {
+      "name": "Northumbria University",
+      "aliases": ["University of Northumbria"]
+    },
+    {
+      "name": "Nottingham Trent University",
+      "acronyms": ["NTU"]
+    },
+    {
+      "name": "Oxford Brookes University"
+    },
+    {
+      "name": "Plymouth Marjon University"
+    },
+    {
+      "name": "Queen Margaret University"
+    },
+    {
+      "name": "Queen Mary University of London",
+      "aliases": ["Queen Mary, University of London"],
+      "acronyms": ["QMUL"]
+    },
+    {
+      "name": "Queen's University Belfast",
+      "aliases": ["Queens University Belfast"],
+      "acronyms": ["QUB"]
+    },
+    {
+      "name": "Ravensbourne University London"
+    },
+    {
+      "name": "Regent's University London"
+    },
+    {
+      "name": "Robert Gordon University",
+      "acronyms": ["RGU"]
+    },
+    {
+      "name": "Royal Agricultural University"
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "aliases": ["Royal Holloway University of London", "Royal Holloway"]
+    },
+    {
+      "name": "Sheffield Hallam University"
+    },
+    {
+      "name": "SOAS University of London",
+      "acronyms": ["SOAS"]
+    },
+    {
+      "name": "Solent University",
+      "aliases": ["Southampton Solent University"]
+    },
+    {
+      "name": "St Mary's University, Twickenham",
+      "aliases": ["St Mary's University Twickenham"]
+    },
+    {
+      "name": "Staffordshire University"
+    },
+    {
+      "name": "Swansea University"
+    },
+    {
+      "name": "Teesside University"
+    },
+    {
+      "name": "The Open University",
+      "aliases": ["Open University"],
+      "caseSensitive": true
+    },
+    {
+      "name": "Ulster University",
+      "aliases": ["University of Ulster"]
+    },
+    {
+      "name": "University College Birmingham"
+    },
+    {
+      "name": "University College London",
+      "acronyms": ["UCL"]
+    },
+    {
+      "name": "University of Aberdeen",
+      "aliases": ["Aberdeen University"]
+    },
+    {
+      "name": "University of Bath",
+      "aliases": ["Bath University"]
+    },
+    {
+      "name": "University of Bedfordshire"
+    },
+    {
+      "name": "University of Birmingham",
+      "aliases": ["Birmingham University"]
+    },
+    {
+      "name": "University of Bolton"
+    },
+    {
+      "name": "University of Bradford"
+    },
+    {
+      "name": "University of Brighton"
+    },
+    {
+      "name": "University of Bristol",
+      "aliases": ["Bristol University"]
+    },
+    {
+      "name": "University of Buckingham"
+    },
+    {
+      "name": "University of Cambridge",
+      "aliases": ["Cambridge University"]
+    },
+    {
+      "name": "University of Central Lancashire",
+      "acronyms": ["UCLan"]
+    },
+    {
+      "name": "University of Chester"
+    },
+    {
+      "name": "University of Chichester"
+    },
+    {
+      "name": "University of Cumbria"
+    },
+    {
+      "name": "University of Derby"
+    },
+    {
+      "name": "University of Dundee",
+      "aliases": ["Dundee University"]
+    },
+    {
+      "name": "University of East Anglia",
+      "acronyms": ["UEA"]
+    },
+    {
+      "name": "University of East London",
+      "acronyms": ["UEL"]
+    },
+    {
+      "name": "University of Edinburgh",
+      "aliases": ["Edinburgh University"]
+    },
+    {
+      "name": "University of Essex"
+    },
+    {
+      "name": "University of Exeter",
+      "aliases": ["Exeter University"]
+    },
+    {
+      "name": "University of Glasgow",
+      "aliases": ["Glasgow University"]
+    },
+    {
+      "name": "University of Gloucestershire"
+    },
+    {
+      "name": "University of Greenwich"
+    },
+    {
+      "name": "University of Hertfordshire"
+    },
+    {
+      "name": "University of Huddersfield"
+    },
+    {
+      "name": "University of Hull"
+    },
+    {
+      "name": "University of Kent"
+    },
+    {
+      "name": "University of Law",
+      "aliases": ["The University of Law"]
+    },
+    {
+      "name": "University of Leeds",
+      "aliases": ["Leeds University"]
+    },
+    {
+      "name": "University of Leicester",
+      "aliases": ["Leicester University"]
+    },
+    {
+      "name": "University of Lincoln"
+    },
+    {
+      "name": "University of Liverpool",
+      "aliases": ["Liverpool University"]
+    },
+    {
+      "name": "University of Manchester",
+      "aliases": ["Manchester University"]
+    },
+    {
+      "name": "University of Northampton"
+    },
+    {
+      "name": "University of Nottingham",
+      "aliases": ["Nottingham University"]
+    },
+    {
+      "name": "University of Oxford",
+      "aliases": ["Oxford University"]
+    },
+    {
+      "name": "University of Plymouth",
+      "aliases": ["Plymouth University"]
+    },
+    {
+      "name": "University of Portsmouth",
+      "aliases": ["Portsmouth University"]
+    },
+    {
+      "name": "University of Reading",
+      "aliases": ["Reading University"]
+    },
+    {
+      "name": "University of Roehampton"
+    },
+    {
+      "name": "University of Salford",
+      "aliases": ["Salford University"]
+    },
+    {
+      "name": "University of Sheffield",
+      "aliases": ["Sheffield University"]
+    },
+    {
+      "name": "University of South Wales",
+      "acronyms": ["USW"]
+    },
+    {
+      "name": "University of Southampton",
+      "aliases": ["Southampton University"]
+    },
+    {
+      "name": "University of St Andrews",
+      "aliases": ["St Andrews University"]
+    },
+    {
+      "name": "University of Stirling",
+      "aliases": ["Stirling University"]
+    },
+    {
+      "name": "University of Strathclyde",
+      "aliases": ["Strathclyde University"]
+    },
+    {
+      "name": "University of Suffolk"
+    },
+    {
+      "name": "University of Sunderland"
+    },
+    {
+      "name": "University of Surrey"
+    },
+    {
+      "name": "University of Sussex"
+    },
+    {
+      "name": "University of the Arts London",
+      "acronyms": ["UAL"]
+    },
+    {
+      "name": "University of the Highlands and Islands",
+      "acronyms": ["UHI"]
+    },
+    {
+      "name": "University of the West of England",
+      "aliases": ["UWE Bristol"],
+      "acronyms": ["UWE"]
+    },
+    {
+      "name": "University of the West of Scotland",
+      "acronyms": ["UWS"]
+    },
+    {
+      "name": "University of Wales Trinity Saint David",
+      "acronyms": ["UWTSD"]
+    },
+    {
+      "name": "University of Warwick",
+      "aliases": ["Warwick University", "Warwick Manufacturing Group"],
+      "acronyms": ["WMG"]
+    },
+    {
+      "name": "University of West London",
+      "acronyms": ["UWL"]
+    },
+    {
+      "name": "University of Westminster"
+    },
+    {
+      "name": "University of Winchester"
+    },
+    {
+      "name": "University of Wolverhampton"
+    },
+    {
+      "name": "University of Worcester"
+    },
+    {
+      "name": "University of York",
+      "aliases": ["York University"]
+    },
+    {
+      "name": "Wrexham University",
+      "aliases": ["Wrexham Glyndwr University", "Glyndwr University", "Glyndŵr University"]
+    },
+    {
+      "name": "York St John University"
+    }
+  ]
+}
