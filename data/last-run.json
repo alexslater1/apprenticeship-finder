@@ -1,6 +1,6 @@
 {
   "date": "2026-10-09",
-  "finished_at": "2026-10-09T18:19:25.314Z",
+  "finished_at": "2026-10-09T19:27:34.589Z",
   "status": "ok",
   "trigger": "manual",
   "stats": {
@@ -12,16 +12,40 @@
       "detailErrors": 0,
       "invalid": 0,
       "fetched": 54,
-      "ms": 74986
+      "ms": 76009
+    },
+    "higherin": {
+      "sitemapJobs": 2206,
+      "carded": 64,
+      "candidates": 78,
+      "pagesFetched": 0,
+      "pageErrors": 0,
+      "categoryErrors": 0,
+      "capped": "no",
+      "fetched": 78,
+      "ms": 15252
+    },
+    "reed": {
+      "skipped": "not configured"
+    },
+    "adzuna": {
+      "days": 3,
+      "calls": 8,
+      "errors": 0,
+      "results": 86,
+      "fetched": 86,
+      "ms": 22129
     },
     "total": {
-      "raw": 54,
-      "relevant": 54,
-      "listings": 54,
+      "raw": 218,
+      "relevant": 161,
+      "listings": 124,
       "inserted": 0,
-      "updated": 54,
-      "deactivated": 0,
-      "requests": 38
+      "updated": 124,
+      "deactivated": 1,
+      "matchedExisting": 23,
+      "multiSource": 15,
+      "requests": 57
     }
   }
 }
