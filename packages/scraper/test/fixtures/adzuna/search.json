@@ -1,0 +1,132 @@
+{
+ "count": 4,
+ "results": [
+  {
+   "location": {
+    "display_name": "North Shields, Tyne & Wear",
+    "__CLASS__": "Adzuna::API::Response::Location",
+    "area": [
+     "UK",
+     "North East England",
+     "Tyne & Wear",
+     "North Shields"
+    ]
+   },
+   "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTkyMDk1MjQ3MyIsInMiOiJyTlNDTEJQRThSR181OWJwTFNWbWpRIn0.7k-Hzj31npGhU68rSG5bO9qKHdnHZDPrkHN76F2uyNE",
+   "__CLASS__": "Adzuna::API::Response::Job",
+   "company": {
+    "__CLASS__": "Adzuna::API::Response::Company",
+    "display_name": "Back 2 Work"
+   },
+   "redirect_url": "https://www.adzuna.co.uk/jobs/land/ad/5920952473?se=rNSCLBPE8RG_59bpLSVmjQ&utm_medium=api&utm_source=efad670f&v=859A043DC79FB38E0098580219B0E7FC99FBAA45",
+   "id": "5920952473",
+   "description": "A leading construction organisation in the North East is seeking a Data Technician Apprentice to support business operations through effective data management. The Opportunity You'll work alongside various departments helping transform data into meaningful business information. Responsibilities · Collecting and validating data. · Producing management reports. · Maintaining business databases. · Analysing project performance information. · Supporting compliance reporting. · Assisting with busine…",
+   "created": "2026-10-09T17:12:08Z",
+   "category": {
+    "label": "IT Jobs",
+    "tag": "it-jobs",
+    "__CLASS__": "Adzuna::API::Response::Category"
+   },
+   "salary_max": 25900,
+   "salary_is_predicted": "0",
+   "title": "Data Technician Apprentice",
+   "salary_min": 25900,
+   "latitude": 55.01558,
+   "contract_type": "contract",
+   "longitude": -1.44956
+  },
+  {
+   "contract_type": "permanent",
+   "description": "Internal Quality Assurer (IQA) – Digital & Data Apprenticeships  Remote (UK) with occasional travel  £40,000 - £48,000 per annum  Full-Time or 3 Days Per Week Considered Benefits ✅ Flexible remote working ✅ Full-time or part-time (3 days per week) options available ✅ 25 days annual leave plus Bank Holidays (pro rata for part-time) ✅ Ongoing professional development and funded training ✅ Supportive and collaborative culture ✅ Clear progression opportunities ✅ Opportunity to influence quality acr…",
+   "contract_time": "full_time",
+   "created": "2026-10-08T03:37:35Z",
+   "category": {
+    "__CLASS__": "Adzuna::API::Response::Category",
+    "tag": "teaching-jobs",
+    "label": "Teaching Jobs"
+   },
+   "salary_min": 40000,
+   "salary_max": 48000,
+   "__CLASS__": "Adzuna::API::Response::Job",
+   "redirect_url": "https://www.adzuna.co.uk/jobs/details/5918224835?utm_medium=api&utm_source=efad670f",
+   "salary_is_predicted": "0",
+   "id": "5918224835",
+   "title": "Internal Quality Assurer (IQA) – Digital & Data Apprenticeships",
+   "company": {
+    "__CLASS__": "Adzuna::API::Response::Company",
+    "display_name": "Pertemps Ltd"
+   },
+   "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTkxODIyNDgzNSIsInMiOiJyTlNDTEJQRThSR181OWJwTFNWbWpRIn0.WGYWYlhKX5Gk6wmCSZmtVrFQsY4GOz_iUs7cjVPFFhY",
+   "location": {
+    "__CLASS__": "Adzuna::API::Response::Location",
+    "display_name": "UK",
+    "area": [
+     "UK"
+    ]
+   }
+  },
+  {
+   "contract_type": "permanent",
+   "description": "Internal Quality Assurer (IQA) – Digital & Data Apprenticeships  Remote (UK) with occasional travel  £40,000 - £48,000 per annum  Full-Time or 3 Days Per Week Considered Benefits ✅ Flexible remote working ✅ Full-time or part-time (3 days per week) options available ✅ 25 days annual leave plus Bank Holidays (pro rata for part-time) ✅ Ongoing professional development and funded training ✅ Supportive and collaborative culture ✅ Clear progression opportunities ✅ Opportunity to influence quality acr…",
+   "contract_time": "full_time",
+   "created": "2026-10-08T03:37:35Z",
+   "category": {
+    "__CLASS__": "Adzuna::API::Response::Category",
+    "tag": "teaching-jobs",
+    "label": "Teaching Jobs"
+   },
+   "salary_min": 40000,
+   "salary_max": 48000,
+   "__CLASS__": "Adzuna::API::Response::Job",
+   "redirect_url": "https://www.adzuna.co.uk/jobs/details/5918224835?utm_medium=api&utm_source=efad670f",
+   "salary_is_predicted": "0",
+   "id": "5918224835",
+   "title": "Internal Quality Assurer (IQA) – Digital & Data Apprenticeships",
+   "company": {
+    "__CLASS__": "Adzuna::API::Response::Company",
+    "display_name": "Pertemps Ltd"
+   },
+   "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTkxODIyNDgzNSIsInMiOiJyTlNDTEJQRThSR181OWJwTFNWbWpRIn0.WGYWYlhKX5Gk6wmCSZmtVrFQsY4GOz_iUs7cjVPFFhY",
+   "location": {
+    "__CLASS__": "Adzuna::API::Response::Location",
+    "display_name": "UK",
+    "area": [
+     "UK"
+    ]
+   }
+  },
+  {
+   "salary_is_predicted": "1",
+   "title": "2027 AI Engineer Apprentice - AI and Data Science Graduate Level Apprenticeship",
+   "salary_max": 28559,
+   "salary_min": 28559,
+   "longitude": -4.25596,
+   "contract_type": "permanent",
+   "latitude": 55.86026,
+   "location": {
+    "__CLASS__": "Adzuna::API::Response::Location",
+    "display_name": "Glasgow, Scotland",
+    "area": [
+     "UK",
+     "Scotland",
+     "Glasgow"
+    ]
+   },
+   "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTkxNDIwNDIwMyIsInMiOiJyTlNDTEJQRThSR181OWJwTFNWbWpRIn0.PlYT86N4h4ClCIK8lIUoXpERZsdcxbSAJ4qJWzfXZKc",
+   "company": {
+    "display_name": "Thales",
+    "__CLASS__": "Adzuna::API::Response::Company"
+   },
+   "redirect_url": "https://www.adzuna.co.uk/jobs/land/ad/5914204203?se=rNSCLBPE8RG_59bpLSVmjQ&utm_medium=api&utm_source=efad670f&v=2B5FD96FDA5321344BA0865985042AB2A0F99BFC",
+   "id": "5914204203",
+   "__CLASS__": "Adzuna::API::Response::Job",
+   "created": "2026-10-06T18:50:45Z",
+   "category": {
+    "tag": "graduate-jobs",
+    "label": "Graduate Jobs",
+    "__CLASS__": "Adzuna::API::Response::Category"
+   },
+   "description": "Location: Glasgow, United Kingdom Thales is a global technology leader with more than 83,000 employees on five continents. With over 7,500 people in the UK, operating across defence, space, aerospace, and digital security, we help build a future we can all trust. Thales supports the security and stability of our nation by providing extraordinary technology to our customers, as well as delivering social value to the UK with our products and services. 2027 AI Engineer Apprentice - AI and Data Sci…"
+  }
+ ]
+}
