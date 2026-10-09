@@ -1,0 +1,34 @@
+{
+ "results": 2,
+ "pages": 1,
+ "data": [
+  {
+   "id": 7244,
+   "slug": "apprentice-software-developer-7244",
+   "slugTrans": "prentis-datblygwr-meddalwedd-7244",
+   "title": "Apprentice Software Developer",
+   "employer": "Border Merchant Systems Ltd",
+   "closingDate": "2026-10-15T00:00:00Z",
+   "location": "Monmouth",
+   "coordinates": "51.807350561053,-2.7302295760574",
+   "apprenticeshipLevel": 3,
+   "payDetails": "Apprenticeship rates",
+   "distance": 0.0,
+   "score": "NaN"
+  },
+  {
+   "id": 7250,
+   "slug": "it-technician-7250",
+   "slugTrans": "technegydd-tg-7250",
+   "title": "IT Technician",
+   "employer": "Ysgol Maesydderwen",
+   "closingDate": "2026-10-19T00:00:00Z",
+   "location": "Swansea",
+   "coordinates": "51.769303262583,-3.7679947592621",
+   "apprenticeshipLevel": 2,
+   "payDetails": "£12.65 per hour",
+   "distance": 0.0,
+   "score": "NaN"
+  }
+ ]
+}
