@@ -87,6 +87,33 @@ export function SourceBadges({ sources }: { sources: ListingRow['sources'] }) {
   );
 }
 
+/** Adzuna's terms: every Adzuna ad shows an "Adzuna" label of at least 116×23 px linking to adzuna.co.uk. */
+export function AdzunaAttribution({ sources }: { sources: ListingRow['sources'] }) {
+  if (!sources.some((s) => s.source === 'adzuna')) return null;
+  return (
+    <a
+      href="https://www.adzuna.co.uk"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+      className="inline-flex h-[23px] min-w-[116px] items-center justify-center rounded border border-[#2e9ec7]/40 px-2 text-xs font-semibold text-[#1f7fa3] dark:text-[#6cc4e6]"
+    >
+      Jobs by Adzuna
+    </a>
+  );
+}
+
+export function PreRegisterBadge() {
+  return (
+    <span
+      title="Applications aren't open yet: register your interest to be told when they are."
+      className="inline-flex h-6 items-center rounded-md bg-st-interview/15 px-1.5 text-xs font-medium whitespace-nowrap text-st-interview"
+    >
+      Register interest
+    </span>
+  );
+}
+
 export function NewDot() {
   return (
     <span className="inline-flex h-5 items-center rounded-full bg-primary px-1.5 text-[10px] font-semibold tracking-wide text-primary-foreground uppercase">

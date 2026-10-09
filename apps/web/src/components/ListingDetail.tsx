@@ -15,7 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { SOURCE_LABELS, sourceKey, type Derived } from '@/lib/derive';
 import { formatDate, formatSalary, milesLabel } from '@/lib/format';
 import { useListingDetail, useSetHidden, useUpdateTracking } from '@/lib/queries';
-import { ClosingBadge, LevelBadge, MatchChip } from './badges';
+import { AdzunaAttribution, ClosingBadge, LevelBadge, MatchChip, PreRegisterBadge } from './badges';
 import { Notes } from './Notes';
 import { StatusSelect } from './StatusSelect';
 
@@ -92,6 +92,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
               <div className="flex flex-wrap items-center gap-1.5">
                 <MatchChip score={d.score} />
                 <LevelBadge level={r.level} isDegree={r.is_degree} />
+                {r.pre_register && <PreRegisterBadge />}
                 <span className="text-xs text-muted-foreground">{ROLE_LABELS[r.role_type]}</span>
                 {!r.is_active && (
                   <span className="text-xs font-medium text-destructive">Closed</span>
@@ -249,6 +250,9 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                     </li>
                   )}
                 </ul>
+                <div className="mt-2">
+                  <AdzunaAttribution sources={r.sources} />
+                </div>
                 {r.sources.some((s) => s.source === 'faa') && (
                   <p className="mt-2 text-xs text-muted-foreground">
                     Contains public sector information licensed under the Open Government Licence

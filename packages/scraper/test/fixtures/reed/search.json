@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "jobId": 55501234,
+      "employerId": 1001,
+      "employerName": "Example Analytics Ltd",
+      "jobTitle": "Data Analyst Apprentice",
+      "locationName": "Manchester",
+      "minimumSalary": 21000,
+      "maximumSalary": 23000,
+      "currency": "GBP",
+      "expirationDate": "20/11/2026",
+      "date": "02/10/2026",
+      "jobDescription": "Join our data team as an apprentice working towards the Level 4 Data Analyst standard...",
+      "applications": 12,
+      "jobUrl": "https://www.reed.co.uk/jobs/data-analyst-apprentice/55501234"
+    },
+    {
+      "jobId": 55509999,
+      "employerName": "Training Co",
+      "jobTitle": "Data Apprenticeship Skills Coach",
+      "locationName": "Leeds",
+      "expirationDate": "01/12/2026",
+      "date": "05/10/2026",
+      "jobDescription": "Coach apprentices on the data standard.",
+      "jobUrl": "https://www.reed.co.uk/jobs/skills-coach/55509999"
+    }
+  ],
+  "totalResults": 2
+}

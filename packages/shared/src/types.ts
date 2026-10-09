@@ -90,6 +90,8 @@ export interface RawListing {
   knownApprenticeship?: boolean;
   /** Page-hash leads get their score capped. */
   isLead?: boolean;
+  /** A source's own category, e.g. Higherin 'Data analysis'; used for role when the title says nothing. */
+  roleHint?: string;
   raw?: unknown;
 }
 
@@ -103,7 +105,7 @@ export interface Standard {
   core: boolean;
 }
 
-export type RoleVia = 'title' | 'title_weak' | 'standard' | 'description';
+export type RoleVia = 'title' | 'title_weak' | 'standard' | 'category' | 'description';
 export type LevelSource = 'source' | 'lars' | 'title' | 'text';
 
 export interface Classification {
@@ -172,6 +174,8 @@ export interface ListingRow {
   tracking_updated_at: string | null;
   sources: Array<{ source: string; url: string }>;
   notes_count: number;
+  /** Higherin "Register your interest" advert: not open for applications yet. */
+  pre_register: boolean;
 }
 
 export interface SettingsRow {

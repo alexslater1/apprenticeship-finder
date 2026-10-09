@@ -7,6 +7,7 @@ export interface ClassifyInput {
   level?: number;
   larsCode?: number;
   standardTitle?: string;
+  roleHint?: string;
   knownApprenticeship?: boolean;
 }
 
@@ -90,6 +91,9 @@ export function classify(input: ClassifyInput): Classification {
   } else if (standardTitle && roleFrom(standardTitle)) {
     roleType = roleFrom(standardTitle)!;
     roleVia = 'standard';
+  } else if (input.roleHint && roleFrom(input.roleHint)) {
+    roleType = roleFrom(input.roleHint)!;
+    roleVia = 'category';
   } else if (text) {
     const r = roleFrom(text);
     if (r && r !== 'software_tech') {
