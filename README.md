@@ -11,7 +11,8 @@ A private, login-only dashboard of UK data-science apprenticeships (data scienti
 apps/web            Vite + React dashboard (GitHub Pages)
 packages/shared     types, classification + scoring rules, parsers (used by both)
 packages/scraper    CLI: scrape, digest, migrate (runs in GitHub Actions)
-config/             keywords.json (classification rules), standards.json (LARS codes), uk-places.json (gazetteer)
+config/             keywords.json (classification rules), standards.json (LARS codes), uk-places.json (gazetteer),
+                    universities.json (names the degree partner), employers.json (watchlist + connectors)
 supabase/migrations SQL schema + row-level security
 .github/workflows   ci.yml, deploy-web.yml, scrape.yml (daily 06:23 UTC)
 data/last-run.json  public run summary committed daily (keeps the cron alive)

@@ -40,6 +40,7 @@ const rows = [
     role_type: 'data_analyst',
     score: 60,
   }),
+  listing({ id: 'software', title: 'Software Developer Apprentice', role_type: 'software_tech' }),
   listing({ id: 'hidden', hidden: true }),
   listing({ id: 'closed', is_active: false }),
   listing({ id: 'nowhere', locations: [], primary_city: null, region: null, nation: 'Unknown' }),
@@ -49,24 +50,28 @@ const ids = (filters: Filters) =>
   derived.filter((d) => matches(d, filters, today)).map((d) => d.row.id);
 
 describe('derive', () => {
-  it('adds personal boosts, distance and closing days', () => {
+  it('applies the Settings preferences, distance and closing days', () => {
     const leeds = derived.find((d) => d.row.id === 'leeds')!;
     expect(leeds.distance).toBeLessThan(1);
-    expect(leeds.score).toBe(70 + 10 + 10 + 8);
+    // Data analyst High (45 instead of 38), level 4 Maybe (12 instead of 18), within 50 miles.
+    expect(leeds.score).toBe(70 - 38 - 18 + 45 + 12 + 8);
     expect(leeds.daysToClose).toBe(6);
     expect(leeds.isNew).toBe(true);
   });
 });
 
 describe('matches', () => {
-  it('hides hidden, closed and level 2–3 listings by default', () => {
+  it('hides hidden and closed listings by default', () => {
     expect(ids(f())).toEqual(['crawley', 'leeds', 'nowhere']);
-    expect(ids(f({ includeLowLevels: true }))).toContain('l3');
     expect(ids(f({ includeHidden: true }))).toContain('hidden');
     expect(ids(f({ includeClosed: true }))).toContain('closed');
   });
-  it('explicit level filters override the low-level default', () => {
-    expect(ids(f({ levels: [3] }))).toEqual(['l3']);
+  it("never shows levels 2–3 or roles and levels set to 'No'", () => {
+    const all = f({ includeHidden: true, includeClosed: true });
+    expect(ids(all)).not.toContain('l3');
+    expect(ids(all)).not.toContain('software');
+    expect(derived.find((d) => d.row.id === 'software')!.excluded).toBe('role');
+    expect(ids(f({ levels: [3] }))).toEqual([]);
   });
   it('filters by distance and keeps unknown locations unless asked', () => {
     expect(ids(f({ maxDistance: 25 }))).toEqual(['leeds', 'nowhere']);
@@ -87,8 +92,12 @@ describe('matches', () => {
 
 describe('sortDerived', () => {
   it('ranks by uncapped score so boosted listings keep their order', () => {
+    const near = { locations: rows[1]!.locations };
     const top = derive(
-      [listing({ id: 'a', score: 97 }), listing({ id: 'b', title: 'AAA', score: 84 })],
+      [
+        listing({ id: 'a', score: 97, ...near }),
+        listing({ id: 'b', title: 'AAA', score: 95, ...near }),
+      ],
       settings,
       today,
     );

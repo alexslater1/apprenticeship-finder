@@ -18,3 +18,4 @@ packages/scraper/test/fixtures/**/*.raw
 *.swp
 .idea/
 .vscode/
+.claude/worktrees/

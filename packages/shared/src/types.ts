@@ -19,6 +19,37 @@ export const ROLE_LABELS: Record<RoleType, string> = {
   other: 'Other',
 };
 
+/** How much he wants a role type or level (Settings). 'no' hides it everywhere. */
+export const PREFS = ['high', 'maybe', 'no'] as const;
+export type Pref = (typeof PREFS)[number];
+
+export const PREF_LABELS: Record<Pref, string> = { high: 'High', maybe: 'Maybe', no: 'No' };
+
+/** Levels we keep at all; 2–3 are dropped by the scraper. */
+export const LEVELS = [4, 5, 6, 7] as const;
+export const MIN_LEVEL = 4;
+
+export type RolePrefs = Record<RoleType, Pref>;
+export type LevelPrefs = Record<`${(typeof LEVELS)[number]}`, Pref>;
+
+/** BRIEF.md: L6 and L5 first, then L4; data science and data analyst, maybe ML/AI. */
+export const DEFAULT_ROLE_PREFS: RolePrefs = {
+  data_science: 'high',
+  data_analyst: 'high',
+  ml_ai: 'maybe',
+  data_engineering: 'maybe',
+  software_tech: 'maybe',
+  business_analyst: 'maybe',
+  other: 'maybe',
+};
+
+export const DEFAULT_LEVEL_PREFS: LevelPrefs = {
+  '4': 'maybe',
+  '5': 'high',
+  '6': 'high',
+  '7': 'maybe',
+};
+
 export const NATIONS = [
   'England',
   'Scotland',
@@ -149,6 +180,8 @@ export interface ListingRow {
   lars_code: number | null;
   standard_title: string | null;
   provider_name: string | null;
+  /** Degree partner named by the provider or the advert, e.g. 'University of Exeter'. */
+  university: string | null;
   role_type: RoleType;
   score: number;
   score_breakdown: ScoreBreakdown | null;
@@ -183,8 +216,8 @@ export interface SettingsRow {
   home_postcode: string | null;
   home_lat: number | null;
   home_lon: number | null;
-  preferred_levels: number[];
-  preferred_roles: RoleType[];
+  role_prefs: Partial<RolePrefs>;
+  level_prefs: Partial<LevelPrefs>;
   default_distance_miles: number;
   digest_min_score: number;
   digest_enabled: boolean;
