@@ -25,7 +25,7 @@ export function ListingCard({ d }: { d: Derived }) {
   return (
     <article
       className={cn(
-        'relative rounded-xl border bg-card p-4 shadow-xs transition-colors focus-within:ring-2 focus-within:ring-ring/50 hover:bg-accent/40',
+        'relative min-w-0 rounded-xl border bg-card p-4 shadow-xs transition-colors focus-within:ring-2 focus-within:ring-ring/50 hover:bg-accent/40',
         !r.is_active && 'opacity-60',
       )}
     >
@@ -36,7 +36,7 @@ export function ListingCard({ d }: { d: Derived }) {
         {d.isNew && <NewDot />}
         {!r.is_active && <span className="text-xs text-muted-foreground">Closed</span>}
       </div>
-      <h2 className="leading-snug font-semibold">
+      <h2 className="leading-snug font-semibold break-words">
         {/* The whole card is clickable via this link's ::after overlay. */}
         <a
           href={`#/listing/${r.id}`}
@@ -57,10 +57,12 @@ export function ListingCard({ d }: { d: Derived }) {
         {salary && <span>{salary}</span>}
         <ClosingBadge days={d.daysToClose} />
       </p>
-      <div className="relative z-10 mt-3 flex items-center gap-2">
-        <StatusSelect row={r} compact />
+      <div className="relative z-10 mt-2 flex flex-wrap items-center gap-1.5">
         <SourceBadges sources={r.sources} />
         <AdzunaAttribution sources={r.sources} />
+      </div>
+      <div className="relative z-10 mt-2 flex items-center gap-2">
+        <StatusSelect row={r} compact />
         <span className="ml-auto flex items-center gap-1">
           {r.notes_count > 0 && (
             <span className="flex items-center gap-1 text-xs text-muted-foreground" title="Notes">
