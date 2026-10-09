@@ -144,7 +144,7 @@ describe('baseScore', () => {
 
   it('internal-only adverts drop to near zero', () => {
     const { s } = score('Data Analyst Apprentice', {
-      descriptionText: 'Open to existing employees only.',
+      descriptionText: 'This vacancy is for existing employees only.',
     });
     expect(s.total).toBeLessThan(10);
   });
@@ -202,5 +202,22 @@ describe('personalScore', () => {
   });
   it('keeps zero-scored (closed) listings at zero', () => {
     expect(personalScore({ score: 0, level: 6, role_type: 'data_science' }, prefs, 1)).toBe(0);
+  });
+});
+
+describe('internal-only penalty', () => {
+  it('does not fire when existing staff are one of several entry routes', () => {
+    const { s } = score('Business Analyst Apprentice', {
+      larsCode: 165,
+      descriptionText:
+        'Entry: A levels, or a degree, or existing staff with 2+ years of experience.',
+    });
+    expect(s.penaltyLabels).not.toContain('internal only');
+  });
+  it('fires for internal-only adverts', () => {
+    const { s } = score('Data Analyst Apprentice', {
+      descriptionText: 'This role is only open to existing colleagues.',
+    });
+    expect(s.penaltyLabels).toContain('internal only');
   });
 });

@@ -68,6 +68,7 @@ export function personalScore(
   listing: { score: number; level: number | null; role_type: RoleType },
   prefs: PersonalPrefs,
   distanceMiles: number | null,
+  opts: { clamp?: boolean } = {},
 ): number {
   const b = rules.personal;
   let s = listing.score;
@@ -76,7 +77,8 @@ export function personalScore(
     s += b.preferredLevel;
   if (prefs.preferredRoles.includes(listing.role_type)) s += b.preferredRole;
   if (distanceMiles !== null && distanceMiles <= prefs.defaultDistanceMiles) s += b.withinDistance;
-  return clamp(s);
+  // Unclamped values keep the ranking when boosts push several listings past 100.
+  return opts.clamp === false ? s : clamp(s);
 }
 
 export type MatchTier = 'high' | 'medium' | 'low';

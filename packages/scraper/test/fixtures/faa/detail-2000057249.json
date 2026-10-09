@@ -1,0 +1,75 @@
+{
+ "employerDescription": "<p>Together, we create the ingenious technological systems and innovations that impact and improve people's lives every single day. Even if you haven't heard the name Thales before, you've definitely benefited from our inventiveness. We reinvest 20% of our sales in Research &amp; Development in the UK. Together we supply invention across 4 core areas: Aerospace, Space, Defence and Security, Digital Identity and Security.</p>",
+ "trainingDescription": "<p>You will study towards a Level 6 Data Scientist Apprenticeship with The University of Nottingham.</p>\r\n<p>The programme is delivered over 42 months through a blend of:</p>\r\n<ul>\r\n<li>On-campus learning</li>\r\n<li>Online study</li>\r\n<li>Workplace-based learning</li>\r\n</ul>\r\n<p>You will typically attend university for a minimum of 4 weeks each academic year, delivered in 1-week blocks.</p>\r\n<p>On successful completion of the programme and End Point Assessment, you will achieve:</p>\r\n<ul>\r\n<li>A fully funded BSc (Hons) Data Science degree</li>\r\n<li>A Level 6 Data Scientist Degree Apprenticeship qualification</li>\r\n</ul>",
+ "outcomeDescription": "<ul>\r\n<li>Will qualify and be a permanent member of the team within the Thales business</li>\r\n</ul>",
+ "fullDescription": "<p>Working alongside experienced data professionals, you will learn how to transform raw data into valuable business intelligence and help develop data-driven solutions that create measurable impact.</p>\r\n<p>Your responsibilities may include:</p>\r\n<ul>\r\n<li>Identifying business challenges and using data science techniques to recommend solutions.</li>\r\n<li>Collecting, preparing, cleansing, and analysing data from multiple sources.</li>\r\n</ul>\r\n<p>Building skills in:</p>\r\n<ul>\r\n<li>Data Science and Analytics</li>\r\n<li>Machine Learning and Artificial Intelligence</li>\r\n<li>Statistical Analysis</li>\r\n<li>Data Engineering Fundamentals</li>\r\n<li>Data Visualisation and Storytelling</li>\r\n<li>Programming and Automation (e.g. Python, SQL)</li>\r\n<li>Supporting the development and testing of predictive models and analytical solutions.</li>\r\n<li>Working with data teams to create data products, dashboards, and insights used across the business.</li>\r\n<li>Evaluating model performance and supporting continuous improvement of analytical solutions.</li>\r\n</ul>",
+ "skills": [
+  "Communication skills",
+  "Attention to detail",
+  "Organisation skills",
+  "Problem solving skills",
+  "Administrative skills",
+  "Number skills",
+  "Analytical skills",
+  "Logical",
+  "Team working"
+ ],
+ "qualifications": [
+  {
+   "weighting": "Essential",
+   "qualificationType": "GCSE",
+   "subject": "5 incl. Maths & English",
+   "grade": "A-C or 9-4"
+  },
+  {
+   "weighting": "Essential",
+   "qualificationType": "A Level",
+   "subject": "Maths",
+   "grade": "BBC"
+  }
+ ],
+ "thingsToConsider": "<p>Because of the work we do at Thales, all roles are subject to security requirements.</p>\r\n<p>To be considered for this position, you must have the permanent right to work in the UK and be able to successfully complete and maintain UK Government security checks, including Baseline Personnel Security Standard (BPSS) screening and Security Clearance (SC), which is a government background check, before starting employment.</p>\r\n<p>To be eligible for SC clearance, you will typically need to have lived in the UK continuously for the last five years. As part of the vetting process, you will be asked to provide evidence of your identity, right to work in the UK, any time spent overseas during the last five years, and your employment and/or education history.</p>\r\n<p>For further details of the evidence required to apply for security clearance please follow this link -&nbsp;https://www.gov.uk/government/publications/united-kingdom-security-vetting-clearance-levels/national-security-vetting-clearance-levels.</p>",
+ "companyBenefitsInformation": "<ul>\r\n<li>201 hours annual leave (plus a company day and bank holidays)</li>\r\n<li>80 Hours Volunteering (first two years)</li>\r\n<li>Discount Portal</li>\r\n<li>Health Care Cash Plan</li>\r\n</ul>",
+ "title": "2027 Data Science Apprentice - Crawley",
+ "description": "<p>As a Data Scientist Apprentice, you will be valued for your curiosity, analytical mindset, and passion for solving problems using data. You will work with a variety of datasets, tools, and technologies to identify trends, build predictive models, and generate insights that support business decision-making.</p>",
+ "numberOfPositions": 2,
+ "postedDate": "2026-10-05T11:33:46.88Z",
+ "closingDate": "2027-02-17T23:59:59Z",
+ "startDate": "2027-09-06T00:00:00Z",
+ "wage": {
+  "wageType": "Custom",
+  "wageUnit": "Annually",
+  "wageAdditionalInformation": "£24,000 a year",
+  "workingWeekDescription": "Monday - Friday (8 hours Monday – Thursday, 5 hours Friday). Shifts TBC."
+ },
+ "hoursPerWeek": 37,
+ "expectedDuration": "3 Years 6 Months",
+ "addresses": [
+  {
+   "addressLine1": "Manor Royal",
+   "addressLine4": "Crawley",
+   "postcode": "RH10 9HA",
+   "latitude": 51.13028,
+   "longitude": -0.18389
+  }
+ ],
+ "applicationUrl": "https://thales.wd3.myworkdayjobs.com/Careers/job/Crawley/XMLNAME-2027-Data-Science-Apprentice_R0337752",
+ "distance": 0,
+ "employerName": "THALES UK LIMITED",
+ "employerWebsiteUrl": "https://careers.thalesgroup.com/global/en/united-kingdom-apprenticeship",
+ "course": {
+  "larsCode": 337,
+  "title": "Data scientist (integrated degree) (level 6)",
+  "level": 6,
+  "route": "Digital",
+  "type": "Standard"
+ },
+ "apprenticeshipLevel": "Degree",
+ "providerName": "UNIVERSITY OF NOTTINGHAM",
+ "ukprn": 10007154,
+ "isDisabilityConfident": true,
+ "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000057249",
+ "vacancyReference": "2000057249",
+ "isNationalVacancy": false,
+ "isNationalVacancyDetails": ""
+}
