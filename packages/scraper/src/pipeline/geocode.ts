@@ -5,7 +5,7 @@ import {
   type Nation,
   type RawListing,
 } from '@af/shared';
-import { findPlace, nearestPlace, placeByName } from '@af/shared/places';
+import { findPlace, nearestPlace, placeByName, places } from '@af/shared/places';
 import type { Ctx } from '../types.ts';
 
 /** What we keep per postcode from postcodes.io (cached in source_state 'geo:postcodes'). */
@@ -24,6 +24,13 @@ const STREETY =
   /\d|\b(street|st|road|rd|lane|ln|avenue|ave|close|way|drive|court|place|park|house|farm|estate|industrial|unit|floor|building|centre|center|square|crescent|terrace|grove|hill|walk|row|mews|gardens|business|office|campus)\b/i;
 
 const titleCase = (s: string) => s.toLowerCase().replace(/\b([a-z])/g, (c) => c.toUpperCase());
+
+// postcodes.io says 'Yorkshire and The Humber'; the gazetteer (OS Open Names) says 'the'.
+const REGIONS = new Map(
+  places.filter((p) => p.kind === 'region').map((p) => [p.name.toLowerCase(), p.name]),
+);
+const canonicalRegion = (r: string | null | undefined) =>
+  r ? (REGIONS.get(r.toLowerCase()) ?? r) : undefined;
 
 /** Pick a human city name for one location (PLAN.md §5.2). */
 export function cityFor(loc: Location, info: PostcodeInfo | null): string | undefined {
@@ -65,7 +72,7 @@ export function enrichLocation(loc: Location, cache: PostcodeCache): void {
     loc.lat ??= info.lat;
     loc.lon ??= info.lon;
     loc.nation = nationFrom(info.country) ?? loc.nation;
-    loc.region = info.region ?? info.country ?? loc.region;
+    loc.region = canonicalRegion(info.region) ?? info.country ?? loc.region;
   }
 
   if (!info && !loc.lines?.length) {

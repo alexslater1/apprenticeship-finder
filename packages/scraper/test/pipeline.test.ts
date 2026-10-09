@@ -105,6 +105,19 @@ describe('geocode', () => {
     enrichLocation(loc, cache);
     expect(loc.city).toBe('London');
   });
+  it('canonicalises region names', () => {
+    const loc: Location = { text: '', postcode: 'LS1 4BN', lines: ['Leeds'] };
+    enrichLocation(loc, {
+      'LS1 4BN': {
+        lat: 53.8,
+        lon: -1.55,
+        district: 'Leeds',
+        region: 'Yorkshire and The Humber',
+        country: 'England',
+      },
+    });
+    expect(loc.region).toBe('Yorkshire and the Humber');
+  });
   it('takes nation from the postcode', () => {
     const loc: Location = { text: '', postcode: 'ch52ns', nation: 'England', lines: ['Broughton'] };
     enrichLocation(loc, cache);
