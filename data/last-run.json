@@ -1,8 +1,8 @@
 {
   "date": "2026-10-09",
-  "finished_at": "2026-10-09T17:45:17.003Z",
+  "finished_at": "2026-10-09T17:52:20.572Z",
   "status": "ok",
-  "trigger": "local",
+  "trigger": "manual",
   "stats": {
     "total": {
       "raw": 0,
