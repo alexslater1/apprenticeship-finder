@@ -64,13 +64,13 @@ const columns = helper.columns([
     cell: (c) => {
       const d = c.row.original;
       return (
-        <div className="min-w-[16rem]">
-          <div className="flex items-start gap-2">
-            <span className="font-medium">{d.row.title}</span>
+        <div className="max-w-[24rem] min-w-[14rem]">
+          <div className="font-medium">{d.row.title}</div>
+          <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+            {d.row.employer_name}
             {d.row.pre_register && <PreRegisterBadge />}
             {d.isNew && <NewDot />}
           </div>
-          <div className="text-xs text-muted-foreground">{d.row.employer_name}</div>
         </div>
       );
     },
@@ -155,7 +155,7 @@ export function ListingTable({ data }: { data: Derived[] }) {
     columns,
     data,
     getRowId: (d) => d.row.id,
-    initialState: { columnVisibility: { posted: false } },
+    initialState: { columnVisibility: { posted: false, role: false } },
   });
 
   return (
