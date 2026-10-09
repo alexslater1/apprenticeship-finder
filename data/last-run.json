@@ -1,6 +1,6 @@
 {
   "date": "2026-10-09",
-  "finished_at": "2026-10-09T19:27:34.589Z",
+  "finished_at": "2026-10-09T19:32:42.207Z",
   "status": "ok",
   "trigger": "manual",
   "stats": {
@@ -12,7 +12,7 @@
       "detailErrors": 0,
       "invalid": 0,
       "fetched": 54,
-      "ms": 76009
+      "ms": 74800
     },
     "higherin": {
       "sitemapJobs": 2206,
@@ -23,7 +23,7 @@
       "categoryErrors": 0,
       "capped": "no",
       "fetched": 78,
-      "ms": 15252
+      "ms": 15251
     },
     "reed": {
       "skipped": "not configured"
@@ -34,7 +34,7 @@
       "errors": 0,
       "results": 86,
       "fetched": 86,
-      "ms": 22129
+      "ms": 22926
     },
     "total": {
       "raw": 218,
@@ -42,7 +42,7 @@
       "listings": 124,
       "inserted": 0,
       "updated": 124,
-      "deactivated": 1,
+      "deactivated": 0,
       "matchedExisting": 23,
       "multiSource": 15,
       "requests": 57
