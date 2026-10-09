@@ -1,7 +1,20 @@
 import type { Location, RawListing } from '@af/shared';
 import { describe, expect, it } from 'vitest';
 import { cityFor, enrichLocation, type PostcodeCache } from '../src/pipeline/geocode.ts';
-import { dedupeKey, mergeWithinRun, normalise, sanitize } from '../src/pipeline/normalise.ts';
+import {
+  assignKeys,
+  dedupeKey,
+  sameEmployer,
+  samePlace,
+  similarTitles,
+  titleTokens,
+} from '../src/pipeline/dedupe.ts';
+import {
+  mergeWithinRun,
+  normalise,
+  sanitize,
+  splitProviderTitle,
+} from '../src/pipeline/normalise.ts';
 import { toRow } from '../src/pipeline/persist.ts';
 import { detectBotWall } from '../src/http.ts';
 
@@ -66,6 +79,180 @@ describe('dedupe', () => {
     expect(merged).toHaveLength(1);
     expect(merged[0]!.sources.map((s) => s.source)).toEqual(['faa', 'higherin']);
     expect(merged[0]!.descriptionText).toContain('much longer');
+  });
+});
+
+describe('cross-source matching', () => {
+  const t = (title: string, city = 'Crawley') => titleTokens(title, [city]);
+  it.each([
+    ['2027 Data Science Apprentice - Crawley', 'Level 6 Data Science Degree Apprenticeship'],
+    [
+      '2027 AI Engineer Apprentice - Level 6 - Crawley',
+      'AI Engineer Degree Apprenticeship (Level 6, Machine Learning)',
+    ],
+    [
+      '2027 Machine Learning Apprentice - Level 6 AI Engineer',
+      'Machine Learning (Level 6 AI Engineer) Degree Apprenticeship',
+    ],
+    ['Data Scientist Degree Apprenticeship', 'Data Science Apprentice'],
+    [
+      'Digital & Technology Solutions Degree Apprenticeship 2027',
+      'Digital and Technology Solutions Apprentice',
+    ],
+  ])('%s ≈ %s', (a, b) => expect(similarTitles(t(a), t(b))).toBe(true));
+
+  it.each([
+    [
+      '2027 AI Engineer Apprentice - Level 6 - Crawley',
+      '2027 AI Researcher Apprentice - Level 6 - Crawley',
+    ],
+    [
+      '2027 Software Engineering Apprentice - Crawley',
+      '2027 Systems Engineering Apprentice - Crawley',
+    ],
+    ['Data Analyst Apprentice', 'Data Engineer Apprentice'],
+    ['Degree Apprenticeships 2027', 'Degree Apprenticeship Programme'],
+  ])('%s ≠ %s', (a, b) => expect(similarTitles(t(a), t(b))).toBe(false));
+
+  it('ignores a trailing place or client tag in titles', () => {
+    expect(
+      similarTitles(
+        titleTokens('2027 Software Engineering Apprentice - Cheadle', ['Stockport']),
+        titleTokens(
+          'Software Engineering Degree Apprentice - Level 6 Digital and Technology Solutions',
+          ['Manchester'],
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  it('only "artificial intelligence" means AI', () => {
+    expect(
+      similarTitles(t('Business Intelligence Analyst Apprentice'), t('AI Analyst Apprentice')),
+    ).toBe(false);
+    expect(
+      similarTitles(t('Artificial Intelligence Engineer Apprentice'), t('AI Engineer Apprentice')),
+    ).toBe(true);
+  });
+
+  it('nearby towns count as the same place', () => {
+    expect(samePlace(['Stockport'], ['Manchester'])).toBe(true);
+    expect(samePlace(['Crawley'], ['Templecombe'])).toBe(false);
+    expect(samePlace([], ['Leeds'])).toBe(true);
+  });
+
+  it('employer names match on a word prefix', () => {
+    expect(sameEmployer('airbus', 'airbus operations')).toBe(true);
+    expect(sameEmployer('bae systems', 'bae')).toBe(true);
+    expect(sameEmployer('thales', 'thames water')).toBe(false);
+  });
+
+  it('a Higherin listing adopts the stored FAA listing it duplicates', () => {
+    const existing = [
+      {
+        dedupeKey: 'faa-ds',
+        employerNorm: 'thales',
+        title: '2027 Data Science Apprentice - Crawley',
+        cities: ['Crawley'],
+      },
+      {
+        dedupeKey: 'faa-ai',
+        employerNorm: 'thales',
+        title: '2027 AI Engineer Apprentice - Level 6 - Crawley',
+        cities: ['Crawley'],
+      },
+    ];
+    const keys = assignKeys(
+      [
+        {
+          dedupeKey: 'hi-ds',
+          employerNorm: 'thales',
+          title: 'Level 6 Data Science Degree Apprenticeship',
+          cities: ['Crawley'],
+        },
+        {
+          dedupeKey: 'hi-glasgow',
+          employerNorm: 'thales',
+          title: 'AI and Data Science Degree Apprenticeship',
+          cities: ['Glasgow'],
+        },
+        {
+          dedupeKey: 'adz-ds',
+          employerNorm: 'thales',
+          title: 'Data Science Apprentice',
+          cities: ['Crawley'],
+        },
+      ],
+      existing,
+    );
+    expect(keys).toEqual(['faa-ds', 'hi-glasgow', 'faa-ds']);
+  });
+
+  it('same-run duplicates collapse onto the first one seen', () => {
+    const keys = assignKeys(
+      [
+        {
+          dedupeKey: 'a',
+          employerNorm: 'fca',
+          title: 'AI/Machine Learning Degree Apprenticeship',
+          cities: ['London'],
+        },
+        {
+          dedupeKey: 'b',
+          employerNorm: 'fca',
+          title: 'Level 6 AI Machine Learning Apprentice 2027',
+          cities: ['London'],
+        },
+      ],
+      [],
+    );
+    expect(keys).toEqual(['a', 'a']);
+  });
+});
+
+describe('provider-posted adverts', () => {
+  it.each([
+    [
+      'Data Analyst Higher Apprenticeship - Grosvenor',
+      'QA Limited',
+      'Data Analyst Higher Apprenticeship',
+      'Grosvenor',
+    ],
+    [
+      'AI Developer & Automation Apprentice - Rawlinson & Hunter LLP',
+      'QA Limited',
+      'AI Developer & Automation Apprentice',
+      'Rawlinson & Hunter LLP',
+    ],
+    [
+      'Junior Data Analyst Level 3 Apprenticeship - Terberg DTS',
+      'QA Limited',
+      'Junior Data Analyst Level 3 Apprenticeship',
+      'Terberg DTS',
+    ],
+  ])('%s', (title, employer, role, client) => {
+    expect(splitProviderTitle(title, employer)).toEqual({
+      title: role,
+      employer: client,
+      provider: employer,
+    });
+  });
+  it('leaves places, levels and real employers alone', () => {
+    expect(splitProviderTitle('Data Analyst Apprentice - Leeds', 'QA Limited')).toBeNull();
+    expect(splitProviderTitle('IT Technician - Level 3 Apprenticeship', 'QA')).toBeNull();
+    expect(splitProviderTitle('Data Analyst Apprentice - Grosvenor', 'Thales')).toBeNull();
+    expect(
+      splitProviderTitle('IT Level 3 Apprenticeship 2026 - CSL Data Services', 'QA Limited'),
+    ).toBeNull();
+  });
+  it("the advert then matches the employer's own FAA listing", () => {
+    const n = normalise({
+      ...base,
+      source: 'higherin',
+      title: 'AI Developer & Automation Apprentice - Rawlinson & Hunter LLP',
+      employerName: 'QA Limited',
+    })!;
+    expect(n).toMatchObject({ employerName: 'Rawlinson & Hunter LLP', providerName: 'QA Limited' });
   });
 });
 
@@ -166,6 +353,45 @@ describe('persist merge rules', () => {
     expect(row.posted_date).toBe('2026-09-20');
     expect(row.closing_date).toBe('2026-11-01');
     expect(row.is_active).toBe(true);
+  });
+  it('another source never blanks out stored facts', () => {
+    const higherin = normalise({
+      ...base,
+      source: 'higherin',
+      applyUrl: undefined,
+      locations: [],
+      salaryText: undefined,
+    })!;
+    const row = toRow(
+      higherin,
+      {
+        id: 'x',
+        dedupe_key: higherin.dedupeKey,
+        first_seen_at: '2026-10-01T10:00:00Z',
+        description_html: null,
+        description_text: null,
+        posted_date: null,
+        closing_date: null,
+        apply_url: 'https://thales.wd3.myworkdayjobs.com/x',
+        salary_min: 24000,
+        salary_max: null,
+        locations: [
+          { text: 'Crawley, RH10 9HA', city: 'Crawley', region: 'South East', nation: 'England' },
+        ],
+        primary_city: 'Crawley',
+        region: 'South East',
+        nation: 'England',
+        lars_code: 337,
+      },
+      '2026-10-09',
+      '2026-10-09T06:30:00Z',
+    );
+    expect(row).toMatchObject({
+      apply_url: 'https://thales.wd3.myworkdayjobs.com/x',
+      salary_min: 24000,
+      primary_city: 'Crawley',
+      lars_code: 337,
+    });
   });
   it('a closing date in the past scores zero', () => {
     const row = toRow(

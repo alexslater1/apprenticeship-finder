@@ -1,10 +1,9 @@
-import { createHash } from 'node:crypto';
 import {
+  rules,
   classify,
   collapseSpaces,
   decodeEntities,
   normaliseEmployerName,
-  normaliseTitle,
   parseSalary,
   type Classification,
   type Location,
@@ -12,7 +11,9 @@ import {
   type RawListing,
 } from '@af/shared';
 import { decode as decodeHtml } from 'he';
+import { placeByName } from '@af/shared/places';
 import sanitizeHtml from 'sanitize-html';
+import { dedupeKey } from './dedupe.ts';
 
 /** Scraped HTML is untrusted: keep simple formatting and links only (the UI sanitises again). */
 export function sanitize(html: string): string {
@@ -95,19 +96,25 @@ export interface NormalisedListing {
   sources: SourceRef[];
 }
 
-/** PLAN.md §5.3: sha1(employer_name_norm | title_norm | primary_city_norm). */
-export function dedupeKey(
-  employerNorm: string,
+const PROVIDERS = new Set(rules.providerNames.map(normaliseEmployerName));
+
+/**
+ * Training providers post 'Data Analyst Apprenticeship - Grosvenor' under their own name.
+ * Return the real employer so the advert matches the employer's own FAA listing.
+ */
+export function splitProviderTitle(
   title: string,
-  city: string | null | undefined,
-): string {
-  const cityNorm = (city ?? '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
-  return createHash('sha1')
-    .update(`${employerNorm}|${normaliseTitle(title)}|${cityNorm}`)
-    .digest('hex');
+  employer: string,
+): { title: string; employer: string; provider: string } | null {
+  if (!PROVIDERS.has(normaliseEmployerName(employer))) return null;
+  const m = /^(.+?)\s+[-–|]\s+([^-–|]+)$/.exec(title);
+  if (!m) return null;
+  const [, role, client] = m as unknown as [string, string, string];
+  const c = client.trim();
+  if (c.split(/\s+/).length > 6 || /apprentic|\blevel\b/i.test(c) || placeByName(c)) return null;
+  // The role must be on the left ('Junior Data Analyst Level 3 Apprenticeship - Terberg DTS').
+  if (classify({ title: role }).roleVia !== 'title') return null;
+  return { title: role.trim(), employer: c, provider: employer };
 }
 
 const RAW_LIMIT = 20_000;
@@ -130,7 +137,15 @@ function compact<T extends Record<string, unknown>>(o: T | undefined): T | null 
  * geocoded (see geocode.ts) so the primary city is known.
  */
 export function normalise(raw: RawListing): NormalisedListing | null {
-  const title = collapseSpaces(decodeEntities(raw.title));
+  let title = collapseSpaces(decodeEntities(raw.title));
+  let employerName = collapseSpaces(decodeEntities(raw.employerName));
+  let providerName = raw.providerName ?? null;
+  const split = splitProviderTitle(title, employerName);
+  if (split) {
+    title = split.title;
+    employerName = split.employer;
+    providerName ??= split.provider;
+  }
   const descriptionHtml = raw.descriptionHtml ? sanitize(raw.descriptionHtml) : null;
   const descriptionText =
     raw.descriptionText ?? (descriptionHtml ? htmlToText(descriptionHtml) : null) ?? null;
@@ -141,6 +156,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     level: raw.level,
     larsCode: raw.larsCode,
     standardTitle: raw.standardTitle,
+    roleHint: raw.roleHint,
     knownApprenticeship: raw.knownApprenticeship,
   });
   if (!classification.relevant) return null;
@@ -150,7 +166,6 @@ export function normalise(raw: RawListing): NormalisedListing | null {
       ? { min: raw.salaryMin, max: raw.salaryMax ?? null }
       : parseSalary(raw.salaryText);
 
-  const employerName = collapseSpaces(decodeEntities(raw.employerName));
   const employerNameNorm = normaliseEmployerName(employerName) || 'unknown';
   const locations = raw.locations.map(({ lines: _lines, ...l }) => l);
   const first = locations[0];
@@ -158,7 +173,12 @@ export function normalise(raw: RawListing): NormalisedListing | null {
   const primaryCity = first?.city ?? null;
 
   return {
-    dedupeKey: dedupeKey(employerNameNorm, title, primaryCity),
+    dedupeKey: dedupeKey(
+      employerNameNorm,
+      title,
+      primaryCity,
+      locations.map((l) => l.city),
+    ),
     title,
     employerName,
     employerNameNorm,
@@ -169,7 +189,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     classification,
     larsCode: raw.larsCode ?? null,
     standardTitle: raw.standardTitle ?? classification.standard?.title ?? null,
-    providerName: raw.providerName ?? null,
+    providerName,
     salaryMin: salary.min,
     salaryMax: salary.max,
     salaryText: raw.salaryText ?? null,
