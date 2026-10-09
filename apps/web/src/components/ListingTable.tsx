@@ -5,7 +5,7 @@ import {
   tableFeatures,
   useTable,
 } from '@tanstack/react-table';
-import { Columns3, Eye, EyeOff } from 'lucide-react';
+import { Columns3, Eye, EyeOff, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -68,6 +68,12 @@ const columns = helper.columns([
           <div className="font-medium">{d.row.title}</div>
           <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
             {d.row.employer_name}
+            {d.row.university && (
+              <span className="inline-flex items-center gap-1">
+                · <GraduationCap className="size-3.5" aria-label="University" />
+                {d.row.university}
+              </span>
+            )}
             {d.row.pre_register && <PreRegisterBadge />}
             {d.isNew && <NewDot />}
           </div>

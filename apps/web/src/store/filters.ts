@@ -21,8 +21,6 @@ export interface Filters {
   degreeOnly: boolean;
   includeHidden: boolean;
   includeClosed: boolean;
-  /** Levels outside 4–7 are hidden unless asked for (BRIEF: store other levels, hide by default). */
-  includeLowLevels: boolean;
   sort: SortKey;
 }
 
@@ -42,7 +40,6 @@ export const DEFAULT_FILTERS: Filters = {
   degreeOnly: false,
   includeHidden: false,
   includeClosed: false,
-  includeLowLevels: false,
   sort: 'score',
 };
 
@@ -75,7 +72,18 @@ export const useFilters = create<FilterStore>()(
       set: (patch) => set(patch),
       reset: () => set({ ...DEFAULT_FILTERS }),
     }),
-    { name: 'af:filters', version: 1, storage: safeStorage },
+    {
+      name: 'af:filters',
+      version: 2,
+      storage: safeStorage,
+      // v2: levels 2–3 are gone, and with them the "include levels 2–3" switch.
+      migrate: (old) => {
+        const { includeLowLevels: _gone, ...rest } = (old ?? {}) as Partial<Filters> & {
+          includeLowLevels?: boolean;
+        };
+        return { ...rest, levels: (rest.levels ?? []).filter((l) => l >= 4) } as FilterStore;
+      },
+    },
   ),
 );
 
@@ -95,7 +103,6 @@ export function activeFilterCount(f: Filters): number {
   if (f.degreeOnly) n++;
   if (f.includeHidden) n++;
   if (f.includeClosed) n++;
-  if (f.includeLowLevels) n++;
   if (f.onlyKnownLocation) n++;
   return n;
 }

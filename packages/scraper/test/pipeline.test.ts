@@ -60,6 +60,23 @@ describe('normalise', () => {
   it('national vacancies are UK-wide', () => {
     expect(normalise({ ...base, locations: [], isNational: true })!.nation).toBe('UK-wide');
   });
+  it('drops levels 2–3', () => {
+    expect(normalise({ ...base, level: 3 })).toBeNull();
+    expect(normalise({ ...base, level: 4 })).not.toBeNull();
+  });
+  it('names the university from the provider or the advert', () => {
+    expect(normalise({ ...base, providerName: 'BPP UNIVERSITY LIMITED' })!.university).toBe(
+      'BPP University',
+    );
+    expect(
+      normalise({
+        ...base,
+        providerName: 'QA Limited',
+        descriptionText: 'You will graduate with a BSc from Northumbria University.',
+      })!.university,
+    ).toBe('Northumbria University');
+    expect(normalise(base)!.university).toBeNull();
+  });
 });
 
 describe('dedupe', () => {
@@ -335,6 +352,25 @@ describe('persist merge rules', () => {
     closingDate: '2026-11-01',
     descriptionText: 'short',
   })!;
+  it('keeps a stored level 2–3 listing closed when another source has no level', () => {
+    const noLevel = { ...n, classification: { ...n.classification, level: null } };
+    const row = toRow(
+      noLevel,
+      {
+        id: 'x',
+        dedupe_key: n.dedupeKey,
+        first_seen_at: '2026-09-01T10:00:00Z',
+        description_html: null,
+        description_text: null,
+        posted_date: null,
+        closing_date: null,
+        level: 3,
+      },
+      '2026-10-09',
+      '2026-10-09T06:30:00Z',
+    );
+    expect(row).toMatchObject({ level: 3, is_active: false, closed_reason: 'below_min_level' });
+  });
   it('keeps the longer stored description and the earliest posted date', () => {
     const row = toRow(
       n,

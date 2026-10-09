@@ -1,4 +1,4 @@
-import { baseScore, londonDate } from '@af/shared';
+import { MIN_LEVEL, baseScore, londonDate } from '@af/shared';
 import { db, must } from '../db.ts';
 import type { Ctx } from '../types.ts';
 import type { Matchable } from './dedupe.ts';
@@ -19,6 +19,7 @@ export interface ExistingRow {
   lars_code?: number | null;
   standard_title?: string | null;
   provider_name?: string | null;
+  university?: string | null;
   salary_min?: number | null;
   salary_max?: number | null;
   salary_text?: string | null;
@@ -31,7 +32,7 @@ export interface ExistingRow {
 }
 
 const EXISTING_COLUMNS =
-  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,salary_min,salary_max,salary_text,start_date,locations,primary_city,region,nation,details';
+  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,university,salary_min,salary_max,salary_text,start_date,locations,primary_city,region,nation,details';
 
 const chunk = <T>(xs: T[], n: number): T[][] =>
   Array.from({ length: Math.ceil(xs.length / n) }, (_, i) => xs.slice(i * n, i * n + n));
@@ -73,6 +74,13 @@ export function toRow(
     today,
   });
   const c = l.classification;
+  const level = c.level ?? ex?.level ?? null;
+  const closedReason =
+    closingDate && closingDate < today
+      ? 'closing_date_passed'
+      : level !== null && level < MIN_LEVEL
+        ? 'below_min_level'
+        : null;
   // Fill gaps, never blank out what another source told us (e.g. Higherin has no apply link
   // for a Thales job FAA links straight to Workday).
   const keepLocation = !l.locations.length && !!ex?.locations?.length;
@@ -85,12 +93,13 @@ export function toRow(
     apply_url: l.applyUrl ?? ex?.apply_url ?? null,
     description_html: descriptionHtml,
     description_text: descriptionText,
-    level: c.level ?? ex?.level ?? null,
+    level,
     level_source: c.level !== null ? c.levelSource : (ex?.level_source ?? null),
     is_degree: c.isDegree ?? ex?.is_degree ?? null,
     lars_code: l.larsCode ?? ex?.lars_code ?? null,
     standard_title: l.standardTitle ?? ex?.standard_title ?? null,
     provider_name: l.providerName ?? ex?.provider_name ?? null,
+    university: l.university ?? ex?.university ?? null,
     role_type: c.roleType,
     score: score.total,
     score_breakdown: score,
@@ -107,9 +116,10 @@ export function toRow(
     is_national: l.isNational,
     details: l.details || ex?.details ? { ...(ex?.details ?? {}), ...(l.details ?? {}) } : null,
     last_seen_at: nowIso,
-    // Still advertised but past its deadline: keep it closed rather than flip it back on.
-    is_active: !(closingDate && closingDate < today),
-    closed_reason: closingDate && closingDate < today ? 'closing_date_passed' : null,
+    // Still advertised but past its deadline (or a level we don't show): keep it closed rather
+    // than flip it back on.
+    is_active: !closedReason,
+    closed_reason: closedReason,
   };
 }
 

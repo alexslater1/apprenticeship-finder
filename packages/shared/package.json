@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./places": "./src/places.ts"
+    "./places": "./src/places.ts",
+    "./universities": "./src/universities.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json"
