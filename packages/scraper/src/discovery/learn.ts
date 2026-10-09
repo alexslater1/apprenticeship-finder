@@ -3,7 +3,7 @@ import { detectFrom } from '../connectors/detect.ts';
 import { db, must } from '../db.ts';
 import type { NormalisedListing } from '../pipeline/normalise.ts';
 import type { Ctx } from '../types.ts';
-import { ignoredNames, isAggregator, type SuggestionInput } from './config.ts';
+import { ignoredName, ignoredNames, isAggregator, type SuggestionInput } from './config.ts';
 
 /**
  * D3 (PLAN.md §6.5): every strong listing at a company we don't watch becomes a suggestion,
@@ -26,6 +26,7 @@ export function suggestionsFromListings(
     if (l.employerId || l.isLead) continue;
     const norm = l.employerNameNorm;
     if (!norm || norm === 'unknown' || ignored.has(norm) || PROVIDERS.has(norm)) continue;
+    if (ignoredName(l.employerName)) continue;
     const score = baseScore({
       title: l.title,
       descriptionText: l.descriptionText ?? undefined,
@@ -35,7 +36,10 @@ export function suggestionsFromListings(
       today,
     }).total;
     if (score < MIN_SCORE) continue;
+    // A link to the employer's own site (not a board or training provider) is what makes a
+    // suggestion useful: without one there's nothing to watch.
     const link = [l.applyUrl, l.url].find((u): u is string => !!u && !isAggregator(u));
+    if (!link) continue;
     const s = l.sources[0]!;
     out.push({
       name: l.employerName,
@@ -47,7 +51,7 @@ export function suggestionsFromListings(
             : 'listing',
       careersUrl: link,
       evidence: { source: s.source, url: s.url, title: l.title, seen_at: today },
-      detected: link ? detectFrom(link) : null,
+      detected: detectFrom(link),
     });
   }
   return out;
@@ -58,12 +62,19 @@ export async function saveSuggestions(
   inputs: SuggestionInput[],
   ctx: Ctx,
   isWatched: (norm: string) => boolean,
+  employers: Array<{ connector: string | null; connector_config: Record<string, unknown> }> = [],
 ): Promise<{ added: number; auto: number; updated: number }> {
   const ignored = ignoredNames();
   const byNorm = new Map<string, SuggestionInput[]>();
+  const watchedBoards = new Set(
+    employers.map((e) => boardKey(e.connector, e.connector_config)).filter(Boolean),
+  );
   for (const s of inputs) {
     const norm = normaliseEmployerName(s.name);
-    if (!norm || ignored.has(norm) || isWatched(norm)) continue;
+    if (!norm || ignored.has(norm) || isWatched(norm) || ignoredName(s.name)) continue;
+    // Already watching that job board under another name (Airbus's Workday tenant is 'ag').
+    if (s.detected && watchedBoards.has(boardKey(s.detected.connector, s.detected.config)))
+      continue;
     byNorm.set(norm, [...(byNorm.get(norm) ?? []), s]);
   }
   if (!byNorm.size) return { added: 0, auto: 0, updated: 0 };
@@ -138,6 +149,21 @@ export async function saveSuggestions(
     if (upgrade) auto++;
   }
   return { added, auto, updated };
+}
+
+/** One job board's identity across connectors: Workday tenant, Greenhouse token, host… */
+export function boardKey(connector: string | null, cfg: Record<string, unknown>): string {
+  if (!connector) return '';
+  const id =
+    cfg.tenant ??
+    cfg.token ??
+    cfg.account ??
+    cfg.company ??
+    cfg.org ??
+    cfg.companyId ??
+    cfg.host ??
+    cfg.url;
+  return id ? `${connector}:${String(id).toLowerCase()}` : '';
 }
 
 /** A free employer id for a new company: 'acme', then 'acme-2'… */

@@ -263,3 +263,33 @@ export function useScrapeRuns() {
     },
   });
 }
+
+export interface Budget {
+  key: string;
+  month: string | null;
+  used: number;
+  limit: number | null;
+}
+
+/** Monthly search budgets the scraper keeps in source_state (SerpApi, Tavily). */
+export function useBudgets() {
+  return useQuery({
+    queryKey: ['budgets'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('source_state')
+        .select('key,value')
+        .in('key', ['budget:serpapi', 'budget:tavily']);
+      fail('Loading budgets', error);
+      return (data ?? []).map((r) => {
+        const v = r.value as { month?: string; used?: number; limit?: number };
+        return {
+          key: r.key as string,
+          month: v.month ?? null,
+          used: v.used ?? 0,
+          limit: v.limit ?? null,
+        };
+      }) as Budget[];
+    },
+  });
+}

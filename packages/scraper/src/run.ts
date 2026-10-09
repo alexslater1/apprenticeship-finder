@@ -225,6 +225,7 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
         inputs,
         { ...ctx, log: log.child('discovery') },
         (norm) => matchEmployer(norm) !== null,
+        storedEmployers,
       );
     } catch (err) {
       log.error(`suggestions: ${(err as Error).message}`);

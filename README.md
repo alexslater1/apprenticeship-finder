@@ -1,6 +1,6 @@
 # Apprenticeship Finder
 
-A private, login-only dashboard of UK data-science apprenticeships (data scientist, data analyst, ML/AI, data engineering; levels 6/5 first, then 4). A daily GitHub Actions job collects listings into Supabase; the React app on GitHub Pages reads them.
+A private, login-only dashboard of UK data-science apprenticeships (data scientist, data analyst, ML/AI, data engineering; levels 4–7, ranked by the High/Maybe/No preferences in Settings). A daily GitHub Actions job collects listings into Supabase from job boards, the gov.uk, Scottish, Welsh and NI services, 145+ employers' own careers sites and web-wide discovery; the React app on GitHub Pages reads them.
 
 - Live site: https://alexslater1.github.io/apprenticeship-finder/ (sign-in required)
 - Decisions: [`BRIEF.md`](BRIEF.md) · Build plan: [`PLAN.md`](PLAN.md) · Source research: [`research/`](research/)
@@ -10,9 +10,15 @@ A private, login-only dashboard of UK data-science apprenticeships (data scienti
 ```
 apps/web            Vite + React dashboard (GitHub Pages)
 packages/shared     types, classification + scoring rules, parsers (used by both)
-packages/scraper    CLI: scrape, digest, migrate (runs in GitHub Actions)
+packages/scraper    CLI: scrape, digest, migrate, sync-employers, detect-ats (runs in GitHub Actions)
+  src/sources/      aggregators: faa, higherin, reed, adzuna, scot, wales, ni, amazing, ngtu,
+                    google-jobs (SerpApi), web-search (Tavily)
+  src/connectors/   employer job systems (Workday, SuccessFactors, Oracle, Avature, Oleeo, Eightfold,
+                    Phenom, Greenhouse, …) plus generic jsonld / pagehash / manual
+  src/discovery/    suggestions: learn employers from listings, turn approved ones into employers
 config/             keywords.json (classification rules), standards.json (LARS codes), uk-places.json (gazetteer),
-                    universities.json (names the degree partner), employers.json (watchlist + connectors)
+                    universities.json (names the degree partner), employers.json (watchlist + connectors),
+                    employers.excluded.json (checked and left out), discovery.json (search queries, budgets)
 supabase/migrations SQL schema + row-level security
 .github/workflows   ci.yml, deploy-web.yml, scrape.yml (daily 06:23 UTC)
 data/last-run.json  public run summary committed daily (keeps the cron alive)
@@ -28,12 +34,23 @@ npm install
 npm run dev                        # http://localhost:5173, uses the hosted Supabase
 npm run scrape -- --dry-run        # fetch + classify, print, write nothing
 npm run scrape -- --source faa     # one source, writes to Supabase
+npm run scrape -- --employer barclays,thales --dry-run   # just these employers' careers sites
+npm run scrape -- --source employers --dry-run           # every watched employer
+npm run cli -w packages/scraper -- detect-ats https://careers.example.com/jobs   # which job system?
 npm run migrate                    # apply supabase/migrations/*.sql (needs SUPABASE_DB_PASSWORD)
 npm test                           # vitest
 npm run lint && npm run typecheck
 ```
 
 Classification is table-driven: edit `config/keywords.json` and run `npm test` to see what changes.
+
+### Employers
+
+`config/employers.json` is the watchlist: identity, the job system (`connector`) and its settings (`connector_config`, shapes in `research/ats-platforms.md` §20 and `src/connectors/*.ts`). Every scrape syncs it into the `employers` table; status, counts and the Watch toggle live in the database. To add one by hand, run `detect-ats` on its careers page and paste the result. Companies added from the dashboard ("Add company") or found by discovery live only in the database. `connector_note` records what the 2026-10-09 checks found; `manual` is for sites that block bots or forbid crawling in robots.txt, which we respect rather than work around.
+
+### Discovery
+
+Google Jobs (6 searches a day, SerpApi free plan) and Tavily (10 a day) look for adverts and pages at companies we don't watch; every strong listing at an unwatched company becomes a suggestion. Suggestions whose apply link reveals a known job system are watched automatically; the rest wait in Companies → Suggested. Monthly search counts are on the Health page and in the email when they pass 80%.
 
 ## Configuration
 
@@ -53,7 +70,7 @@ Supabase dashboard settings (not in code):
 
 ## Operations
 
-- Run the scrape now: Actions → scrape → Run workflow (or `gh workflow run scrape.yml`). Inputs: `sources` (e.g. `faa`), `dry_run`.
+- Run the scrape now: Actions → scrape → Run workflow (or `gh workflow run scrape.yml`). Inputs: `sources` (e.g. `faa`, or `employers`), `employers` (e.g. `barclays`), `dry_run`.
 - If GitHub ever disables the schedule: `gh workflow enable scrape.yml`.
 - If Supabase pauses the project after a quiet week: Dashboard → Restore.
 - Logs from each run are uploaded as a workflow artifact for 14 days.

@@ -22,6 +22,8 @@ const Config = z.object({
     ),
   }),
   ignoreEmployers: z.array(z.string()),
+  /** Names that are providers or boards, not employers ('University of X: Apprenticeships'). */
+  ignoreNamePattern: z.string().optional(),
   aggregatorHosts: z.array(z.string()),
 });
 export type DiscoveryConfig = z.infer<typeof Config>;
@@ -42,6 +44,11 @@ export function ignoredNames(): Set<string> {
       normaliseEmployerName,
     ),
   );
+}
+
+export function ignoredName(name: string): boolean {
+  const p = discoveryConfig().ignoreNamePattern;
+  return !!p && new RegExp(p, 'i').test(name);
 }
 
 export function isAggregator(url: string): boolean {
