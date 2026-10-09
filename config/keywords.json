@@ -103,7 +103,7 @@
     ],
     "text": [
       {
-        "re": "\\blevel\\s*([2-7])\\s*(apprenticeship|standard|qualification|degree)",
+        "re": "\\blevel\\s*([2-7])\\b(?=[^.\\n]{0,40}\\b(apprenticeship|standard|qualification|degree))",
         "group": 1
       },
       {
@@ -162,5 +162,33 @@
     "preferredLevel": 10,
     "preferredRole": 10,
     "withinDistance": 8
+  },
+  "providers": {
+    "$comment": "Training providers that post adverts on behalf of employers as 'Role - Employer'. The pipeline moves the employer out of the title so cross-source dedupe works.",
+    "names": [
+      "QA",
+      "QA Limited",
+      "QA Ltd",
+      "QA Apprenticeships",
+      "Baltic Apprenticeships",
+      "Baltic Training",
+      "Firebrand Training",
+      "Just IT",
+      "Just IT Training",
+      "Multiverse",
+      "Apprentify",
+      "Estio Training",
+      "Cambridge Spark",
+      "Corndel",
+      "Avado",
+      "LDN Apprenticeships",
+      "Itec Skills",
+      "Lifetime Training",
+      "Learning Curve Group",
+      "Paragon Skills",
+      "Kaplan",
+      "BPP",
+      "Firebrand"
+    ]
   }
 }
