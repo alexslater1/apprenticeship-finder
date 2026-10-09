@@ -3,6 +3,7 @@ import type { Env } from './env.ts';
 import type { Http } from './http.ts';
 import type { Logger } from './log.ts';
 import type { StateStore } from './state.ts';
+import type { SuggestionInput } from './discovery/config.ts';
 
 export interface Ctx {
   env: Env;
@@ -26,6 +27,8 @@ export interface SourceResult {
   stats: Record<string, number | string>;
   /** Employer boards: every job listed (not just apprenticeships), so 0 candidates isn't an outage. */
   total?: number | null;
+  /** Companies the source came across that might be worth watching (web search). */
+  suggestions?: SuggestionInput[];
 }
 
 /** An aggregator (FAA, Higherin, Reed…), PLAN.md §6.1. */

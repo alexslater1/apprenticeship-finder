@@ -343,6 +343,7 @@
     "aliases": [
       "FTSE Russell",
       "LSEG",
+      "London Stock Exchange",
       "Refinitiv"
     ],
     "sector": "Banking & Finance",
@@ -3619,6 +3620,7 @@
     "aliases": [
       "John Lewis",
       "John Lewis & Partners",
+      "John Lewis Partners",
       "Waitrose",
       "Waitrose & Partners"
     ],
@@ -4803,6 +4805,7 @@
     "id": "babcock-international",
     "name": "Babcock International",
     "aliases": [
+      "Babcock",
       "Babcock Land",
       "Babcock Marine",
       "Cavendish Nuclear"
@@ -4850,6 +4853,7 @@
     "id": "bae-systems",
     "name": "BAE Systems",
     "aliases": [
+      "BAE",
       "BAE Systems Air",
       "BAE Systems Digital Intelligence",
       "BAE Systems Maritime",
@@ -5061,7 +5065,9 @@
     "name": "Jaguar Land Rover",
     "aliases": [
       "JLR",
-      "Jaguar Land Rover Ltd"
+      "Jaguar",
+      "Jaguar Land Rover Ltd",
+      "Land Rover"
     ],
     "sector": "Engineering, Defence & Manufacturing",
     "relevance": "core",
@@ -6205,6 +6211,7 @@
     "aliases": [
       "Bord Gáis Energy",
       "British Gas",
+      "Centrica",
       "Centrica plc",
       "Hive"
     ],

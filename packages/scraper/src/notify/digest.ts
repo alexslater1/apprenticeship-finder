@@ -43,6 +43,8 @@ export interface DigestData {
   newBelowThreshold: number;
   closingSoon: DigestItem[];
   openedEmployers: Array<{ name: string; url: string | null }>;
+  /** Discovery: companies watched automatically since the last email, and how many await a tap. */
+  newCompanies: { auto: string[]; pending: number };
   health: string[];
   dashboardUrl: string;
 }
@@ -188,7 +190,38 @@ export async function gatherDigest(
     'opened employers',
   );
 
+  const suggestions = must<Array<{ name: string | null; status: string; auto: boolean }>>(
+    await db().from('employer_suggestions').select('name,status,auto').gt('created_at', newSince),
+    'new suggestions',
+  );
+  const pendingTotal = must<Array<{ id: string }>>(
+    await db().from('employer_suggestions').select('id').eq('status', 'pending'),
+    'pending suggestions',
+  ).length;
+
   const health: string[] = [];
+  const erroring = must<Array<{ name: string }>>(
+    await db().from('employers').select('name').eq('watch', true).eq('status', 'error'),
+    'erroring employers',
+  );
+  if (erroring.length)
+    health.push(
+      `${plural(erroring.length, 'company site')} couldn't be checked: ${erroring
+        .slice(0, 6)
+        .map((x) => x.name)
+        .join(', ')}${erroring.length > 6 ? '…' : ''} (see Health).`,
+    );
+  for (const [key, label] of [
+    ['budget:serpapi', 'Google Jobs (SerpApi)'],
+    ['budget:tavily', 'web search (Tavily)'],
+  ] as const) {
+    const b = must<Array<{ value: { month: string; used: number; limit?: number } }>>(
+      await db().from('source_state').select('value').eq('key', key).limit(1),
+      key,
+    )[0]?.value;
+    if (b && b.month === today.slice(0, 7) && b.limit && b.used >= b.limit * 0.8)
+      health.push(`${label} has used ${b.used} of its ${b.limit} searches this month.`);
+  }
   const runs = must<
     Array<{
       started_at: string;
@@ -230,6 +263,10 @@ export async function gatherDigest(
         name: o.name,
         url: o.job_search_url ?? o.early_careers_url,
       })),
+      newCompanies: {
+        auto: suggestions.filter((x) => x.auto && x.name).map((x) => x.name!),
+        pending: pendingTotal,
+      },
       health,
       dashboardUrl: e.DASHBOARD_URL,
     },
@@ -238,7 +275,11 @@ export async function gatherDigest(
 
 export function isEmpty(d: DigestData): boolean {
   return (
-    !d.newMatches.length && !d.closingSoon.length && !d.openedEmployers.length && !d.health.length
+    !d.newMatches.length &&
+    !d.closingSoon.length &&
+    !d.openedEmployers.length &&
+    !d.newCompanies.auto.length &&
+    !d.health.length
   );
 }
 
@@ -298,6 +339,8 @@ export function renderDigest(d: DigestData): Mail {
   if (d.closingSoon.length) parts.push(`${d.closingSoon.length} closing soon`);
   if (d.openedEmployers.length)
     parts.push(plural(d.openedEmployers.length, 'employer opened', 'employers opened'));
+  if (d.newCompanies.auto.length)
+    parts.push(plural(d.newCompanies.auto.length, 'new company', 'new companies'));
   const subject = parts.length
     ? `Apprenticeships: ${parts.join(', ')}`
     : 'Apprenticeship Finder: scrape problems';
@@ -357,6 +400,22 @@ export function renderDigest(d: DigestData): Mail {
         .join('')}</ul>`,
     );
     text.push(d.openedEmployers.map((o) => `- ${o.name}${o.url ? ` ${o.url}` : ''}`).join('\n'));
+  }
+
+  if (d.newCompanies.auto.length || d.newCompanies.pending) {
+    section('New companies found');
+    const parts: string[] = [];
+    if (d.newCompanies.auto.length)
+      parts.push(
+        `Now watching: ${d.newCompanies.auto.slice(0, 10).join(', ')}${d.newCompanies.auto.length > 10 ? '…' : ''}.`,
+      );
+    if (d.newCompanies.pending)
+      parts.push(`${plural(d.newCompanies.pending, 'suggestion')} waiting in the Suggested tab.`);
+    const link = `${d.dashboardUrl}#/companies`;
+    html.push(
+      `<p style="font-size:15px">${parts.map(esc).join(' ')} <a href="${esc(link)}" style="color:#1d4ed8">Companies</a></p>`,
+    );
+    text.push(`${parts.join(' ')} ${link}`);
   }
 
   if (d.health.length) {

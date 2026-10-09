@@ -1,0 +1,147 @@
+{
+  "$comment": "Discovery (PLAN.md §6.5): queries for Google Jobs (SerpApi) and Tavily, monthly budgets, and names that are never employers. See research/discovery.md.",
+  "googleJobs": {
+    "monthlyBudget": 230,
+    "dateFilter": " in the last 3 days",
+    "queries": [
+      "data science apprenticeship",
+      "data analyst apprenticeship",
+      "degree apprenticeship data",
+      "machine learning apprenticeship",
+      "data engineer apprenticeship",
+      "graduate apprenticeship data science"
+    ],
+    "weeklyQueries": [
+      "level 6 apprenticeship data",
+      "digital and technology solutions apprenticeship"
+    ]
+  },
+  "tavily": {
+    "monthlyBudget": 900,
+    "maxPageFetches": 12,
+    "queries": [
+      {
+        "query": "data science degree apprenticeship 2027 applications open UK"
+      },
+      {
+        "query": "data analyst apprenticeship September 2027 UK"
+      },
+      {
+        "query": "level 6 data scientist apprenticeship employer UK"
+      },
+      {
+        "query": "AI machine learning degree apprenticeship 2027 UK"
+      },
+      {
+        "query": "graduate apprenticeship data science Scotland 2027"
+      },
+      {
+        "query": "apprenticeship data UK",
+        "include_domains": [
+          "myworkdayjobs.com",
+          "myworkdaysite.com"
+        ]
+      },
+      {
+        "query": "apprenticeship data UK",
+        "include_domains": [
+          "tal.net",
+          "avature.net",
+          "eightfold.ai"
+        ]
+      },
+      {
+        "query": "apprenticeship data UK",
+        "include_domains": [
+          "successfactors.eu",
+          "successfactors.com",
+          "jobs2web.com"
+        ]
+      },
+      {
+        "query": "apprenticeship data UK",
+        "include_domains": [
+          "teamtailor.com",
+          "greenhouse.io",
+          "lever.co",
+          "ashbyhq.com",
+          "workable.com"
+        ]
+      },
+      {
+        "query": "data apprenticeship 2027 school leavers UK",
+        "include_domains": [
+          "oraclecloud.com",
+          "pinpointhq.com",
+          "smartrecruiters.com",
+          "icims.com"
+        ]
+      }
+    ],
+    "excludeDomains": [
+      "facebook.com",
+      "instagram.com",
+      "reddit.com",
+      "linkedin.com",
+      "x.com",
+      "twitter.com",
+      "tiktok.com",
+      "youtube.com",
+      "threads.net",
+      "pinterest.com"
+    ]
+  },
+  "ignoreEmployers": [
+    "Unknown employer",
+    "Confidential",
+    "InternHunt",
+    "Talents By StudySmarter",
+    "StudySmarter",
+    "Jobrapido",
+    "JobLeads",
+    "Early Bird",
+    "Earlybird",
+    "LinkedIn",
+    "Indeed",
+    "Totaljobs",
+    "Reed",
+    "Adzuna",
+    "Higherin",
+    "RateMyApprenticeship",
+    "Not Going To Uni",
+    "Find an apprenticeship",
+    "Amazing Apprenticeships"
+  ],
+  "aggregatorHosts": [
+    "linkedin.com",
+    "indeed.com",
+    "indeed.co.uk",
+    "jobrapido.com",
+    "jobleads.com",
+    "studysmarter.co.uk",
+    "earlybirdhq.com",
+    "glassdoor.co.uk",
+    "glassdoor.com",
+    "totaljobs.com",
+    "reed.co.uk",
+    "adzuna.co.uk",
+    "cv-library.co.uk",
+    "s1jobs.com",
+    "talent.com",
+    "jooble.org",
+    "careerjet.co.uk",
+    "ziprecruiter.co.uk",
+    "simplyhired.co.uk",
+    "swe.org",
+    "higherin.com",
+    "notgoingtouni.co.uk",
+    "findapprenticeship.service.gov.uk",
+    "ratemyapprenticeship.co.uk",
+    "getmyfirstjob.co.uk",
+    "springpod.com",
+    "gradcracker.com",
+    "brightnetwork.co.uk",
+    "prospects.ac.uk",
+    "targetcareers.co.uk"
+  ]
+}

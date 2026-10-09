@@ -230,7 +230,14 @@ export interface SettingsRow {
   updated_at: string;
 }
 
-export const EMPLOYER_STATUSES = ['unknown', 'open', 'closed', 'blocked', 'error', 'manual'] as const;
+export const EMPLOYER_STATUSES = [
+  'unknown',
+  'open',
+  'closed',
+  'blocked',
+  'error',
+  'manual',
+] as const;
 export type EmployerStatus = (typeof EMPLOYER_STATUSES)[number];
 
 /** Row shape of the `v_employers` view (Companies page). */
