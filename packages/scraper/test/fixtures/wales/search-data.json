@@ -1,0 +1,62 @@
+{
+ "results": 4,
+ "pages": 1,
+ "data": [
+  {
+   "id": 7232,
+   "slug": "procurement-apprentice-7232",
+   "slugTrans": "prentis-caffael-7232",
+   "title": "Procurement Apprentice",
+   "employer": "Teledyne Qioptiq",
+   "closingDate": "2026-10-12T00:00:00Z",
+   "location": "St. Asaph",
+   "coordinates": "53.252903203304,-3.4728039558197",
+   "apprenticeshipLevel": 1,
+   "payDetails": "£18,319 progressively increasing each year of the Apprenticeship (over 4 years) ",
+   "distance": 0.0,
+   "score": 4.844253
+  },
+  {
+   "id": 7040,
+   "slug": "trainee-accountant-7040",
+   "slugTrans": "cyfrifydd-dan-hyfforddiant-7040",
+   "title": "Trainee Accountant",
+   "employer": "Maximus Accountants Ltd ",
+   "closingDate": "2026-10-30T00:00:00Z",
+   "location": "Cardiff",
+   "coordinates": "51.492410419959,-3.1714662",
+   "apprenticeshipLevel": 2,
+   "payDetails": "Apprenticeship rates",
+   "distance": 0.0,
+   "score": 4.7745075
+  },
+  {
+   "id": 7245,
+   "slug": "gap-personnel-business-administration-apprentice-7245",
+   "slugTrans": "personel-gap-prentis-gweinyddu-busnes-7245",
+   "title": "Gap Personnel - Business Administration Apprentice",
+   "employer": "Gap Personnel Holdings Ltd",
+   "closingDate": "2026-10-30T00:00:00Z",
+   "location": "Pontypridd ",
+   "coordinates": "51.5647452422,-3.2827531472214",
+   "apprenticeshipLevel": 1,
+   "payDetails": "Apprenticeship rates",
+   "distance": 0.0,
+   "score": 3.9735694
+  },
+  {
+   "id": 7228,
+   "slug": "flint-high-school-aln-administration-apprentice-7228",
+   "slugTrans": "ysgol-uwchradd-y-fflint-prentis-gweinyddiaeth-ady-7228",
+   "title": "Flint High School - ALN Administration Apprentice",
+   "employer": "Ap Prentis Cyf",
+   "closingDate": "2026-10-31T00:00:00Z",
+   "location": "Flintshire ",
+   "coordinates": "53.239247521258,-3.1367227",
+   "apprenticeshipLevel": 1,
+   "payDetails": "Apprenticeship rates",
+   "distance": 0.0,
+   "score": 3.4027483
+  }
+ ]
+}
