@@ -1,0 +1,444 @@
+{
+ "vacancies": [
+  {
+   "title": "2027 Data Science Apprentice - Crawley",
+   "description": "<p>As a Data Scientist Apprentice, you will be valued for your curiosity, analytical mindset, and passion for solving problems using data. You will work with a variety of datasets, tools, and technologies to identify trends, build predictive models, and generate insights that support business decision-making.</p>",
+   "numberOfPositions": 2,
+   "postedDate": "2026-10-05T11:33:46.88Z",
+   "closingDate": "2027-02-17T23:59:59Z",
+   "startDate": "2027-09-06T00:00:00Z",
+   "wage": {
+    "wageType": "Custom",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£24,000 a year",
+    "workingWeekDescription": "Monday - Friday (8 hours Monday – Thursday, 5 hours Friday). Shifts TBC."
+   },
+   "hoursPerWeek": 37,
+   "expectedDuration": "3 Years 6 Months",
+   "addresses": [
+    {
+     "addressLine1": "Manor Royal",
+     "addressLine4": "Crawley",
+     "postcode": "RH10 9HA",
+     "latitude": 51.13028,
+     "longitude": -0.18389
+    }
+   ],
+   "applicationUrl": "https://thales.wd3.myworkdayjobs.com/Careers/job/Crawley/XMLNAME-2027-Data-Science-Apprentice_R0337752",
+   "distance": 0,
+   "employerName": "THALES UK LIMITED",
+   "employerWebsiteUrl": "https://careers.thalesgroup.com/global/en/united-kingdom-apprenticeship",
+   "course": {
+    "larsCode": 337,
+    "title": "Data scientist (integrated degree) (level 6)",
+    "level": 6,
+    "route": "Digital",
+    "type": "Standard"
+   },
+   "apprenticeshipLevel": "Degree",
+   "providerName": "UNIVERSITY OF NOTTINGHAM",
+   "ukprn": 10007154,
+   "isDisabilityConfident": true,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000057249",
+   "vacancyReference": "2000057249",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  },
+  {
+   "title": "Data Team Apprentice",
+   "description": "<p>Do you want to start your career in data? You will be responsible for supporting the MI and Compliance officers in ensuring that income earned by the organisation each month is claimed accurately and contributes to the effective day-to-day operation of the organisation. Our fantastic team will support you all throughout your apprenticeship journey!</p>",
+   "numberOfPositions": 1,
+   "postedDate": "2026-01-16T11:05:26.453Z",
+   "closingDate": "2026-11-19T23:59:59Z",
+   "startDate": "2026-11-30T00:00:00Z",
+   "wage": {
+    "wageType": "ApprenticeshipMinimum",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£14,560 a year",
+    "workingWeekDescription": "Monday to Friday, between 9.00am to 5.00pm."
+   },
+   "hoursPerWeek": 35,
+   "expectedDuration": "1 Year 6 Months",
+   "addresses": [
+    {
+     "addressLine1": "197-205 HIGH STREET",
+     "addressLine2": "PONDERS END",
+     "addressLine3": "ENFIELD",
+     "postcode": "EN3 4DZ",
+     "latitude": 51.64551,
+     "longitude": -0.04624
+    }
+   ],
+   "distance": 0,
+   "employerName": "FIRST RUNG LIMITED ",
+   "employerWebsiteUrl": "www.firstrung.org.uk",
+   "course": {
+    "larsCode": 196,
+    "title": "Business administrator (level 3)",
+    "level": 3,
+    "route": "Business and administration",
+    "type": "Standard"
+   },
+   "apprenticeshipLevel": "Advanced",
+   "providerName": "FIRST RUNG LIMITED",
+   "ukprn": 10002483,
+   "isDisabilityConfident": false,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000009150",
+   "vacancyReference": "2000009150",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  },
+  {
+   "title": "Level 6 Apprentice Therapeutic Radiographer",
+   "description": "We strongly encourage you to arrange a visit to the department if this career is for you. This is an exciting opportunity for an apprentice to join an...",
+   "numberOfPositions": 0,
+   "postedDate": "2026-09-24T13:21:39.25Z",
+   "closingDate": "2026-10-18T23:59:59Z",
+   "startDate": "0001-01-01T00:00:00Z",
+   "wage": {
+    "wageType": "Custom",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£32073.00 to £39043.00"
+   },
+   "hoursPerWeek": 0,
+   "expectedDuration": "",
+   "addresses": [
+    {
+     "addressLine4": "Truro",
+     "postcode": "TR1 3LJ",
+     "latitude": 50.26667,
+     "longitude": -5.09151
+    }
+   ],
+   "applicationUrl": "https://beta.jobs.nhs.uk/candidate/jobadvert/C9156-26-0528",
+   "distance": 0,
+   "employerName": "Royal Cornwall Hospitals Trust",
+   "course": {
+    "larsCode": 0,
+    "level": 0
+   },
+   "ukprn": 0,
+   "isDisabilityConfident": false,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/C9156-26-0528",
+   "vacancyReference": "C9156-26-0528",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  },
+  {
+   "title": "Apprentice Sandwich Artist",
+   "description": "<p>Northern Skills are recruiting on behalf of Subway for a friendly, passionate, team player to join their busy team as a Sandwich Artist. The successful learner will gain a level 2 Foundation Level Apprenticeship in Catering and Hospitality.</p>",
+   "numberOfPositions": 1,
+   "postedDate": "2026-08-25T14:26:53.343Z",
+   "closingDate": "2026-10-25T23:59:59Z",
+   "startDate": "2026-10-30T00:00:00Z",
+   "wage": {
+    "wageType": "ApprenticeshipMinimum",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£12,480 a year",
+    "workingWeekDescription": "The store is open Monday to Sunday. Hours and days will be confirmed at interview, but typical shift patterns include: \r\n7.30am- 3.00pm and 11.00am  7.00pm. A flexible approach to working hours is essential."
+   },
+   "hoursPerWeek": 30,
+   "expectedDuration": "8 Months",
+   "addresses": [
+    {
+     "addressLine1": "31-33 WELLINGTON SQUARE",
+     "addressLine2": "STOCKTON ON TEES",
+     "postcode": "TS18 1RG",
+     "latitude": 54.56457,
+     "longitude": -1.3139
+    }
+   ],
+   "distance": 0,
+   "employerName": "Subway (KATS (STOCKTON) LTD)",
+   "employerWebsiteUrl": "https://restaurants.subway.com/united-kingdom/en/stockton-on-tees/64-high-street-castlegate-shopping",
+   "course": {
+    "larsCode": 831,
+    "title": "Catering and hospitality foundation apprenticeship (level 2)",
+    "level": 2,
+    "route": "Catering and hospitality",
+    "type": "Foundation"
+   },
+   "apprenticeshipLevel": "Intermediate",
+   "providerName": "MIDDLESBROUGH COLLEGE",
+   "ukprn": 10004344,
+   "isDisabilityConfident": false,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000050062",
+   "vacancyReference": "2000050062",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  },
+  {
+   "title": "Halfords - Crystal Peaks (Waterthorpe) Level 2 Autocare Technician Apprenticeship",
+   "description": "<p>Drive your career forward with this exciting apprenticeship opportunity.&nbsp;</p>\r\n<p>Our Autocare Technicians/Mechanics are involved all aspects of maintenance and repair from routine servicing to complex diagnostics and repairs to our customers vehicles.</p>",
+   "numberOfPositions": 1,
+   "postedDate": "2026-09-09T14:55:42.45Z",
+   "closingDate": "2026-10-09T23:59:59Z",
+   "startDate": "2026-10-30T00:00:00Z",
+   "wage": {
+    "wageType": "ApprenticeshipMinimum",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£16,640 a year",
+    "workingWeekDescription": "Monday - Friday, 08:30 - 17:30. \r\n\r\nPossibility of Saturday workings and/or shifts. \r\n\r\nWorking week will be confirmed on application."
+   },
+   "hoursPerWeek": 40,
+   "expectedDuration": "2 Years",
+   "addresses": [
+    {
+     "addressLine1": "Unit D, Crystal Peaks Retail Park",
+     "addressLine2": "Drake House Way, Crystal Peaks",
+     "addressLine3": "Sheffield",
+     "postcode": "S20 7JL",
+     "latitude": 53.3438,
+     "longitude": -1.35376
+    }
+   ],
+   "applicationUrl": "https://inspiro.tal.net/vx/appcentre-auto/brand-4/spa-1/candidate/so/pm/1/pl/41/opp/14013-Halfords-Crystal-Peaks-Waterthorpe-Level-2-Autocare-Technician-Apprenticeship/en-GB",
+   "distance": 0,
+   "employerName": "HALFORDS AUTOCENTRES LIMITED",
+   "course": {
+    "larsCode": 283,
+    "title": "Autocare technician (level 2)",
+    "level": 2,
+    "route": "Engineering and manufacturing",
+    "type": "Standard"
+   },
+   "apprenticeshipLevel": "Intermediate",
+   "providerName": "INSPIRO LEARNING LIMITED",
+   "ukprn": 10037348,
+   "isDisabilityConfident": false,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000052590",
+   "vacancyReference": "2000052590",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  },
+  {
+   "title": "Data & Operations Technician Apprentice",
+   "description": "<p>Kick-start your career in data and business operations with Testo Industrial Services. As a Data &amp; Operations Apprentice, you'll gain hands-on experience working with customer service, operations and logistics data, supporting the smooth running for the business while developing valuable data and analytical skills.&nbsp;</p>",
+   "numberOfPositions": 2,
+   "postedDate": "2026-09-24T16:37:38.307Z",
+   "closingDate": "2026-10-22T23:59:59Z",
+   "startDate": "2026-10-29T00:00:00Z",
+   "wage": {
+    "wageType": "Custom",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£18,000 a year",
+    "workingWeekDescription": "Monday to Thursday, 8:15am to 5:00pm.\r\nFriday, 8:15am to 3:45pm.\r\nLunch break: 1 hour each day."
+   },
+   "hoursPerWeek": 37.5,
+   "expectedDuration": "2 Years",
+   "addresses": [
+    {
+     "addressLine1": "STANLEY HOUSE",
+     "addressLine2": "THE OLD BRICK KILN",
+     "addressLine3": "MONK SHERBORNE ROAD",
+     "addressLine4": "RAMSDELL",
+     "postcode": "RG26 5PR",
+     "latitude": 51.31294,
+     "longitude": -1.1551
+    },
+    {
+     "addressLine1": "Unit 1, Armstrong Point",
+     "addressLine2": "Swan Lane, Hindley",
+     "addressLine3": "Wigan",
+     "postcode": "WN2 4AU",
+     "latitude": 53.528,
+     "longitude": -2.54806
+    }
+   ],
+   "distance": 0,
+   "employerName": "TESTO INDUSTRIAL SERVICES LIMITED",
+   "employerWebsiteUrl": "https://www.testotis.co.uk/",
+   "course": {
+    "larsCode": 576,
+    "title": "Data technician (level 3)",
+    "level": 3,
+    "route": "Digital",
+    "type": "Standard"
+   },
+   "apprenticeshipLevel": "Advanced",
+   "providerName": "THE S&A TRANSFORM GROUP LIMITED",
+   "ukprn": 10088850,
+   "isDisabilityConfident": true,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000054720",
+   "vacancyReference": "2000054720",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  },
+  {
+   "title": "Childcare Level 3 apprenticeship",
+   "description": "Are you passionate about giving children the best start in life?  At Strong Tower Day Nursery, we're always on the lookout for caring, committed and enthusiastic individuals to join our team.  Your role will be supporting children aged 9 months to 5 years. You will also be a key person to a small group of children, making learning fun.",
+   "numberOfPositions": 3,
+   "postedDate": "2025-09-11T09:11:53.973Z",
+   "closingDate": "2026-11-25T23:59:59Z",
+   "startDate": "2026-12-09T00:00:00Z",
+   "wage": {
+    "wageType": "ApprenticeshipMinimum",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£16,640 a year",
+    "workingWeekDescription": "Monday - Friday, 8.30am - 5.30pm"
+   },
+   "hoursPerWeek": 40,
+   "expectedDuration": "1 Year 6 Months",
+   "addresses": [
+    {
+     "addressLine1": "26 ADMIRALTY CLOSE",
+     "addressLine2": "DEPTFORD",
+     "addressLine3": "LONDON",
+     "postcode": "SE8 4SS",
+     "latitude": 51.47547,
+     "longitude": -0.02495
+    },
+    {
+     "addressLine1": "89 Spa Road",
+     "addressLine3": "London",
+     "postcode": "SE16 3SG",
+     "latitude": 51.49627,
+     "longitude": -0.07088
+    }
+   ],
+   "distance": 0,
+   "employerName": "STRONG TOWER EDUCATION LTD",
+   "course": {
+    "larsCode": 430,
+    "title": "Early years educator (level 3)",
+    "level": 3,
+    "route": "Education and early years",
+    "type": "Standard"
+   },
+   "apprenticeshipLevel": "Advanced",
+   "providerName": "NORTH WALES TRAINING LTD.",
+   "ukprn": 10004716,
+   "isDisabilityConfident": false,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/1000341512",
+   "vacancyReference": "1000341512",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  },
+  {
+   "title": "Early Years Lead Practitioner Level 5 Apprenticeship",
+   "description": "<p>Ready to take the next step in your early years career? This Level 5 Early Years Lead Practitioner apprenticeship is designed for experienced practitioners looking to develop their leadership skills while continuing to support children's learning and development.</p>",
+   "numberOfPositions": 1,
+   "postedDate": "2026-06-30T09:10:01.58Z",
+   "closingDate": "2026-12-01T23:59:59Z",
+   "startDate": "2026-12-02T00:00:00Z",
+   "wage": {
+    "wageType": "ApprenticeshipMinimum",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£16,640 a year",
+    "workingWeekDescription": "Various shift patterns. \r\n\r\nGenerally 4 day working week, working hours within Monday to Friday 8.00am to 6.00pm."
+   },
+   "hoursPerWeek": 40,
+   "expectedDuration": "1 Year 6 Months",
+   "addresses": [],
+   "employerName": "BEST PRACTICE NETWORK LIMITED",
+   "course": {
+    "larsCode": 430,
+    "title": "Early years educator (level 3)",
+    "level": 3,
+    "route": "Education and early years",
+    "type": "Standard"
+   },
+   "apprenticeshipLevel": "Advanced",
+   "providerName": "BEST PRACTICE NETWORK LIMITED",
+   "ukprn": 10019464,
+   "isDisabilityConfident": true,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000039857",
+   "vacancyReference": "2000039857",
+   "isNationalVacancy": true,
+   "isNationalVacancyDetails": "<ul>\r\n<li>Become part or our talent pool and we will match you with employers to start your apprenticeship.</li>\r\n<li>Personalised support from the Apprenticeship Recruitment Team</li>\r\n<li>There's no guarantee of a placement, but the team will try their best to match you</li>\r\n</ul>"
+  },
+  {
+   "title": "Apprentice Vehicle Damage Assessor (VDA) Level 4 - SBS Bodyworks",
+   "description": "<p>As a Vehicle Damage Assessor, you will be inspecting and assessing accident-damaged vehicles. You will learn skills to appraise and compile accurate estimates. Researching repair methods to work out the correct and safe repair required for each individual vehicle and using specialist software to produce work instructions and costings.</p>",
+   "numberOfPositions": 1,
+   "postedDate": "2026-10-05T10:46:35.15Z",
+   "closingDate": "2026-10-28T23:59:59Z",
+   "startDate": "2026-11-09T00:00:00Z",
+   "wage": {
+    "wageType": "Custom",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£16,640 a year",
+    "workingWeekDescription": "Typically Monday - Friday, 8 am - 5 pm."
+   },
+   "hoursPerWeek": 40,
+   "expectedDuration": "2 Years",
+   "addresses": [
+    {
+     "addressLine1": "UNIT 2",
+     "addressLine2": "ANGEL ROAD WORKS",
+     "addressLine3": "ADVENT WAY",
+     "addressLine4": "LONDON",
+     "postcode": "N18 3AH",
+     "latitude": 51.61222,
+     "longitude": -0.04706
+    }
+   ],
+   "distance": 0,
+   "employerName": "SBS BODYWORKS LTD ",
+   "employerWebsiteUrl": "https://sbsbodywork.co.uk/",
+   "course": {
+    "larsCode": 450,
+    "title": "Vehicle damage assessor (level 4)",
+    "level": 4,
+    "route": "Engineering and manufacturing",
+    "type": "Standard"
+   },
+   "apprenticeshipLevel": "Higher",
+   "providerName": "AUTO-ASSESS LIMITED",
+   "ukprn": 10065596,
+   "isDisabilityConfident": false,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000057160",
+   "vacancyReference": "2000057160",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  },
+  {
+   "title": "Data Analyst Apprenticeship Programme",
+   "description": "<p>Our Data Science and Analytics Team helps colleagues across Howden turn complex information into meaningful insights that drive better business decisions.</p>\r\n<p>As an apprentice, you'll learn how to work with real business data, uncover patterns, solve problems and create valuable reports and dashboards.</p>",
+   "numberOfPositions": 1,
+   "postedDate": "2026-10-09T14:40:36.713Z",
+   "closingDate": "2026-11-13T23:59:59Z",
+   "startDate": "2027-09-13T00:00:00Z",
+   "wage": {
+    "wageType": "Custom",
+    "wageUnit": "Annually",
+    "wageAdditionalInformation": "£23,000 a year",
+    "workingWeekDescription": "Monday to Friday 9 am to 5:30 pm."
+   },
+   "hoursPerWeek": 37.5,
+   "expectedDuration": "1 Year 6 Months",
+   "addresses": [
+    {
+     "addressLine1": "St. James House",
+     "addressLine2": "St. James Square",
+     "addressLine3": "Cheltenham",
+     "postcode": "GL50 3PR",
+     "latitude": 51.90051,
+     "longitude": -2.07997
+    }
+   ],
+   "applicationUrl": "https://hyperiongrp.wd3.myworkdayjobs.com/Hyperion_External/job/Cheltenham---St-James-House/Data-Analyst-Apprenticeship-Programme-2027---Cheltenham_R0019722-1?source=GovUK",
+   "distance": 0,
+   "employerName": "HOWDEN UK GROUP LIMITED",
+   "employerWebsiteUrl": "https://www.howdengroupholdings.com/",
+   "course": {
+    "larsCode": 60,
+    "title": "Insurance practitioner (level 3)",
+    "level": 3,
+    "route": "Legal, finance and accounting",
+    "type": "Standard"
+   },
+   "apprenticeshipLevel": "Advanced",
+   "providerName": "WISER ACADEMY LIMITED",
+   "ukprn": 10055749,
+   "isDisabilityConfident": true,
+   "vacancyUrl": "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/2000058432",
+   "vacancyReference": "2000058432",
+   "isNationalVacancy": false,
+   "isNationalVacancyDetails": ""
+  }
+ ],
+ "total": 10,
+ "totalFiltered": 10,
+ "totalPages": 1
+}

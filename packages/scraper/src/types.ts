@@ -12,6 +12,8 @@ export interface Ctx {
   dryRun: boolean;
   /** Europe/London date of the run, YYYY-MM-DD. */
   today: string;
+  /** Source ids already stored for a source (skip detail calls for these). */
+  knownSourceIds(source: string): Promise<Set<string>>;
 }
 
 export interface SourceResult {
