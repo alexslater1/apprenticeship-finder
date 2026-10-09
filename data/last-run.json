@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-09",
+  "finished_at": "2026-10-09T17:45:17.003Z",
+  "status": "ok",
+  "trigger": "local",
+  "stats": {
+    "total": {
+      "raw": 0,
+      "requests": 0
+    }
+  }
+}

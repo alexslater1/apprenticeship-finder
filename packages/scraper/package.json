@@ -1,0 +1,28 @@
+{
+  "name": "@af/scraper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "cli": "tsx src/cli.ts",
+    "scrape": "tsx src/cli.ts scrape",
+    "digest": "tsx src/cli.ts digest",
+    "migrate": "tsx src/cli.ts migrate",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@af/shared": "*",
+    "@supabase/supabase-js": "^2.117.3",
+    "he": "^2.0.0",
+    "pg": "^8.23.1",
+    "robots-parser": "^3.0.1",
+    "sanitize-html": "^2.18.0",
+    "tsx": "^4.23.15",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/he": "^1.2.3",
+    "@types/pg": "^8.23.1",
+    "@types/sanitize-html": "^2.16.2"
+  }
+}
