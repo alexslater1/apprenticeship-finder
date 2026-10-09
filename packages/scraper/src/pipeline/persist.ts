@@ -2,7 +2,7 @@ import { baseScore, londonDate } from '@af/shared';
 import { db, must } from '../db.ts';
 import type { Ctx } from '../types.ts';
 import type { Matchable } from './dedupe.ts';
-import type { NormalisedListing } from './normalise.ts';
+import { plausibleDeadline, type NormalisedListing } from './normalise.ts';
 
 export interface ExistingRow {
   id: string;
@@ -61,7 +61,7 @@ export function toRow(
   const descriptionText = keepOldDescription ? ex!.description_text : l.descriptionText;
   const postedDate =
     [l.postedDate, ex?.posted_date].filter((d): d is string => !!d).sort()[0] ?? null;
-  const closingDate = l.closingDate ?? ex?.closing_date ?? null;
+  const closingDate = l.closingDate ?? plausibleDeadline(ex?.closing_date ?? undefined);
   const firstSeen = ex ? londonDate(new Date(ex.first_seen_at)) : today;
   const score = baseScore({
     title: l.title,

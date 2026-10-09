@@ -399,6 +399,23 @@ describe('persist merge rules', () => {
     expect(plausibleDeadline('2036-01-01', now)).toBeNull();
     expect(plausibleDeadline('2027-02-17', now)).toBe('2027-02-17');
   });
+  it('drops a placeholder deadline stored before the fix', () => {
+    const row = toRow(
+      { ...n, closingDate: null },
+      {
+        id: 'x',
+        dedupe_key: n.dedupeKey,
+        first_seen_at: '2026-10-09T06:00:00Z',
+        description_html: null,
+        description_text: null,
+        posted_date: null,
+        closing_date: '2036-01-01',
+      },
+      '2026-10-09',
+      '2026-10-09T06:30:00Z',
+    );
+    expect(row.closing_date).toBeNull();
+  });
   it('a listing past its deadline stays closed even if still advertised', () => {
     const row = toRow(
       { ...n, closingDate: '2026-10-01' },
