@@ -1,0 +1,19 @@
+{
+  "jobId": 55501234,
+  "employerName": "Example Analytics Ltd",
+  "jobTitle": "Data Analyst Apprentice",
+  "locationName": "Manchester",
+  "minimumSalary": 21000,
+  "maximumSalary": 23000,
+  "yearlyMinimumSalary": 21000,
+  "yearlyMaximumSalary": 23000,
+  "salaryType": "per annum",
+  "salary": "£21,000 - £23,000 per annum",
+  "datePosted": "02/10/2026",
+  "expirationDate": "20/11/2026",
+  "externalUrl": "https://careers.example.com/jobs/123",
+  "jobUrl": "https://www.reed.co.uk/jobs/data-analyst-apprentice/55501234",
+  "contractType": "Permanent",
+  "jobType": "Full Time",
+  "jobDescription": "<p>Join our data team as an apprentice working towards the <strong>Level 4 Data Analyst</strong> standard.</p><ul><li>SQL and Python</li></ul>"
+}
