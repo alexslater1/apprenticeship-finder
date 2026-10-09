@@ -107,8 +107,9 @@ export function toRow(
     is_national: l.isNational,
     details: l.details || ex?.details ? { ...(ex?.details ?? {}), ...(l.details ?? {}) } : null,
     last_seen_at: nowIso,
-    is_active: true,
-    closed_reason: null,
+    // Still advertised but past its deadline: keep it closed rather than flip it back on.
+    is_active: !(closingDate && closingDate < today),
+    closed_reason: closingDate && closingDate < today ? 'closing_date_passed' : null,
   };
 }
 

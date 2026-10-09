@@ -12,6 +12,7 @@ import {
 import {
   mergeWithinRun,
   normalise,
+  plausibleDeadline,
   sanitize,
   splitProviderTitle,
 } from '../src/pipeline/normalise.ts';
@@ -392,6 +393,20 @@ describe('persist merge rules', () => {
       primary_city: 'Crawley',
       lars_code: 337,
     });
+  });
+  it('far-future placeholder deadlines are treated as none', () => {
+    const now = new Date('2026-10-09T12:00:00Z');
+    expect(plausibleDeadline('2036-01-01', now)).toBeNull();
+    expect(plausibleDeadline('2027-02-17', now)).toBe('2027-02-17');
+  });
+  it('a listing past its deadline stays closed even if still advertised', () => {
+    const row = toRow(
+      { ...n, closingDate: '2026-10-01' },
+      undefined,
+      '2026-10-09',
+      '2026-10-09T06:30:00Z',
+    );
+    expect(row).toMatchObject({ is_active: false, closed_reason: 'closing_date_passed' });
   });
   it('a closing date in the past scores zero', () => {
     const row = toRow(
