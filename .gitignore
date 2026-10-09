@@ -1,0 +1,20 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# deps / build
+node_modules/
+dist/
+.vite/
+coverage/
+
+# scraper output
+logs/
+packages/scraper/test/fixtures/**/*.raw
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
