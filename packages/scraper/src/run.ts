@@ -4,6 +4,9 @@ import { db, must } from './db.ts';
 import { env, REPO_ROOT } from './env.ts';
 import { Http } from './http.ts';
 import { logger, startLogFile } from './log.ts';
+import { geocodeAll } from './pipeline/geocode.ts';
+import { mergeWithinRun, normalise, type NormalisedListing } from './pipeline/normalise.ts';
+import { knownSourceIds, markMissing, persist } from './pipeline/persist.ts';
 import { SOURCES } from './sources/index.ts';
 import { StateStore } from './state.ts';
 import type { Ctx, SourceResult } from './types.ts';
@@ -53,6 +56,8 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
     state: new StateStore(o.dryRun),
     dryRun: o.dryRun,
     today,
+    knownSourceIds: (source) =>
+      o.dryRun ? Promise.resolve(new Set<string>()) : knownSourceIds(source),
   };
 
   const stats: Record<string, unknown> = {};
@@ -82,12 +87,48 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
     }
   }
 
-  const listings: RawListing[] = results.flatMap((r) => r.result.listings);
-  const newListingIds: string[] = [];
-  stats.total = { raw: listings.length, requests: ctx.http.requests };
+  const raw: RawListing[] = results.flatMap((r) => r.result.listings);
+  let newListingIds: string[] = [];
+  let pipelineError: string | null = null;
+  try {
+    await geocodeAll(raw, ctx);
+    const kept = raw.map(normalise).filter((l): l is NormalisedListing => l !== null);
+    const merged = mergeWithinRun(kept);
+    const saved = await persist(merged, ctx);
+    newListingIds = saved.newIds;
+    let deactivated = 0;
+    if (!o.dryRun) {
+      for (const { source, result } of results) {
+        // A "complete" sync that returned nothing is more likely an outage than an empty market.
+        if (result.complete && result.listings.length > 0) {
+          deactivated += await markMissing(source, startedAt.toISOString());
+        }
+      }
+    }
+    stats.total = {
+      raw: raw.length,
+      relevant: kept.length,
+      listings: merged.length,
+      inserted: saved.inserted,
+      updated: saved.updated,
+      deactivated,
+      requests: ctx.http.requests,
+    };
+    log.info(
+      `pipeline: ${raw.length} raw → ${kept.length} relevant → ${merged.length} listings (${saved.inserted} new, ${saved.updated} updated, ${deactivated} deactivated)`,
+    );
+  } catch (err) {
+    pipelineError = err instanceof Error ? err.message : String(err);
+    log.error(`pipeline: ${pipelineError}`);
+  }
 
-  const status: RunSummary['status'] =
-    failed === 0 ? 'ok' : ran > 0 && failed * 2 > ran ? 'failed' : 'partial';
+  const status: RunSummary['status'] = pipelineError
+    ? 'failed'
+    : failed === 0
+      ? 'ok'
+      : ran > 0 && failed * 2 > ran
+        ? 'failed'
+        : 'partial';
 
   if (runId) {
     must(
@@ -98,7 +139,7 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
           status,
           stats,
           new_listing_ids: newListingIds,
-          error: failed ? `${failed}/${ran} sources failed` : null,
+          error: pipelineError ?? (failed ? `${failed}/${ran} sources failed` : null),
         })
         .eq('id', runId),
       'finish scrape_runs row',
