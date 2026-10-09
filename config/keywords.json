@@ -123,7 +123,7 @@
       "label": "admin/data-centre role"
     },
     {
-      "re": "existing (employees|staff|colleagues)|internal (applicants|candidates) only|internal only",
+      "re": "(only|exclusively) (open|available) to (existing|current|internal)|(existing|current) (employees|staff|colleagues) only|internal (applicants|candidates|applications|vacancy) only|open to internal (applicants|candidates)",
       "points": -60,
       "label": "internal only"
     }
