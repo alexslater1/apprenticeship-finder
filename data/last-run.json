@@ -1,12 +1,27 @@
 {
   "date": "2026-10-09",
-  "finished_at": "2026-10-09T17:52:20.572Z",
+  "finished_at": "2026-10-09T18:19:25.314Z",
   "status": "ok",
   "trigger": "manual",
   "stats": {
+    "faa": {
+      "vacancies": 3718,
+      "pages": 38,
+      "relevant": 54,
+      "detailFetched": 0,
+      "detailErrors": 0,
+      "invalid": 0,
+      "fetched": 54,
+      "ms": 74986
+    },
     "total": {
-      "raw": 0,
-      "requests": 0
+      "raw": 54,
+      "relevant": 54,
+      "listings": 54,
+      "inserted": 0,
+      "updated": 54,
+      "deactivated": 0,
+      "requests": 38
     }
   }
 }
