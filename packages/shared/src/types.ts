@@ -51,6 +51,8 @@ export const STATUS_LABELS: Record<TrackStatus, string> = {
 
 export interface Location {
   text: string;
+  /** Raw address lines from the source; used for city detection, dropped before saving. */
+  lines?: string[];
   postcode?: string;
   lat?: number;
   lon?: number;
