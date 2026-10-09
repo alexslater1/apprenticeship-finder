@@ -117,6 +117,13 @@ export function splitProviderTitle(
   return { title: role.trim(), employer: c, provider: employer };
 }
 
+/** Boards fill 'ongoing' adverts with far-future placeholders (Higherin: 2036-01-01). */
+export function plausibleDeadline(date: string | undefined, now = new Date()): string | null {
+  if (!date) return null;
+  const limit = new Date(now.getTime() + 2 * 365 * 86_400_000).toISOString().slice(0, 10);
+  return date > limit ? null : date;
+}
+
 const RAW_LIMIT = 20_000;
 
 function trimRaw(raw: unknown): unknown {
@@ -194,7 +201,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     salaryMax: salary.max,
     salaryText: raw.salaryText ?? null,
     postedDate: raw.postedDate ?? null,
-    closingDate: raw.closingDate ?? null,
+    closingDate: plausibleDeadline(raw.closingDate),
     startDate: raw.startDate ?? null,
     locations,
     primaryCity,
