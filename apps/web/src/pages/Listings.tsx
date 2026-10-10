@@ -59,6 +59,7 @@ export default function Listings() {
       sortDerived(
         derived.filter((d) => matches(d, filters)),
         filters.sort,
+        filters.sortReverse,
       ),
     [derived, filters],
   );
