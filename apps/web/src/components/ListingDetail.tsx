@@ -1,7 +1,7 @@
 import { rankLinks, ROLE_LABELS, standardFor, standardUrl } from '@af/shared';
 import DOMPurify from 'dompurify';
 import { Eye, EyeOff } from 'lucide-react';
-import { useMemo, type ReactNode } from 'react';
+import { lazy, Suspense, useMemo, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -22,6 +22,9 @@ import { AdvertSkills } from './AdvertSkills';
 import { ClosingBadge, GradeFitBadge, LevelBadge, MatchChip, PreRegisterBadge } from './badges';
 import { Notes } from './Notes';
 import { StatusSelect } from './StatusSelect';
+
+// Leaflet is big: load the map only when a listing is opened.
+const ListingMap = lazy(() => import('./ListingMap'));
 
 // Links in scraped descriptions open in a new tab, safely.
 DOMPurify.addHook('afterSanitizeAttributes', (node) => {
@@ -346,6 +349,21 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
               </section>
 
               <Notes target={{ kind: 'listing', id: r.id }} />
+
+              <section>
+                <h3 className="mb-2 font-semibold">Map</h3>
+                {r.locations?.some((l) => typeof l.lat === 'number') ? (
+                  <Suspense fallback={<Skeleton className="h-56 w-full rounded-lg" />}>
+                    <ListingMap locations={r.locations} score={d.score} />
+                  </Suspense>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    {r.is_national
+                      ? 'Advertised nationwide, so there’s no single place to show.'
+                      : 'The advert doesn’t give an address to map.'}
+                  </p>
+                )}
+              </section>
             </div>
           </>
         )}
