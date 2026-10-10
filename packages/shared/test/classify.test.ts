@@ -259,6 +259,25 @@ describe('personalScore', () => {
     expect(personalScore(ds6, all, 1)).toBe(100);
     expect(personalScore(ds6, all, 1, { clamp: false })).toBe(ds6.score + 8);
   });
+  it('adds the Settings extras: university ranking, grades, start, salary, favourites', () => {
+    const anywhere = { ...prefs, defaultDistanceMiles: null };
+    const plain = personalScore(ds6, anywhere, null);
+    const at = (extra: object, score: object = {}) =>
+      personalScore({ ...ds6, ...extra }, { ...anywhere, score }, null, { clamp: false });
+    // Warwick is top 10 in computer science: +12 ('some'), +18 ('lots'), nothing when off.
+    expect(at({ university: 'University of Warwick' }) - plain).toBe(12);
+    expect(at({ university: 'University of Warwick' }, { universityWeight: 'lots' }) - plain).toBe(
+      18,
+    );
+    expect(at({ university: 'University of Warwick' }, { universityWeight: 'off' })).toBe(plain);
+    const entry = { summary: 'BBB at A level', ucas: 120, subjects: [] };
+    expect(at({ entry }, { predictedGrades: 'AAB' }) - plain).toBe(5);
+    expect(at({ entry }, { predictedGrades: 'CCC' }) - plain).toBe(-20);
+    expect(at({ start_date: '2027-01-05' }, { earliestStart: '2027-09-01' }) - plain).toBe(-40);
+    expect(at({ salary_min: 18000 }, { minSalary: 22000 }) - plain).toBe(-10);
+    expect(at({ employer_id: 'thales' }, { favourites: ['thales'] }) - plain).toBe(8);
+    expect(at({ is_degree: true }, { preferDegree: true }) - plain).toBe(10);
+  });
   it('ignores distance when he is happy to move anywhere', () => {
     const anywhere = { ...prefs, defaultDistanceMiles: null };
     expect(personalScore(da4, anywhere, 10)).toBe(personalScore(da4, anywhere, 400));

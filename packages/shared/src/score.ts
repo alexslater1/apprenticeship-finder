@@ -9,7 +9,9 @@ import {
   type RolePrefs,
   type RoleType,
   type ScoreBreakdown,
+  type ScorePrefs,
 } from './types.ts';
+import { bestRank, gradeFit, ordinal, universityRanking, type EntryReq } from './fit.ts';
 
 export interface ScoreInput {
   title: string;
@@ -71,6 +73,65 @@ export interface PersonalPrefs {
   levels: Partial<LevelPrefs>;
   /** Null: happy to move anywhere, so distance never changes the score. */
   defaultDistanceMiles: number | null;
+  score?: ScorePrefs;
+}
+
+/** What personalParts needs to know about a listing. */
+export interface ScoredListing {
+  score: number;
+  level: number | null;
+  role_type: RoleType;
+  score_breakdown?: ScoreBreakdown | null;
+  university?: string | null;
+  entry?: EntryReq | null;
+  start_date?: string | null;
+  salary_min?: number | null;
+  salary_max?: number | null;
+  employer_id?: string | null;
+  is_degree?: boolean | null;
+}
+
+const fmtMonth = (iso: string) =>
+  new Date(`${iso.slice(0, 10)}T12:00:00Z`).toLocaleDateString('en-GB', {
+    month: 'short',
+    year: 'numeric',
+  });
+
+/** The parts that come from Settings → "Your grades and start" / "What else counts". */
+function extraParts(l: ScoredListing, sp: ScorePrefs | undefined): PersonalPart[] {
+  const x = rules.personal.extras;
+  const out: PersonalPart[] = [];
+  const weight = x.universityWeight[sp?.universityWeight ?? 'some'] ?? 1;
+  const ranking = universityRanking(l.university);
+  if (ranking && weight > 0) {
+    const best = bestRank(ranking);
+    const band = x.universityBands.find(([max]) => best.rank <= max);
+    const points = Math.round((band?.[1] ?? 0) * weight);
+    if (points)
+      out.push({ label: `${l.university}: ${ordinal(best.rank)} for ${best.table}`, points });
+  }
+  const fit = gradeFit(l.entry, sp?.predictedGrades, sp?.subjects ?? []);
+  if (fit === 'meets')
+    out.push({ label: 'Your predicted grades meet the entry requirements', points: x.gradesMeet });
+  if (fit === 'close')
+    out.push({ label: 'Asks for a little more than your predicted grades', points: x.gradesClose });
+  if (fit === 'below')
+    out.push({ label: 'Asks for more than your predicted grades', points: x.gradesBelow });
+  if (fit === 'subject')
+    out.push({ label: 'Needs an A level you don’t take (Maths)', points: x.missingSubject });
+  if (sp?.preferDegree && l.is_degree)
+    out.push({ label: 'Degree apprenticeship (you prefer these)', points: x.preferDegree });
+  if (sp?.earliestStart && l.start_date && l.start_date < sp.earliestStart)
+    out.push({
+      label: `Starts ${fmtMonth(l.start_date)}, before you can`,
+      points: x.startsTooEarly,
+    });
+  const pay = l.salary_max ?? l.salary_min;
+  if (sp?.minSalary && pay && pay < sp.minSalary)
+    out.push({ label: 'Below your minimum salary', points: x.belowMinSalary });
+  if (l.employer_id && sp?.favourites?.includes(l.employer_id))
+    out.push({ label: 'One of your favourite companies', points: x.favourite });
+  return out;
 }
 
 export function rolePref(prefs: PersonalPrefs, role: RoleType): Pref {
@@ -106,12 +167,7 @@ export interface PersonalPart {
  * in the title counts more than one guessed from the description).
  */
 export function personalParts(
-  listing: {
-    score: number;
-    level: number | null;
-    role_type: RoleType;
-    score_breakdown?: ScoreBreakdown | null;
-  },
+  listing: ScoredListing,
   prefs: PersonalPrefs,
   distanceMiles: number | null,
 ): { parts: PersonalPart[]; raw: number; cap: number | null } {
@@ -154,16 +210,12 @@ export function personalParts(
     distanceMiles <= prefs.defaultDistanceMiles
   )
     parts.push({ label: `Within ${prefs.defaultDistanceMiles} miles`, points: w.withinDistance });
+  parts.push(...extraParts(listing, prefs.score));
   return { parts, raw: parts.reduce((n, x) => n + x.points, 0), cap };
 }
 
 export function personalScore(
-  listing: {
-    score: number;
-    level: number | null;
-    role_type: RoleType;
-    score_breakdown?: ScoreBreakdown | null;
-  },
+  listing: ScoredListing,
   prefs: PersonalPrefs,
   distanceMiles: number | null,
   opts: { clamp?: boolean } = {},

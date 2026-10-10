@@ -18,7 +18,9 @@ packages/scraper    CLI: scrape, digest, migrate, sync-employers, detect-ats (ru
   src/discovery/    suggestions: learn employers from listings, turn approved ones into employers
 config/             keywords.json (classification rules), standards.json (LARS codes), uk-places.json (gazetteer),
                     universities.json (names the degree partner), employers.json (watchlist + connectors),
-                    employers.excluded.json (checked and left out), discovery.json (search queries, budgets)
+                    employers.excluded.json (checked and left out), discovery.json (search queries, budgets),
+                    university-rankings.json (Complete University Guide positions; rebuild yearly with
+                    scripts/build-university-rankings.ts)
 supabase/migrations SQL schema + row-level security
 .github/workflows   ci.yml, deploy-web.yml, scrape.yml (daily 06:23 UTC)
 data/last-run.json  public run summary committed daily (keeps the cron alive)
@@ -43,6 +45,8 @@ npm run lint && npm run typecheck
 ```
 
 Classification is table-driven: edit `config/keywords.json` and run `npm test` to see what changes.
+
+The match score is the base score (role, level, degree, clear title, freshness, penalties) with the role and level points taken from Settings → High/Maybe, plus Settings extras: university league-table position, predicted grades against the advert's entry requirements, earliest start, minimum salary, degree preference and favourite companies. Weights are in `config/keywords.json` → `personal`; each listing's "Why this match" shows the parts.
 
 ### Employers
 

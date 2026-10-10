@@ -1,4 +1,4 @@
-import { BookOpen, EyeOff, Eye, GraduationCap, MessageSquare } from 'lucide-react';
+import { BookOpen, ClipboardCheck, EyeOff, Eye, GraduationCap, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Derived } from '@/lib/derive';
 import { formatSalary, locationLabel, milesLabel, studyWith } from '@/lib/format';
@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import {
   AdzunaAttribution,
   ClosingBadge,
+  GradeFitBadge,
   LevelBadge,
   MatchChip,
   NewDot,
@@ -63,7 +64,15 @@ export function ListingCard({ d }: { d: Derived }) {
           )}
           <span className="min-w-0 break-words">
             {study.kind === 'provider' ? `Training with ${study.name}` : study.name}
+            {study.rank && <span className="text-xs"> · {study.rank}</span>}
           </span>
+        </p>
+      )}
+      {r.entry && (
+        <p className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted-foreground">
+          <ClipboardCheck className="size-4 shrink-0" aria-label="Entry requirements" />
+          <span className="min-w-0 break-words">Needs {r.entry.summary}</span>
+          <GradeFitBadge fit={d.fit} />
         </p>
       )}
       <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">

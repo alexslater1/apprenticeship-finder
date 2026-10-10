@@ -9,6 +9,8 @@ import {
   type Location,
   type Nation,
   type RawListing,
+  extractEntry,
+  type EntryReq,
 } from '@af/shared';
 import { decode as decodeHtml } from 'he';
 import { placeByName } from '@af/shared/places';
@@ -85,6 +87,7 @@ export interface NormalisedListing {
   standardTitle: string | null;
   providerName: string | null;
   university: string | null;
+  entry: EntryReq | null;
   salaryMin: number | null;
   salaryMax: number | null;
   salaryText: string | null;
@@ -216,6 +219,10 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     larsCode: raw.larsCode ?? null,
     standardTitle: raw.standardTitle ?? classification.standard?.title ?? null,
     providerName,
+    entry: extractEntry(
+      descriptionText,
+      (raw.details?.qualifications as Parameters<typeof extractEntry>[1] | undefined) ?? [],
+    ),
     university: findUniversity({
       provider: providerName,
       employer: employerName,
@@ -260,6 +267,7 @@ export function mergeWithinRun(listings: NormalisedListing[]): NormalisedListing
     prev.applyUrl ??= l.applyUrl;
     prev.employerId ??= l.employerId;
     prev.university ??= l.university;
+    prev.entry ??= l.entry;
     prev.salaryMin ??= l.salaryMin;
     prev.salaryMax ??= l.salaryMax;
     prev.salaryText ??= l.salaryText;
