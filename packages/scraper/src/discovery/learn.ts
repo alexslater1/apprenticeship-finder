@@ -41,6 +41,7 @@ export function suggestionsFromListings(
     const link = [l.applyUrl, l.url].find((u): u is string => !!u && !isAggregator(u));
     if (!link) continue;
     const s = l.sources[0]!;
+    const detected = detectFrom(link);
     out.push({
       name: l.employerName,
       origin:
@@ -51,7 +52,9 @@ export function suggestionsFromListings(
             : 'listing',
       careersUrl: link,
       evidence: { source: s.source, url: s.url, title: l.title, seen_at: today },
-      detected: detectFrom(link),
+      // Web pages often don't say who's hiring, so their names are guesses: never auto-watch them.
+      detected: s.source === 'web_search' ? null : detected,
+      board: detected,
     });
   }
   return out;
