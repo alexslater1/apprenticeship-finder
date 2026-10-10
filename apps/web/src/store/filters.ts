@@ -2,7 +2,36 @@ import type { Nation, RoleType } from '@af/shared';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-export type SortKey = 'score' | 'closing' | 'newest' | 'salary' | 'distance';
+export type SortKey =
+  | 'score'
+  | 'closing'
+  | 'newest'
+  | 'salary'
+  | 'distance'
+  // Column headers in the table (Alex: "make the listing columns sortable by header click").
+  | 'title'
+  | 'location'
+  | 'level'
+  | 'role'
+  | 'grades'
+  | 'posted'
+  | 'status';
+
+/** What each sort is called, in its natural order and reversed. */
+export const SORT_LABELS: Record<SortKey, [string, string]> = {
+  score: ['Best match', 'Weakest match'],
+  closing: ['Closing soonest', 'Closing latest'],
+  newest: ['Newest', 'Oldest'],
+  salary: ['Highest salary', 'Lowest salary'],
+  distance: ['Nearest', 'Furthest'],
+  title: ['Title A–Z', 'Title Z–A'],
+  location: ['Location A–Z', 'Location Z–A'],
+  level: ['Highest level', 'Lowest level'],
+  role: ['Role A–Z', 'Role Z–A'],
+  grades: ['Best grade fit', 'Worst grade fit'],
+  posted: ['Recently posted', 'Posted longest ago'],
+  status: ['Furthest along', 'Least far along'],
+};
 
 export interface Filters {
   search: string;
@@ -28,6 +57,8 @@ export interface Filters {
   includeHidden: boolean;
   includeClosed: boolean;
   sort: SortKey;
+  /** Opposite of the sort's natural order (a second click on the column header). */
+  sortReverse: boolean;
 }
 
 export const DEFAULT_FILTERS: Filters = {
@@ -50,6 +81,7 @@ export const DEFAULT_FILTERS: Filters = {
   includeHidden: false,
   includeClosed: false,
   sort: 'score',
+  sortReverse: false,
 };
 
 interface FilterStore extends Filters {

@@ -119,4 +119,30 @@ describe('sortDerived', () => {
       'nowhere',
     ]);
   });
+
+  it('reverses on a second header click but keeps unknowns at the bottom', () => {
+    expect(sortDerived(visible, 'distance', true).map((d) => d.row.id)).toEqual([
+      'crawley',
+      'leeds',
+      'nowhere',
+    ]);
+  });
+
+  it('sorts the other columns', () => {
+    const titles = (list: typeof visible) => list.map((d) => d.row.title);
+    const az = titles(sortDerived(visible, 'title'));
+    expect(az).toEqual([...az].sort((a, b) => a.localeCompare(b)));
+    expect(titles(sortDerived(visible, 'title', true))).toEqual([...az].reverse());
+    const lv = sortDerived(visible, 'level').map((d) => d.row.level);
+    expect(lv[0]).toBe(Math.max(...lv.filter((l): l is number => l !== null)));
+    const graded = sortDerived(
+      [
+        { ...visible[0]!, fit: null },
+        { ...visible[0]!, fit: 'below' as const, row: { ...visible[0]!.row, id: 'below' } },
+        { ...visible[0]!, fit: 'meets' as const, row: { ...visible[0]!.row, id: 'meets' } },
+      ],
+      'grades',
+    );
+    expect(graded.map((d) => d.fit)).toEqual(['meets', 'below', null]);
+  });
 });

@@ -30,15 +30,10 @@ import {
 import { Slider } from '@/components/ui/slider';
 import { SOURCE_LABELS, sourceKey } from '@/lib/derive';
 import { cn } from '@/lib/utils';
-import { activeFilterCount, useFilters, type SortKey } from '@/store/filters';
+import { activeFilterCount, useFilters, type SortKey, SORT_LABELS } from '@/store/filters';
 
-const SORTS: Array<[SortKey, string]> = [
-  ['score', 'Best match'],
-  ['closing', 'Closing soonest'],
-  ['newest', 'Newest'],
-  ['salary', 'Highest salary'],
-  ['distance', 'Nearest'],
-];
+/** The dropdown's sorts; a column header's sort joins them while it's in use. */
+const SORTS: SortKey[] = ['score', 'closing', 'newest', 'salary', 'distance'];
 
 const QUICK_ROLES: RoleType[] = ['data_science', 'ml_ai', 'data_analyst', 'data_engineering'];
 const QUICK_LEVELS = [6, 5, 4];
@@ -193,12 +188,12 @@ export function FilterBar({
         <select
           id="sort"
           value={f.sort}
-          onChange={(e) => f.set({ sort: e.target.value as SortKey })}
+          onChange={(e) => f.set({ sort: e.target.value as SortKey, sortReverse: false })}
           className="h-10 w-[7.5rem] shrink-0 rounded-lg border border-input bg-background px-2 text-sm sm:h-8 sm:w-auto dark:bg-input/30"
         >
-          {SORTS.map(([k, l]) => (
+          {(SORTS.includes(f.sort) ? SORTS : [...SORTS, f.sort]).map((k) => (
             <option key={k} value={k} disabled={k === 'distance' && !hasHome}>
-              {l}
+              {SORT_LABELS[k][k === f.sort && f.sortReverse ? 1 : 0]}
             </option>
           ))}
         </select>
