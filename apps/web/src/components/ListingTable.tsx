@@ -5,7 +5,7 @@ import {
   tableFeatures,
   useTable,
 } from '@tanstack/react-table';
-import { BookOpen, ClipboardCheck, Columns3, Eye, EyeOff, GraduationCap } from 'lucide-react';
+import { BookOpen, Columns3, Eye, EyeOff, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -25,7 +25,6 @@ import {
   MatchChip,
   NewDot,
   PreRegisterBadge,
-  SourceBadges,
 } from './badges';
 import { useOpenListing } from '@/lib/useOpenListing';
 import { StatusSelect } from './StatusSelect';
@@ -82,13 +81,6 @@ const columns = helper.columns([
             {d.row.pre_register && <PreRegisterBadge />}
             {d.isNew && <NewDot />}
           </div>
-          {d.row.entry && (
-            <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
-              <ClipboardCheck className="size-3.5" aria-label="Entry requirements" />
-              Needs {d.row.entry.summary}
-              <GradeFitBadge fit={d.fit} />
-            </div>
-          )}
         </div>
       );
     },
@@ -132,14 +124,20 @@ const columns = helper.columns([
     header: 'Posted',
     cell: (c) => <span className="whitespace-nowrap">{formatDate(c.getValue())}</span>,
   }),
-  helper.accessor((d) => d.row.sources, {
-    id: 'sources',
-    header: 'Sources',
-    cell: (c) => (
-      <div className="grid gap-1">
-        <SourceBadges sources={c.getValue()} />
-      </div>
-    ),
+  helper.accessor((d) => d.row.entry?.summary ?? null, {
+    id: 'grades',
+    header: 'Grades needed',
+    cell: (c) =>
+      c.getValue() ? (
+        <div className="grid max-w-[12rem] min-w-[8rem] justify-items-start gap-1">
+          {c.getValue()}
+          <GradeFitBadge fit={c.row.original.fit} />
+        </div>
+      ) : (
+        <span className="text-muted-foreground" title="The advert doesn’t say">
+          —
+        </span>
+      ),
   }),
   helper.display({
     id: 'status',
@@ -162,7 +160,7 @@ const COLUMN_LABELS: Record<string, string> = {
   salary: 'Salary',
   closing: 'Closes',
   posted: 'Posted',
-  sources: 'Sources',
+  grades: 'Grades needed',
 };
 
 export function ListingTable({ data }: { data: Derived[] }) {

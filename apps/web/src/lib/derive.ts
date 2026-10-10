@@ -158,18 +158,3 @@ export const SOURCE_LABELS: Record<string, string> = {
   amazing: 'Amazing Apprenticeships',
   ngtu: 'Not Going To Uni',
 };
-
-export const SOURCE_SHORT: Record<string, string> = {
-  faa: 'FAA',
-  higherin: 'Higherin',
-  reed: 'Reed',
-  adzuna: 'Adzuna',
-  employer: 'Employer',
-  google_jobs: 'Google',
-  web_search: 'Web',
-  scot: 'Scotland',
-  wales: 'Wales',
-  ni: 'NI',
-  amazing: 'Amazing',
-  ngtu: 'NGTU',
-};
