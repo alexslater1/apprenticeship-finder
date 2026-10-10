@@ -52,13 +52,24 @@ export function detectBotWall(body: string, headers: Headers): string | null {
 }
 
 export interface RequestOptions {
-  method?: 'GET' | 'POST';
+  method?: 'GET' | 'POST' | 'HEAD';
   headers?: Record<string, string>;
   body?: string;
   /** Respect robots.txt for this request (default true for HTML scraping, false for APIs). */
   robots?: boolean;
   timeoutMs?: number;
   retries?: number;
+  /** 'manual' hands back 3xx responses (read the `location` header) instead of following them. */
+  redirect?: 'follow' | 'manual';
+  /** Keep the body as bytes (PDFs); `body` is then only filled for text replies. */
+  binary?: boolean;
+}
+
+export interface HttpResponse {
+  status: number;
+  body: string;
+  headers: Headers;
+  bytes?: Buffer;
 }
 
 const DEFAULT_GAP_MS = 1500;
@@ -101,10 +112,12 @@ export class Http {
     return (await this.request(url, o)).body;
   }
 
-  async request(
-    url: string,
-    o: RequestOptions = {},
-  ): Promise<{ status: number; body: string; headers: Headers }> {
+  /** Download a file as bytes. A text/HTML reply (bot wall, error page) is still sniffed. */
+  async bytes(url: string, o: RequestOptions = {}): Promise<Buffer> {
+    return (await this.request(url, { ...o, binary: true })).bytes ?? Buffer.alloc(0);
+  }
+
+  async request(url: string, o: RequestOptions = {}): Promise<HttpResponse> {
     const host = new URL(url).hostname;
     if (o.robots && !(await this.allowedByRobots(url))) {
       throw new BlockedError(url, 'disallowed by robots.txt');
@@ -116,7 +129,7 @@ export class Http {
     return run;
   }
 
-  private async doRequest(url: string, host: string, o: RequestOptions) {
+  private async doRequest(url: string, host: string, o: RequestOptions): Promise<HttpResponse> {
     const retries = o.retries ?? 2;
     for (let attempt = 0; ; attempt++) {
       const wait = (this.lastAt.get(host) ?? 0) + gapFor(host) - Date.now();
@@ -129,9 +142,11 @@ export class Http {
           headers: { 'User-Agent': USER_AGENT, ...o.headers },
           body: o.body,
           signal: AbortSignal.timeout(o.timeoutMs ?? 20_000),
-          redirect: 'follow',
+          redirect: o.redirect ?? 'follow',
         });
-        const body = await res.text();
+        const bytes = o.binary ? Buffer.from(await res.arrayBuffer()) : undefined;
+        const textual = /text|html|json|xml/i.test(res.headers.get('content-type') ?? '');
+        const body = bytes ? (textual ? bytes.toString('utf8') : '') : await res.text();
         if (res.status >= 500 && attempt < retries) {
           await sleep(1000 * 2 ** attempt);
           continue;
@@ -144,9 +159,10 @@ export class Http {
           throw new BlockedError(url, wall);
         }
         if (res.status === 403 || res.status === 429) throw new HttpError(res.status, url, body);
-        if (!res.ok) throw new HttpError(res.status, url, body);
-        if (this.opts.record) this.record(url, body);
-        return { status: res.status, body, headers: res.headers };
+        const redirected = o.redirect === 'manual' && res.status >= 300 && res.status < 400;
+        if (!res.ok && !redirected) throw new HttpError(res.status, url, body);
+        if (this.opts.record) this.record(url, bytes ?? body);
+        return { status: res.status, body, headers: res.headers, bytes };
       } catch (err) {
         const retryable =
           !(err instanceof HttpError) && !(err instanceof BlockedError) && attempt < retries;
@@ -171,7 +187,7 @@ export class Http {
     return p.then((robots) => (robots ? robots.isAllowed(url, USER_AGENT) !== false : true));
   }
 
-  private record(url: string, body: string) {
+  private record(url: string, body: string | Buffer) {
     const dir = `${REPO_ROOT}packages/scraper/test/fixtures/recorded/`;
     mkdirSync(dir, { recursive: true });
     const name = `${new URL(url).hostname}-${createHash('sha1').update(url).digest('hex').slice(0, 10)}.raw`;
