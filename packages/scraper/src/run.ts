@@ -5,6 +5,7 @@ import { env, REPO_ROOT } from './env.ts';
 import { Http } from './http.ts';
 import { logger, startLogFile } from './log.ts';
 import { geocodeAll } from './pipeline/geocode.ts';
+import { checkLinks } from './pipeline/links.ts';
 import { mergeWithinRun, normalise, type NormalisedListing } from './pipeline/normalise.ts';
 import { assignKeys } from './pipeline/dedupe.ts';
 import {
@@ -243,6 +244,11 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
       }
       // Incremental sources (Adzuna) never report closures; retire what we haven't seen in a while.
       deactivated += await expireStale(STALE_DAYS);
+      try {
+        stats.links = await checkLinks({ ...ctx, log: log.child('links') });
+      } catch (err) {
+        log.error(`link checks: ${(err as Error).message}`);
+      }
       if (employerRuns.length) {
         const { opened } = await saveEmployerStatus(
           employerRuns,

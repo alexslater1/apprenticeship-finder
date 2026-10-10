@@ -1,3 +1,4 @@
+import { rankLinks } from '@af/shared';
 import { Download, RefreshCw } from 'lucide-react';
 import { useMemo } from 'react';
 import { Link } from 'react-router';
@@ -43,7 +44,7 @@ function exportListings(rows: Derived[]) {
       formatSalary(d.row) ?? '',
       d.row.closing_date ?? '',
       d.row.status === 'none' ? '' : d.row.status,
-      d.row.apply_url || d.row.url,
+      rankLinks(d.row)[0]?.url ?? d.row.url,
     ]),
   );
 }
