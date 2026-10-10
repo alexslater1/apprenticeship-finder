@@ -1,5 +1,6 @@
 import {
   classifiedSegments,
+  extractEntry,
   extractSkills,
   extractStartDate,
   londonToday,
@@ -23,6 +24,8 @@ interface Row {
   skills: unknown;
   start_date?: string | null;
   start_precision?: 'day' | 'month' | 'year' | null;
+  entry?: unknown;
+  details?: { qualifications?: Parameters<typeof extractEntry>[1] } | null;
 }
 
 async function allListings(columns: string, activeOnly = false): Promise<Row[]> {
@@ -40,16 +43,24 @@ async function allListings(columns: string, activeOnly = false): Promise<Row[]> 
   }
 }
 
-/** Re-tag skills; fill start dates the advert gives where there's none, or only a month. */
+/** Re-read entry requirements, re-tag skills, and fill start dates where we have a vaguer one. */
 export async function rederive(
   opts: { dryRun?: boolean } = {},
-): Promise<{ checked: number; skills: number; starts: number }> {
+): Promise<{ checked: number; skills: number; starts: number; entries: number }> {
   const today = londonToday();
-  const rows = await allListings('id,title,description_text,skills,start_date,start_precision');
+  const rows = await allListings(
+    'id,title,description_text,skills,start_date,start_precision,entry,details',
+  );
   let skillsChanged = 0;
   let starts = 0;
+  let entries = 0;
   for (const r of rows) {
     const patch: Record<string, unknown> = {};
+    const entry = extractEntry(r.description_text, r.details?.qualifications ?? []);
+    if (entry && JSON.stringify(entry) !== JSON.stringify(r.entry ?? null)) {
+      patch.entry = entry;
+      entries++;
+    }
     const skills = extractSkills(r.description_text);
     if (JSON.stringify(skills) !== JSON.stringify(r.skills ?? null)) {
       patch.skills = skills;
@@ -66,7 +77,7 @@ export async function rederive(
     if (Object.keys(patch).length && !opts.dryRun)
       must(await db().from('listings').update(patch).eq('id', r.id), 'save derived fields');
   }
-  return { checked: rows.length, skills: skillsChanged, starts };
+  return { checked: rows.length, skills: skillsChanged, starts, entries };
 }
 
 const STOP = new Set(
