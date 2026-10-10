@@ -74,7 +74,7 @@ export default function MapPage() {
   const mapped = visible.filter((d) =>
     (d.row.locations ?? []).some((l) => typeof l.lat === 'number'),
   );
-  const radius = filters.maxDistance ?? settings?.default_distance_miles ?? null;
+  const radius = filters.maxDistance ?? settings?.default_distance_miles ?? null; // null: no circle
   const activeCount = useMemo(() => derived.filter((d) => d.row.is_active).length, [derived]);
 
   return (

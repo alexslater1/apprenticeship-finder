@@ -28,7 +28,7 @@ export function prefsFrom(s: SettingsRow | undefined): PersonalPrefs {
   return {
     roles: s?.role_prefs ?? {},
     levels: s?.level_prefs ?? {},
-    defaultDistanceMiles: s?.default_distance_miles ?? 50,
+    defaultDistanceMiles: s ? s.default_distance_miles : null,
   };
 }
 

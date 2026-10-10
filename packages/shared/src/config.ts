@@ -50,7 +50,7 @@ const k = keywordsJson as unknown as {
     level: { high: number; maybe: number };
     withinDistance: number;
   };
-  providers: { names: string[] };
+  providers: { names: string[]; inText?: Array<{ name: string; re: string }> };
 };
 
 export const rules = {
@@ -77,6 +77,8 @@ export const rules = {
   personal: k.personal,
   /** Normalised training-provider names (see normaliseEmployerName). */
   providerNames: k.providers.names,
+  /** Providers recognised in advert text (case-sensitive patterns). */
+  providersInText: (k.providers.inText ?? []).map((x) => ({ name: x.name, re: new RegExp(x.re) })),
 };
 
 export const standards: Standard[] = (standardsJson as { standards: Standard[] }).standards;

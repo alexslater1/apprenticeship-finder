@@ -5,7 +5,7 @@ import {
   tableFeatures,
   useTable,
 } from '@tanstack/react-table';
-import { Columns3, Eye, EyeOff, GraduationCap } from 'lucide-react';
+import { BookOpen, Columns3, Eye, EyeOff, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import type { Derived } from '@/lib/derive';
-import { formatDate, formatSalary, locationLabel, milesLabel } from '@/lib/format';
+import { formatDate, formatSalary, locationLabel, milesLabel, studyWith } from '@/lib/format';
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import {
@@ -68,10 +68,15 @@ const columns = helper.columns([
           <div className="font-medium">{d.row.title}</div>
           <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
             {d.row.employer_name}
-            {d.row.university && (
+            {studyWith(d.row) && (
               <span className="inline-flex items-center gap-1">
-                · <GraduationCap className="size-3.5" aria-label="University" />
-                {d.row.university}
+                ·{' '}
+                {d.row.university ? (
+                  <GraduationCap className="size-3.5" aria-label="University" />
+                ) : (
+                  <BookOpen className="size-3.5" aria-label="Training provider" />
+                )}
+                {studyWith(d.row)!.name}
               </span>
             )}
             {d.row.pre_register && <PreRegisterBadge />}

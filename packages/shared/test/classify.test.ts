@@ -259,6 +259,10 @@ describe('personalScore', () => {
     expect(personalScore(ds6, all, 1)).toBe(100);
     expect(personalScore(ds6, all, 1, { clamp: false })).toBe(ds6.score + 8);
   });
+  it('ignores distance when he is happy to move anywhere', () => {
+    const anywhere = { ...prefs, defaultDistanceMiles: null };
+    expect(personalScore(da4, anywhere, 10)).toBe(personalScore(da4, anywhere, 400));
+  });
   it('keeps zero-scored (closed) listings at zero', () => {
     expect(personalScore({ ...ds6, score: 0 }, prefs, 1)).toBe(0);
   });
