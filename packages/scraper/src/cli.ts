@@ -86,7 +86,7 @@ async function main(): Promise<number> {
     case 'reskill': {
       const r = await rederive({ dryRun });
       console.log(
-        `${dryRun ? '[dry] ' : ''}${r.checked} listings: ${r.skills} re-tagged, ${r.starts} start dates filled`,
+        `${dryRun ? '[dry] ' : ''}${r.checked} listings: ${r.entries} entry requirements, ${r.skills} re-tagged, ${r.starts} start dates filled`,
       );
       return 0;
     }

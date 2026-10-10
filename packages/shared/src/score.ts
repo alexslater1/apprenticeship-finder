@@ -119,7 +119,7 @@ function extraParts(l: ScoredListing, sp: ScorePrefs | undefined): PersonalPart[
   if (fit === 'below')
     out.push({ label: 'Asks for more than your predicted grades', points: x.gradesBelow });
   if (fit === 'subject')
-    out.push({ label: 'Needs an A level you don’t take (Maths)', points: x.missingSubject });
+    out.push({ label: 'Needs an A level you don’t take', points: x.missingSubject });
   if (sp?.preferDegree && l.is_degree)
     out.push({ label: 'Degree apprenticeship (you prefer these)', points: x.preferDegree });
   // A month or year only counts as too early if all of it is (2027 could be September).
