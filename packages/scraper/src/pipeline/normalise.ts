@@ -73,6 +73,8 @@ export interface NormalisedListing {
   title: string;
   employerName: string;
   employerNameNorm: string;
+  /** Watchlist employer this listing belongs to (set by employer connectors or name matching). */
+  employerId: string | null;
   url: string;
   applyUrl: string | null;
   descriptionHtml: string | null;
@@ -167,6 +169,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     standardTitle: raw.standardTitle,
     roleHint: raw.roleHint,
     knownApprenticeship: raw.knownApprenticeship,
+    knownDegree: raw.isDegree,
   });
   if (!classification.relevant) return null;
 
@@ -191,6 +194,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     title,
     employerName,
     employerNameNorm,
+    employerId: raw.employerId ?? null,
     url: raw.url,
     applyUrl: raw.applyUrl ?? null,
     descriptionHtml: descriptionHtml || null,
@@ -241,6 +245,7 @@ export function mergeWithinRun(listings: NormalisedListing[]): NormalisedListing
     if (l.closingDate && (!prev.closingDate || l.closingDate > prev.closingDate))
       prev.closingDate = l.closingDate;
     prev.applyUrl ??= l.applyUrl;
+    prev.employerId ??= l.employerId;
     prev.university ??= l.university;
     prev.salaryMin ??= l.salaryMin;
     prev.salaryMax ??= l.salaryMax;

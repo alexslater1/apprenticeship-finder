@@ -274,6 +274,8 @@ export function toRawListing(d: Doc, frameworkName?: string): RawListing {
     closingDate: parseDate(d.ClosingDate) ?? undefined,
     locations: locations(d),
     knownApprenticeship: true,
+    // Graduate Apprenticeships are Scotland's degree apprenticeships.
+    isDegree: type === 'GA' || undefined,
     details: {
       apprenticeshipType: TYPE_NAMES[type],
       scqfLevel: d.ModernApprenticeshipLevel || undefined,
