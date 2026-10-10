@@ -224,7 +224,8 @@ export interface SettingsRow {
   home_lon: number | null;
   role_prefs: Partial<RolePrefs>;
   level_prefs: Partial<LevelPrefs>;
-  default_distance_miles: number;
+  /** Null: anywhere in the UK (happy to move). */
+  default_distance_miles: number | null;
   digest_min_score: number;
   digest_enabled: boolean;
   updated_at: string;

@@ -207,6 +207,97 @@
       "Kaplan",
       "BPP",
       "Firebrand"
+    ],
+    "$comment_inText": "Training providers named in advert text ('delivered by our partner Firebrand'), used when the source doesn't give one. Patterns are case-sensitive.",
+    "inText": [
+      {
+        "name": "QA",
+        "re": "\\bQA (?:Ltd|Limited|Apprenticeships|Higher Education)\\b|\\b(?:with|by|through|via|partner(?:ing|ed)? with|provider,?) QA\\b"
+      },
+      {
+        "name": "Firebrand",
+        "re": "\\bFirebrand\\b"
+      },
+      {
+        "name": "Multiverse",
+        "re": "\\bMultiverse\\b"
+      },
+      {
+        "name": "Corndel",
+        "re": "\\bCorndel\\b"
+      },
+      {
+        "name": "Cambridge Spark",
+        "re": "\\bCambridge Spark\\b"
+      },
+      {
+        "name": "BPP",
+        "re": "\\bBPP\\b(?! University)"
+      },
+      {
+        "name": "Kaplan",
+        "re": "\\bKaplan\\b"
+      },
+      {
+        "name": "Baltic",
+        "re": "\\bBaltic (?:Apprenticeships|Training)\\b"
+      },
+      {
+        "name": "Just IT",
+        "re": "\\bJust IT\\b"
+      },
+      {
+        "name": "Apprentify",
+        "re": "\\bApprentify\\b"
+      },
+      {
+        "name": "Avado",
+        "re": "\\bAvado\\b"
+      },
+      {
+        "name": "Estio",
+        "re": "\\bEstio\\b"
+      },
+      {
+        "name": "Itec Skills",
+        "re": "\\bItec Skills\\b"
+      },
+      {
+        "name": "Lifetime Training",
+        "re": "\\bLifetime Training\\b"
+      },
+      {
+        "name": "Learning Curve Group",
+        "re": "\\bLearning Curve Group\\b"
+      },
+      {
+        "name": "Paragon Skills",
+        "re": "\\bParagon Skills\\b"
+      },
+      {
+        "name": "Babington",
+        "re": "\\bBabington\\b"
+      },
+      {
+        "name": "The Coders Guild",
+        "re": "\\bThe Coders Guild\\b"
+      },
+      {
+        "name": "Makers",
+        "re": "\\bMakers Academy\\b"
+      },
+      {
+        "name": "Netcom Training",
+        "re": "\\bNetcom Training\\b"
+      },
+      {
+        "name": "Learning People",
+        "re": "\\bThe Learning People\\b"
+      },
+      {
+        "name": "Nowskills",
+        "re": "\\bNowSkills\\b|\\bNowskills\\b"
+      }
     ]
   }
 }
