@@ -13,6 +13,11 @@ const Config = z.object({
   host: z.string(),
   tenant: z.string(),
   site: z.string(),
+  /** Other public sites of the same tenant (LBG's apprenticeship board, bp's early careers). */
+  extraSites: z.array(z.string()).optional(),
+  /** Country facet applied to every query (big global tenants such as Pfizer). */
+  ukFacet: z.object({ param: z.string(), ids: z.array(z.string()).min(1) }).optional(),
+  /** Job-type facet value(s) for apprentices on the main site. */
   apprenticeFacet: z.object({ param: z.string(), ids: z.array(z.string()).min(1) }).optional(),
 });
 type Config = z.infer<typeof Config>;
@@ -30,7 +35,7 @@ const Posting = z
     bulletFields: z.array(z.string()).nullish(),
   })
   .loose();
-type Posting = z.infer<typeof Posting> & { fromFacet?: boolean };
+type Posting = z.infer<typeof Posting> & { fromFacet?: boolean; site?: string };
 
 const ListPage = z
   .object({ total: z.number().nullish(), jobPostings: z.array(z.unknown()).nullish() })
@@ -86,7 +91,10 @@ async function listAll(
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          appliedFacets: o.appliedFacets ?? {},
+          appliedFacets: {
+            ...(c.ukFacet ? { [c.ukFacet.param]: c.ukFacet.ids } : {}),
+            ...o.appliedFacets,
+          },
           limit: PAGE,
           offset: page * PAGE,
           searchText: o.searchText ?? '',
@@ -96,7 +104,9 @@ async function listAll(
     );
     // Some tenants report total 0 after page 1; keep the first page's.
     if (page === 0) total = body.total ?? null;
-    const items = (body.jobPostings ?? []).map((p) => Posting.safeParse(p)).filter((r) => r.success);
+    const items = (body.jobPostings ?? [])
+      .map((p) => Posting.safeParse(p))
+      .filter((r) => r.success);
     postings.push(...items.map((r) => r.data));
     if (items.length < PAGE || (total !== null && (page + 1) * PAGE >= total)) {
       return { total, postings, full: true };
@@ -105,7 +115,12 @@ async function listAll(
   return { total, postings, full: false };
 }
 
-function toListing(ctx: EmployerCtx, c: Config, p: Posting, d?: z.infer<typeof Detail>): RawListing {
+function toListing(
+  ctx: EmployerCtx,
+  c: Config,
+  p: Posting,
+  d?: z.infer<typeof Detail>,
+): RawListing {
   const info = d?.jobPostingInfo;
   const country = info?.jobRequisitionLocation?.country?.alpha2Code ?? info?.country?.descriptor;
   const places = info
@@ -133,48 +148,80 @@ function toListing(ctx: EmployerCtx, c: Config, p: Posting, d?: z.infer<typeof D
   });
 }
 
+/** One site: read in full when small enough, else facet + targeted searches. */
+async function readSite(
+  c: Config,
+  ctx: EmployerCtx,
+): Promise<{ postings: Posting[]; total: number | null; complete: boolean }> {
+  const first = await listAll(c, ctx, { maxPages: Math.ceil(FULL_SCAN_MAX / PAGE) });
+  const byPath = new Map<string, Posting>();
+  let complete = first.full;
+  for (const p of first.postings) byPath.set(p.externalPath, p);
+  if (!first.full) {
+    // Too big to read in full every day: what we've read, plus targeted queries.
+    for (const q of ['apprentice', 'apprenticeship', 'school leaver']) {
+      const r = await listAll(c, ctx, { searchText: q, maxPages: 15 });
+      for (const p of r.postings) if (!byPath.has(p.externalPath)) byPath.set(p.externalPath, p);
+    }
+  }
+  if (c.apprenticeFacet) {
+    const r = await listAll(c, ctx, {
+      appliedFacets: { [c.apprenticeFacet.param]: c.apprenticeFacet.ids },
+    });
+    for (const p of r.postings)
+      byPath.set(p.externalPath, { ...byPath.get(p.externalPath), ...p, fromFacet: true });
+    // With the facet read in full, every apprenticeship is accounted for.
+    if (!first.full && r.full) complete = true;
+  }
+  return { postings: [...byPath.values()], total: first.total, complete };
+}
+
 export const workday = defineConnector({
   id: 'workday',
   config: Config,
   async run(c, ctx) {
-    const first = await listAll(c, ctx, { maxPages: Math.ceil(FULL_SCAN_MAX / PAGE) });
-    const byPath = new Map<string, Posting>();
-    let complete = first.full;
-    let total = first.total;
-    if (first.full) {
-      for (const p of first.postings) byPath.set(p.externalPath, p);
-    } else {
-      // Too big to read in full every day: what we've read, plus targeted queries.
-      for (const p of first.postings) byPath.set(p.externalPath, p);
-      for (const q of ['apprentice', 'apprenticeship', 'school leaver']) {
-        const r = await listAll(c, ctx, { searchText: q, maxPages: 15 });
-        for (const p of r.postings) if (!byPath.has(p.externalPath)) byPath.set(p.externalPath, p);
+    const byId = new Map<string, Posting>();
+    let total = 0;
+    let complete = true;
+    for (const site of [c.site, ...(c.extraSites ?? [])]) {
+      const sc = { ...c, site, apprenticeFacet: site === c.site ? c.apprenticeFacet : undefined };
+      const r = await readSite(sc, ctx);
+      total += r.total ?? r.postings.length;
+      complete &&= r.complete;
+      for (const p of r.postings) {
+        const id = workdayJobId(p);
+        if (!byId.has(id) || p.fromFacet) byId.set(id, { ...byId.get(id), ...p, site });
       }
     }
-    if (c.apprenticeFacet) {
-      const r = await listAll(c, ctx, {
-        appliedFacets: { [c.apprenticeFacet.param]: c.apprenticeFacet.ids },
-      });
-      for (const p of r.postings) byPath.set(p.externalPath, { ...byPath.get(p.externalPath), ...p, fromFacet: true });
-      // With the facet read in full, every apprenticeship is accounted for.
-      if (!first.full && r.full) complete = true;
-    }
-    total ??= byPath.size;
-
+    const byPath = byId;
     const candidates = [...byPath.values()].filter((p) => p.fromFacet || isCandidateTitle(p.title));
     const { listings, detailed, errors } = await withDetails(ctx, candidates, {
       id: workdayJobId,
       sig: (p) => p.title,
-      detail: async (p) =>
-        toListing(ctx, c, p, Detail.parse(await ctx.http.json(`${base(c)}${p.externalPath}`, { robots: true }))),
-      fallback: (p) => toListing(ctx, c, p),
+      detail: async (p) => {
+        const sc = { ...c, site: p.site ?? c.site };
+        return toListing(
+          ctx,
+          sc,
+          p,
+          Detail.parse(await ctx.http.json(`${base(sc)}${p.externalPath}`, { robots: true })),
+        );
+      },
+      fallback: (p) => toListing(ctx, { ...c, site: p.site ?? c.site }, p),
     });
-    const uk = listings.filter((l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false));
+    const uk = listings.filter(
+      (l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false),
+    );
     return {
       jobs: uk,
       total,
       complete: complete && errors === 0,
-      stats: { listed: byPath.size, candidates: candidates.length, detailed, abroad: listings.length - uk.length },
+      stats: {
+        listed: byPath.size,
+        candidates: candidates.length,
+        detailed,
+        abroad: listings.length - uk.length,
+      },
     };
   },
   detect(url) {
@@ -182,7 +229,10 @@ export const workday = defineConnector({
       /\/\/([\w-]+)\.(wd\d+)\.myworkdayjobs\.com\/(?:[a-z]{2}-[A-Z]{2}\/)?([^/?#]+)/.exec(url) ??
       null;
     if (m) return { host: `${m[1]}.${m[2]}.myworkdayjobs.com`, tenant: m[1], site: m[3] };
-    const s = /\/\/(wd\d+\.myworkdaysite\.com)\/(?:[a-z]{2}-[A-Z]{2}\/)?recruiting\/([^/]+)\/([^/?#]+)/.exec(url);
+    const s =
+      /\/\/(wd\d+\.myworkdaysite\.com)\/(?:[a-z]{2}-[A-Z]{2}\/)?recruiting\/([^/]+)\/([^/?#]+)/.exec(
+        url,
+      );
     if (s) return { host: s[1], tenant: s[2], site: s[3] };
     return null;
   },

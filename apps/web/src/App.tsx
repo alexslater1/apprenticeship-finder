@@ -4,8 +4,10 @@ import { Layout } from '@/components/Layout';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import Companies from '@/pages/Companies';
 import Listings from '@/pages/Listings';
 import Login from '@/pages/Login';
+import MapPage from '@/pages/MapPage';
 import SetPassword from '@/pages/SetPassword';
 import Health from '@/pages/Health';
 import Hidden from '@/pages/Hidden';
@@ -37,7 +39,10 @@ export default function App() {
                 <Route element={<Layout />}>
                   <Route index element={<Listings />} />
                   <Route path="/listing/:id" element={<Listings />} />
+                  <Route path="/map" element={<MapPage />} />
                   <Route path="/tracker" element={<Tracker />} />
+                  <Route path="/companies" element={<Companies />} />
+                  <Route path="/companies/:id" element={<Companies />} />
                   <Route path="/hidden" element={<Hidden />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/health" element={<Health />} />

@@ -37,17 +37,20 @@ export class BlockedError extends Error {
 const BOT_WALL = [
   /Quick check needed/i,
   /Just a moment\.\.\./i,
-  /cf-chl-|challenge-platform/i,
   /altcha/i,
   /Access Denied.*Reference #/is,
   /Request unsuccessful\. Incapsula/i,
 ];
+/** Cloudflare injects its challenge script into ordinary pages too; only an error status counts. */
+const BOT_WALL_ON_ERROR = [/cf-chl-|challenge-platform/i];
 
-export function detectBotWall(body: string, headers: Headers): string | null {
+export function detectBotWall(body: string, headers: Headers, status = 200): string | null {
   if (headers.get('cf-mitigated') === 'challenge') return 'cf-mitigated: challenge';
   // Only sniff smallish HTML bodies; real job pages can mention these words.
   if (body.length > 200_000) return null;
   for (const re of BOT_WALL) if (re.test(body)) return `matched ${re.source}`;
+  if (status >= 400)
+    for (const re of BOT_WALL_ON_ERROR) if (re.test(body)) return `matched ${re.source}`;
   return null;
 }
 
@@ -70,6 +73,8 @@ export interface HttpResponse {
   body: string;
   headers: Headers;
   bytes?: Buffer;
+  /** Final URL after redirects. */
+  url: string;
 }
 
 const DEFAULT_GAP_MS = 1500;
@@ -79,12 +84,16 @@ const HOST_GAPS: Array<[RegExp, number]> = [
   [/^api\.apprenticeships\.education\.gov\.uk$/, 2_000],
   [/^api\.postcodes\.io$/, 200],
   [/^api\.adzuna\.com$/, 3_000], // 25 hits/minute limit
+  [/^apply\.careers\.microsoft\.com$/, 6_000], // 429s at 1.5 s
 ];
 
-function gapFor(host: string): number {
-  for (const [re, ms] of HOST_GAPS) if (re.test(host)) return ms;
-  return DEFAULT_GAP_MS;
+function gapFor(host: string, crawlDelayMs = 0): number {
+  for (const [re, ms] of HOST_GAPS) if (re.test(host)) return Math.max(ms, crawlDelayMs);
+  return Math.max(DEFAULT_GAP_MS, crawlDelayMs);
 }
+
+/** Longest robots.txt Crawl-delay we'll honour (a site asking for minutes gets 30 s). */
+const MAX_CRAWL_DELAY_MS = 30_000;
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -96,6 +105,8 @@ export class Http {
   private hostChains = new Map<string, Promise<unknown>>();
   private lastAt = new Map<string, number>();
   private robotsCache = new Map<string, Promise<ReturnType<typeof robotsParser> | null>>();
+  /** Crawl-delay from robots.txt, per host (only known once a robots-checked request ran). */
+  private crawlDelay = new Map<string, number>();
   requests = 0;
 
   constructor(private readonly opts: { record?: boolean } = {}) {}
@@ -132,7 +143,8 @@ export class Http {
   private async doRequest(url: string, host: string, o: RequestOptions): Promise<HttpResponse> {
     const retries = o.retries ?? 2;
     for (let attempt = 0; ; attempt++) {
-      const wait = (this.lastAt.get(host) ?? 0) + gapFor(host) - Date.now();
+      const wait =
+        (this.lastAt.get(host) ?? 0) + gapFor(host, this.crawlDelay.get(host)) - Date.now();
       if (wait > 0) await sleep(wait);
       this.lastAt.set(host, Date.now());
       this.requests++;
@@ -151,7 +163,7 @@ export class Http {
           await sleep(1000 * 2 ** attempt);
           continue;
         }
-        const wall = detectBotWall(body, res.headers);
+        const wall = detectBotWall(body, res.headers, res.status);
         if (
           wall &&
           (res.status === 403 || res.status === 429 || res.status === 503 || body.length < 50_000)
@@ -162,7 +174,7 @@ export class Http {
         const redirected = o.redirect === 'manual' && res.status >= 300 && res.status < 400;
         if (!res.ok && !redirected) throw new HttpError(res.status, url, body);
         if (this.opts.record) this.record(url, bytes ?? body);
-        return { status: res.status, body, headers: res.headers, bytes };
+        return { status: res.status, body, headers: res.headers, bytes, url: res.url || url };
       } catch (err) {
         const retryable =
           !(err instanceof HttpError) && !(err instanceof BlockedError) && attempt < retries;
@@ -184,7 +196,12 @@ export class Http {
         .catch(() => null);
       this.robotsCache.set(origin, p);
     }
-    return p.then((robots) => (robots ? robots.isAllowed(url, USER_AGENT) !== false : true));
+    return p.then((robots) => {
+      const delay = robots?.getCrawlDelay(USER_AGENT);
+      if (delay)
+        this.crawlDelay.set(new URL(url).hostname, Math.min(delay * 1000, MAX_CRAWL_DELAY_MS));
+      return robots ? robots.isAllowed(url, USER_AGENT) !== false : true;
+    });
   }
 
   private record(url: string, body: string | Buffer) {

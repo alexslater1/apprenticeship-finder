@@ -33,7 +33,8 @@ const Config = z.object({
 type Config = z.infer<typeof Config>;
 
 const MAX_PAGES = 40;
-const JOB_LINK = /<a\b[^>]*href=["']([^"']*\/(?:JobDetail|FolderDetail)\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+const JOB_LINK =
+  /<a\b[^>]*href=["']([^"']*\/(?:JobDetail|FolderDetail)\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
 const GENERIC = /^(read more|apply( now)?|view( job)?|more|details|learn more|save|share)$/i;
 
 export interface AvatureRow {
@@ -77,7 +78,9 @@ function withProgramme(r: AvatureRow): string {
 }
 
 function rowLocation(r: AvatureRow): Location[] {
-  const loc = /location:\s*([^|]+?)(?:\s*\||$)/i.exec(r.extra)?.[1] ?? /\(([^()]+,\s*[^()]+)\)$/.exec(r.title)?.[1];
+  const loc =
+    /location:\s*([^|]+?)(?:\s*\||$)/i.exec(r.extra)?.[1] ??
+    /\(([^()]+,\s*[^()]+)\)$/.exec(r.title)?.[1];
   return loc ? [{ text: loc.trim() }] : [];
 }
 
@@ -109,7 +112,7 @@ export const avature = defineConnector({
   config: Config,
   async run(c, ctx) {
     const all = new Map<string, AvatureRow>();
-    let total: number | null = null;
+    let total: number | null;
     let complete = true;
     if (c.sitemapUrl) {
       // Locale portals (en_GB, cs_CZ…) each have a sitemap; keep the configured portal's.
@@ -121,7 +124,9 @@ export const avature = defineConnector({
       total = jobs.length;
       for (const u of jobs) {
         const id = avatureJobId(u.url);
-        const title = slugWords(u.url.replace(/^.*\/(?:JobDetail|FolderDetail)\//, '/').replace(/\/\d+\/?$/, ''));
+        const title = slugWords(
+          u.url.replace(/^.*\/(?:JobDetail|FolderDetail)\//, '/').replace(/\/\d+\/?$/, ''),
+        );
         all.set(id, { id, url: u.url, title, extra: '' });
       }
     } else {
@@ -140,7 +145,9 @@ export const avature = defineConnector({
       for (const row of r.rows) all.set(row.id, { ...all.get(row.id), ...row, known: true });
     }
 
-    const candidates = [...all.values()].filter((r) => r.known || isCandidateTitle(withProgramme(r)));
+    const candidates = [...all.values()].filter(
+      (r) => r.known || isCandidateTitle(withProgramme(r)),
+    );
     const base = (r: AvatureRow) =>
       employerListing(ctx, {
         sourceId: r.id,
@@ -161,7 +168,10 @@ export const avature = defineConnector({
         const fromRow = base(r);
         return {
           ...fromRow,
-          title: p?.title && !r.title.includes(p.title) ? withProgramme({ ...r, title: p.title }) : fromRow.title,
+          title:
+            p?.title && !r.title.includes(p.title)
+              ? withProgramme({ ...r, title: p.title })
+              : fromRow.title,
           descriptionHtml: desc,
           descriptionText: desc ? htmlToText(desc) : undefined,
           postedDate: p?.postedDate,
@@ -172,7 +182,9 @@ export const avature = defineConnector({
       },
       fallback: base,
     });
-    const uk = listings.filter((l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false));
+    const uk = listings.filter(
+      (l) => !l.locations.length || l.locations.some((x) => isUk(x) !== false),
+    );
     return {
       jobs: uk,
       total,
@@ -181,8 +193,12 @@ export const avature = defineConnector({
     };
   },
   detect(url, html) {
-    const m = /\/\/([\w.-]+)(\/[a-z]{2}_[A-Z]{2}\/[\w-]+|\/[\w-]+)\/(?:SearchJobs|JobDetail|FolderDetail|Jobs)\b/.exec(url);
-    if (m && (/avature\.net/.test(m[1]!) || /avature/i.test(html ?? ''))) return { host: m[1], portal: m[2] };
+    const m =
+      /\/\/([\w.-]+)(\/[a-z]{2}_[A-Z]{2}\/[\w-]+|\/[\w-]+)\/(?:SearchJobs|JobDetail|FolderDetail|Jobs)\b/.exec(
+        url,
+      );
+    if (m && (/avature\.net/.test(m[1]!) || /avature/i.test(html ?? '')))
+      return { host: m[1], portal: m[2] };
     return null;
   },
 });

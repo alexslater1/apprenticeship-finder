@@ -7,7 +7,9 @@ export const keys = {
   listings: ['listings'] as const,
   settings: ['settings'] as const,
   detail: (id: string) => ['listing', id] as const,
-  notes: (id: string) => ['notes', id] as const,
+  notes: (t: NoteTarget) => ['notes', t.kind, t.id] as const,
+  employers: ['employers'] as const,
+  suggestions: ['suggestions'] as const,
   runs: ['scrape_runs'] as const,
 };
 
@@ -86,15 +88,23 @@ export interface Note {
   created_at: string;
 }
 
-export function useNotes(listingId: string | undefined) {
+/** Notes hang off a listing or an employer. */
+export interface NoteTarget {
+  kind: 'listing' | 'employer';
+  id: string;
+}
+
+const noteColumn = (t: NoteTarget) => (t.kind === 'listing' ? 'listing_id' : 'employer_id');
+
+export function useNotes(target: NoteTarget | undefined) {
   return useQuery({
-    queryKey: keys.notes(listingId ?? ''),
-    enabled: !!listingId,
+    queryKey: keys.notes(target ?? { kind: 'listing', id: '' }),
+    enabled: !!target?.id,
     queryFn: async () => {
       const { data, error } = await supabase
         .from('notes')
         .select('*')
-        .eq('listing_id', listingId!)
+        .eq(noteColumn(target!), target!.id)
         .order('created_at', { ascending: true });
       fail('Loading notes', error);
       return (data ?? []) as Note[];
@@ -169,24 +179,32 @@ export function useSetHidden() {
   };
 }
 
-export function useAddNote(listingId: string) {
+/** Keep the cached notes_count on listings / employers in step with the thread. */
+function bumpNotes(qc: ReturnType<typeof useQueryClient>, t: NoteTarget, by: number) {
+  const key = t.kind === 'listing' ? keys.listings : keys.employers;
+  qc.setQueryData<Array<{ id: string; notes_count: number }>>(key, (rows) =>
+    rows?.map((r) => (r.id === t.id ? { ...r, notes_count: Math.max(0, r.notes_count + by) } : r)),
+  );
+}
+
+export function useAddNote(target: NoteTarget) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (body: string) => {
-      const { error } = await supabase.from('notes').insert({ listing_id: listingId, body });
+      const { error } = await supabase
+        .from('notes')
+        .insert({ [noteColumn(target)]: target.id, body });
       fail('Saving note', error);
     },
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: keys.notes(listingId) });
-      qc.setQueryData<ListingRow[]>(keys.listings, (rows) =>
-        rows?.map((r) => (r.id === listingId ? { ...r, notes_count: r.notes_count + 1 } : r)),
-      );
+      qc.invalidateQueries({ queryKey: keys.notes(target) });
+      bumpNotes(qc, target, 1);
     },
     onError: (err) => toast.error((err as Error).message),
   });
 }
 
-export function useDeleteNote(listingId: string) {
+export function useDeleteNote(target: NoteTarget) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (noteId: string) => {
@@ -194,12 +212,8 @@ export function useDeleteNote(listingId: string) {
       fail('Deleting note', error);
     },
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: keys.notes(listingId) });
-      qc.setQueryData<ListingRow[]>(keys.listings, (rows) =>
-        rows?.map((r) =>
-          r.id === listingId ? { ...r, notes_count: Math.max(0, r.notes_count - 1) } : r,
-        ),
-      );
+      qc.invalidateQueries({ queryKey: keys.notes(target) });
+      bumpNotes(qc, target, -1);
     },
     onError: (err) => toast.error((err as Error).message),
   });
