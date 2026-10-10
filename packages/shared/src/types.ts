@@ -295,6 +295,8 @@ export interface EmployerRow {
   last_season_first_seen: string | null;
   last_season_closed: string | null;
   notes_count: number;
+  /** Active register-interest pages (not counted in active_listings). */
+  interest_listings: number;
 }
 
 export const SUGGESTION_STATUSES = ['pending', 'approved', 'dismissed', 'added'] as const;

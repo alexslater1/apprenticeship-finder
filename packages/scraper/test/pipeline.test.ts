@@ -60,6 +60,14 @@ describe('normalise', () => {
   it('national vacancies are UK-wide', () => {
     expect(normalise({ ...base, locations: [], isNational: true })!.nation).toBe('UK-wide');
   });
+  it('flags register-interest pages, and clears the flag once a real advert merges in', () => {
+    const page = normalise({ ...base, title: 'Register Your Interest - Data Analyst Apprentice' })!;
+    expect(page.details?.preRegister).toBe(true);
+    const advert = normalise(base)!;
+    expect(advert.details?.preRegister).toBe(false);
+    const [merged] = mergeWithinRun([page, { ...advert, dedupeKey: page.dedupeKey }]);
+    expect(merged!.details?.preRegister).toBe(false);
+  });
   it('drops levels 2–3', () => {
     expect(normalise({ ...base, level: 3 })).toBeNull();
     expect(normalise({ ...base, level: 4 })).not.toBeNull();

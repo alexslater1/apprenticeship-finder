@@ -3,6 +3,7 @@ import {
   baseScore,
   classify,
   excludedByPrefs,
+  isRegisterInterest,
   matchTier,
   noiseReason,
   personalScore,
@@ -290,6 +291,17 @@ describe('personalScore', () => {
     expect(excludedByPrefs({ level: 7, role_type: 'data_science' }, prefs)).toBe('level');
     expect(excludedByPrefs({ level: null, role_type: 'data_science' }, prefs)).toBeNull();
     expect(excludedByPrefs({ level: 5, role_type: 'other' }, prefs)).toBeNull();
+  });
+});
+
+describe('isRegisterInterest', () => {
+  it.each([
+    ['Register Your Interest - Data Science Degree Apprenticeship 2027', true],
+    ['Expression of interest for Apprenticeship', true],
+    ['Software Engineering Apprenticeship – Registration of Interest Ref. 3850', true],
+    ['2027 Data Science Apprentice - Crawley', false],
+  ])('%s → %s', (title, want) => {
+    expect(isRegisterInterest(title)).toBe(want);
   });
 });
 

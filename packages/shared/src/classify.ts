@@ -55,6 +55,13 @@ function textLevelFrom(text: string): number | null {
   return hit.level;
 }
 
+/** 'Register your interest – …', 'Expression of interest', 'Registration of Interest': not open yet. */
+export function isRegisterInterest(title: string): boolean {
+  return /register (?:your )?interest|expressions? of interest|registration of interest|talent pool|pre-?register/i.test(
+    title,
+  );
+}
+
 export function isApprenticeshipTitle(text: string): boolean {
   return firstMatch(rules.apprenticeship, text);
 }
