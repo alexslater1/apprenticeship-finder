@@ -45,8 +45,9 @@ describe('rankSkills', () => {
     expect(r.stats.map((s) => s.id)).toEqual(['teamwork', 'python', 'excel']);
     // Teamwork is asked for in both, so all of its bar is "asked".
     const teamwork = r.stats.find((s) => s.id === 'teamwork')!;
-    expect(teamwork.byCtx).toEqual({ asked: 1, taught: 0, job: 0 });
-    expect(r.stats.find((s) => s.id === 'python')!.byCtx.taught).toBeCloseTo(0.75);
+    expect(teamwork.byKind).toEqual({ asked: 1, not_required: 0 });
+    // Python is taught, which counts as not required.
+    expect(r.stats.find((s) => s.id === 'python')!.byKind.not_required).toBeCloseTo(0.75);
   });
 
   it('counts every advert the same when weighting is off', () => {
@@ -58,7 +59,7 @@ describe('rankSkills', () => {
   });
 
   it('can count just one kind of mention', () => {
-    const r = rankSkills(all, { ctx: 'taught' });
+    const r = rankSkills(all, { kind: 'not_required' });
     expect(r.stats.map((s) => s.id)).toEqual(['python']);
     expect(r.stats[0]!.share).toBeCloseTo(0.75);
     expect(r.basis).toBe(2);
@@ -75,7 +76,7 @@ describe('rankSkills', () => {
   });
 
   it('says what a skill mostly is', () => {
-    expect(mostly({ asked: 1, taught: 3, job: 0 })).toBe('taught');
-    expect(mostly({ asked: 2, taught: 2, job: 1 })).toBe('asked');
+    expect(mostly({ asked: 1, not_required: 3 })).toBe('not_required');
+    expect(mostly({ asked: 2, not_required: 2 })).toBe('asked');
   });
 });

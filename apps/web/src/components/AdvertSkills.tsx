@@ -1,15 +1,15 @@
-import { SKILL_BY_ID, type SkillContext, type SkillMention } from '@af/shared';
+import { SKILL_BY_ID, type SkillMention } from '@af/shared';
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { kindOf, type SkillKind } from '@/lib/skills';
 import { cn } from '@/lib/utils';
 
-const GROUPS: Array<{ ctx: SkillContext; label: string }> = [
-  { ctx: 'asked', label: 'Asks for' },
-  { ctx: 'taught', label: 'You’d learn' },
-  { ctx: 'job', label: 'Part of the job' },
+const GROUPS: Array<{ kind: SkillKind; label: string }> = [
+  { kind: 'asked', label: 'Asks for' },
+  { kind: 'not_required', label: 'Not required' },
 ];
 
-/** The skills this advert mentions, grouped by how it mentions them; tap one for the sentence. */
+/** The skills this advert mentions, split into asked for and not required; tap one for the sentence. */
 export function AdvertSkills({ skills }: { skills: SkillMention[] | null | undefined }) {
   const [picked, setPicked] = useState<string | null>(null);
   const known = (skills ?? []).filter((s) => SKILL_BY_ID[s.id]);
@@ -27,11 +27,11 @@ export function AdvertSkills({ skills }: { skills: SkillMention[] | null | undef
         </Link>
       </h3>
       <div className="grid gap-2">
-        {GROUPS.map(({ ctx, label }) => {
-          const group = known.filter((s) => s.ctx === ctx);
+        {GROUPS.map(({ kind, label }) => {
+          const group = known.filter((s) => kindOf(s.ctx) === kind);
           if (!group.length) return null;
           return (
-            <div key={ctx} className="flex flex-wrap items-center gap-1.5 text-sm">
+            <div key={kind} className="flex flex-wrap items-center gap-1.5 text-sm">
               <span className="mr-1 text-muted-foreground">{label}:</span>
               {group.map((s) => (
                 <button
