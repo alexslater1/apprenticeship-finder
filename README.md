@@ -10,7 +10,8 @@ A private, login-only dashboard of UK data-science apprenticeships (data scienti
 ```
 apps/web            Vite + React dashboard (GitHub Pages)
 packages/shared     types, classification + scoring rules, parsers (used by both)
-packages/scraper    CLI: scrape, digest, migrate, sync-employers, detect-ats (runs in GitHub Actions)
+packages/scraper    CLI: scrape, digest, migrate, sync-employers, detect-ats, reskill, skill-candidates
+                    (runs in GitHub Actions)
   src/sources/      aggregators: faa, higherin, reed, adzuna, scot, wales, ni, amazing, ngtu,
                     google-jobs (SerpApi), web-search (Tavily)
   src/connectors/   employer job systems (Workday, SuccessFactors, Oracle, Avature, Oleeo, Eightfold,
@@ -20,7 +21,7 @@ config/             keywords.json (classification rules), standards.json (LARS c
                     universities.json (names the degree partner), employers.json (watchlist + connectors),
                     employers.excluded.json (checked and left out), discovery.json (search queries, budgets),
                     university-rankings.json (Complete University Guide positions; rebuild yearly with
-                    scripts/build-university-rankings.ts)
+                    scripts/build-university-rankings.ts), skills.json (the Skills page's dictionary)
 supabase/migrations SQL schema + row-level security
 .github/workflows   ci.yml, deploy-web.yml, scrape.yml (daily 06:23 UTC)
 data/last-run.json  public run summary committed daily (keeps the cron alive)
@@ -47,6 +48,16 @@ npm run lint && npm run typecheck
 Classification is table-driven: edit `config/keywords.json` and run `npm test` to see what changes.
 
 The match score is the base score (role, level, degree, clear title, freshness, penalties) with the role and level points taken from Settings → High/Maybe, plus Settings extras: university league-table position, predicted grades against the advert's entry requirements, earliest start, minimum salary, degree preference and favourite companies. Weights are in `config/keywords.json` → `personal`; each listing's "Why this match" shows the parts.
+
+### Skills
+
+The Skills page ranks what the adverts mention, each advert weighted by its match score. `config/skills.json` lists the skills and the wordings that count as each one; every scrape tags the adverts it sees, and `packages/shared/src/skills.ts` decides from the surrounding wording whether an advert asks for a skill, teaches it, or lists it as a duty. To grow the list:
+
+```sh
+npm run cli -w packages/scraper -- skill-candidates   # frequent requirement phrases no skill covers, by employer count
+# add a skill or a wording to config/skills.json, then
+npm run cli -w packages/scraper -- reskill            # re-tag every stored listing
+```
 
 ### Employers
 

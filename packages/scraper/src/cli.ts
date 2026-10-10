@@ -4,6 +4,7 @@ import { syncEmployers } from './employers.ts';
 import { Http } from './http.ts';
 import { migrate } from './migrate.ts';
 import { runDigest, sendFailureEmail } from './notify/digest.ts';
+import { reskill, skillCandidates } from './pipeline/skills.ts';
 import { runScrape } from './run.ts';
 
 const USAGE = `usage: cli <command> [options]
@@ -17,6 +18,8 @@ commands:
   digest [--dry-run]                                  send the daily email (dry run writes logs/digest.html)
   notify-failure                                      email both of you that the workflow failed
   migrate [--dry-run]                                 apply supabase/migrations/*.sql
+  reskill [--dry-run]                                 re-tag every listing's skills after config/skills.json changes
+  skill-candidates                                    frequent requirement phrases no skill in config/skills.json covers
 `;
 
 async function main(): Promise<number> {
@@ -77,6 +80,15 @@ async function main(): Promise<number> {
       return 0;
     case 'migrate':
       await migrate({ dryRun });
+      return 0;
+    case 'reskill': {
+      const r = await reskill({ dryRun });
+      console.log(`${dryRun ? '[dry] ' : ''}re-tagged ${r.changed} of ${r.checked} listings`);
+      return 0;
+    }
+    case 'skill-candidates':
+      for (const c of await skillCandidates())
+        console.log(`${String(c.employers).padStart(3)}  ${c.phrase.padEnd(32)} ${c.example}`);
       return 0;
     default:
       console.error(USAGE);
