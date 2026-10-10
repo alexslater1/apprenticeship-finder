@@ -131,7 +131,7 @@
   }
 }
 
-/* Map pins (MapPage): a dot coloured by match tier. */
+/* Map pins (ListingMap): a dot coloured by match tier. */
 .af-pin {
   border-radius: 9999px;
   border: 2px solid var(--background);
@@ -157,21 +157,4 @@
 .leaflet-container {
   font: inherit;
   background: var(--muted);
-}
-/* Clusters in the app's colours (the plugin's default theme CSS isn't loaded). */
-.marker-cluster {
-  background: color-mix(in oklab, var(--primary) 25%, transparent);
-  border-radius: 9999px;
-}
-.marker-cluster div {
-  width: 30px;
-  height: 30px;
-  margin: 5px;
-  border-radius: 9999px;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 30px;
 }

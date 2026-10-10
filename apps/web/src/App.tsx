@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { lazy, Suspense } from 'react';
 import { HashRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
 import { Layout } from '@/components/Layout';
 import { Toaster } from '@/components/ui/sonner';
@@ -13,9 +12,6 @@ import Health from '@/pages/Health';
 import Settings from '@/pages/Settings';
 import Skills from '@/pages/Skills';
 import Tracker from '@/pages/Tracker';
-
-// Leaflet is big; load the map only when it's opened.
-const MapPage = lazy(() => import('@/pages/MapPage'));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 10 * 60 * 1000, refetchOnWindowFocus: false, retry: 1 } },
@@ -42,18 +38,6 @@ export default function App() {
                 <Route element={<Layout />}>
                   <Route index element={<Listings />} />
                   <Route path="/listing/:id" element={<Listings />} />
-                  <Route
-                    path="/map"
-                    element={
-                      <Suspense
-                        fallback={
-                          <div className="p-8 text-center text-muted-foreground">Loading map…</div>
-                        }
-                      >
-                        <MapPage />
-                      </Suspense>
-                    }
-                  />
                   <Route path="/tracker" element={<Tracker />} />
                   <Route path="/skills" element={<Skills />} />
                   <Route path="/companies" element={<Companies />} />
