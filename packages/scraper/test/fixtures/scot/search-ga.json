@@ -1,0 +1,352 @@
+{
+ "facets": {
+  "VacancyType": [
+   {
+    "count": 4,
+    "value": "GA"
+   }
+  ],
+  "JobFamily": [
+   {
+    "count": 4,
+    "value": "Engineering"
+   }
+  ],
+  "ModernApprenticeshipLevel": [
+   {
+    "count": 3,
+    "value": "SCQF level 10"
+   },
+   {
+    "count": 1,
+    "value": "SCQF level 8"
+   }
+  ],
+  "IsTwoTicks": [
+   {
+    "count": 1,
+    "value": "True"
+   }
+  ]
+ },
+ "results": [
+  {
+   "score": 1,
+   "highlights": null,
+   "document": {
+    "Id": "74743",
+    "MemberNodeId": 0,
+    "RefCode": "167343",
+    "JobTitle": "Degree Apprentice Civil Engineer",
+    "City": "EDINBURGH",
+    "Postcode": "EH3 8BP",
+    "PositionsAvailable": null,
+    "MinSalary": null,
+    "MaxSalary": null,
+    "Description": null,
+    "DescriptionOverview": "Application Deadline: Recruitment is ongoing. Please apply as soon as possible as the advert may close once we have sufficient applicants. \n\nJoin our Edinburgh team as an Apprentice Civil Engineer and gain hands-on experience working alongside a team of Civil Engineers with a range of experience in Edinburgh and across Scotland. You’ll support a variety of exciting projects, including active travel and bus fund schemes, local authority projects, and design and build work with contractors.\n\n \n\nKey Responsibilities\n\nAs an Apprentice Civil Engineer, you will work under the guidance of experienced engineers, you’ll develop drawings and models for civil infrastructure projects while building …",
+    "DescriptionTypicalDay": null,
+    "DescriptionLearn": "Earn while you learn. Whichever apprenticeship route you take, your tuition and qualification fees are on us. You will work towards a Level 6 Civil Engineering degree in conjunction with one of our Training Providers. Your training provider and study arrangement will be discussed further during the recruitment process. \n\n \n\nFor this role, your Training Provider will be: \n\nDay release: \n\nEdinburgh Napier University\n \n\nTo help you feel supported and connected during your apprenticeship, you’ll spend four days a week working from the office alongside your colleagues. \n\n",
+    "DescriptionQualifications": "About you:\n\nYou’re adaptable, resilient, collaborative and curious. You stay calm when things change, keep going when challenges come up, enjoy working with others, value different perspectives and like sharing ideas, asking questions and finding better ways to solve problems. \n\nQualifications: \n\nFor our Level 6 apprenticeship you will need to achieve a minimum of 112 UCAS points, from one of the following: \n\nScottish Highers \n\nFour SQA Highers at A, B, B, B, including Mathematics. Higher Applications of Mathematics is not accepted. \n\nA level: BBC (excluding General Studies). You must have Mathematics at grade B or above and one other analytical science subject at grade B or above. …",
+    "EmployerName": "Stantec",
+    "HideEmployerName": false,
+    "TrainingProviderName": "Edinburgh Napier University",
+    "EmployerWebsite": null,
+    "ApplicationWebAddress": "https://careers-uk-ireland.stantec.com/vacancies/9542/degree-apprentice-civil-engineer--edinburgh.html",
+    "SalaryFrequency": "apprentice-minimum-wage",
+    "ModernApprenticeshipLevel": "SCQF level 10",
+    "EntryRequirement": "",
+    "LocalAuthority": "Edinburgh",
+    "CompanyIndustry": "",
+    "PreferredApplyMethod": "Website",
+    "ClosingDate": "2026-12-04T23:59:59Z",
+    "SOC": null,
+    "IsDeleted": false,
+    "IsNew": true,
+    "CreatedWhen": "2026-10-09T12:04:57.953Z",
+    "UpdatedWhen": "2026-10-09T12:44:49.7Z",
+    "DeletedWhen": null,
+    "UpdatedReason": 3,
+    "VacancyStatus": 2,
+    "WorkQueueStatus": 6,
+    "ProcessStatus": 0,
+    "GeoLocationLat": "55.946057",
+    "GeoLocationLon": "-3.207504",
+    "GeoLocation": {
+     "type": "Point",
+     "coordinates": [
+      -3.2075047,
+      55.9460579
+     ],
+     "crs": {
+      "type": "name",
+      "properties": {
+       "name": "EPSG:4326"
+      }
+     }
+    },
+    "Logo_Id": null,
+    "IsTest": false,
+    "JobFamily": "Engineering",
+    "SystemJobTitle": null,
+    "FirstPublishedDate": "2026-10-09T12:44:49.713Z",
+    "UJMErrorMessage": null,
+    "IsTwoTicks": false,
+    "HasExpiryReminder": true,
+    "IsUjmVacancy": false,
+    "VacancyApiId": 0,
+    "LogoFileName": null,
+    "LogoNotVerified_Id": null,
+    "TypeOfEmployment": "Full",
+    "SubmittedWhen": "2026-10-09T12:07:33.38Z",
+    "PublicSector": null,
+    "VacancyAPICompany": null,
+    "VacancyType": "GA",
+    "Framework": "2fREfk7nyHg7QYqzz6xBC0",
+    "Nationwide": null,
+    "WorkingHours": "37.50",
+    "GroupedVacancyId": null,
+    "AcceptFA": false
+   }
+  },
+  {
+   "score": 1,
+   "highlights": null,
+   "document": {
+    "Id": "74681",
+    "MemberNodeId": 0,
+    "RefCode": "167281",
+    "JobTitle": "Apprentice Civil Engineer",
+    "City": "GLASGOW",
+    "Postcode": "G2  1DY",
+    "PositionsAvailable": null,
+    "MinSalary": null,
+    "MaxSalary": null,
+    "Description": null,
+    "DescriptionOverview": "Degree Apprentice (Level 6) Civil Engineer - Water – Glasgow (202 7 )\n\nApplication Deadline: Recruitment is ongoing. Please apply as soon as possible as the advert may close once we have sufficient applicants.\n\nThe Opportunity\n\nYou’ll join our Glasgow Civils Team, a supportive local team of around 20 people who are able to provide day-to-day guidance. You’ll also be part of our wider integrated Scottish civils team, working alongside colleagues in Glasgow and Edinburgh and learning from engineers across a range of disciplines.\n\nYou’ll have the opportunity to gain experience on a variety of water projects across Scotland and the wider UK, supporting work for clients including Scottish Water, …",
+    "DescriptionTypicalDay": null,
+    "DescriptionLearn": "At Stantec, we offer a high-energy environment that balances fully funded academic study with hands-on, real-world project experience.You will gain a Level 6 BEng Civil Engineering degree in conjunction with our Training Provider(s). This will be discussed further during the recruitment process. For this role, training providers could include;\n\nUniversity of Strathclyde(day release)\n\nEdinburgh Napier (day release)\n\nTo help you feel supported and connected during your apprenticeship, you’ll spend four days a week working from the office alongside your colleagues.",
+    "DescriptionQualifications": "About you:\n\nYou’re adaptable, resilient, collaborative and curious — you stay calm when things change, keep going when challenges come up, enjoy working with others, value different perspectives and like sharing ideas, asking questions and finding better ways to solve problems.\n\nQualifications:\n\nFor our Level 6 apprenticeship you will need to achieve a minimum of 112 UCAS points, from one of the following: \n\nA level: BBC (excluding General Studies). You must have Mathematics at grade B or above and one other analytical science subject at grade B or above. Analytical science subjects can include Physics, Biology/Human Biology, Chemistry, Computer Science, Further Mathematics and Design and …",
+    "EmployerName": "Stantec",
+    "HideEmployerName": false,
+    "TrainingProviderName": "University of Strathclyde",
+    "EmployerWebsite": null,
+    "ApplicationWebAddress": "https://stantec.jobs/glasgow-gbr/degree-apprentice-civil-engineer-water-glasgow-2027/3E44FFA0BF114DA5BBDA480E70066CF3/job/",
+    "SalaryFrequency": "apprentice-minimum-wage",
+    "ModernApprenticeshipLevel": "SCQF level 10",
+    "EntryRequirement": "",
+    "LocalAuthority": "Glasgow",
+    "CompanyIndustry": "",
+    "PreferredApplyMethod": "Website",
+    "ClosingDate": "2026-12-01T23:59:59Z",
+    "SOC": null,
+    "IsDeleted": false,
+    "IsNew": true,
+    "CreatedWhen": "2026-10-05T11:13:20.793Z",
+    "UpdatedWhen": "2026-10-05T13:10:23.77Z",
+    "DeletedWhen": null,
+    "UpdatedReason": 3,
+    "VacancyStatus": 2,
+    "WorkQueueStatus": 6,
+    "ProcessStatus": 0,
+    "GeoLocationLat": "55.860445",
+    "GeoLocationLon": "-4.250827",
+    "GeoLocation": {
+     "type": "Point",
+     "coordinates": [
+      -4.2508276,
+      55.8604456
+     ],
+     "crs": {
+      "type": "name",
+      "properties": {
+       "name": "EPSG:4326"
+      }
+     }
+    },
+    "Logo_Id": null,
+    "IsTest": false,
+    "JobFamily": "Engineering",
+    "SystemJobTitle": null,
+    "FirstPublishedDate": "2026-10-05T13:10:23.787Z",
+    "UJMErrorMessage": null,
+    "IsTwoTicks": false,
+    "HasExpiryReminder": true,
+    "IsUjmVacancy": false,
+    "VacancyApiId": 0,
+    "LogoFileName": null,
+    "LogoNotVerified_Id": null,
+    "TypeOfEmployment": "Full",
+    "SubmittedWhen": "2026-10-05T11:16:10.307Z",
+    "PublicSector": null,
+    "VacancyAPICompany": null,
+    "VacancyType": "GA",
+    "Framework": "2fREfk7nyHg7QYqzz6xBC0",
+    "Nationwide": null,
+    "WorkingHours": "37.50",
+    "GroupedVacancyId": null,
+    "AcceptFA": false
+   }
+  },
+  {
+   "score": 1,
+   "highlights": null,
+   "document": {
+    "Id": "74679",
+    "MemberNodeId": 0,
+    "RefCode": "167279",
+    "JobTitle": "Apprentice Civil Engineer",
+    "City": "Edinburgh",
+    "Postcode": "EH3 8BP",
+    "PositionsAvailable": null,
+    "MinSalary": null,
+    "MaxSalary": null,
+    "Description": null,
+    "DescriptionOverview": "Degree Apprentice (Level 6) Civil Engineer - Water - Edinburgh (2027)\n\nApplication Deadline: Recruitment is ongoing. Please apply as soon as possible as the advert may close once we have sufficient applicants.\n\nThe Opportunity\n\nYou’ll join a supportive team of over 50 civil engineering colleagues working across Scotland. You’ll learn from experienced engineers while developing the skills and confidence to build a career in civil engineering.\n\nYou’ll have the opportunity to get involved in important clean water and wastewater projects, including infrastructure and non-infrastructure work delivered through Scottish Water’s DV4 Framework for the SR27 investment period. Current projects include …",
+    "DescriptionTypicalDay": null,
+    "DescriptionLearn": "At Stantec, we offer a high-energy environment that balances fully funded academic study with hands-on, real-world project experience.You will gain a Level 6 BEng Civil Engineering degree in conjunction with our Training Provider(s). This will be discussed further during the recruitment process. For this role, training providers could include;\n\nUniversity of Strathclyde (day release)\n\nEdinburgh Napier (day release)\n\nTo help you feel supported and connected during your apprenticeship, you’ll spend four days a week working from the office alongside your colleagues.\n",
+    "DescriptionQualifications": "About you:\n\nYou’re adaptable, resilient, collaborative and curious — you stay calm when things change, keep going when challenges come up, enjoy working with others, value different perspectives and like sharing ideas, asking questions and finding better ways to solve problems.\n\nQualifications:\n\nFor our Level 6 apprenticeship you will need to achieve a minimum of 112 UCAS points, from one of the following: \n\nA level: BBC (excluding General Studies). You must have Mathematics at grade B or above and one other analytical science subject at grade B or above. Analytical science subjects can include Physics, Biology/Human Biology, Chemistry, Computer Science, Further Mathematics and Design and …",
+    "EmployerName": "Stantec",
+    "HideEmployerName": false,
+    "TrainingProviderName": "University of Strathclyde",
+    "EmployerWebsite": null,
+    "ApplicationWebAddress": "https://stantec.jobs/edinburgh-gbr/degree-apprentice-civil-engineer-water-edinburgh-2027/40AEC5D376EA4EED979D7B3F7DCD0CA0/job/",
+    "SalaryFrequency": "apprentice-minimum-wage",
+    "ModernApprenticeshipLevel": "SCQF level 10",
+    "EntryRequirement": "",
+    "LocalAuthority": "Edinburgh",
+    "CompanyIndustry": "",
+    "PreferredApplyMethod": "Website",
+    "ClosingDate": "2026-12-01T23:59:59Z",
+    "SOC": null,
+    "IsDeleted": false,
+    "IsNew": true,
+    "CreatedWhen": "2026-10-05T10:51:47.953Z",
+    "UpdatedWhen": "2026-10-05T13:10:03.64Z",
+    "DeletedWhen": null,
+    "UpdatedReason": 3,
+    "VacancyStatus": 2,
+    "WorkQueueStatus": 6,
+    "ProcessStatus": 0,
+    "GeoLocationLat": "55.946057",
+    "GeoLocationLon": "-3.207504",
+    "GeoLocation": {
+     "type": "Point",
+     "coordinates": [
+      -3.2075047,
+      55.9460579
+     ],
+     "crs": {
+      "type": "name",
+      "properties": {
+       "name": "EPSG:4326"
+      }
+     }
+    },
+    "Logo_Id": null,
+    "IsTest": false,
+    "JobFamily": "Engineering",
+    "SystemJobTitle": null,
+    "FirstPublishedDate": "2026-10-05T13:10:03.657Z",
+    "UJMErrorMessage": null,
+    "IsTwoTicks": false,
+    "HasExpiryReminder": true,
+    "IsUjmVacancy": false,
+    "VacancyApiId": 0,
+    "LogoFileName": null,
+    "LogoNotVerified_Id": null,
+    "TypeOfEmployment": "Full",
+    "SubmittedWhen": "2026-10-05T10:56:40.713Z",
+    "PublicSector": null,
+    "VacancyAPICompany": null,
+    "VacancyType": "GA",
+    "Framework": "2fREfk7nyHg7QYqzz6xBC0",
+    "Nationwide": null,
+    "WorkingHours": "37.50",
+    "GroupedVacancyId": null,
+    "AcceptFA": false
+   }
+  },
+  {
+   "score": 1,
+   "highlights": null,
+   "document": {
+    "Id": "74715",
+    "MemberNodeId": 0,
+    "RefCode": "167315",
+    "JobTitle": "2027 AI Engineer Apprentice",
+    "City": "GLASGOW",
+    "Postcode": "G51 4BZ",
+    "PositionsAvailable": 1,
+    "MinSalary": "24000.0000",
+    "MaxSalary": null,
+    "Description": null,
+    "DescriptionOverview": "Turn your curiosity into a career. If you're passionate about artificial intelligence, eager to learn, and looking for a degree apprenticeship that combines academic study with exciting on-the-job experience, we'd love to hear from you.\n\nBenefits of the programme:\nEarn a salary while studying for your qualification\nGain hands-on experience in a real AI and engineering environment\nReceive job-specific training and development\nAchieve a recognised qualification\nSecure a permanent role from the start of your apprenticeship\nHave your university tuition fees fully paid\n\n About the Role:\nAs an AI Engineer Apprentice, you will develop the technical knowledge, practical skills and professional …",
+    "DescriptionTypicalDay": null,
+    "DescriptionLearn": "Throughout the apprenticeship, you will gain experience and knowledge in:\nProfessional engineering behaviours, teamwork and industry best practice\nProgramming, software engineering, version control and automated testing\nData preparation, feature engineering and data quality techniques\nMachine learning methods, model selection, training and evaluation\nDeployment patterns, MLOps, monitoring and lifecycle management\nCloud, compute and development tools used to deliver AI solutions\nResponsible AI, security, privacy, safety and regulatory considerations\nStructured approaches to troubleshooting, experimentation and continuous improvement\n\n Degree Apprenticeship Programme:\nYou will study towards …",
+    "DescriptionQualifications": "To apply, you will need:\nHighers:\n96 UCAS points\nFour Highers (BBCC) including Maths or Computing\nA foundation apprenticeship will be equal to one Higher at B\nA modern apprenticeship SCQF Level 6 in a relevant discipline will be equal to two Highers at B\n\nTo be considered for this position, you must have the permanent right to work in the UK and be able to successfully complete and maintain UK Government security checks, including Baseline Personnel Security Standard (BPSS) screening and Security Clearance (SC), which is a government background check, before starting employment.\n\n To be eligible for SC clearance, you will typically need to have lived in the UK continuously for the last five …",
+    "EmployerName": "Thales Group",
+    "HideEmployerName": false,
+    "TrainingProviderName": "Glasgow Caledonian University",
+    "EmployerWebsite": null,
+    "ApplicationWebAddress": "https://thales.wd3.myworkdayjobs.com/Careers/job/Glasgow/XMLNAME-2027-AI-Engineer-Apprentice---AI-and-Data-Science-Graduate-Level-Apprenticeship_R0337760",
+    "SalaryFrequency": "Year",
+    "ModernApprenticeshipLevel": "SCQF level 8",
+    "EntryRequirement": "",
+    "LocalAuthority": "Glasgow",
+    "CompanyIndustry": "",
+    "PreferredApplyMethod": "Website",
+    "ClosingDate": "2026-12-01T23:59:59Z",
+    "SOC": null,
+    "IsDeleted": false,
+    "IsNew": true,
+    "CreatedWhen": "2026-10-08T10:06:22.273Z",
+    "UpdatedWhen": "2026-10-08T11:36:37.607Z",
+    "DeletedWhen": null,
+    "UpdatedReason": 3,
+    "VacancyStatus": 2,
+    "WorkQueueStatus": 6,
+    "ProcessStatus": 0,
+    "GeoLocationLat": "55.866464",
+    "GeoLocationLon": "-4.335838",
+    "GeoLocation": {
+     "type": "Point",
+     "coordinates": [
+      -4.3358385,
+      55.8664643
+     ],
+     "crs": {
+      "type": "name",
+      "properties": {
+       "name": "EPSG:4326"
+      }
+     }
+    },
+    "Logo_Id": null,
+    "IsTest": false,
+    "JobFamily": "Engineering",
+    "SystemJobTitle": null,
+    "FirstPublishedDate": "2026-10-08T11:36:37.623Z",
+    "UJMErrorMessage": null,
+    "IsTwoTicks": true,
+    "HasExpiryReminder": true,
+    "IsUjmVacancy": false,
+    "VacancyApiId": 0,
+    "LogoFileName": null,
+    "LogoNotVerified_Id": null,
+    "TypeOfEmployment": "Full",
+    "SubmittedWhen": "2026-10-08T10:23:40.207Z",
+    "PublicSector": null,
+    "VacancyAPICompany": null,
+    "VacancyType": "GA",
+    "Framework": "73ek13sMqiITmHo2NbM0lr",
+    "Nationwide": null,
+    "WorkingHours": "37.00",
+    "GroupedVacancyId": null,
+    "AcceptFA": false
+   }
+  }
+ ],
+ "count": 4,
+ "isRelatedVacancies": false
+}

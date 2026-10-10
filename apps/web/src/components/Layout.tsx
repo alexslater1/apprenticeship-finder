@@ -1,13 +1,23 @@
-import { BriefcaseBusiness, EyeOff, ListChecks, Settings } from 'lucide-react';
+import {
+  BriefcaseBusiness,
+  Building2,
+  EyeOff,
+  ListChecks,
+  Map as MapIcon,
+  Settings,
+} from 'lucide-react';
 import { NavLink, Outlet } from 'react-router';
 import { cn } from '@/lib/utils';
 import { DetailHost } from './DetailHost';
 
 const NAV = [
-  { to: '/', label: 'Listings', icon: BriefcaseBusiness, end: true },
-  { to: '/tracker', label: 'Tracker', icon: ListChecks },
-  { to: '/hidden', label: 'Hidden', icon: EyeOff },
-  { to: '/settings', label: 'Settings', icon: Settings },
+  { to: '/', label: 'Listings', icon: BriefcaseBusiness, end: true, mobile: true },
+  { to: '/map', label: 'Map', icon: MapIcon, mobile: true },
+  { to: '/tracker', label: 'Tracker', icon: ListChecks, mobile: true },
+  { to: '/companies', label: 'Companies', icon: Building2, mobile: true },
+  // On phones, Hidden is linked from the Tracker page (five tabs fit; six don't).
+  { to: '/hidden', label: 'Hidden', icon: EyeOff, mobile: false },
+  { to: '/settings', label: 'Settings', icon: Settings, mobile: true },
 ];
 
 export function Layout() {
@@ -43,9 +53,9 @@ export function Layout() {
 
       <nav
         aria-label="Main"
-        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden"
       >
-        {NAV.map(({ to, label, icon: Icon, end }) => (
+        {NAV.filter((n) => n.mobile).map(({ to, label, icon: Icon, end }) => (
           <NavLink
             key={to}
             to={to}

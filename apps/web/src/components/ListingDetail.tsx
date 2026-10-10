@@ -264,7 +264,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                 )}
               </section>
 
-              <Notes listingId={r.id} />
+              <Notes target={{ kind: 'listing', id: r.id }} />
             </div>
           </>
         )}

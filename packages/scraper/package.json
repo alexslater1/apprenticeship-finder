@@ -13,6 +13,8 @@
   "dependencies": {
     "@af/shared": "*",
     "@supabase/supabase-js": "^2.117.3",
+    "cheerio": "^1.2.0",
+    "fast-xml-parser": "^5.11.2",
     "he": "^2.0.0",
     "nodemailer": "^10.0.16",
     "pg": "^8.23.1",

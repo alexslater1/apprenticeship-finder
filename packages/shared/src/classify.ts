@@ -15,6 +15,7 @@ export interface ClassifyInput {
   standardTitle?: string;
   roleHint?: string;
   knownApprenticeship?: boolean;
+  knownDegree?: boolean;
 }
 
 const firstMatch = (res: RegExp[], text: string) => res.some((re) => re.test(text));
@@ -128,7 +129,7 @@ export function classify(input: ClassifyInput): Classification {
   const dataWordsInText = rules.dataWords.test(text);
 
   let isDegree: boolean | null = null;
-  if (standard?.degree) isDegree = true;
+  if (input.knownDegree || standard?.degree) isDegree = true;
   else if (rules.degreeTitle.test(title)) isDegree = true;
   else if ((level ?? 0) >= 6 && rules.degreeText.test(text)) isDegree = true;
   else if (standard) isDegree = false;

@@ -121,3 +121,48 @@
     cursor: pointer;
   }
 }
+
+/* Map pins (MapPage): a dot coloured by match tier. */
+.af-pin {
+  border-radius: 9999px;
+  border: 2px solid var(--background);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
+}
+.af-pin-high {
+  background: var(--match-high);
+}
+.af-pin-medium {
+  background: var(--match-medium);
+}
+.af-pin-low {
+  background: var(--match-low);
+}
+.af-popup button {
+  margin-top: 6px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+}
+.leaflet-container {
+  font: inherit;
+  background: var(--muted);
+}
+/* Clusters in the app's colours (the plugin's default theme CSS isn't loaded). */
+.marker-cluster {
+  background: color-mix(in oklab, var(--primary) 25%, transparent);
+  border-radius: 9999px;
+}
+.marker-cluster div {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  border-radius: 9999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 30px;
+}
