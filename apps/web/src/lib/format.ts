@@ -1,4 +1,4 @@
-import type { ListingRow } from '@af/shared';
+import { bestRank, ordinal, universityRanking, type ListingRow } from '@af/shared';
 
 const gbp = new Intl.NumberFormat('en-GB', {
   style: 'currency',
@@ -93,8 +93,16 @@ export function providerLabel(name: string): string {
  */
 export function studyWith(
   r: Pick<ListingRow, 'university' | 'provider_name'>,
-): { kind: 'university' | 'provider'; name: string } | null {
-  if (r.university) return { kind: 'university', name: r.university };
+): { kind: 'university' | 'provider'; name: string; rank?: string } | null {
+  if (r.university) {
+    const ranking = universityRanking(r.university);
+    const best = ranking ? bestRank(ranking) : null;
+    return {
+      kind: 'university',
+      name: r.university,
+      rank: best ? `${ordinal(best.rank)} for ${best.table}` : undefined,
+    };
+  }
   if (r.provider_name) return { kind: 'provider', name: providerLabel(r.provider_name) };
   return null;
 }

@@ -2,6 +2,8 @@ import {
   MIN_LEVEL,
   daysBetween,
   excludedByPrefs,
+  gradeFit,
+  type GradeFit,
   londonToday,
   nearestMiles,
   personalScore,
@@ -22,6 +24,8 @@ export interface Derived {
   isNew: boolean;
   /** Hidden by a 'No' role or level in Settings (or a level we no longer collect). */
   excluded: 'role' | 'level' | null;
+  /** His predicted grades against the entry requirements (null when either is unknown). */
+  fit: GradeFit | null;
 }
 
 export function prefsFrom(s: SettingsRow | undefined): PersonalPrefs {
@@ -29,6 +33,7 @@ export function prefsFrom(s: SettingsRow | undefined): PersonalPrefs {
     roles: s?.role_prefs ?? {},
     levels: s?.level_prefs ?? {},
     defaultDistanceMiles: s ? s.default_distance_miles : null,
+    score: s?.score_prefs ?? {},
   };
 }
 
@@ -53,6 +58,7 @@ export function derive(
       daysToClose: row.closing_date ? daysBetween(today, row.closing_date) : null,
       isNew: daysBetween(row.first_seen_at.slice(0, 10), today) <= 3,
       excluded: row.level !== null && row.level < MIN_LEVEL ? 'level' : excludedByPrefs(row, prefs),
+      fit: gradeFit(row.entry, prefs.score?.predictedGrades, prefs.score?.subjects ?? []),
     };
   });
 }
@@ -95,6 +101,7 @@ export function matches(d: Derived, f: Filters, today = londonToday()): boolean 
     return false;
   if (f.degreeOnly && !r.is_degree) return false;
   if (f.employerId && r.employer_id !== f.employerId) return false;
+  if (f.withinGrades && (d.fit === 'below' || d.fit === 'subject')) return false;
   return true;
 }
 

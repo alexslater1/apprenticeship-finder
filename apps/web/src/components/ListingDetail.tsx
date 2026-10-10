@@ -17,7 +17,14 @@ import { formatDate, formatSalary, milesLabel, providerLabel } from '@/lib/forma
 import { WhyThisMatch } from './WhyThisMatch';
 import { useEmployers } from '@/lib/companies';
 import { useListingDetail, useSetHidden, useUpdateTracking } from '@/lib/queries';
-import { AdzunaAttribution, ClosingBadge, LevelBadge, MatchChip, PreRegisterBadge } from './badges';
+import {
+  AdzunaAttribution,
+  ClosingBadge,
+  GradeFitBadge,
+  LevelBadge,
+  MatchChip,
+  PreRegisterBadge,
+} from './badges';
 import { Notes } from './Notes';
 import { StatusSelect } from './StatusSelect';
 
@@ -35,6 +42,53 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
       <dt className="text-xs text-muted-foreground">{label}</dt>
       <dd className="text-sm break-words">{children}</dd>
     </div>
+  );
+}
+
+/**
+ * Plain-text descriptions: keep the source's blank lines; a long single block (Workday, Google)
+ * is broken every few sentences so it reads like an advert, not a wall of text.
+ */
+function paragraphs(text: string): string[] {
+  const blocks = text.split(/\n{2,}/);
+  if (blocks.length > 1 || text.length < 600) return blocks;
+  const sentences = text.split(/(?<=[.!?])\s+(?=[A-Z])/);
+  const out: string[] = [];
+  for (let i = 0; i < sentences.length; i += 3) out.push(sentences.slice(i, i + 3).join(' '));
+  return out;
+}
+
+/** Why the description is missing or short, and where the full advert is. */
+function MissingNote({ r, textLength }: { r: Derived['row']; textLength: number }) {
+  const only = new Set(
+    r.sources.map((x) => (x.source.startsWith('employer:') ? 'employer' : x.source)),
+  );
+  let why: string | null = null;
+  if (r.is_lead)
+    why = 'This is a line from a careers page or an apprenticeship listing, not a full advert.';
+  else if (textLength === 0 && r.pre_register)
+    why =
+      'Higherin’s “register your interest” pages don’t have a job description yet. The full advert appears when applications open.';
+  else if (textLength === 0 && only.has('amazing'))
+    why =
+      'This comes from the Amazing Apprenticeships listing (a PDF), which only gives the title and a link.';
+  else if (textLength === 0) why = 'The source didn’t include a description.';
+  else if (textLength < 700 && only.size === 1 && only.has('adzuna'))
+    why = 'Adzuna only shares a short summary of each advert.';
+  if (!why) return null;
+  return (
+    <p className="mt-2 rounded-lg bg-muted/60 p-3 text-sm text-muted-foreground">
+      {why}{' '}
+      <a
+        href={r.apply_url || r.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary underline-offset-2 hover:underline"
+      >
+        Open the full advert
+      </a>
+      .
+    </p>
   );
 }
 
@@ -198,9 +252,15 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
 
               <WhyThisMatch d={d} />
 
-              {quals.length > 0 && (
+              {(quals.length > 0 || r.entry) && (
                 <section>
                   <h3 className="mb-2 font-semibold">Entry requirements</h3>
+                  {r.entry && (
+                    <p className="mb-2 flex flex-wrap items-center gap-2 text-sm">
+                      <span className="font-medium">{r.entry.summary}</span>
+                      <GradeFitBadge fit={d.fit} />
+                    </p>
+                  )}
                   <ul className="grid gap-1 text-sm">
                     {quals.map((q, i) => (
                       <li key={i}>
@@ -228,10 +288,17 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                     className="prose-sm grid gap-3 text-sm leading-relaxed [&_a]:text-primary [&_a]:underline [&_h3]:mt-2 [&_h3]:font-semibold [&_h4]:font-semibold [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5"
                     dangerouslySetInnerHTML={{ __html: html }}
                   />
-                ) : (
-                  <p className="text-sm text-muted-foreground">
-                    No description. Open the advert for details.
-                  </p>
+                ) : detail?.description_text ? (
+                  <div className="grid gap-3 text-sm leading-relaxed">
+                    {paragraphs(detail.description_text).map((p, i) => (
+                      <p key={i} className="whitespace-pre-line">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ) : null}
+                {!isLoading && (
+                  <MissingNote r={r} textLength={detail?.description_text?.length ?? 0} />
                 )}
               </section>
 

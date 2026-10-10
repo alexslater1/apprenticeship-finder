@@ -1,4 +1,4 @@
-import type { ListingRow, SettingsRow, TrackStatus } from '@af/shared';
+import type { ListingRow, ScorePrefs, SettingsRow, TrackStatus } from '@af/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { supabase } from './supabase';
@@ -51,6 +51,7 @@ export function useSettings() {
 export interface ListingDetail {
   id: string;
   description_html: string | null;
+  description_text: string | null;
   details: Record<string, unknown> | null;
   listing_sources: Array<{
     source: string;
@@ -68,7 +69,7 @@ export function useListingDetail(id: string | undefined) {
       const { data, error } = await supabase
         .from('listings')
         .select(
-          'id,description_html,details,listing_sources(source,url,first_seen_at,last_seen_at)',
+          'id,description_html,description_text,details,listing_sources(source,url,first_seen_at,last_seen_at)',
         )
         .eq('id', id!)
         .single();
@@ -292,4 +293,14 @@ export function useBudgets() {
       }) as Budget[];
     },
   });
+}
+
+/** Merge a change into settings.score_prefs (reads the cached row so quick taps don't clobber). */
+export function useUpdateScorePrefs() {
+  const qc = useQueryClient();
+  const update = useUpdateSettings();
+  return (patch: Partial<ScorePrefs>) => {
+    const current = qc.getQueryData<SettingsRow>(keys.settings)?.score_prefs ?? {};
+    update.mutate({ score_prefs: { ...current, ...patch } });
+  };
 }
