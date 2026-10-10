@@ -68,6 +68,7 @@ export function matches(d: Derived, f: Filters, today = londonToday()): boolean 
   if (d.excluded) return false;
   if (!f.includeHidden && r.hidden) return false;
   if (!f.includeClosed && !r.is_active) return false;
+  if (!f.includeInterest && r.pre_register) return false;
   if (f.search) {
     const q = f.search.toLowerCase();
     const hay =

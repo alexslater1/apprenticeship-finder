@@ -20,7 +20,7 @@ import {
 } from '@/lib/companies';
 
 const SECTION_HINTS: Partial<Record<Section, string>> = {
-  soon: 'Usually open within the next two months.',
+  soon: 'Collecting names now, or usually open within two months. You’ll get an alert when the real advert appears.',
   manual: 'Their sites block automated checks: open the link now and then.',
   error: 'The last check failed; see Health for details.',
 };

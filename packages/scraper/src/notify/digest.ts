@@ -140,8 +140,9 @@ export async function gatherDigest(
   const rankOf = (r: ListingRow) =>
     personalScore(r, prefs, nearestMiles(home, r.locations ?? []), { clamp: false });
   // Like the dashboard: roles and levels set to 'No' in Settings stay out.
+  // Register-interest adverts aren't applications: the email waits for the real advert.
   const wanted = (r: ListingRow) =>
-    !excludedByPrefs(r, prefs) && (r.level === null || r.level >= MIN_LEVEL);
+    !r.pre_register && !excludedByPrefs(r, prefs) && (r.level === null || r.level >= MIN_LEVEL);
 
   // First digest ever: the last week, so the very first email isn't the whole database.
   const newSince = since ?? new Date(now.getTime() - 7 * 86_400_000).toISOString();

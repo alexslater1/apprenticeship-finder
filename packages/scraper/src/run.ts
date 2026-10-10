@@ -189,9 +189,10 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
     const nameById = new Map(storedEmployers.map((x) => [x.id, x.name]));
     for (const l of kept) attributeToEmployer(l, matchEmployer, (id) => nameById.get(id));
     const relevantBySource = new Map<string, number>();
+    // An employer is "open" when it has real adverts, not just a register-interest page.
     for (const l of kept)
       for (const s of l.sources)
-        if (s.source.startsWith('employer:'))
+        if (s.source.startsWith('employer:') && !l.details?.preRegister)
           relevantBySource.set(s.source, (relevantBySource.get(s.source) ?? 0) + 1);
     // Same vacancy on several sources (or re-titled since yesterday) → one listing.
     const existing = await loadMatchables(); // read-only, so dry runs show real merges too

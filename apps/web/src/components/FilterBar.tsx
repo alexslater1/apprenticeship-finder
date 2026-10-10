@@ -256,6 +256,12 @@ export function FilterBar({
                   onChange={(v) => f.set({ degreeOnly: v })}
                 />
                 <Check
+                  id="f-interest"
+                  label="Include “register your interest” pages"
+                  checked={f.includeInterest}
+                  onChange={(v) => f.set({ includeInterest: v })}
+                />
+                <Check
                   id="f-grades"
                   label="Hide ones asking for more than his predicted grades"
                   checked={f.withinGrades}

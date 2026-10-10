@@ -11,6 +11,7 @@ import {
   type RawListing,
   extractEntry,
   type EntryReq,
+  isRegisterInterest,
 } from '@af/shared';
 import { decode as decodeHtml } from 'he';
 import { placeByName } from '@af/shared/places';
@@ -239,7 +240,12 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     region: first?.region ?? null,
     nation,
     isNational: !!raw.isNational,
-    details: compact(raw.details),
+    // Register-interest adverts aren't open yet: kept, but off the main list by default. Always
+    // set (true or false) so a stored flag clears when the real advert replaces the page.
+    details: compact({
+      ...raw.details,
+      preRegister: Boolean(raw.details?.preRegister) || isRegisterInterest(title),
+    }),
     isLead: !!raw.isLead,
     sources: [{ source: raw.source, sourceId: raw.sourceId, url: raw.url, raw: trimRaw(raw.raw) }],
   };
@@ -265,6 +271,9 @@ export function mergeWithinRun(listings: NormalisedListing[]): NormalisedListing
     if (l.closingDate && (!prev.closingDate || l.closingDate > prev.closingDate))
       prev.closingDate = l.closingDate;
     prev.applyUrl ??= l.applyUrl;
+    // One source with the real advert means it's open, whatever the others say.
+    if (prev.details?.preRegister && !l.details?.preRegister)
+      prev.details = { ...prev.details, preRegister: false };
     prev.employerId ??= l.employerId;
     prev.university ??= l.university;
     prev.entry ??= l.entry;
