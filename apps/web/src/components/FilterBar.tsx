@@ -255,6 +255,12 @@ export function FilterBar({
                   checked={f.degreeOnly}
                   onChange={(v) => f.set({ degreeOnly: v })}
                 />
+                <Check
+                  id="f-grades"
+                  label="Hide ones asking for more than his predicted grades"
+                  checked={f.withinGrades}
+                  onChange={(v) => f.set({ withinGrades: v })}
+                />
               </Section>
 
               <Section title="Where">

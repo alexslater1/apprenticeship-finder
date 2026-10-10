@@ -43,7 +43,7 @@ export function listing(over: Partial<ListingRow> = {}): ListingRow {
     lars_code: 337,
     standard_title: 'Data scientist (integrated degree)',
     provider_name: 'University of Nottingham',
-    university: 'University of Nottingham',
+    university: null,
     role_type: 'data_science',
     score,
     score_breakdown: breakdown(score, role, level),
@@ -80,6 +80,7 @@ export function listing(over: Partial<ListingRow> = {}): ListingRow {
     notes_count: 0,
     pre_register: false,
     is_lead: false,
+    entry: null,
     ...over,
   };
 }
@@ -91,6 +92,7 @@ export const settings: SettingsRow = {
   home_lon: -1.5537,
   role_prefs: { data_science: 'high', data_analyst: 'high', ml_ai: 'maybe', software_tech: 'no' },
   level_prefs: { '4': 'maybe', '5': 'high', '6': 'high', '7': 'maybe' },
+  score_prefs: {},
   default_distance_miles: 50,
   digest_min_score: 40,
   digest_enabled: true,

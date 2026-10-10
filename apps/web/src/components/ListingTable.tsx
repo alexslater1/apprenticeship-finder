@@ -5,7 +5,7 @@ import {
   tableFeatures,
   useTable,
 } from '@tanstack/react-table';
-import { BookOpen, Columns3, Eye, EyeOff, GraduationCap } from 'lucide-react';
+import { BookOpen, ClipboardCheck, Columns3, Eye, EyeOff, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils';
 import {
   AdzunaAttribution,
   ClosingBadge,
+  GradeFitBadge,
   LevelBadge,
   MatchChip,
   NewDot,
@@ -70,18 +71,25 @@ const columns = helper.columns([
             {d.row.employer_name}
             {studyWith(d.row) && (
               <span className="inline-flex items-center gap-1">
-                ·{' '}
                 {d.row.university ? (
                   <GraduationCap className="size-3.5" aria-label="University" />
                 ) : (
                   <BookOpen className="size-3.5" aria-label="Training provider" />
                 )}
                 {studyWith(d.row)!.name}
+                {studyWith(d.row)!.rank && ` (${studyWith(d.row)!.rank})`}
               </span>
             )}
             {d.row.pre_register && <PreRegisterBadge />}
             {d.isNew && <NewDot />}
           </div>
+          {d.row.entry && (
+            <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+              <ClipboardCheck className="size-3.5" aria-label="Entry requirements" />
+              Needs {d.row.entry.summary}
+              <GradeFitBadge fit={d.fit} />
+            </div>
+          )}
         </div>
       );
     },

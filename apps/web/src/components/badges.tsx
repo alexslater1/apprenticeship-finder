@@ -1,4 +1,4 @@
-import { matchTier, type ListingRow } from '@af/shared';
+import { matchTier, type GradeFit, type ListingRow } from '@af/shared';
 import { cn } from '@/lib/utils';
 import { SOURCE_LABELS, SOURCE_SHORT, sourceKey } from '@/lib/derive';
 import { closingLabel, levelLabel } from '@/lib/format';
@@ -66,7 +66,10 @@ export function ClosingBadge({ days, className }: { days: number | null; classNa
 
 export function SourceBadges({ sources }: { sources: ListingRow['sources'] }) {
   const seen = new Map<string, string>();
-  for (const s of sources) if (!seen.has(sourceKey(s.source))) seen.set(sourceKey(s.source), s.url);
+  // Adzuna gets its own (required) label below rather than a second, smaller tag.
+  for (const s of sources)
+    if (s.source !== 'adzuna' && !seen.has(sourceKey(s.source)))
+      seen.set(sourceKey(s.source), s.url);
   return (
     <span className="flex flex-wrap gap-1">
       {[...seen.entries()].map(([key, url]) => (
@@ -79,7 +82,6 @@ export function SourceBadges({ sources }: { sources: ListingRow['sources'] }) {
           title={SOURCE_LABELS[key] ?? key}
           className="inline-flex h-5 items-center rounded border px-1.5 text-[11px] text-muted-foreground hover:bg-muted hover:text-foreground"
         >
-          {/* Adzuna's terms require their name on any ad from them. */}
           {SOURCE_SHORT[key] ?? key}
         </a>
       ))}
@@ -87,16 +89,25 @@ export function SourceBadges({ sources }: { sources: ListingRow['sources'] }) {
   );
 }
 
-/** Adzuna's terms: every Adzuna ad shows an "Adzuna" label of at least 116×23 px linking to adzuna.co.uk. */
+/**
+ * Adzuna's terms: every Adzuna ad shows an "Adzuna" label of at least 116×23 px linking to
+ * adzuna.co.uk. It doubles as the Adzuna source tag (it links to the ad on adzuna.co.uk), styled
+ * like the other tags so it doesn't shout.
+ */
 export function AdzunaAttribution({ sources }: { sources: ListingRow['sources'] }) {
-  if (!sources.some((s) => s.source === 'adzuna')) return null;
+  const ad = sources.find((s) => s.source === 'adzuna');
+  if (!ad) return null;
+  const href = /^https:\/\/(www\.)?adzuna\.co\.uk\//.test(ad.url)
+    ? ad.url
+    : 'https://www.adzuna.co.uk';
   return (
     <a
-      href="https://www.adzuna.co.uk"
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       onClick={(e) => e.stopPropagation()}
-      className="inline-flex h-[23px] min-w-[116px] items-center justify-center rounded border border-[#2e9ec7]/40 px-2 text-xs font-semibold text-[#1f7fa3] dark:text-[#6cc4e6]"
+      title="Adzuna"
+      className="inline-flex h-[23px] min-w-[116px] items-center justify-center rounded border px-2 text-[11px] text-muted-foreground hover:bg-muted hover:text-foreground"
     >
       Jobs by Adzuna
     </a>
@@ -118,6 +129,41 @@ export function NewDot() {
   return (
     <span className="inline-flex h-5 items-center rounded-full bg-primary px-1.5 text-[10px] font-semibold tracking-wide text-primary-foreground uppercase">
       New
+    </span>
+  );
+}
+
+const FIT: Record<GradeFit, { label: string; className: string }> = {
+  meets: {
+    label: 'Meets your grades',
+    className: 'bg-match-high/15 text-match-high ring-match-high/30',
+  },
+  close: {
+    label: 'Just above your grades',
+    className: 'bg-match-medium/15 text-match-medium ring-match-medium/30',
+  },
+  below: {
+    label: 'Above your grades',
+    className: 'bg-destructive/10 text-destructive ring-destructive/30',
+  },
+  subject: {
+    label: 'Needs A-level Maths',
+    className: 'bg-match-medium/15 text-match-medium ring-match-medium/30',
+  },
+};
+
+/** How his predicted grades compare with the advert's entry requirements. */
+export function GradeFitBadge({ fit }: { fit: GradeFit | null }) {
+  if (!fit) return null;
+  const f = FIT[fit];
+  return (
+    <span
+      className={cn(
+        'inline-flex h-5 shrink-0 items-center rounded-full px-1.5 text-xs font-medium whitespace-nowrap ring-1 ring-inset',
+        f.className,
+      )}
+    >
+      {f.label}
     </span>
   );
 }

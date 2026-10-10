@@ -179,7 +179,41 @@
       "high": 25,
       "maybe": 12
     },
-    "withinDistance": 8
+    "withinDistance": 8,
+    "extras": {
+      "$comment": "Settings → 'What else counts'. University points use the better of its Computer Science / Maths league-table position (else overall); 'Lots' multiplies by 1.5.",
+      "universityBands": [
+        [
+          10,
+          12
+        ],
+        [
+          20,
+          9
+        ],
+        [
+          35,
+          6
+        ],
+        [
+          60,
+          3
+        ]
+      ],
+      "universityWeight": {
+        "off": 0,
+        "some": 1,
+        "lots": 1.5
+      },
+      "gradesMeet": 5,
+      "gradesClose": -8,
+      "gradesBelow": -20,
+      "missingSubject": -15,
+      "preferDegree": 10,
+      "startsTooEarly": -40,
+      "belowMinSalary": -10,
+      "favourite": 8
+    }
   },
   "providers": {
     "$comment": "Training providers that post adverts on behalf of employers as 'Role - Employer'. The pipeline moves the employer out of the title so cross-source dedupe works.",

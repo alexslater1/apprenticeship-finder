@@ -215,6 +215,23 @@ export interface ListingRow {
   pre_register: boolean;
   /** A line on a careers page ("applications open in November"), not a job advert. */
   is_lead: boolean;
+  /** Entry requirements read from the advert (fit.ts `EntryReq`). */
+  entry: { summary: string; ucas: number | null; subjects: string[] } | null;
+}
+
+/** Settings → "Your grades and start" and "What else counts" (all optional). */
+export interface ScorePrefs {
+  /** Predicted A-level grades, e.g. 'A*AB'. */
+  predictedGrades?: string;
+  /** His A-level subjects ('Maths', 'Computer Science', …). */
+  subjects?: string[];
+  /** ISO date: listings starting earlier rank lower (he's in Year 13 until summer 2027). */
+  earliestStart?: string | null;
+  universityWeight?: 'off' | 'some' | 'lots';
+  preferDegree?: boolean;
+  minSalary?: number | null;
+  /** Starred employer ids. */
+  favourites?: string[];
 }
 
 export interface SettingsRow {
@@ -224,6 +241,7 @@ export interface SettingsRow {
   home_lon: number | null;
   role_prefs: Partial<RolePrefs>;
   level_prefs: Partial<LevelPrefs>;
+  score_prefs: ScorePrefs;
   /** Null: anywhere in the UK (happy to move). */
   default_distance_miles: number | null;
   digest_min_score: number;

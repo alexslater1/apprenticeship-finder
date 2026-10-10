@@ -1,0 +1,580 @@
+{
+  "$comment": "Positions in the Complete University Guide league tables (overall, Computer Science, Mathematics). Used for the university part of the match score. Rebuild yearly with scripts/build-university-rankings.ts.",
+  "source": "https://www.thecompleteuniversityguide.co.uk/league-tables/rankings",
+  "edition": "2027",
+  "universities": {
+    "University of Cambridge": {
+      "overall": 1,
+      "computerScience": 2,
+      "mathematics": 4
+    },
+    "University of Oxford": {
+      "overall": 2,
+      "computerScience": 3,
+      "mathematics": 3
+    },
+    "London School of Economics": {
+      "overall": 3,
+      "mathematics": 9
+    },
+    "University of St Andrews": {
+      "overall": 4,
+      "computerScience": 4,
+      "mathematics": 1
+    },
+    "Imperial College London": {
+      "overall": 5,
+      "computerScience": 1,
+      "mathematics": 2
+    },
+    "Durham University": {
+      "overall": 6,
+      "computerScience": 8,
+      "mathematics": 8
+    },
+    "University of Warwick": {
+      "overall": 7,
+      "computerScience": 5,
+      "mathematics": 5
+    },
+    "Loughborough University": {
+      "overall": 8,
+      "computerScience": 19,
+      "mathematics": 16
+    },
+    "University of Bath": {
+      "overall": 9,
+      "computerScience": 10,
+      "mathematics": 6
+    },
+    "Lancaster University": {
+      "overall": 10,
+      "computerScience": 24,
+      "mathematics": 15
+    },
+    "University of Exeter": {
+      "overall": 11,
+      "computerScience": 17,
+      "mathematics": 20
+    },
+    "University of Birmingham": {
+      "overall": 12,
+      "computerScience": 6,
+      "mathematics": 19
+    },
+    "University of Sheffield": {
+      "overall": 13,
+      "computerScience": 15,
+      "mathematics": 24
+    },
+    "University College London": {
+      "overall": 14,
+      "computerScience": 7,
+      "mathematics": 10
+    },
+    "University of Southampton": {
+      "overall": 15,
+      "computerScience": 12,
+      "mathematics": 12
+    },
+    "King's College London": {
+      "overall": 16,
+      "computerScience": 14,
+      "mathematics": 23
+    },
+    "University of Bristol": {
+      "overall": 17,
+      "computerScience": 11,
+      "mathematics": 7
+    },
+    "University of Leeds": {
+      "overall": 18,
+      "computerScience": 23,
+      "mathematics": 26
+    },
+    "University of Edinburgh": {
+      "overall": 19,
+      "computerScience": 13,
+      "mathematics": 14
+    },
+    "University of York": {
+      "overall": 20,
+      "computerScience": 22,
+      "mathematics": 25
+    },
+    "University of Surrey": {
+      "overall": 21,
+      "computerScience": 26,
+      "mathematics": 22
+    },
+    "University of Liverpool": {
+      "overall": 22,
+      "computerScience": 28,
+      "mathematics": 48
+    },
+    "Queen's University Belfast": {
+      "overall": 23,
+      "computerScience": 21,
+      "mathematics": 13
+    },
+    "University of Manchester": {
+      "overall": 24,
+      "computerScience": 9,
+      "mathematics": 11
+    },
+    "University of Dundee": {
+      "overall": 25,
+      "computerScience": 34,
+      "mathematics": 35
+    },
+    "University of Nottingham": {
+      "overall": 26,
+      "computerScience": 18,
+      "mathematics": 17
+    },
+    "Cardiff University": {
+      "overall": 27,
+      "computerScience": 25,
+      "mathematics": 27
+    },
+    "University of the Arts London": {
+      "overall": 28,
+      "computerScience": 70
+    },
+    "University of Glasgow": {
+      "overall": 29,
+      "computerScience": 16,
+      "mathematics": 21
+    },
+    "University of Essex": {
+      "overall": 30,
+      "computerScience": 51,
+      "mathematics": 58
+    },
+    "Heriot-Watt University": {
+      "overall": 31,
+      "computerScience": 37,
+      "mathematics": 28
+    },
+    "University of Aberdeen": {
+      "overall": 32,
+      "computerScience": 32,
+      "mathematics": 44
+    },
+    "University of Leicester": {
+      "overall": 33,
+      "computerScience": 30,
+      "mathematics": 18
+    },
+    "University of East Anglia": {
+      "overall": 34,
+      "computerScience": 36,
+      "mathematics": 52
+    },
+    "Newcastle University": {
+      "overall": 35,
+      "computerScience": 27,
+      "mathematics": 30
+    },
+    "University of Sussex": {
+      "overall": 36,
+      "computerScience": 35,
+      "mathematics": 33
+    },
+    "Northumbria University": {
+      "overall": 37,
+      "computerScience": 47,
+      "mathematics": 50
+    },
+    "Harper Adams University": {
+      "overall": 38
+    },
+    "University of Strathclyde": {
+      "overall": 39,
+      "computerScience": 33,
+      "mathematics": 32
+    },
+    "Queen Mary University of London": {
+      "overall": 40,
+      "computerScience": 20,
+      "mathematics": 31
+    },
+    "Swansea University": {
+      "overall": 41,
+      "computerScience": 31,
+      "mathematics": 29
+    },
+    "Royal Holloway, University of London": {
+      "overall": 42,
+      "computerScience": 29,
+      "mathematics": 47
+    },
+    "University of Reading": {
+      "overall": 43,
+      "computerScience": 39,
+      "mathematics": 37
+    },
+    "University of Suffolk": {
+      "overall": 44,
+      "computerScience": 111
+    },
+    "Oxford Brookes University": {
+      "overall": 45,
+      "computerScience": 65
+    },
+    "Nottingham Trent University": {
+      "overall": 46,
+      "computerScience": 59,
+      "mathematics": 49
+    },
+    "Ulster University": {
+      "overall": 47,
+      "computerScience": 42
+    },
+    "Brunel University London": {
+      "overall": 48,
+      "computerScience": 56,
+      "mathematics": 56
+    },
+    "Bangor University": {
+      "overall": 49,
+      "computerScience": 41
+    },
+    "University of Lincoln": {
+      "overall": 50,
+      "computerScience": 48,
+      "mathematics": 43
+    },
+    "University of Portsmouth": {
+      "overall": 51,
+      "computerScience": 52,
+      "mathematics": 57
+    },
+    "Aston University": {
+      "overall": 52,
+      "computerScience": 40,
+      "mathematics": 34
+    },
+    "Manchester Metropolitan University": {
+      "overall": 53,
+      "computerScience": 58,
+      "mathematics": 41
+    },
+    "Keele University": {
+      "overall": 54,
+      "computerScience": 54,
+      "mathematics": 45
+    },
+    "University of Stirling": {
+      "overall": 55,
+      "computerScience": 43,
+      "mathematics": 36
+    },
+    "Aberystwyth University": {
+      "overall": 56,
+      "computerScience": 45,
+      "mathematics": 42
+    },
+    "Coventry University": {
+      "overall": 57,
+      "computerScience": 88,
+      "mathematics": 65
+    },
+    "Edge Hill University": {
+      "overall": 58,
+      "computerScience": 53,
+      "mathematics": 53
+    },
+    "City St George's, University of London": {
+      "overall": 59,
+      "computerScience": 44,
+      "mathematics": 40
+    },
+    "Norwich University of the Arts": {
+      "overall": 60,
+      "computerScience": 107
+    },
+    "Goldsmiths, University of London": {
+      "overall": 61,
+      "computerScience": 94
+    },
+    "University of Kent": {
+      "overall": 62,
+      "computerScience": 38,
+      "mathematics": 38
+    },
+    "University of Chichester": {
+      "overall": 63,
+      "computerScience": 69
+    },
+    "University of Hull": {
+      "overall": 64,
+      "computerScience": 49,
+      "mathematics": 64
+    },
+    "Falmouth University": {
+      "overall": 65,
+      "computerScience": 55
+    },
+    "University of Salford": {
+      "overall": 66,
+      "computerScience": 87,
+      "mathematics": 63
+    },
+    "University of Plymouth": {
+      "overall": 67,
+      "computerScience": 72,
+      "mathematics": 51
+    },
+    "University of Huddersfield": {
+      "overall": 68,
+      "computerScience": 50
+    },
+    "University of Sunderland": {
+      "overall": 69,
+      "computerScience": 80
+    },
+    "University of Hertfordshire": {
+      "overall": 70,
+      "computerScience": 46,
+      "mathematics": 39
+    },
+    "University of Derby": {
+      "overall": 71,
+      "computerScience": 76,
+      "mathematics": 55
+    },
+    "Cardiff Metropolitan University": {
+      "overall": 72,
+      "computerScience": 101
+    },
+    "Arts University Bournemouth": {
+      "overall": 73
+    },
+    "University of the West of England": {
+      "overall": 74,
+      "computerScience": 64,
+      "mathematics": 61
+    },
+    "Robert Gordon University": {
+      "overall": 75,
+      "computerScience": 75
+    },
+    "Liverpool John Moores University": {
+      "overall": 76,
+      "computerScience": 84,
+      "mathematics": 54
+    },
+    "Bournemouth University": {
+      "overall": 77,
+      "computerScience": 71
+    },
+    "University of Chester": {
+      "overall": 78,
+      "computerScience": 81
+    },
+    "St Mary's University, Twickenham": {
+      "overall": 79
+    },
+    "University of Worcester": {
+      "overall": 80,
+      "computerScience": 62
+    },
+    "Sheffield Hallam University": {
+      "overall": 81,
+      "computerScience": 74,
+      "mathematics": 59
+    },
+    "Edinburgh Napier University": {
+      "overall": 82,
+      "computerScience": 67
+    },
+    "Liverpool Hope University": {
+      "overall": 83,
+      "computerScience": 95,
+      "mathematics": 60
+    },
+    "University of West London": {
+      "overall": 84,
+      "computerScience": 96
+    },
+    "University for the Creative Arts": {
+      "overall": 85,
+      "computerScience": 91
+    },
+    "Leeds Beckett University": {
+      "overall": 86,
+      "computerScience": 86
+    },
+    "Teesside University": {
+      "overall": 87,
+      "computerScience": 73
+    },
+    "Kingston University": {
+      "overall": 88,
+      "computerScience": 78
+    },
+    "Glasgow Caledonian University": {
+      "overall": 89,
+      "computerScience": 61
+    },
+    "University of Central Lancashire": {
+      "overall": 90,
+      "computerScience": 97
+    },
+    "University of South Wales": {
+      "overall": 91,
+      "computerScience": 92
+    },
+    "Bath Spa University": {
+      "overall": 92,
+      "computerScience": 66
+    },
+    "Canterbury Christ Church University": {
+      "overall": 93,
+      "computerScience": 104
+    },
+    "SOAS University of London": {
+      "overall": 94
+    },
+    "Birmingham City University": {
+      "overall": 95,
+      "computerScience": 85
+    },
+    "University of East London": {
+      "overall": 96,
+      "computerScience": 90
+    },
+    "University of Winchester": {
+      "overall": 97,
+      "computerScience": 68
+    },
+    "University of Gloucestershire": {
+      "overall": 98,
+      "computerScience": 100
+    },
+    "University of Bradford": {
+      "overall": 99,
+      "computerScience": 77
+    },
+    "University of Wales Trinity Saint David": {
+      "overall": 100,
+      "computerScience": 115
+    },
+    "University of Wolverhampton": {
+      "overall": 101,
+      "computerScience": 89,
+      "mathematics": 46
+    },
+    "Queen Margaret University": {
+      "overall": 102
+    },
+    "University of Greenwich": {
+      "overall": 103,
+      "computerScience": 106,
+      "mathematics": 62
+    },
+    "University of Brighton": {
+      "overall": 104,
+      "computerScience": 83
+    },
+    "Abertay University": {
+      "overall": 105,
+      "computerScience": 57
+    },
+    "University of Bedfordshire": {
+      "overall": 106,
+      "computerScience": 112
+    },
+    "Leeds Arts University": {
+      "overall": 107
+    },
+    "York St John University": {
+      "overall": 108,
+      "computerScience": 99
+    },
+    "Royal Agricultural University": {
+      "overall": 109
+    },
+    "De Montfort University": {
+      "overall": 110,
+      "computerScience": 82
+    },
+    "Staffordshire University": {
+      "overall": 111,
+      "computerScience": 63
+    },
+    "London South Bank University": {
+      "overall": 112,
+      "computerScience": 79
+    },
+    "Anglia Ruskin University": {
+      "overall": 113,
+      "computerScience": 105
+    },
+    "Bishop Grosseteste University": {
+      "overall": 114
+    },
+    "University of Westminster": {
+      "overall": 115,
+      "computerScience": 102
+    },
+    "Solent University": {
+      "overall": 116,
+      "computerScience": 108
+    },
+    "University of Cumbria": {
+      "overall": 117
+    },
+    "University of Bolton": {
+      "overall": 118,
+      "computerScience": 109
+    },
+    "Arts University Plymouth": {
+      "overall": 119
+    },
+    "Buckinghamshire New University": {
+      "overall": 120,
+      "computerScience": 116
+    },
+    "University of Northampton": {
+      "overall": 121,
+      "computerScience": 98
+    },
+    "Middlesex University": {
+      "overall": 122,
+      "computerScience": 113
+    },
+    "University of Roehampton": {
+      "overall": 123,
+      "computerScience": 117
+    },
+    "University of Buckingham": {
+      "overall": 124,
+      "computerScience": 60
+    },
+    "Leeds Trinity University": {
+      "overall": 125,
+      "computerScience": 93
+    },
+    "Plymouth Marjon University": {
+      "overall": 126
+    },
+    "Newman University": {
+      "overall": 127,
+      "computerScience": 103
+    },
+    "University of the West of Scotland": {
+      "overall": 128,
+      "computerScience": 114
+    },
+    "London Metropolitan University": {
+      "overall": 129,
+      "computerScience": 110
+    },
+    "Wrexham University": {
+      "overall": 130,
+      "computerScience": 118
+    }
+  }
+}
