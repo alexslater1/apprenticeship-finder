@@ -1,18 +1,10 @@
-import {
-  BriefcaseBusiness,
-  Building2,
-  ListChecks,
-  Map as MapIcon,
-  Settings,
-  Sparkles,
-} from 'lucide-react';
+import { BriefcaseBusiness, Building2, ListChecks, Settings, Sparkles } from 'lucide-react';
 import { NavLink, Outlet } from 'react-router';
 import { cn } from '@/lib/utils';
 import { DetailHost } from './DetailHost';
 
 const NAV = [
   { to: '/', label: 'Listings', icon: BriefcaseBusiness, end: true, mobile: true },
-  { to: '/map', label: 'Map', icon: MapIcon, mobile: true },
   { to: '/tracker', label: 'Tracker', icon: ListChecks, mobile: true },
   { to: '/skills', label: 'Skills', icon: Sparkles, mobile: true },
   { to: '/companies', label: 'Companies', icon: Building2, mobile: true },
@@ -52,7 +44,7 @@ export function Layout() {
 
       <nav
         aria-label="Main"
-        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-6 border-t bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden"
       >
         {NAV.filter((n) => n.mobile).map(({ to, label, icon: Icon, end }) => (
           <NavLink
