@@ -66,10 +66,7 @@ export function ClosingBadge({ days, className }: { days: number | null; classNa
 
 export function SourceBadges({ sources }: { sources: ListingRow['sources'] }) {
   const seen = new Map<string, string>();
-  // Adzuna gets its own (required) label below rather than a second, smaller tag.
-  for (const s of sources)
-    if (s.source !== 'adzuna' && !seen.has(sourceKey(s.source)))
-      seen.set(sourceKey(s.source), s.url);
+  for (const s of sources) if (!seen.has(sourceKey(s.source))) seen.set(sourceKey(s.source), s.url);
   return (
     <span className="flex flex-wrap gap-1">
       {[...seen.entries()].map(([key, url]) => (
@@ -86,31 +83,6 @@ export function SourceBadges({ sources }: { sources: ListingRow['sources'] }) {
         </a>
       ))}
     </span>
-  );
-}
-
-/**
- * Adzuna's terms: every Adzuna ad shows an "Adzuna" label of at least 116×23 px linking to
- * adzuna.co.uk. It doubles as the Adzuna source tag (it links to the ad on adzuna.co.uk), styled
- * like the other tags so it doesn't shout.
- */
-export function AdzunaAttribution({ sources }: { sources: ListingRow['sources'] }) {
-  const ad = sources.find((s) => s.source === 'adzuna');
-  if (!ad) return null;
-  const href = /^https:\/\/(www\.)?adzuna\.co\.uk\//.test(ad.url)
-    ? ad.url
-    : 'https://www.adzuna.co.uk';
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={(e) => e.stopPropagation()}
-      title="Adzuna"
-      className="inline-flex h-[23px] min-w-[116px] items-center justify-center rounded border px-2 text-[11px] text-muted-foreground hover:bg-muted hover:text-foreground"
-    >
-      Jobs by Adzuna
-    </a>
   );
 }
 

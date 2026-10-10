@@ -5,7 +5,6 @@ import { formatSalary, locationLabel, milesLabel, studyWith } from '@/lib/format
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import {
-  AdzunaAttribution,
   ClosingBadge,
   GradeFitBadge,
   LevelBadge,
@@ -37,6 +36,7 @@ export function ListingCard({ d }: { d: Derived }) {
         {r.pre_register && <PreRegisterBadge />}
         {d.isNew && <NewDot />}
         {!r.is_active && <span className="text-xs text-muted-foreground">Closed</span>}
+        {r.hidden && <span className="text-xs text-muted-foreground">Hidden by you</span>}
       </div>
       <h2 className="leading-snug font-semibold break-words">
         {/* The whole card is clickable via this link's ::after overlay. */}
@@ -81,7 +81,6 @@ export function ListingCard({ d }: { d: Derived }) {
       </p>
       <div className="relative z-10 mt-2 flex flex-wrap items-center gap-1.5">
         <SourceBadges sources={r.sources} />
-        <AdzunaAttribution sources={r.sources} />
       </div>
       <div className="relative z-10 mt-2 flex items-center gap-2">
         <StatusSelect row={r} compact />

@@ -6,6 +6,7 @@ import { Page } from '@/components/Layout';
 import { ListingCard } from '@/components/ListingCard';
 import { ListingTable } from '@/components/ListingTable';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { downloadCsv } from '@/lib/csv';
 import { matches, prefsFrom, sortDerived, type Derived } from '@/lib/derive';
@@ -64,6 +65,11 @@ export default function Listings() {
     () => derived.filter((d) => d.excluded && matches({ ...d, excluded: null }, filters)).length,
     [derived, filters],
   );
+  // Listings he hid himself (the eye button), shown again with the toggle.
+  const youHid = useMemo(
+    () => derived.filter((d) => d.row.hidden && d.row.is_active && !d.excluded).length,
+    [derived],
+  );
   const activeCount = useMemo(() => derived.filter((d) => d.row.is_active).length, [derived]);
 
   return (
@@ -115,17 +121,28 @@ export default function Listings() {
         </div>
       ) : (
         <>
-          <p className="mb-3 text-sm text-muted-foreground" aria-live="polite">
-            {visible.length} {visible.length === 1 ? 'apprenticeship' : 'apprenticeships'}
-            {prefsHidden > 0 && (
-              <>
-                {' · '}
-                <Link to="/settings" className="text-primary underline-offset-2 hover:underline">
-                  {prefsHidden} hidden by your “No” preferences
-                </Link>
-              </>
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <p className="text-sm text-muted-foreground" aria-live="polite">
+              {visible.length} {visible.length === 1 ? 'apprenticeship' : 'apprenticeships'}
+              {prefsHidden > 0 && (
+                <>
+                  {' · '}
+                  <Link to="/settings" className="text-primary underline-offset-2 hover:underline">
+                    {prefsHidden} hidden by your “No” preferences
+                  </Link>
+                </>
+              )}
+            </p>
+            {(youHid > 0 || filters.includeHidden) && (
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={filters.includeHidden}
+                  onCheckedChange={(v) => filters.set({ includeHidden: v === true })}
+                />
+                Show the {youHid} you hid
+              </label>
             )}
-          </p>
+          </div>
           {visible.length === 0 ? (
             <div className="rounded-xl border border-dashed p-8 text-center text-muted-foreground">
               {rows.length === 0
