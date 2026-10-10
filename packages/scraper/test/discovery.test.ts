@@ -25,6 +25,13 @@ describe('Google Jobs (SerpApi)', () => {
     expect(l.url).toContain('careers.thalesgroup.com');
     expect(l.applyUrl).toBe(l.url);
   });
+  it('drops results that only link to copy-sites', () => {
+    const copy = {
+      ...serp.jobs_results[0],
+      apply_options: [{ title: 'JobLeads', link: 'https://www.jobleads.com/gb/job/ai-engineer' }],
+    };
+    expect(toRawListing(copy as never, '2026-10-10')).toBeNull();
+  });
   it('skips results from job boards posing as employers', () => {
     const fake = { ...serp.jobs_results[0], company_name: 'InternHunt' };
     expect(toRawListing(fake as never, '2026-10-10')).toBeNull();

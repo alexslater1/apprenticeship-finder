@@ -16,9 +16,7 @@
   "roles": [
     {
       "role": "data_science",
-      "patterns": [
-        "data scien"
-      ]
+      "patterns": ["data scien"]
     },
     {
       "role": "ml_ai",
@@ -34,9 +32,7 @@
     },
     {
       "role": "data_engineering",
-      "patterns": [
-        "data engineer"
-      ]
+      "patterns": ["data engineer"]
     },
     {
       "role": "data_analyst",
@@ -74,9 +70,7 @@
   "weakTitle": {
     "$comment": "A bare 'data' in the title (e.g. 'HR Data & Systems Apprentice') counts as data_analyst with fewer points and no specificity bonus.",
     "role": "data_analyst",
-    "patterns": [
-      "\\bdata\\b"
-    ],
+    "patterns": ["\\bdata\\b"],
     "exclude": "data (centre|center|entry|input)"
   },
   "dataWords": "data|analytics|machine learning|artificial intelligence|\\bAI\\b|statistic|insight",
@@ -183,22 +177,10 @@
     "extras": {
       "$comment": "Settings → 'What else counts'. University points use the better of its Computer Science / Maths league-table position (else overall); 'Lots' multiplies by 1.5.",
       "universityBands": [
-        [
-          10,
-          12
-        ],
-        [
-          20,
-          9
-        ],
-        [
-          35,
-          6
-        ],
-        [
-          60,
-          3
-        ]
+        [10, 12],
+        [20, 9],
+        [35, 6],
+        [60, 3]
       ],
       "universityWeight": {
         "off": 0,
@@ -240,7 +222,21 @@
       "Paragon Skills",
       "Kaplan",
       "BPP",
-      "Firebrand"
+      "Firebrand",
+      "Back 2 Work",
+      "Back To Work",
+      "NowSkills",
+      "Nowskills Limited",
+      "Just IT Training Limited",
+      "Inspiro Learning",
+      "Learning People",
+      "Remit Training",
+      "Babington",
+      "Kaplan Financial",
+      "Apprentify Group",
+      "Total People",
+      "Pareto",
+      "Pareto Law"
     ],
     "$comment_inText": "Training providers named in advert text ('delivered by our partner Firebrand'), used when the source doesn't give one. Patterns are case-sensitive.",
     "inText": [

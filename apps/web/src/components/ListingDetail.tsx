@@ -1,6 +1,6 @@
-import { ROLE_LABELS, standardFor, standardUrl } from '@af/shared';
+import { rankLinks, ROLE_LABELS, standardFor, standardUrl } from '@af/shared';
 import DOMPurify from 'dompurify';
-import { ExternalLink, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useMemo, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton';
 import { SOURCE_LABELS, sourceKey, type Derived } from '@/lib/derive';
 import { formatDate, formatSalary, milesLabel, providerLabel } from '@/lib/format';
+import { ApplyButton } from './ApplyButton';
 import { WhyThisMatch } from './WhyThisMatch';
 import { useEmployers } from '@/lib/companies';
 import { useListingDetail, useSetHidden, useUpdateTracking } from '@/lib/queries';
@@ -73,7 +74,7 @@ function MissingNote({ r, textLength }: { r: Derived['row']; textLength: number 
     <p className="mt-2 rounded-lg bg-muted/60 p-3 text-sm text-muted-foreground">
       {why}{' '}
       <a
-        href={r.apply_url || r.url}
+        href={rankLinks(r)[0]?.url ?? r.url}
         target="_blank"
         rel="noopener noreferrer"
         className="text-primary underline-offset-2 hover:underline"
@@ -161,11 +162,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                 {milesLabel(d.distance) && ` · ${milesLabel(d.distance)}`}
               </SheetDescription>
               <div className="mt-1 flex flex-wrap gap-2">
-                <Button asChild size="lg">
-                  <a href={r.apply_url || r.url} target="_blank" rel="noopener noreferrer">
-                    Apply <ExternalLink />
-                  </a>
-                </Button>
+                <ApplyButton r={r} employer={employer} />
                 <StatusSelect row={r} compact className="h-11 sm:h-9" />
                 <Button
                   variant="outline"
@@ -304,6 +301,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                       ...s,
                       first_seen_at: r.first_seen_at,
                       last_seen_at: r.last_seen_at,
+                      link_status: s.dead ? ('dead' as const) : null,
                     }))
                   ).map((s) => (
                     <li key={s.source + s.url}>
@@ -318,6 +316,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                       <span className="text-muted-foreground">
                         {' '}
                         · first seen {formatDate(s.first_seen_at)}
+                        {s.link_status === 'dead' && ' · this link no longer works'}
                       </span>
                     </li>
                   ))}

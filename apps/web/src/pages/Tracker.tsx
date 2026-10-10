@@ -1,4 +1,4 @@
-import { STATUS_LABELS, type TrackStatus } from '@af/shared';
+import { rankLinks, STATUS_LABELS, type TrackStatus } from '@af/shared';
 import { AlarmClock, ChevronDown, Download } from 'lucide-react';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
@@ -133,7 +133,7 @@ function exportCsv(rows: Derived[]) {
       d.row.university ?? '',
       d.row.closing_date ?? '',
       d.row.applied_at ?? '',
-      d.row.apply_url || d.row.url,
+      rankLinks(d.row)[0]?.url ?? d.row.url,
       d.row.notes_count,
     ]),
   );

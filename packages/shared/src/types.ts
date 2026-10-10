@@ -209,7 +209,8 @@ export interface ListingRow {
   hidden_at: string | null;
   applied_at: string | null;
   tracking_updated_at: string | null;
-  sources: Array<{ source: string; url: string }>;
+  /** `dead`: the link was checked and now says "job not found" (pipeline/links.ts). */
+  sources: Array<{ source: string; url: string; dead?: boolean }>;
   notes_count: number;
   /** Higherin "Register your interest" advert: not open for applications yet. */
   pre_register: boolean;

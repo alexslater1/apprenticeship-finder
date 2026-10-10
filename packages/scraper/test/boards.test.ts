@@ -17,8 +17,10 @@ describe('Adzuna', () => {
       .map(normalise)
       .filter(Boolean)
       .map((n: { title: string }) => n.title);
-    expect(kept).toContain('Data Technician Apprentice');
+    expect(kept.length).toBeGreaterThan(0);
     expect(kept.some((t: string) => /IQA|Intern\b/.test(t))).toBe(false);
+    // Posted by a training provider (Back 2 Work) with no employer named: nowhere official to apply.
+    expect(kept).not.toContain('Data Technician Apprentice');
   });
 
   it('ignores predicted salaries', () => {
