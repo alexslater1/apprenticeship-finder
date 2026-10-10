@@ -18,7 +18,7 @@ import { greenhouse } from '../src/connectors/simple.ts';
 import { jobsFromSitemap, parseSfSearch, sfJobId } from '../src/connectors/successfactors.ts';
 import type { Employer, EmployerCtx } from '../src/connectors/types.ts';
 import { workday, workdayJobId } from '../src/connectors/workday.ts';
-import { employerMatcher } from '../src/employers.ts';
+import { employerMatcher, isTransient, statusFor } from '../src/employers.ts';
 import type { Http } from '../src/http.ts';
 
 const fx = (name: string) =>
@@ -320,5 +320,31 @@ describe('detection and employer matching', () => {
     expect(match('lloyds bank')).toBe('lloyds-banking-group');
     expect(match('sky')).toBe('sky');
     expect(match('sky betting and gaming')).toBeNull();
+  });
+});
+
+describe('employer status', () => {
+  const employer = {
+    id: 'barclays',
+    name: 'Barclays',
+    aliases: [],
+    connector: 'workday',
+    connector_config: {},
+    status: 'open' as const,
+  };
+  it("keeps yesterday's status through a maintenance page or timeout", () => {
+    const msg = 'Unexpected token \'<\', "<!DOCTYPE "... is not valid JSON';
+    expect(isTransient(msg)).toBe(true);
+    expect(statusFor({ employer, error: msg, transient: true, ms: 0 }, 0)).toBe('open');
+    expect(
+      statusFor(
+        { employer: { ...employer, status: 'unknown' }, error: msg, transient: true, ms: 0 },
+        0,
+      ),
+    ).toBe('error');
+  });
+  it('reports real failures', () => {
+    expect(isTransient('HTTP 404 for https://x')).toBe(false);
+    expect(statusFor({ employer, error: 'HTTP 404', ms: 0 }, 0)).toBe('error');
   });
 });

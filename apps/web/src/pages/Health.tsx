@@ -54,8 +54,14 @@ export default function Health() {
   );
   const employers = useEmployers();
   const budgets = useBudgets();
+  // Failing now, or failed on the last check while keeping yesterday's status (an outage).
   const problem = (employers.data ?? []).filter(
-    (e) => e.watch && (e.status === 'error' || e.status === 'blocked'),
+    (e) =>
+      e.watch &&
+      e.status !== 'manual' &&
+      (e.status === 'error' ||
+        e.status === 'blocked' ||
+        (!!e.last_error && (!e.last_ok_at || (e.last_checked_at ?? '') > e.last_ok_at))),
   );
   const empty = (employers.data ?? []).filter(
     (e) =>

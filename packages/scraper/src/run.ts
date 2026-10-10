@@ -308,6 +308,7 @@ function employerSummary(runs: EmployerRun[], relevantBySource: Map<string, numb
     const relevant = relevantBySource.get(`employer:${r.employer.id}`) ?? 0;
     const status = statusFor(r, relevant);
     counts[status] = (counts[status] ?? 0) + 1;
+    if (r.transient) counts.outage = (counts.outage ?? 0) + 1;
     byId[r.employer.id] = {
       status,
       total: r.result?.total ?? null,
