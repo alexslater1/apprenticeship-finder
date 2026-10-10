@@ -1,4 +1,4 @@
-import { SKILL_CATEGORIES, SKILLS, type SkillCategory, type SkillContext } from '@af/shared';
+import { SKILL_CATEGORIES, SKILLS, type SkillCategory } from '@af/shared';
 import { ChevronDown, Download } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
@@ -10,28 +10,28 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { downloadCsv } from '@/lib/csv';
 import {
-  CONTEXT_COLOURS,
-  CONTEXT_HINTS,
-  CONTEXT_LABELS,
+  KIND_COLOURS,
+  KIND_HINTS,
+  KIND_LABELS,
   mostly,
   rankSkills,
+  SKILL_KINDS,
+  type SkillKind,
   type SkillStat,
 } from '@/lib/skills';
 import { useListingData } from '@/lib/useListingData';
 import { useOpenListing } from '@/lib/useOpenListing';
 import { cn } from '@/lib/utils';
 
-const KINDS = ['asked', 'taught', 'job'] as const;
-
 const SHOWN = 12;
 
-function ContextSplit({ s }: { s: SkillStat }) {
+function KindSplit({ s }: { s: SkillStat }) {
   return (
     <span className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
-      {KINDS.filter((k) => s[k] > 0).map((k) => (
+      {SKILL_KINDS.filter((k) => s[k] > 0).map((k) => (
         <span key={k} className="inline-flex items-center gap-1">
-          <span className={cn('size-2 rounded-full', CONTEXT_COLOURS[k])} aria-hidden />
-          {CONTEXT_LABELS[k]} {s[k]}
+          <span className={cn('size-2 rounded-full', KIND_COLOURS[k])} aria-hidden />
+          {KIND_LABELS[k]} {s[k]}
         </span>
       ))}
     </span>
@@ -76,20 +76,20 @@ function SkillRow({
             className="mt-1.5 flex h-2.5 overflow-hidden rounded-full bg-muted"
             role="presentation"
           >
-            {KINDS.map((k) => (
+            {SKILL_KINDS.map((k) => (
               <span
                 key={k}
-                className={cn('h-full', CONTEXT_COLOURS[k])}
-                style={{ width: `${top > 0 ? (s.byCtx[k] / top) * 100 : 0}%` }}
+                className={cn('h-full', KIND_COLOURS[k])}
+                style={{ width: `${top > 0 ? (s.byKind[k] / top) * 100 : 0}%` }}
               />
             ))}
           </span>
           <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-foreground">
             <span>
               In {s.count} {s.count === 1 ? 'advert' : 'adverts'}
-              {!filtered && <> · mostly {CONTEXT_LABELS[mostly(s)].toLowerCase()}</>}
+              {!filtered && <> · mostly {KIND_LABELS[mostly(s)].toLowerCase()}</>}
             </span>
-            {!filtered && <ContextSplit s={s} />}
+            {!filtered && <KindSplit s={s} />}
           </span>
           {s.blurb && <span className="mt-1 block text-xs text-muted-foreground">{s.blurb}</span>}
         </span>
@@ -104,7 +104,7 @@ function SkillRow({
       {open && (
         <div className="border-t px-3 py-2">
           <ul className="grid gap-1">
-            {listings.map(({ d, ctx }) => (
+            {listings.map(({ d, kind }) => (
               <li key={d.row.id}>
                 <button
                   type="button"
@@ -117,8 +117,8 @@ function SkillRow({
                     <span className="text-muted-foreground"> · {d.row.employer_name}</span>
                   </span>
                   <span className="hidden shrink-0 items-center gap-1 text-xs text-muted-foreground sm:inline-flex">
-                    <span className={cn('size-2 rounded-full', CONTEXT_COLOURS[ctx])} aria-hidden />
-                    {CONTEXT_LABELS[ctx]}
+                    <span className={cn('size-2 rounded-full', KIND_COLOURS[kind])} aria-hidden />
+                    {KIND_LABELS[kind]}
                   </span>
                 </button>
               </li>
@@ -142,14 +142,11 @@ export default function Skills() {
   const [params, setParams] = useSearchParams();
   const tab = (params.get('group') as Tab | null) ?? 'all';
   const kindParam = params.get('kind');
-  const kind = (KINDS as readonly string[]).includes(kindParam ?? '')
-    ? (kindParam as SkillContext)
+  const kind = (SKILL_KINDS as readonly string[]).includes(kindParam ?? '')
+    ? (kindParam as SkillKind)
     : undefined;
   const [weighted, setWeighted] = useState(true);
-  const ranking = useMemo(
-    () => rankSkills(derived, { weighted, ctx: kind }),
-    [derived, weighted, kind],
-  );
+  const ranking = useMemo(() => rankSkills(derived, { weighted, kind }), [derived, weighted, kind]);
   const setParam = (key: string, value: string | null) => {
     const next = new URLSearchParams(params);
     if (value) next.set(key, value);
@@ -170,16 +167,7 @@ export default function Skills() {
           onClick={() =>
             downloadCsv(
               `skills-${new Date().toLocaleDateString('en-CA')}.csv`,
-              [
-                'Rank',
-                'Skill',
-                'Group',
-                'Share %',
-                'Adverts',
-                'Asked for',
-                'Taught',
-                'Part of the job',
-              ],
+              ['Rank', 'Skill', 'Group', 'Share %', 'Adverts', 'Asked for', 'Not required'],
               ranking.stats.map((s, i) => [
                 i + 1,
                 s.label,
@@ -187,8 +175,7 @@ export default function Skills() {
                 Math.round(s.share * 100),
                 s.count,
                 s.asked,
-                s.taught,
-                s.job,
+                s.not_required,
               ]),
             )
           }
@@ -223,36 +210,32 @@ export default function Skills() {
         >
           Every mention
         </Button>
-        {KINDS.map((k) => (
+        {SKILL_KINDS.map((k) => (
           <Button
             key={k}
             variant={kind === k ? 'secondary' : 'outline'}
             size="sm"
             aria-pressed={kind === k}
             className={cn(kind === k && 'ring-2 ring-primary')}
-            title={`${CONTEXT_LABELS[k]}: ${CONTEXT_HINTS[k]}`}
+            title={`${KIND_LABELS[k]}: ${KIND_HINTS[k]}`}
             onClick={() => setParam('kind', kind === k ? null : k)}
           >
-            <span className={cn('size-2.5 rounded-full', CONTEXT_COLOURS[k])} aria-hidden />
-            {k === 'asked'
-              ? 'Only asked for'
-              : k === 'taught'
-                ? 'Only taught'
-                : 'Only part of the job'}
+            <span className={cn('size-2.5 rounded-full', KIND_COLOURS[k])} aria-hidden />
+            {k === 'asked' ? 'Only asked for' : 'Only not required'}
           </Button>
         ))}
       </div>
 
       <ul className="mb-4 grid max-w-3xl gap-1 text-xs text-muted-foreground">
-        {KINDS.map((k) => (
+        {SKILL_KINDS.map((k) => (
           <li key={k} className="flex items-start gap-2">
             <span
-              className={cn('mt-1 size-2.5 shrink-0 rounded-full', CONTEXT_COLOURS[k])}
+              className={cn('mt-1 size-2.5 shrink-0 rounded-full', KIND_COLOURS[k])}
               aria-hidden
             />
             <span>
-              <strong className="font-medium text-foreground">{CONTEXT_LABELS[k]}</strong>:{' '}
-              {CONTEXT_HINTS[k]}.
+              <strong className="font-medium text-foreground">{KIND_LABELS[k]}</strong>:{' '}
+              {KIND_HINTS[k]}.
             </span>
           </li>
         ))}
@@ -317,12 +300,11 @@ export default function Skills() {
           </p>
           <p>
             <strong className="text-foreground">Asked for</strong> means the advert lists it as
-            something you need (“You’ll need…”, “Experience with… would be useful”).{' '}
-            <strong className="text-foreground">Taught</strong> means the training covers it
-            (“You’ll learn…”, “training provided”).{' '}
-            <strong className="text-foreground">Part of the job</strong> means it’s one of the
-            duties. These are read from the wording around each mention, so a few will be wrong.
-            Open an advert to see the sentence each skill came from.
+            something to have already, even if only as “useful”.{' '}
+            <strong className="text-foreground">Not required</strong> means it isn’t asked for
+            beforehand: either the training covers it (“You’ll learn…”, “training provided”) or it’s
+            one of the duties. These are read from the wording around each mention, so a few will be
+            wrong. Open an advert to see the sentence each skill came from.
           </p>
           <p>
             Hidden adverts, “No” preferences and “register interest” pages are left out, and so are
