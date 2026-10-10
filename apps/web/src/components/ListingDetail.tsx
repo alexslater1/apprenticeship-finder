@@ -18,6 +18,7 @@ import { ApplyButton } from './ApplyButton';
 import { WhyThisMatch } from './WhyThisMatch';
 import { useEmployers } from '@/lib/companies';
 import { useListingDetail, useSetHidden, useUpdateTracking } from '@/lib/queries';
+import { AdvertSkills } from './AdvertSkills';
 import { ClosingBadge, GradeFitBadge, LevelBadge, MatchChip, PreRegisterBadge } from './badges';
 import { Notes } from './Notes';
 import { StatusSelect } from './StatusSelect';
@@ -264,6 +265,8 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                   </ul>
                 </section>
               )}
+
+              <AdvertSkills skills={detail?.skills} />
 
               <section>
                 <h3 className="mb-2 font-semibold">Description</h3>

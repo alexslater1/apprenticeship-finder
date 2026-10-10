@@ -218,6 +218,8 @@ export interface ListingRow {
   is_lead: boolean;
   /** Entry requirements read from the advert (fit.ts `EntryReq`). */
   entry: { summary: string; ucas: number | null; subjects: string[] } | null;
+  /** Skills the advert mentions (skills.ts); null when the description is too short to judge. */
+  skills: Array<{ id: string; ctx: 'asked' | 'taught' | 'job' }> | null;
 }
 
 /** Settings → "Your grades and start" and "What else counts" (all optional). */
