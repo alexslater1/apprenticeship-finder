@@ -9,35 +9,46 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { downloadCsv } from '@/lib/csv';
-import { CONTEXT_LABELS, mostly, rankSkills, type SkillStat } from '@/lib/skills';
+import {
+  CONTEXT_COLOURS,
+  CONTEXT_HINTS,
+  CONTEXT_LABELS,
+  mostly,
+  rankSkills,
+  type SkillStat,
+} from '@/lib/skills';
 import { useListingData } from '@/lib/useListingData';
 import { useOpenListing } from '@/lib/useOpenListing';
 import { cn } from '@/lib/utils';
 
-const CONTEXT_DOT: Record<SkillContext, string> = {
-  asked: 'bg-amber-500',
-  taught: 'bg-sky-500',
-  job: 'bg-muted-foreground/50',
-};
+const KINDS = ['asked', 'taught', 'job'] as const;
 
 const SHOWN = 12;
 
 function ContextSplit({ s }: { s: SkillStat }) {
   return (
     <span className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
-      {(['asked', 'taught', 'job'] as const)
-        .filter((k) => s[k] > 0)
-        .map((k) => (
-          <span key={k} className="inline-flex items-center gap-1">
-            <span className={cn('size-2 rounded-full', CONTEXT_DOT[k])} aria-hidden />
-            {CONTEXT_LABELS[k]} {s[k]}
-          </span>
-        ))}
+      {KINDS.filter((k) => s[k] > 0).map((k) => (
+        <span key={k} className="inline-flex items-center gap-1">
+          <span className={cn('size-2 rounded-full', CONTEXT_COLOURS[k])} aria-hidden />
+          {CONTEXT_LABELS[k]} {s[k]}
+        </span>
+      ))}
     </span>
   );
 }
 
-function SkillRow({ s, rank, top }: { s: SkillStat; rank: number; top: number }) {
+function SkillRow({
+  s,
+  rank,
+  top,
+  filtered,
+}: {
+  s: SkillStat;
+  rank: number;
+  top: number;
+  filtered: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const [all, setAll] = useState(false);
   const openListing = useOpenListing();
@@ -62,20 +73,23 @@ function SkillRow({ s, rank, top }: { s: SkillStat; rank: number; top: number })
             </span>
           </span>
           <span
-            className="mt-1.5 block h-2 overflow-hidden rounded-full bg-muted"
+            className="mt-1.5 flex h-2.5 overflow-hidden rounded-full bg-muted"
             role="presentation"
           >
-            <span
-              className="block h-full rounded-full bg-primary"
-              style={{ width: `${top > 0 ? (s.share / top) * 100 : 0}%` }}
-            />
+            {KINDS.map((k) => (
+              <span
+                key={k}
+                className={cn('h-full', CONTEXT_COLOURS[k])}
+                style={{ width: `${top > 0 ? (s.byCtx[k] / top) * 100 : 0}%` }}
+              />
+            ))}
           </span>
           <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-foreground">
             <span>
-              In {s.count} {s.count === 1 ? 'advert' : 'adverts'} · mostly{' '}
-              {CONTEXT_LABELS[mostly(s)].toLowerCase()}
+              In {s.count} {s.count === 1 ? 'advert' : 'adverts'}
+              {!filtered && <> · mostly {CONTEXT_LABELS[mostly(s)].toLowerCase()}</>}
             </span>
-            <ContextSplit s={s} />
+            {!filtered && <ContextSplit s={s} />}
           </span>
           {s.blurb && <span className="mt-1 block text-xs text-muted-foreground">{s.blurb}</span>}
         </span>
@@ -103,7 +117,7 @@ function SkillRow({ s, rank, top }: { s: SkillStat; rank: number; top: number })
                     <span className="text-muted-foreground"> · {d.row.employer_name}</span>
                   </span>
                   <span className="hidden shrink-0 items-center gap-1 text-xs text-muted-foreground sm:inline-flex">
-                    <span className={cn('size-2 rounded-full', CONTEXT_DOT[ctx])} aria-hidden />
+                    <span className={cn('size-2 rounded-full', CONTEXT_COLOURS[ctx])} aria-hidden />
                     {CONTEXT_LABELS[ctx]}
                   </span>
                 </button>
@@ -127,8 +141,21 @@ export default function Skills() {
   const { derived, isLoading, error } = useListingData();
   const [params, setParams] = useSearchParams();
   const tab = (params.get('group') as Tab | null) ?? 'all';
+  const kindParam = params.get('kind');
+  const kind = (KINDS as readonly string[]).includes(kindParam ?? '')
+    ? (kindParam as SkillContext)
+    : undefined;
   const [weighted, setWeighted] = useState(true);
-  const ranking = useMemo(() => rankSkills(derived, { weighted }), [derived, weighted]);
+  const ranking = useMemo(
+    () => rankSkills(derived, { weighted, ctx: kind }),
+    [derived, weighted, kind],
+  );
+  const setParam = (key: string, value: string | null) => {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    setParams(next, { replace: true });
+  };
   const shown = ranking.stats.filter((s) => tab === 'all' || s.category === tab);
   const top = shown[0]?.share ?? 0;
 
@@ -185,11 +212,54 @@ export default function Skills() {
         )}
       </p>
 
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <Tabs
-          value={tab}
-          onValueChange={(v) => setParams(v === 'all' ? {} : { group: v }, { replace: true })}
+      <div className="mb-4 flex flex-wrap items-center gap-2" role="group" aria-label="Count">
+        <span className="text-sm text-muted-foreground">Count:</span>
+        <Button
+          variant={kind ? 'outline' : 'secondary'}
+          size="sm"
+          aria-pressed={!kind}
+          className={cn(!kind && 'ring-2 ring-primary')}
+          onClick={() => setParam('kind', null)}
         >
+          Every mention
+        </Button>
+        {KINDS.map((k) => (
+          <Button
+            key={k}
+            variant={kind === k ? 'secondary' : 'outline'}
+            size="sm"
+            aria-pressed={kind === k}
+            className={cn(kind === k && 'ring-2 ring-primary')}
+            title={`${CONTEXT_LABELS[k]}: ${CONTEXT_HINTS[k]}`}
+            onClick={() => setParam('kind', kind === k ? null : k)}
+          >
+            <span className={cn('size-2.5 rounded-full', CONTEXT_COLOURS[k])} aria-hidden />
+            {k === 'asked'
+              ? 'Only asked for'
+              : k === 'taught'
+                ? 'Only taught'
+                : 'Only part of the job'}
+          </Button>
+        ))}
+      </div>
+
+      <ul className="mb-4 grid max-w-3xl gap-1 text-xs text-muted-foreground">
+        {KINDS.map((k) => (
+          <li key={k} className="flex items-start gap-2">
+            <span
+              className={cn('mt-1 size-2.5 shrink-0 rounded-full', CONTEXT_COLOURS[k])}
+              aria-hidden
+            />
+            <span>
+              <strong className="font-medium text-foreground">{CONTEXT_LABELS[k]}</strong>:{' '}
+              {CONTEXT_HINTS[k]}.
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <Tabs value={tab} onValueChange={(v) => setParam('group', v === 'all' ? null : v)}>
           <TabsList className="h-auto max-w-full justify-start overflow-x-auto [scrollbar-width:none]">
             <TabsTrigger value="all" className="h-9 flex-none px-3">
               All
@@ -227,7 +297,7 @@ export default function Skills() {
       ) : (
         <ol className="grid gap-2">
           {shown.map((s, i) => (
-            <SkillRow key={s.id} s={s} rank={i + 1} top={top} />
+            <SkillRow key={s.id} s={s} rank={i + 1} top={top} filtered={!!kind} />
           ))}
         </ol>
       )}
