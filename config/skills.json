@@ -1,0 +1,646 @@
+{
+  "$comment": "Skills the Skills page ranks. Each pattern is a case-insensitive regular expression (unless caseSensitive) matched against advert text. Built from the adverts collected in Oct 2026. `npm run cli -w packages/scraper -- skill-candidates` lists frequent requirement phrases no skill covers yet; after editing, `npm run cli -w packages/scraper -- reskill` re-tags every listing.",
+  "categories": {
+    "technical": "Technical skills",
+    "tools": "Languages and tools",
+    "knowledge": "Subject knowledge",
+    "personal": "Personal qualities"
+  },
+  "skills": [
+    {
+      "id": "data_analysis",
+      "label": "Data analysis",
+      "category": "technical",
+      "blurb": "Finding patterns and answers in data.",
+      "patterns": [
+        "\\bdata analy\\w+",
+        "\\banaly[sz](?:e|es|ed|ing|is of) (?:large |complex |the |raw |financial |operational |customer )?(?:data|datasets|information|trends|results|figures)",
+        "\\b(?:data[- ]driven|actionable) insights?",
+        "\\banalytics\\b",
+        "\\bidentify(?:ing)? (?:trends|patterns|anomalies)",
+        "\\bbusiness intelligence\\b"
+      ]
+    },
+    {
+      "id": "data_cleaning",
+      "label": "Cleaning and preparing data",
+      "category": "technical",
+      "blurb": "Fixing messy data before it can be used: gaps, duplicates, wrong formats.",
+      "patterns": [
+        "\\bclean(?:s|se|ses|sing|ing)?\\b[^.;]{0,40}\\bdata(?:sets?)?\\b",
+        "\\bdata (?:cleansing|cleaning|preparation|wrangling|quality|validation|integrity)",
+        "\\bprepar(?:e|es|ing|ation)\\b[^.;]{0,30}\\bdata\\b",
+        "\\bvalidat(?:e|es|ing)\\b[^.;]{0,30}\\bdata\\b"
+      ]
+    },
+    {
+      "id": "visualisation",
+      "label": "Dashboards, charts and reports",
+      "category": "technical",
+      "blurb": "Showing data so other people can read it at a glance.",
+      "patterns": [
+        "\\bvisuali[sz]\\w*",
+        "\\bdashboards?\\b",
+        "\\bdata storytelling",
+        "\\b(?:charts?|graphs?)\\b",
+        "\\b(?:produc|creat|build|prepar|develop|deliver|automat|run|writ)\\w* (?:\\w+ ){0,2}reports?\\b",
+        "\\b(?:regular|weekly|monthly|daily|management|business) report(?:s|ing)\\b",
+        "\\breporting (?:tools|solutions|processes|platforms|requirements)"
+      ]
+    },
+    {
+      "id": "statistics",
+      "label": "Statistics",
+      "category": "technical",
+      "blurb": "Averages, spread, probability, testing whether a result is real.",
+      "patterns": [
+        "\\bstatistic\\w*",
+        "\\bhypothesis testing",
+        "\\bprobability\\b",
+        "\\bregression\\b"
+      ]
+    },
+    {
+      "id": "machine_learning",
+      "label": "Machine learning",
+      "category": "technical",
+      "blurb": "Training models that learn patterns from data to make predictions.",
+      "patterns": [
+        "\\bmachine learning",
+        "\\bpredictive (?:model\\w*|analytics)",
+        "\\bmodel (?:training|development|selection|evaluation)",
+        "\\b(?:deep learning|neural networks?|MLOps)\\b",
+        "\\bfeature engineering"
+      ]
+    },
+    {
+      "id": "ai",
+      "label": "AI and generative AI",
+      "category": "technical",
+      "blurb": "Using and building AI tools, including chatbots and large language models.",
+      "patterns": [
+        "\\bartificial intelligence",
+        "\\bAI\\b",
+        "\\bgenerative\\b",
+        "\\bLLMs?\\b",
+        "\\blarge language models?",
+        "\\bprompt engineering",
+        "\\b(?:copilot|chatgpt)\\b"
+      ]
+    },
+    {
+      "id": "programming",
+      "label": "Programming",
+      "category": "technical",
+      "blurb": "Writing code in any language.",
+      "patterns": [
+        "\\bprogramming\\b",
+        "\\bcoding\\b",
+        "\\bwrit(?:e|ing) (?:\\w+ ){0,3}code\\b",
+        "\\bscripting\\b",
+        "\\bsoftware development",
+        "\\bdevelop(?:ing)? software"
+      ]
+    },
+    {
+      "id": "software_engineering",
+      "label": "Software engineering practice",
+      "category": "technical",
+      "blurb": "Writing code other people can trust: testing, version control, code review.",
+      "patterns": [
+        "\\bsoftware engineering",
+        "\\bautomated testing",
+        "\\bunit test\\w*",
+        "\\bcode reviews?",
+        "\\bclean,? (?:tested|maintainable)",
+        "\\bCI/CD\\b",
+        "\\bdevops\\b",
+        "\\bsoftware testing",
+        "\\btest(?:ing)? (?:code|software|applications|systems|tools)",
+        "\\bdebug\\w*"
+      ]
+    },
+    {
+      "id": "databases",
+      "label": "Databases and data modelling",
+      "category": "technical",
+      "blurb": "How data is stored and organised, and how tables relate to each other.",
+      "patterns": [
+        "\\bdatabases?\\b",
+        "\\bdata model\\w*",
+        "\\bsemantic model\\w*",
+        "\\bdata warehous\\w*",
+        "\\bdata lakes?\\b",
+        "\\brelational\\b",
+        "\\bschemas?\\b"
+      ]
+    },
+    {
+      "id": "data_engineering",
+      "label": "Data engineering and pipelines",
+      "category": "technical",
+      "blurb": "Moving data between systems automatically so it's ready to analyse.",
+      "patterns": [
+        "\\bdata engineering",
+        "\\bdata pipelines?",
+        "\\bETL\\b",
+        "\\bELT\\b",
+        "\\bdata integration",
+        "\\bingest(?:ion|ing)?\\b"
+      ]
+    },
+    {
+      "id": "automation",
+      "label": "Automation",
+      "category": "technical",
+      "blurb": "Getting computers to do repetitive tasks.",
+      "patterns": ["\\bautomat(?:e|es|ed|ing|ion)\\b(?! testing)"]
+    },
+    {
+      "id": "business_analysis",
+      "label": "Business analysis and requirements",
+      "category": "technical",
+      "blurb": "Working out what people actually need before building anything.",
+      "patterns": [
+        "\\brequirements gathering",
+        "\\bbusiness (?:requirements|analysis)\\b",
+        "\\buser stories",
+        "\\b(?:analys\\w*|gather\\w*|captur\\w*|translat\\w*|turn\\w*|defin\\w*|document\\w*|understand\\w*) (?:(?!entry|funding|eligibility|security|minimum)\\w+ ){0,2}requirements\\b(?! (?:to|for) (?:apply|this|the (?:role|programme)))",
+        "\\bprocess (?:improvement|mapping)",
+        "\\bprocess maps?"
+      ]
+    },
+    {
+      "id": "agile",
+      "label": "Agile ways of working",
+      "category": "technical",
+      "blurb": "Working in short cycles (sprints) and adjusting as you go.",
+      "patterns": [
+        "\\bagile (?:ways|methodolog\\w*|projects?|delivery|teams?|principles|frameworks?|environment|practices|data)",
+        "\\bscrum\\b",
+        "\\bkanban\\b",
+        "\\bsprints?\\b"
+      ]
+    },
+    {
+      "id": "project_management",
+      "label": "Project management",
+      "category": "technical",
+      "blurb": "Planning work, tracking progress and hitting deadlines.",
+      "patterns": [
+        "\\bproject management",
+        "\\bmanag(?:e|ing) (?:\\w+ )?projects",
+        "\\bproject (?:planning|delivery|coordination)"
+      ]
+    },
+    {
+      "id": "data_ethics",
+      "label": "Data protection and ethics",
+      "category": "technical",
+      "blurb": "Handling data legally and fairly (GDPR, responsible AI).",
+      "patterns": [
+        "\\bGDPR\\b",
+        "\\bdata protection\\b(?! policy)",
+        "\\bdata governance",
+        "\\bresponsible AI",
+        "\\b(?:data|AI) ethics",
+        "\\bethical (?:and sustainable )?(?:AI|data|use)",
+        "\\bprivacy\\b"
+      ]
+    },
+    {
+      "id": "cyber_security",
+      "label": "Cyber security",
+      "category": "technical",
+      "blurb": "Keeping systems and data safe from attack.",
+      "patterns": [
+        "\\bcyber\\b",
+        "\\bcyber[- ]?security",
+        "\\binformation security",
+        "\\bpenetration testing",
+        "\\bthreat (?:analysis|intelligence|detection)"
+      ]
+    },
+    {
+      "id": "it_infrastructure",
+      "label": "IT networks and infrastructure",
+      "category": "technical",
+      "blurb": "The hardware, servers and networks systems run on.",
+      "patterns": [
+        "\\bnetwork(?:s|ing)? (?:infrastructure|engineering|security|administration|support|troubleshooting)",
+        "\\bcomputer networks?",
+        "\\b(?:LAN|WAN|TCP/IP)\\b",
+        "\\bfirewalls?\\b",
+        "\\bservers?\\b",
+        "\\bhardware\\b",
+        "\\bIT infrastructure",
+        "\\binfrastructure\\b"
+      ]
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud (Azure, AWS, Google Cloud)",
+      "category": "tools",
+      "blurb": "Running data and software on rented computers instead of your own.",
+      "patterns": [
+        "\\bcloud\\b",
+        "\\bazure\\b",
+        "\\bAWS\\b",
+        "\\bamazon web services",
+        "\\bgoogle cloud",
+        "\\bGCP\\b"
+      ]
+    },
+    {
+      "id": "python",
+      "label": "Python",
+      "category": "tools",
+      "blurb": "The most common language in data science.",
+      "patterns": ["\\bpython\\b", "\\b(?:pandas|numpy|scikit-learn|jupyter)\\b"]
+    },
+    {
+      "id": "sql",
+      "label": "SQL",
+      "category": "tools",
+      "blurb": "The language for asking databases questions.",
+      "patterns": ["\\bSQL\\b", "\\bT-SQL\\b", "\\bmysql\\b", "\\bpostgres\\w*"]
+    },
+    {
+      "id": "r",
+      "label": "R",
+      "category": "tools",
+      "blurb": "A language for statistics.",
+      "caseSensitive": true,
+      "patterns": [
+        "\\bR (?:programming|language)\\b",
+        "\\b(?:Python|SQL)(?:,| or| and) R\\b",
+        "\\bR(?:,| or| and) Python\\b",
+        "\\bRStudio\\b"
+      ]
+    },
+    {
+      "id": "javascript",
+      "label": "JavaScript / TypeScript",
+      "category": "tools",
+      "blurb": "The language of websites.",
+      "patterns": ["\\bjavascript\\b", "\\btypescript\\b", "\\bnode\\.?js\\b", "\\breact\\b"]
+    },
+    {
+      "id": "java",
+      "label": "Java",
+      "category": "tools",
+      "patterns": ["\\bjava\\b"]
+    },
+    {
+      "id": "csharp",
+      "label": "C# / .NET",
+      "category": "tools",
+      "patterns": ["\\bC#", "(?<![\\w/])\\.NET\\b", "\\bASP\\.NET\\b"],
+      "caseSensitive": true
+    },
+    {
+      "id": "cpp",
+      "label": "C / C++",
+      "category": "tools",
+      "patterns": ["\\bC\\+\\+", "\\bC/C\\+\\+"]
+    },
+    {
+      "id": "web",
+      "label": "HTML and CSS",
+      "category": "tools",
+      "patterns": ["\\bHTML\\d?\\b", "\\bCSS\\b"]
+    },
+    {
+      "id": "excel",
+      "label": "Excel",
+      "category": "tools",
+      "blurb": "Spreadsheets: formulas, pivot tables, lookups.",
+      "patterns": [
+        "(?<!to )\\bexcel\\b(?! (?:in|at|as)\\b)",
+        "\\bspreadsheets?\\b",
+        "\\bpivot tables?",
+        "\\b[vx]lookups?\\b",
+        "\\bVBA\\b",
+        "\\bmacros\\b"
+      ]
+    },
+    {
+      "id": "power_bi",
+      "label": "Power BI",
+      "category": "tools",
+      "blurb": "Microsoft's dashboard tool.",
+      "patterns": ["\\bpower ?bi\\b"]
+    },
+    {
+      "id": "tableau",
+      "label": "Tableau",
+      "category": "tools",
+      "patterns": ["\\btableau\\b"]
+    },
+    {
+      "id": "alteryx",
+      "label": "Alteryx",
+      "category": "tools",
+      "patterns": ["\\balteryx\\b"]
+    },
+    {
+      "id": "data_platforms",
+      "label": "Data platforms (Fabric, Databricks, Snowflake)",
+      "category": "tools",
+      "patterns": [
+        "\\bmicrosoft fabric",
+        "\\bdatabricks\\b",
+        "\\bsnowflake\\b",
+        "\\bbigquery\\b",
+        "\\bsynapse\\b"
+      ]
+    },
+    {
+      "id": "power_platform",
+      "label": "Power Platform (Power Apps, Power Automate)",
+      "category": "tools",
+      "patterns": ["\\bpower (?:automate|apps|platform)\\b", "\\bpowerapps\\b"]
+    },
+    {
+      "id": "office",
+      "label": "Microsoft Office",
+      "category": "tools",
+      "blurb": "Word, PowerPoint, Outlook, SharePoint.",
+      "patterns": [
+        "\\bmicrosoft (?:office|word|365|products|suite)",
+        "\\bMS office",
+        "\\boffice 365",
+        "\\bpowerpoint\\b",
+        "\\boutlook\\b",
+        "\\bsharepoint\\b",
+        "\\bword, "
+      ]
+    },
+    {
+      "id": "google_workspace",
+      "label": "Google Workspace and Analytics",
+      "category": "tools",
+      "patterns": [
+        "\\bgoogle (?:workspace|suite|sheets|docs|analytics)",
+        "\\bG ?suite\\b",
+        "\\bgsheets?\\b"
+      ]
+    },
+    {
+      "id": "git",
+      "label": "Git / version control",
+      "category": "tools",
+      "patterns": ["\\bgit\\b", "\\bgithub\\b", "\\bgitlab\\b", "\\bversion control"]
+    },
+    {
+      "id": "jira",
+      "label": "Jira / ServiceNow",
+      "category": "tools",
+      "patterns": ["\\bjira\\b", "\\bconfluence\\b", "\\bservicenow\\b"]
+    },
+    {
+      "id": "maths",
+      "label": "Maths and numeracy",
+      "category": "knowledge",
+      "blurb": "Comfort with numbers beyond the grade itself.",
+      "patterns": [
+        "\\bnumer(?:ical|acy)\\b(?! reasoning test)",
+        "\\bmathematical\\b",
+        "\\b(?:passion for|comfortable with|good with|love of|flair for|confident with) numbers",
+        "\\b(?:strong|good|excellent) maths",
+        "\\bmaths skills",
+        "\\bquantitative\\b"
+      ]
+    },
+    {
+      "id": "finance",
+      "label": "Finance, accounting and audit",
+      "category": "knowledge",
+      "patterns": [
+        "\\bfinance\\b",
+        "\\baccount(?:ing|ancy)\\b",
+        "\\baudit(?:s|ing|ors?)?\\b",
+        "\\bfinancial (?:data|services|statements|reporting|analysis|markets|knowledge|crime|risk)"
+      ]
+    },
+    {
+      "id": "commercial",
+      "label": "Business and commercial awareness",
+      "category": "knowledge",
+      "blurb": "Understanding how the company makes money and what its customers want.",
+      "patterns": [
+        "\\bcommercial(?:ly)? (?:awareness|minded|acumen|understanding)",
+        "\\bbusiness (?:acumen|awareness|understanding)",
+        "\\bunderstand(?:ing)? (?:of )?(?:how )?(?:the )?business\\b"
+      ]
+    },
+    {
+      "id": "sustainability",
+      "label": "Sustainability and ESG",
+      "category": "knowledge",
+      "patterns": [
+        "\\bsustainab\\w+",
+        "\\bESG\\b",
+        "\\bnet zero",
+        "\\bcarbon\\b",
+        "\\bcorporate (?:social )?responsibility"
+      ]
+    },
+    {
+      "id": "teamwork",
+      "label": "Teamwork",
+      "category": "personal",
+      "blurb": "Working well with other people towards a shared goal.",
+      "patterns": [
+        "\\bteam ?work(?:ing)?\\b",
+        "\\bteam player",
+        "\\bcollaborat\\w*",
+        "\\bas part of (?:a|the|our) (?:\\w+ ){0,3}teams?\\b",
+        "\\bcross-functional",
+        "\\bwork(?:ing)? (?:well |closely |effectively )?(?:with|alongside) (?:other|colleagues|others|experienced|a team|the team)",
+        "\\bworking in groups"
+      ]
+    },
+    {
+      "id": "communication",
+      "label": "Communication",
+      "category": "personal",
+      "blurb": "Writing and speaking clearly.",
+      "patterns": [
+        "\\bcommunicat\\w*",
+        "\\binterpersonal",
+        "\\b(?:written|verbal) and (?:written|verbal|oral)",
+        "\\boral and written"
+      ]
+    },
+    {
+      "id": "presenting",
+      "label": "Presenting and explaining to non-experts",
+      "category": "personal",
+      "blurb": "Turning findings into a clear story for people who aren't technical.",
+      "patterns": [
+        "\\bpresent(?:ing|ations?)\\b",
+        "\\bpresent (?:findings|insights|results|recommendations|data|your)",
+        "\\bnon-technical",
+        "\\bstorytelling",
+        "\\bexplain\\w* (?:complex|technical|findings|insights|data|why)",
+        "\\b(?:clear|accessible),? (?:accessible )?(?:presentations|explanations)"
+      ]
+    },
+    {
+      "id": "problem_solving",
+      "label": "Problem solving",
+      "category": "personal",
+      "blurb": "Breaking a problem down and working through it.",
+      "patterns": [
+        "\\bproblem[- ]solv\\w*",
+        "\\bsolv(?:e|es|ing) (?:\\w+ ){0,2}(?:problems|challenges)",
+        "\\btroubleshoot\\w*",
+        "\\bstructured (?:problem|approaches)"
+      ]
+    },
+    {
+      "id": "analytical",
+      "label": "Analytical and logical thinking",
+      "category": "personal",
+      "patterns": [
+        "\\banalytical\\b",
+        "\\bcritical thinking",
+        "\\blogical\\b",
+        "\\banalytical (?:mind|mindset|thinking)"
+      ]
+    },
+    {
+      "id": "curiosity",
+      "label": "Curiosity and keenness to learn",
+      "category": "personal",
+      "blurb": "Asking why, and wanting to keep learning.",
+      "patterns": [
+        "\\bcurio(?:us|sity)\\b",
+        "\\beager(?:ness)? to (?:learn|develop|grow)",
+        "\\bkeen to (?:learn|develop|grow)",
+        "\\bwilling(?:ness)? to learn",
+        "\\b(?:desire|passion|love|hunger|thirst) (?:to|for) (?:learn|learning|knowledge)",
+        "\\bgrowth mindset",
+        "\\b(?:constant|continuous|lifelong) (?:and curious )?learn\\w*"
+      ]
+    },
+    {
+      "id": "interest",
+      "label": "Real interest in tech and data",
+      "category": "personal",
+      "blurb": "Showing you care about the subject, e.g. with a project or reading.",
+      "patterns": [
+        "\\b(?:genuine|strong|keen|real|clear) interest in",
+        "\\binterest(?:ed)? in (?:technology|tech|data|AI|computing|digital|software|engineering|analytics|cyber|numbers|how data)",
+        "\\bpassion(?:ate)? (?:for|about) (?:technology|tech|data|AI|numbers|computing|digital|software|problem|artificial)",
+        "\\benthusias\\w+ (?:for|about) (?:technology|tech|data|AI|computing|digital)"
+      ]
+    },
+    {
+      "id": "projects",
+      "label": "Personal projects and teaching yourself",
+      "category": "personal",
+      "blurb": "Things you've built or learned on your own: a project, a course, a club.",
+      "patterns": [
+        "\\b(?:personal|side|own|home) projects?\\b",
+        "\\bcoding clubs?\\b",
+        "\\bhackathons?\\b",
+        "\\bportfolio\\b(?! of (?:clients|products|services|brands|companies))",
+        "\\bself[- ]taught\\b",
+        "\\bonline (?:courses?|learning)\\b",
+        "\\bteach(?:ing)? yourself\\b"
+      ]
+    },
+    {
+      "id": "attention_to_detail",
+      "label": "Attention to detail and accuracy",
+      "category": "personal",
+      "patterns": [
+        "\\battention to detail",
+        "\\bdetail[- ]orient\\w*",
+        "\\beye for detail",
+        "\\bmeticulous",
+        "\\baccura(?:cy|te)\\b"
+      ]
+    },
+    {
+      "id": "organisation",
+      "label": "Organisation and time management",
+      "category": "personal",
+      "patterns": [
+        "\\borganisational skills",
+        "\\b(?:well|highly|very)[- ]organised",
+        "\\btime management",
+        "\\bprioriti[sz]\\w*",
+        "\\bmanag(?:e|ing) (?:your|my|their) (?:own )?(?:time|workload)",
+        "\\b(?:meet(?:ing)?|tight|work to) deadlines",
+        "\\bmulti-?task\\w*",
+        "\\borganised\\b"
+      ]
+    },
+    {
+      "id": "self_motivation",
+      "label": "Self-motivation and initiative",
+      "category": "personal",
+      "patterns": [
+        "\\bself[- ]motivat\\w*",
+        "\\bself[- ]starter",
+        "\\b(?:use|show|take|using|showing|taking) (?:your |the )?(?:own )?initiative\\b",
+        "\\binitiative\\b(?!s)",
+        "\\bproactive\\w*",
+        "\\b(?:work|working|ability to work) (?:\\w+ )?(?:independently|autonomously|on your own)",
+        "\\bhighly motivated",
+        "\\bdriven\\b(?! (?:by|solutions|insights|decisions))"
+      ]
+    },
+    {
+      "id": "adaptability",
+      "label": "Adaptability and resilience",
+      "category": "personal",
+      "patterns": [
+        "\\badapt(?:able|ability|ing|s)?\\b(?! to (?:the|our) (?:needs))",
+        "\\bresilien\\w*",
+        "\\bembrace change",
+        "\\b(?:fast|quick)[- ]paced",
+        "\\b(?:evolving|changing) environment",
+        "\\bwelcome and adapt to change"
+      ]
+    },
+    {
+      "id": "stakeholders",
+      "label": "Working with stakeholders and customers",
+      "category": "personal",
+      "blurb": "Understanding what the people you work for need, and keeping them updated.",
+      "patterns": [
+        "\\bstakeholders?\\b",
+        "\\bcustomer (?:service|focus\\w*)",
+        "\\bclient[- ]facing",
+        "\\bbuild(?:ing)? (?:strong )?relationships"
+      ]
+    },
+    {
+      "id": "creativity",
+      "label": "Creativity and new ideas",
+      "category": "personal",
+      "patterns": [
+        "\\bcreativ\\w+",
+        "\\bnew ideas",
+        "\\bthink(?:ing)? (?:differently|creatively|outside)",
+        "\\binnovative (?:ideas|thinking)"
+      ]
+    },
+    {
+      "id": "commitment",
+      "label": "Commitment and work ethic",
+      "category": "personal",
+      "patterns": [
+        "\\bcommitment\\b(?! to (?:creating|diversity|equal|inclusion|supporting|sustainab))",
+        "\\bwork ethic",
+        "\\bwork hard",
+        "\\bhard[- ]working",
+        "\\bdedicat(?:ed|ion) to"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { MIN_LEVEL, baseScore, extractEntry, londonDate } from '@af/shared';
+import { MIN_LEVEL, baseScore, extractEntry, extractSkills, londonDate } from '@af/shared';
 import { findUniversity } from '@af/shared/universities';
 import { db, must } from '../db.ts';
 import type { Ctx } from '../types.ts';
@@ -119,6 +119,7 @@ export function toRow(
     provider_name: providerName,
     university,
     entry,
+    skills: extractSkills(descriptionText),
     role_type: c.roleType,
     score: score.total,
     score_breakdown: score,

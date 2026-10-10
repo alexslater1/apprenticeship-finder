@@ -11,6 +11,7 @@ import Login from '@/pages/Login';
 import SetPassword from '@/pages/SetPassword';
 import Health from '@/pages/Health';
 import Settings from '@/pages/Settings';
+import Skills from '@/pages/Skills';
 import Tracker from '@/pages/Tracker';
 
 // Leaflet is big; load the map only when it's opened.
@@ -54,6 +55,7 @@ export default function App() {
                     }
                   />
                   <Route path="/tracker" element={<Tracker />} />
+                  <Route path="/skills" element={<Skills />} />
                   <Route path="/companies" element={<Companies />} />
                   <Route path="/companies/:id" element={<Companies />} />
                   <Route path="/settings" element={<Settings />} />

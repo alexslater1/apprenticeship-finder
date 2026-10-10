@@ -1,4 +1,4 @@
-import type { ListingRow, ScorePrefs, SettingsRow, TrackStatus } from '@af/shared';
+import type { ListingRow, ScorePrefs, SettingsRow, SkillMention, TrackStatus } from '@af/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { supabase } from './supabase';
@@ -53,6 +53,8 @@ export interface ListingDetail {
   description_html: string | null;
   description_text: string | null;
   details: Record<string, unknown> | null;
+  /** With the sentence each skill came from (the listings view carries ids only). */
+  skills: SkillMention[] | null;
   listing_sources: Array<{
     source: string;
     url: string;
@@ -70,7 +72,7 @@ export function useListingDetail(id: string | undefined) {
       const { data, error } = await supabase
         .from('listings')
         .select(
-          'id,description_html,description_text,details,listing_sources(source,url,first_seen_at,last_seen_at,link_status)',
+          'id,description_html,description_text,details,skills,listing_sources(source,url,first_seen_at,last_seen_at,link_status)',
         )
         .eq('id', id!)
         .single();
