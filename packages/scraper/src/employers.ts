@@ -145,7 +145,19 @@ export interface EmployerRun {
   result?: ConnectorResult;
   error?: string;
   blocked?: boolean;
+  /** A passing outage (maintenance page, timeout, 5xx): keep yesterday's status. */
+  transient?: boolean;
   ms: number;
+}
+
+/**
+ * Errors that say "try again later" rather than "this config is broken": Workday serves an HTML
+ * maintenance page instead of JSON on Saturday mornings, and sites time out or 5xx now and then.
+ */
+export function isTransient(msg: string): boolean {
+  return /is not valid JSON|Unexpected token '<'|timed out|aborted|ECONNRESET|ETIMEDOUT|fetch failed|HTTP 5\d\d|HTTP 429/i.test(
+    msg,
+  );
 }
 
 const EMPLOYER_TIMEOUT_MS = 8 * 60_000;
@@ -201,6 +213,7 @@ export async function runEmployers(
         employer,
         error: msg,
         blocked: err instanceof BlockedError,
+        transient: !(err instanceof BlockedError) && isTransient(msg),
         ms: Date.now() - t0,
       });
       log.warn(msg);
@@ -212,6 +225,9 @@ export async function runEmployers(
 export function statusFor(run: EmployerRun, relevant: number): EmployerStatus {
   if (run.employer.connector === 'manual') return 'manual';
   if (run.blocked) return 'blocked';
+  // A passing outage keeps the last known status (an unknown one becomes error).
+  if (run.error && run.transient && run.employer.status && run.employer.status !== 'unknown')
+    return run.employer.status;
   if (run.error) return 'error';
   return relevant > 0 ? 'open' : 'closed';
 }
