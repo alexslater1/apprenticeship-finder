@@ -1,11 +1,4 @@
-import {
-  BriefcaseBusiness,
-  Building2,
-  EyeOff,
-  ListChecks,
-  Map as MapIcon,
-  Settings,
-} from 'lucide-react';
+import { BriefcaseBusiness, Building2, ListChecks, Map as MapIcon, Settings } from 'lucide-react';
 import { NavLink, Outlet } from 'react-router';
 import { cn } from '@/lib/utils';
 import { DetailHost } from './DetailHost';
@@ -15,8 +8,6 @@ const NAV = [
   { to: '/map', label: 'Map', icon: MapIcon, mobile: true },
   { to: '/tracker', label: 'Tracker', icon: ListChecks, mobile: true },
   { to: '/companies', label: 'Companies', icon: Building2, mobile: true },
-  // On phones, Hidden is linked from the Tracker page (five tabs fit; six don't).
-  { to: '/hidden', label: 'Hidden', icon: EyeOff, mobile: false },
   { to: '/settings', label: 'Settings', icon: Settings, mobile: true },
 ];
 
