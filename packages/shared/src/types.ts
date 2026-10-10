@@ -198,7 +198,7 @@ export interface ListingRow {
   closing_date: string | null;
   start_date: string | null;
   /** How exact start_date is: 'month' means only the month is known (start.ts). */
-  start_precision: 'day' | 'month' | null;
+  start_precision: 'day' | 'month' | 'year' | null;
   locations: Location[];
   primary_city: string | null;
   region: string | null;

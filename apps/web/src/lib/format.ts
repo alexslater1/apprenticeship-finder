@@ -26,9 +26,10 @@ export function formatDate(iso: string | null | undefined, opts: { year?: boolea
   });
 }
 
-/** "6 Sept 2027", or "Sept 2027" when the advert only gives the month. */
+/** "6 Sept 2027"; "Sept 2027" or "2027" when the advert only gives the month or year. */
 export function formatStart(r: Pick<ListingRow, 'start_date' | 'start_precision'>): string | null {
   if (!r.start_date) return null;
+  if (r.start_precision === 'year') return r.start_date.slice(0, 4);
   const d = new Date(`${r.start_date}T12:00:00Z`);
   return r.start_precision === 'month'
     ? d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })

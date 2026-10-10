@@ -5,6 +5,7 @@ import { env, REPO_ROOT } from './env.ts';
 import { Http } from './http.ts';
 import { logger, startLogFile } from './log.ts';
 import { geocodeAll } from './pipeline/geocode.ts';
+import { inheritLevels } from './pipeline/siblings.ts';
 import { checkLinks } from './pipeline/links.ts';
 import { mergeWithinRun, normalise, type NormalisedListing } from './pipeline/normalise.ts';
 import { assignKeys } from './pipeline/dedupe.ts';
@@ -244,6 +245,16 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
       }
       // Incremental sources (Adzuna) never report closures; retire what we haven't seen in a while.
       deactivated += await expireStale(STALE_DAYS);
+      try {
+        const levels = await inheritLevels();
+        if (levels.filled)
+          log.info(
+            `levels from other adverts: ${levels.filled} (${levels.closed} below the minimum)`,
+          );
+        deactivated += levels.closed;
+      } catch (err) {
+        log.error(`levels from other adverts: ${(err as Error).message}`);
+      }
       try {
         stats.links = await checkLinks({ ...ctx, log: log.child('links') });
       } catch (err) {

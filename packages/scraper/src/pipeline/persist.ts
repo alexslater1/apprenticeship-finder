@@ -12,6 +12,8 @@ import type { Ctx } from '../types.ts';
 import type { Matchable } from './dedupe.ts';
 import { plausibleDeadline, providerFromText, type NormalisedListing } from './normalise.ts';
 
+const PRECISION = { year: 0, month: 1, day: 2 } as const;
+
 export interface ExistingRow {
   id: string;
   dedupe_key: string;
@@ -34,7 +36,7 @@ export interface ExistingRow {
   salary_max?: number | null;
   salary_text?: string | null;
   start_date?: string | null;
-  start_precision?: 'day' | 'month' | null;
+  start_precision?: 'day' | 'month' | 'year' | null;
   locations?: NormalisedListing['locations'];
   primary_city?: string | null;
   region?: string | null;
@@ -100,12 +102,16 @@ export function toRow(
   const quals = (l.details?.qualifications ?? ex?.details?.qualifications) as
     Parameters<typeof extractEntry>[1] | undefined;
   const entry = l.entry ?? extractEntry(descriptionText, quals ?? []) ?? ex?.entry ?? null;
-  // The source's start date, else one the advert states, else what we had.
+  // The source's start date, else the more exact of the advert's and what we had.
   const advertStart = l.startDate ? null : extractStartDate(l.title, descriptionText, today);
+  const had = ex?.start_date
+    ? { date: ex.start_date, precision: ex.start_precision ?? 'day' }
+    : null;
   const start = l.startDate
     ? { date: l.startDate, precision: l.startPrecision ?? 'day' }
-    : (advertStart ??
-      (ex?.start_date ? { date: ex.start_date, precision: ex.start_precision ?? 'day' } : null));
+    : advertStart && (!had || PRECISION[advertStart.precision] >= PRECISION[had.precision])
+      ? advertStart
+      : had;
   const closedReason =
     closingDate && closingDate < today
       ? 'closing_date_passed'
@@ -204,6 +210,7 @@ export async function persist(listings: NormalisedListing[], ctx: Ctx): Promise<
       source: s.source,
       source_id: s.sourceId,
       url: s.url,
+      apply_url: s.applyUrl ?? null,
       last_seen_at: nowIso,
       missed_runs: 0,
       raw: s.raw ?? null,

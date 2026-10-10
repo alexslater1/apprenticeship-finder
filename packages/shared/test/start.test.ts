@@ -56,6 +56,27 @@ describe('extractStartDate', () => {
     });
   });
 
+  it('falls back to the year when that is all it says', () => {
+    expect(extractStartDate('2027 Data Analyst Apprentice', '', today)).toEqual({
+      date: '2027-01-01',
+      precision: 'year',
+    });
+    expect(
+      extractStartDate('Degree Apprenticeships 2027', 'Join our 2027 intake.', today)?.precision,
+    ).toBe('year');
+    expect(start('Start date: 2027. Applications close 17 February 2027.')?.precision).toBe('year');
+    // A month beats the year.
+    expect(
+      extractStartDate('2027 Data Analyst Apprentice', 'Start date: September 2027', today),
+    ).toEqual({
+      date: '2027-09-01',
+      precision: 'month',
+    });
+    // A start this year is still possible in October; last year's isn't.
+    expect(extractStartDate('2026 Apprenticeship', '', today)?.date).toBe('2026-01-01');
+    expect(extractStartDate('2025 Apprenticeship', '', today)).toBeNull();
+  });
+
   it('ignores closing dates and dates that cannot be a start', () => {
     expect(start('Closing date: 17 February 2027. Apply early.')).toBeNull();
     expect(start('Start date: TBC. Applications close 17 February 2027.')).toBeNull();
