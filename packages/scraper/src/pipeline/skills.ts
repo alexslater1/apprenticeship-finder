@@ -14,13 +14,15 @@ import { db, must } from '../db.ts';
  * date rules change.
  */
 
+const EXACTNESS = { year: 0, month: 1, day: 2 } as const;
+
 interface Row {
   id: string;
   title?: string;
   description_text: string | null;
   skills: unknown;
   start_date?: string | null;
-  start_precision?: 'day' | 'month' | null;
+  start_precision?: 'day' | 'month' | 'year' | null;
 }
 
 async function allListings(columns: string, activeOnly = false): Promise<Row[]> {
@@ -53,9 +55,9 @@ export async function rederive(
       patch.skills = skills;
       skillsChanged++;
     }
-    if (!r.start_date || r.start_precision === 'month') {
+    if (!r.start_date || r.start_precision !== 'day') {
       const s = extractStartDate(r.title, r.description_text, today);
-      if (s && (!r.start_date || s.precision === 'day')) {
+      if (s && (!r.start_date || EXACTNESS[s.precision] > EXACTNESS[r.start_precision ?? 'day'])) {
         patch.start_date = s.date;
         patch.start_precision = s.precision;
         starts++;

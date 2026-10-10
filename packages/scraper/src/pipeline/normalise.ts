@@ -68,6 +68,8 @@ export interface SourceRef {
   source: string;
   sourceId: string;
   url: string;
+  /** Where this source's Apply button goes, when it isn't the page itself (checked by links.ts). */
+  applyUrl?: string;
   raw?: unknown;
 }
 
@@ -95,7 +97,7 @@ export interface NormalisedListing {
   postedDate: string | null;
   closingDate: string | null;
   startDate: string | null;
-  startPrecision: 'day' | 'month' | null;
+  startPrecision: 'day' | 'month' | 'year' | null;
   locations: Location[];
   primaryCity: string | null;
   region: string | null;
@@ -258,7 +260,15 @@ export function normalise(raw: RawListing): NormalisedListing | null {
       preRegister: Boolean(raw.details?.preRegister) || isRegisterInterest(title),
     }),
     isLead: !!raw.isLead,
-    sources: [{ source: raw.source, sourceId: raw.sourceId, url: raw.url, raw: trimRaw(raw.raw) }],
+    sources: [
+      {
+        source: raw.source,
+        sourceId: raw.sourceId,
+        url: raw.url,
+        applyUrl: raw.applyUrl && raw.applyUrl !== raw.url ? raw.applyUrl : undefined,
+        raw: trimRaw(raw.raw),
+      },
+    ],
   };
 }
 
