@@ -115,6 +115,8 @@ export interface RawListing {
   postedDate?: string; // ISO date
   closingDate?: string;
   startDate?: string;
+  /** 'month' when the source only gives a month (the 1st stands in for it); default 'day'. */
+  startPrecision?: 'day' | 'month';
   locations: Location[];
   isNational?: boolean;
   /** Source-specific facts shown on the detail page (duration, hours, qualifications…). */
@@ -195,6 +197,8 @@ export interface ListingRow {
   posted_date: string | null;
   closing_date: string | null;
   start_date: string | null;
+  /** How exact start_date is: 'month' means only the month is known (start.ts). */
+  start_precision: 'day' | 'month' | null;
   locations: Location[];
   primary_city: string | null;
   region: string | null;

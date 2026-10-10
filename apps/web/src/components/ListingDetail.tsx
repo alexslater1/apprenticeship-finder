@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/sheet';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SOURCE_LABELS, sourceKey, type Derived } from '@/lib/derive';
-import { formatDate, formatSalary, milesLabel, providerLabel } from '@/lib/format';
+import { formatDate, formatSalary, formatStart, milesLabel, providerLabel } from '@/lib/format';
 import { ApplyButton } from './ApplyButton';
 import { WhyThisMatch } from './WhyThisMatch';
 import { useEmployers } from '@/lib/companies';
@@ -183,7 +183,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                   <ClosingBadge days={d.daysToClose} className="block" />
                 </Fact>
                 <Fact label="Salary">{formatSalary(r) ?? r.salary_text ?? '—'}</Fact>
-                <Fact label="Starts">{formatDate(r.start_date, { year: true })}</Fact>
+                <Fact label="Starts">{formatStart(r) ?? '—'}</Fact>
                 <Fact label="Standard">
                   {standard ? (
                     <a

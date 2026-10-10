@@ -95,6 +95,7 @@ export interface NormalisedListing {
   postedDate: string | null;
   closingDate: string | null;
   startDate: string | null;
+  startPrecision: 'day' | 'month' | null;
   locations: Location[];
   primaryCity: string | null;
   region: string | null;
@@ -244,6 +245,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     postedDate: raw.postedDate ?? null,
     closingDate: plausibleDeadline(raw.closingDate),
     startDate: raw.startDate ?? null,
+    startPrecision: raw.startDate ? (raw.startPrecision ?? 'day') : null,
     locations,
     primaryCity,
     region: first?.region ?? null,

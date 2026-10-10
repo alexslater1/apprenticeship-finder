@@ -10,7 +10,7 @@ A private, login-only dashboard of UK data-science apprenticeships (data scienti
 ```
 apps/web            Vite + React dashboard (GitHub Pages)
 packages/shared     types, classification + scoring rules, parsers (used by both)
-packages/scraper    CLI: scrape, digest, migrate, sync-employers, detect-ats, reskill, skill-candidates
+packages/scraper    CLI: scrape, digest, migrate, sync-employers, detect-ats, rederive, skill-candidates
                     (runs in GitHub Actions)
   src/sources/      aggregators: faa, higherin, reed, adzuna, scot, wales, ni, amazing, ngtu,
                     google-jobs (SerpApi), web-search (Tavily)
@@ -56,7 +56,7 @@ The Skills page ranks what the adverts mention, each advert weighted by its matc
 ```sh
 npm run cli -w packages/scraper -- skill-candidates   # frequent requirement phrases no skill covers, by employer count
 # add a skill or a wording to config/skills.json, then
-npm run cli -w packages/scraper -- reskill            # re-tag every stored listing
+npm run cli -w packages/scraper -- rederive           # re-tag every stored listing (and fill start dates)
 ```
 
 ### Employers

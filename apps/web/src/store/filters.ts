@@ -15,6 +15,7 @@ export type SortKey =
   | 'role'
   | 'grades'
   | 'posted'
+  | 'start'
   | 'status';
 
 /** What each sort is called, in its natural order and reversed. */
@@ -30,6 +31,7 @@ export const SORT_LABELS: Record<SortKey, [string, string]> = {
   role: ['Role A–Z', 'Role Z–A'],
   grades: ['Best grade fit', 'Worst grade fit'],
   posted: ['Recently posted', 'Posted longest ago'],
+  start: ['Starting soonest', 'Starting latest'],
   status: ['Furthest along', 'Least far along'],
 };
 
