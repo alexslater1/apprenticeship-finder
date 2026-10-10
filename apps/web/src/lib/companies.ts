@@ -148,6 +148,8 @@ const monthsAhead = (from: number, to: number) => (to - from + 12) % 12;
 export function sectionOf(e: EmployerRow, today = new Date()): Section {
   if (!e.watch) return 'unwatched';
   if (e.active_listings > 0 || e.status === 'open') return 'open';
+  // Collecting names before applications open: as good a sign as it gets that it's coming.
+  if (e.interest_listings > 0) return 'soon';
   if (e.status === 'manual' || e.status === 'blocked') return 'manual';
   if (e.opens_month && monthsAhead(today.getMonth() + 1, e.opens_month) <= 2) return 'soon';
   if (e.status === 'error') return 'error';
@@ -197,7 +199,7 @@ export function statusLabel(e: EmployerRow): string {
     return e.active_listings
       ? `Open · ${e.active_listings} listing${e.active_listings === 1 ? '' : 's'}`
       : 'Open';
-  if (s === 'soon') return 'Opening soon';
+  if (s === 'soon') return e.interest_listings > 0 ? 'Registering interest' : 'Opening soon';
   if (s === 'manual') return e.status === 'blocked' ? 'Blocks bots' : 'Check by hand';
   if (s === 'error') return 'Couldn’t check';
   if (s === 'unwatched') return 'Not watching';

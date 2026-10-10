@@ -61,6 +61,11 @@ describe('derive', () => {
 });
 
 describe('matches', () => {
+  it('keeps register-interest pages off the list unless asked for', () => {
+    const d = derive([listing({ id: 'ri', pre_register: true })], settings, today);
+    expect(d.filter((x) => matches(x, f(), today))).toHaveLength(0);
+    expect(d.filter((x) => matches(x, f({ includeInterest: true }), today))).toHaveLength(1);
+  });
   it('hides hidden and closed listings by default', () => {
     expect(ids(f())).toEqual(['crawley', 'leeds', 'nowhere']);
     expect(ids(f({ includeHidden: true }))).toContain('hidden');

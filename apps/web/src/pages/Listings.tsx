@@ -70,6 +70,11 @@ export default function Listings() {
     () => derived.filter((d) => d.row.hidden && d.row.is_active && !d.excluded).length,
     [derived],
   );
+  // "Register your interest" pages: off the list unless asked for (they aren't open yet).
+  const interest = useMemo(
+    () => derived.filter((d) => d.row.pre_register && d.row.is_active && !d.excluded).length,
+    [derived],
+  );
   const activeCount = useMemo(() => derived.filter((d) => d.row.is_active).length, [derived]);
 
   return (
@@ -133,15 +138,29 @@ export default function Listings() {
                 </>
               )}
             </p>
-            {(youHid > 0 || filters.includeHidden) && (
-              <label className="flex items-center gap-2 text-sm">
-                <Checkbox
-                  checked={filters.includeHidden}
-                  onCheckedChange={(v) => filters.set({ includeHidden: v === true })}
-                />
-                Show the {youHid} you hid
-              </label>
-            )}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              {(interest > 0 || filters.includeInterest) && (
+                <label
+                  className="flex items-center gap-2 text-sm"
+                  title="Pages where employers collect names before applications open. You get an alert here when the real advert appears."
+                >
+                  <Checkbox
+                    checked={filters.includeInterest}
+                    onCheckedChange={(v) => filters.set({ includeInterest: v === true })}
+                  />
+                  Show {interest} “register interest” pages
+                </label>
+              )}
+              {(youHid > 0 || filters.includeHidden) && (
+                <label className="flex items-center gap-2 text-sm">
+                  <Checkbox
+                    checked={filters.includeHidden}
+                    onCheckedChange={(v) => filters.set({ includeHidden: v === true })}
+                  />
+                  Show the {youHid} you hid
+                </label>
+              )}
+            </div>
           </div>
           {visible.length === 0 ? (
             <div className="rounded-xl border border-dashed p-8 text-center text-muted-foreground">
