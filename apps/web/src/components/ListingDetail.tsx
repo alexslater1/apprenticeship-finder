@@ -13,7 +13,9 @@ import {
 } from '@/components/ui/sheet';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SOURCE_LABELS, sourceKey, type Derived } from '@/lib/derive';
-import { formatDate, formatSalary, milesLabel } from '@/lib/format';
+import { formatDate, formatSalary, milesLabel, providerLabel } from '@/lib/format';
+import { WhyThisMatch } from './WhyThisMatch';
+import { useEmployers } from '@/lib/companies';
 import { useListingDetail, useSetHidden, useUpdateTracking } from '@/lib/queries';
 import { AdzunaAttribution, ClosingBadge, LevelBadge, MatchChip, PreRegisterBadge } from './badges';
 import { Notes } from './Notes';
@@ -35,6 +37,10 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
     </div>
   );
 }
+
+/** The provider is worth its own line when it isn't just the university again. */
+const universityDiffers = (r: { university: string | null; provider_name: string | null }) =>
+  !!r.provider_name && providerLabel(r.provider_name).toLowerCase() !== r.university?.toLowerCase();
 
 interface Qualification {
   weighting?: string;
@@ -77,6 +83,9 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
 
   const r = d?.row;
   const standard = standardFor(r?.lars_code);
+  // Research notes record which university or provider each employer used last year.
+  const { data: employers } = useEmployers();
+  const employer = r?.employer_id ? employers?.find((e) => e.id === r.employer_id) : undefined;
   const det = (detail?.details ?? {}) as Record<string, unknown>;
   const quals = (det.qualifications as Qualification[] | undefined) ?? [];
 
@@ -147,10 +156,20 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                     <span className="text-xs text-muted-foreground"> · LARS {r.lars_code}</span>
                   ) : null}
                 </Fact>
-                <Fact label="University">
-                  {r.university ?? (r.is_degree ? 'Not named in the advert' : '—')}
+                <Fact label="Where you’d study">
+                  {r.university ??
+                    (r.provider_name
+                      ? `${providerLabel(r.provider_name)} (training provider)`
+                      : 'Not named in this advert')}
+                  {!r.university && employer?.training_provider && (
+                    <span className="block text-xs text-muted-foreground">
+                      Last cycle at {employer.name}: {employer.training_provider}
+                    </span>
+                  )}
                 </Fact>
-                <Fact label="Training provider">{r.provider_name ?? '—'}</Fact>
+                {r.university && r.provider_name && universityDiffers(r) && (
+                  <Fact label="Training provider">{providerLabel(r.provider_name)}</Fact>
+                )}
                 <Fact label="Duration">{(det.duration as string) ?? '—'}</Fact>
                 <Fact label="Hours">{det.hoursPerWeek ? `${det.hoursPerWeek} a week` : '—'}</Fact>
                 <Fact label="Posted">
@@ -176,6 +195,8 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                   </Fact>
                 ) : null}
               </dl>
+
+              <WhyThisMatch d={d} />
 
               {quals.length > 0 && (
                 <section>

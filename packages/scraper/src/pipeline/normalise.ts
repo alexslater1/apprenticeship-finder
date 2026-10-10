@@ -103,6 +103,15 @@ export interface NormalisedListing {
 
 const PROVIDERS = new Set(rules.providerNames.map(normaliseEmployerName));
 
+/** A training provider the advert names ('delivered by our trusted partner Firebrand'). */
+export function providerFromText(...texts: Array<string | null | undefined>): string | null {
+  for (const t of texts) {
+    if (!t) continue;
+    for (const p of rules.providersInText) if (p.re.test(t)) return p.name;
+  }
+  return null;
+}
+
 /**
  * Training providers post 'Data Analyst Apprenticeship - Grosvenor' under their own name.
  * Return the real employer so the advert matches the employer's own FAA listing.
@@ -161,6 +170,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
   const descriptionHtml = raw.descriptionHtml ? sanitize(raw.descriptionHtml) : null;
   const descriptionText =
     raw.descriptionText ?? (descriptionHtml ? htmlToText(descriptionHtml) : null) ?? null;
+  providerName ??= providerFromText(descriptionText);
 
   const classification = classify({
     title,

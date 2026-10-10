@@ -43,6 +43,8 @@
 }
 
 :root {
+  /* Native controls (select menus, scrollbars) follow the theme. */
+  color-scheme: light;
   --background: oklch(0.99 0 0);
   --foreground: oklch(0.17 0.01 260);
   --card: oklch(1 0 0);
@@ -75,6 +77,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    color-scheme: dark;
     --background: oklch(0.16 0.01 260);
     --foreground: oklch(0.96 0 0);
     --card: oklch(0.2 0.01 260);
@@ -119,6 +122,12 @@
   button:not(:disabled),
   [role='button']:not(:disabled) {
     cursor: pointer;
+  }
+  /* Some browsers draw <select> menus on white whatever the page colours: set them explicitly. */
+  option,
+  optgroup {
+    background-color: var(--popover);
+    color: var(--popover-foreground);
   }
 }
 

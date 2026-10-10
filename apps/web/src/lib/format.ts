@@ -73,3 +73,28 @@ export function ago(iso: string | null | undefined): string {
   if (days < 14) return `${days} days ago`;
   return formatDate(iso);
 }
+
+const ACRONYMS = new Set(['qa', 'bpp', 'cms', 'it', 'uk', 'nhs']);
+
+/** 'Qa Limited' → 'QA'; 'Nowskills Limited' → 'Nowskills'; 'Just It Training Limited' → 'Just IT Training'. */
+export function providerLabel(name: string): string {
+  return name
+    .replace(/\s*\(uk\)\s*/i, ' ')
+    .replace(/\s+(limited|ltd\.?|plc|llp)$/i, '')
+    .split(' ')
+    .map((w) => (ACRONYMS.has(w.toLowerCase()) ? w.toUpperCase() : w))
+    .join(' ')
+    .trim();
+}
+
+/**
+ * Where the off-the-job study happens: the university for degree apprenticeships, else the
+ * training provider (usually online with some workshops), else null when the advert doesn't say.
+ */
+export function studyWith(
+  r: Pick<ListingRow, 'university' | 'provider_name'>,
+): { kind: 'university' | 'provider'; name: string } | null {
+  if (r.university) return { kind: 'university', name: r.university };
+  if (r.provider_name) return { kind: 'provider', name: providerLabel(r.provider_name) };
+  return null;
+}

@@ -69,7 +69,8 @@ export function baseScore(input: ScoreInput): ScoreBreakdown {
 export interface PersonalPrefs {
   roles: Partial<RolePrefs>;
   levels: Partial<LevelPrefs>;
-  defaultDistanceMiles: number;
+  /** Null: happy to move anywhere, so distance never changes the score. */
+  defaultDistanceMiles: number | null;
 }
 
 export function rolePref(prefs: PersonalPrefs, role: RoleType): Pref {
@@ -93,11 +94,69 @@ export function excludedByPrefs(
   return null;
 }
 
+export interface PersonalPart {
+  label: string;
+  points: number;
+}
+
 /**
- * The score shown to him: the base score with its role and level points swapped for ones from
- * his Settings ('High' roles and levels outrank 'Maybe' ones), plus a bonus within his distance.
- * Role points keep the base score's confidence (a title match counts more than a weak one).
+ * The score shown to him, part by part: the base score with its role and level points swapped
+ * for ones from his Settings ('High' roles and levels outrank 'Maybe' ones), plus a bonus within
+ * his travel distance if he set one. Role points keep the base score's confidence (a role named
+ * in the title counts more than one guessed from the description).
  */
+export function personalParts(
+  listing: {
+    score: number;
+    level: number | null;
+    role_type: RoleType;
+    score_breakdown?: ScoreBreakdown | null;
+  },
+  prefs: PersonalPrefs,
+  distanceMiles: number | null,
+): { parts: PersonalPart[]; raw: number; cap: number | null } {
+  const w = rules.personal;
+  const b = listing.score_breakdown;
+  const parts: PersonalPart[] = [];
+  let cap: number | null = null;
+  if (b) {
+    const p = rules.points;
+    const full =
+      listing.role_type === 'software_tech' ? p.role.software_tech_data : p.role[listing.role_type];
+    const confidence = full > 0 ? Math.min(1, b.role / full) : 0;
+    const rp = rolePref(prefs, listing.role_type);
+    const lp = levelPref(prefs, listing.level);
+    parts.push({
+      label: `Role (${rp === 'high' ? 'High' : 'Maybe'}${confidence < 1 ? ', not named in the title' : ''})`,
+      points: Math.round(w.role[rp === 'high' ? 'high' : 'maybe'] * confidence),
+    });
+    parts.push({
+      label:
+        lp === null
+          ? 'Level not stated'
+          : `Level ${listing.level} (${lp === 'high' ? 'High' : 'Maybe'})`,
+      points: lp === null ? (p.level.null ?? 0) : w.level[lp === 'high' ? 'high' : 'maybe'],
+    });
+    if (b.degree) parts.push({ label: 'Degree apprenticeship', points: b.degree });
+    if (b.specificity) parts.push({ label: 'Clear title / known standard', points: b.specificity });
+    if (b.freshness) parts.push({ label: 'Posted in the last week', points: b.freshness });
+    if (b.penalties)
+      parts.push({ label: b.penaltyLabels.join(', ') || 'Penalties', points: b.penalties });
+    const raw = b.role + b.level + b.degree + b.specificity + b.freshness + b.penalties;
+    // A capped base score (page-change leads) stays capped.
+    if (b.total < clamp(raw)) cap = b.total;
+  } else {
+    parts.push({ label: 'Base score', points: listing.score });
+  }
+  if (
+    distanceMiles !== null &&
+    prefs.defaultDistanceMiles !== null &&
+    distanceMiles <= prefs.defaultDistanceMiles
+  )
+    parts.push({ label: `Within ${prefs.defaultDistanceMiles} miles`, points: w.withinDistance });
+  return { parts, raw: parts.reduce((n, x) => n + x.points, 0), cap };
+}
+
 export function personalScore(
   listing: {
     score: number;
@@ -110,24 +169,9 @@ export function personalScore(
   opts: { clamp?: boolean } = {},
 ): number {
   if (listing.score <= 0) return 0;
-  const w = rules.personal;
-  const b = listing.score_breakdown;
-  let s = listing.score;
-  if (b) {
-    const p = rules.points;
-    const full =
-      listing.role_type === 'software_tech' ? p.role.software_tech_data : p.role[listing.role_type];
-    const confidence = full > 0 ? Math.min(1, b.role / full) : 0;
-    const lp = levelPref(prefs, listing.level);
-    const role = w.role[rolePref(prefs, listing.role_type) === 'high' ? 'high' : 'maybe'];
-    const level = lp === null ? (p.level.null ?? 0) : w.level[lp === 'high' ? 'high' : 'maybe'];
-    const raw = b.role + b.level + b.degree + b.specificity + b.freshness + b.penalties;
-    s = raw - b.role - b.level + Math.round(role * confidence) + level;
-    // A capped base score (leads) stays capped.
-    if (b.total < clamp(raw)) s = Math.min(s, b.total);
-    if (s <= 0) return 0;
-  }
-  if (distanceMiles !== null && distanceMiles <= prefs.defaultDistanceMiles) s += w.withinDistance;
+  const { raw, cap } = personalParts(listing, prefs, distanceMiles);
+  const s = cap !== null ? Math.min(raw, cap) : raw;
+  if (s <= 0) return 0;
   // Unclamped values keep the ranking when several listings pass 100.
   return opts.clamp === false ? s : clamp(s);
 }
