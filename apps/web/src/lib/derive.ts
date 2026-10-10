@@ -9,9 +9,12 @@ import {
   personalScore,
   type ListingRow,
   type PersonalPrefs,
+  ROLE_LABELS,
   type SettingsRow,
+  type TrackStatus,
 } from '@af/shared';
-import type { Filters } from '@/store/filters';
+import type { Filters, SortKey } from '@/store/filters';
+import { locationLabel } from './format';
 
 export interface Derived {
   row: ListingRow;
@@ -106,37 +109,61 @@ export function matches(d: Derived, f: Filters, today = londonToday()): boolean 
   return true;
 }
 
-const nullsLast = (a: number | null, b: number | null, dir: 1 | -1) => {
-  if (a === null && b === null) return 0;
-  if (a === null) return 1;
-  if (b === null) return -1;
-  return (a - b) * dir;
+type SortValue = number | string | null;
+
+const FIT_ORDER: Record<GradeFit, number> = { meets: 0, close: 1, below: 2, subject: 3 };
+const STATUS_ORDER: Partial<Record<TrackStatus, number>> = {
+  offer: 0,
+  interview: 1,
+  applied: 2,
+  saved: 3,
+  rejected: 4,
 };
 
-export function sortDerived(list: Derived[], sort: Filters['sort']): Derived[] {
-  const out = [...list];
+/** What each sort compares, and its natural direction (1 = smallest / A first). */
+const SORTS: Record<SortKey, { value: (d: Derived) => SortValue; dir: 1 | -1 }> = {
+  score: { value: (d) => d.rank, dir: -1 },
+  closing: { value: (d) => d.daysToClose, dir: 1 },
+  newest: { value: (d) => d.row.first_seen_at, dir: -1 },
+  salary: { value: (d) => d.row.salary_max ?? d.row.salary_min, dir: -1 },
+  distance: { value: (d) => d.distance, dir: 1 },
+  title: { value: (d) => d.row.title.toLowerCase(), dir: 1 },
+  location: {
+    value: (d) => {
+      const l = locationLabel(d.row);
+      return l === 'Location unknown' ? null : l.toLowerCase();
+    },
+    dir: 1,
+  },
+  level: { value: (d) => d.row.level, dir: -1 },
+  role: { value: (d) => ROLE_LABELS[d.row.role_type], dir: 1 },
+  // Adverts his grades meet first, then close, then below; adverts that don't say, last.
+  grades: { value: (d) => (d.fit ? FIT_ORDER[d.fit] : null), dir: 1 },
+  posted: { value: (d) => d.row.posted_date ?? d.row.first_seen_at.slice(0, 10), dir: -1 },
+  status: { value: (d) => STATUS_ORDER[d.row.status] ?? null, dir: 1 },
+};
+
+/** Whether this sort puts the smallest value (or A) first: which way the header arrow points. */
+export function sortsAscending(sort: SortKey, reverse: boolean): boolean {
+  return (SORTS[sort] ?? SORTS.score).dir * (reverse ? -1 : 1) === 1;
+}
+
+/** Sorted copy. `reverse` flips the order; unknown values stay at the bottom either way. */
+export function sortDerived(list: Derived[], sort: SortKey, reverse = false): Derived[] {
+  const { value, dir } = SORTS[sort] ?? SORTS.score;
+  const sign = reverse ? -dir : dir;
   const tie = (a: Derived, b: Derived) => b.rank - a.rank || a.row.title.localeCompare(b.row.title);
-  out.sort((a, b) => {
-    switch (sort) {
-      case 'closing':
-        return nullsLast(a.daysToClose, b.daysToClose, 1) || tie(a, b);
-      case 'newest':
-        return b.row.first_seen_at.localeCompare(a.row.first_seen_at) || tie(a, b);
-      case 'salary':
-        return (
-          nullsLast(
-            a.row.salary_max ?? a.row.salary_min,
-            b.row.salary_max ?? b.row.salary_min,
-            -1,
-          ) || tie(a, b)
-        );
-      case 'distance':
-        return nullsLast(a.distance, b.distance, 1) || tie(a, b);
-      default:
-        return tie(a, b);
-    }
-  });
-  return out;
+  return list
+    .map((d) => ({ d, v: value(d) }))
+    .sort((a, b) => {
+      if (a.v === null || b.v === null) {
+        if (a.v !== b.v) return a.v === null ? 1 : -1;
+        return tie(a.d, b.d);
+      }
+      const c = typeof a.v === 'string' ? a.v.localeCompare(b.v as string) : a.v - (b.v as number);
+      return c * sign || tie(a.d, b.d);
+    })
+    .map((x) => x.d);
 }
 
 /** 'employer:barclays' → 'employer'; everything else as-is. */

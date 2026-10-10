@@ -5,7 +5,16 @@ import {
   tableFeatures,
   useTable,
 } from '@tanstack/react-table';
-import { BookOpen, Columns3, Eye, EyeOff, GraduationCap } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  BookOpen,
+  Columns3,
+  Eye,
+  EyeOff,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -14,7 +23,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Derived } from '@/lib/derive';
+import { sortsAscending, type Derived } from '@/lib/derive';
+import { SORT_LABELS, useFilters, type SortKey } from '@/store/filters';
 import { formatDate, formatSalary, locationLabel, milesLabel, studyWith } from '@/lib/format';
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
@@ -153,6 +163,46 @@ const columns = helper.columns([
   }),
 ]);
 
+/** Columns you can sort by clicking the header, and the sort each one uses. */
+const COLUMN_SORT: Record<string, SortKey> = {
+  match: 'score',
+  title: 'title',
+  location: 'location',
+  level: 'level',
+  role: 'role',
+  salary: 'salary',
+  closing: 'closing',
+  posted: 'posted',
+  grades: 'grades',
+  status: 'status',
+};
+
+function SortHeader({ sortKey, children }: { sortKey: SortKey; children: React.ReactNode }) {
+  const { sort, sortReverse, set } = useFilters();
+  const active = sort === sortKey;
+  const Icon = !active ? ArrowUpDown : sortsAscending(sort, sortReverse) ? ArrowUp : ArrowDown;
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        active ? set({ sortReverse: !sortReverse }) : set({ sort: sortKey, sortReverse: false })
+      }
+      title={
+        active
+          ? `Sorted: ${SORT_LABELS[sortKey][sortReverse ? 1 : 0]}. Click to reverse.`
+          : `Sort: ${SORT_LABELS[sortKey][0]}`
+      }
+      className={cn(
+        '-mx-1 inline-flex items-center gap-1 rounded px-1 py-0.5 hover:bg-muted hover:text-foreground',
+        active && 'text-foreground',
+      )}
+    >
+      {children}
+      <Icon className={cn('size-3.5', !active && 'opacity-40')} aria-hidden />
+    </button>
+  );
+}
+
 const COLUMN_LABELS: Record<string, string> = {
   location: 'Location',
   level: 'Level',
@@ -165,6 +215,7 @@ const COLUMN_LABELS: Record<string, string> = {
 
 export function ListingTable({ data }: { data: Derived[] }) {
   const open = useOpenListing();
+  const { sort, sortReverse } = useFilters();
   const table = useTable({
     features,
     columns,
@@ -205,15 +256,32 @@ export function ListingTable({ data }: { data: Derived[] }) {
           <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
             {table.getHeaderGroups().map((group) => (
               <tr key={group.id}>
-                {group.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    scope="col"
-                    className="px-3 py-2 font-medium whitespace-nowrap"
-                  >
-                    {header.isPlaceholder ? null : <table.FlexRender header={header} />}
-                  </th>
-                ))}
+                {group.headers.map((header) => {
+                  const key = COLUMN_SORT[header.column.id];
+                  const active = key !== undefined && sort === key;
+                  return (
+                    <th
+                      key={header.id}
+                      scope="col"
+                      aria-sort={
+                        active
+                          ? sortsAscending(sort, sortReverse)
+                            ? 'ascending'
+                            : 'descending'
+                          : undefined
+                      }
+                      className="px-3 py-2 font-medium whitespace-nowrap"
+                    >
+                      {header.isPlaceholder ? null : key ? (
+                        <SortHeader sortKey={key}>
+                          <table.FlexRender header={header} />
+                        </SortHeader>
+                      ) : (
+                        <table.FlexRender header={header} />
+                      )}
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>
