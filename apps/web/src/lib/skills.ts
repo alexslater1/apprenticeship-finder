@@ -8,6 +8,8 @@ export interface SkillStat {
   blurb?: string;
   /** Share of the (weighted) adverts that mention it, 0–1. */
   share: number;
+  /** The same share split by how each advert mentions it (adds up to `share`). */
+  byCtx: Record<SkillContext, number>;
   /** How many adverts mention it. */
   count: number;
   asked: number;
@@ -33,9 +35,12 @@ function inPool(d: Derived): boolean {
 /**
  * Every skill's share of the adverts, each advert weighted by its match score (so a skill the
  * best-fitting adverts mention ranks above one only poor fits mention). `weighted: false`
- * counts every advert the same.
+ * counts every advert the same; `ctx` counts only mentions of that kind (just what's asked for).
  */
-export function rankSkills(derived: Derived[], { weighted = true } = {}): SkillRanking {
+export function rankSkills(
+  derived: Derived[],
+  { weighted = true, ctx }: { weighted?: boolean; ctx?: SkillContext } = {},
+): SkillRanking {
   const pool = derived.filter(inPool);
   const basis = pool.filter((d) => d.row.skills !== null && d.row.skills !== undefined);
   const weight = (d: Derived) => (weighted ? d.score : 1);
@@ -43,6 +48,7 @@ export function rankSkills(derived: Derived[], { weighted = true } = {}): SkillR
   const byId = new Map<string, SkillStat>();
   for (const d of basis) {
     for (const m of d.row.skills ?? []) {
+      if (ctx && m.ctx !== ctx) continue;
       const def = SKILL_BY_ID[m.id];
       if (!def) continue; // removed from the dictionary since the advert was tagged
       let s = byId.get(m.id);
@@ -53,6 +59,7 @@ export function rankSkills(derived: Derived[], { weighted = true } = {}): SkillR
           category: def.category,
           blurb: def.blurb,
           share: 0,
+          byCtx: { asked: 0, taught: 0, job: 0 },
           count: 0,
           asked: 0,
           taught: 0,
@@ -62,6 +69,7 @@ export function rankSkills(derived: Derived[], { weighted = true } = {}): SkillR
         byId.set(m.id, s);
       }
       s.share += weight(d);
+      s.byCtx[m.ctx] += weight(d);
       s.count++;
       s[m.ctx]++;
       s.listings.push({ d, ctx: m.ctx });
@@ -72,6 +80,11 @@ export function rankSkills(derived: Derived[], { weighted = true } = {}): SkillR
     .map((s) => ({
       ...s,
       share: total > 0 ? s.share / total : 0,
+      byCtx: {
+        asked: total > 0 ? s.byCtx.asked / total : 0,
+        taught: total > 0 ? s.byCtx.taught / total : 0,
+        job: total > 0 ? s.byCtx.job / total : 0,
+      },
       listings: s.listings.sort((a, b) => b.d.rank - a.d.rank),
     }))
     .sort((a, b) => b.share - a.share || b.count - a.count || order.get(a.id)! - order.get(b.id)!);
@@ -88,4 +101,18 @@ export const CONTEXT_LABELS: Record<SkillContext, string> = {
   asked: 'Asked for',
   taught: 'Taught',
   job: 'Part of the job',
+};
+
+/** What each kind means, for the key on the Skills page. */
+export const CONTEXT_HINTS: Record<SkillContext, string> = {
+  asked: 'listed as something to have already (“you’ll need…”, “experience with… would be useful”)',
+  taught: 'the advert says the training covers it (“you’ll learn…”, “training provided”)',
+  job: 'listed as a duty (“what you’ll do…”) without saying whether you need it first',
+};
+
+/** Bar and dot colours, shared by the page and its key. */
+export const CONTEXT_COLOURS: Record<SkillContext, string> = {
+  asked: 'bg-amber-500',
+  taught: 'bg-sky-500',
+  job: 'bg-zinc-400 dark:bg-zinc-500',
 };
