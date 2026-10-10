@@ -80,4 +80,6 @@ export interface SuggestionInput {
   careersUrl?: string;
   evidence: { source: string; url?: string; title?: string; listing_id?: string; seen_at: string };
   detected?: Detection | null;
+  /** The job board a page sits on, used only to skip boards we already watch (never auto-watched). */
+  board?: Detection | null;
 }
