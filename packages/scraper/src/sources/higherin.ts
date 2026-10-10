@@ -141,6 +141,8 @@ export function parseJobPage(html: string): {
   posting: JobPosting | null;
   title: string | null;
   company: string | null;
+  /** Higherin's Apply button forwards straight to the employer ('/redirect?job_id=…'). */
+  redirectApply: boolean;
 } {
   let posting: JobPosting | null = null;
   for (const m of html.matchAll(
@@ -165,6 +167,7 @@ export function parseJobPage(html: string): {
     posting,
     title: h1 ? collapseSpaces(decodeEntities(h1.replace(/<[^>]+>/g, ' '))) : null,
     company: company ? collapseSpaces(company) : null,
+    redirectApply: /<job-redirect-button\b[^>]*apply-type="redirect"/.test(html),
   };
 }
 
@@ -248,6 +251,8 @@ export function toRawListing(
     source: 'higherin',
     sourceId: job.id,
     url: job.url,
+    // Clicking this in a browser lands on the employer's own application page.
+    applyUrl: page?.redirectApply ? `${BASE}/redirect?job_id=${job.id}` : undefined,
     title,
     employerName: collapseSpaces(decodeEntities(employer)),
     descriptionHtml: p?.description || undefined,

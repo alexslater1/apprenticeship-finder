@@ -58,6 +58,7 @@ export interface ListingDetail {
     url: string;
     first_seen_at: string;
     last_seen_at: string;
+    link_status: 'ok' | 'dead' | 'unknown' | null;
   }>;
 }
 
@@ -69,7 +70,7 @@ export function useListingDetail(id: string | undefined) {
       const { data, error } = await supabase
         .from('listings')
         .select(
-          'id,description_html,description_text,details,listing_sources(source,url,first_seen_at,last_seen_at)',
+          'id,description_html,description_text,details,listing_sources(source,url,first_seen_at,last_seen_at,link_status)',
         )
         .eq('id', id!)
         .single();

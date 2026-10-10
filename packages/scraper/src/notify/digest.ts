@@ -7,6 +7,7 @@ import {
   matchTier,
   nearestMiles,
   personalScore,
+  rankLinks,
   type ListingRow,
   type SettingsRow,
 } from '@af/shared';
@@ -89,7 +90,8 @@ function toItem(r: ListingRow, score: number, today: string, dashboard: string):
     preRegister: r.pre_register,
     adzunaOnly: r.sources.length > 0 && r.sources.every((s) => s.source === 'adzuna'),
     dashboardUrl: `${dashboard}#/listing/${r.id}`,
-    applyUrl: r.apply_url || r.url,
+    // The employer's own page where we have one, never a copy-site if there's a better link.
+    applyUrl: rankLinks(r)[0]?.url ?? r.apply_url ?? r.url,
   };
 }
 

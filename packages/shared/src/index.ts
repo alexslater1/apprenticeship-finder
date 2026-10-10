@@ -6,3 +6,4 @@ export * from './normalise.ts';
 export * from './dates.ts';
 export * from './geo.ts';
 export * from './fit.ts';
+export * from './links.ts';

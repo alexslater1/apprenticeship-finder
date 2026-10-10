@@ -1,7 +1,13 @@
 import { createHash } from 'node:crypto';
-import { collapseSpaces, normaliseEmployerName, type RawListing } from '@af/shared';
+import {
+  LINK_RANK,
+  collapseSpaces,
+  linkKind,
+  normaliseEmployerName,
+  type RawListing,
+} from '@af/shared';
 import { z } from 'zod';
-import { discoveryConfig, ignoredNames, isAggregator, spend } from '../discovery/config.ts';
+import { discoveryConfig, ignoredNames, spend } from '../discovery/config.ts';
 import type { Ctx, Source, SourceResult } from '../types.ts';
 
 /**
@@ -48,11 +54,15 @@ export function agoToDate(ext: string[] | null | undefined, today: string): stri
 export function toRawListing(j: Job, today: string): RawListing | null {
   const company = j.company_name?.trim();
   if (!company || ignoredNames().has(normaliseEmployerName(company))) return null;
-  const links = (j.apply_options ?? []).map((a) => a.link);
-  // Prefer the employer's own careers site / ATS over the boards Google copied it from.
-  const own = links.find((l) => !isAggregator(l));
-  const url = own ?? links[0] ?? j.share_link;
-  if (!url) return null;
+  // Only keep results that can be applied for on the employer's own site, an official service
+  // or the training provider recruiting for them; copy-sites (JobLeads, StudySmarter…) are dropped.
+  const ranked = (j.apply_options ?? [])
+    .map((a) => ({ url: a.link, kind: linkKind(a.link, company) }))
+    .sort((a, b) => LINK_RANK[a.kind] - LINK_RANK[b.kind]);
+  const best = ranked[0];
+  if (!best || LINK_RANK[best.kind] > LINK_RANK.provider) return null;
+  const url = best.url;
+  const own = url;
   const location = j.location?.replace(/\s*\(\+\d+ others?\)\s*$/, '').trim();
   return {
     source: 'google_jobs',

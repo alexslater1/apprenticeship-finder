@@ -106,6 +106,7 @@ export interface NormalisedListing {
 }
 
 const PROVIDERS = new Set(rules.providerNames.map(normaliseEmployerName));
+const BOARD_SOURCES = new Set(['adzuna', 'reed', 'google_jobs', 'web_search']);
 
 /** A training provider the advert names ('delivered by our trusted partner Firebrand'). */
 export function providerFromText(...texts: Array<string | null | undefined>): string | null {
@@ -196,6 +197,14 @@ export function normalise(raw: RawListing): NormalisedListing | null {
       : parseSalary(raw.salaryText);
 
   const employerNameNorm = normaliseEmployerName(employerName) || 'unknown';
+  // Boards (Adzuna, Reed, Google Jobs) carry ads where a training provider or agency hides who the
+  // employer is ('AI Engineer Apprentice' by Back 2 Work, an email address as the company): there's
+  // no official site to apply on, so they're dropped. FAA's own provider-posted ads stay.
+  if (
+    BOARD_SOURCES.has(raw.source) &&
+    (PROVIDERS.has(employerNameNorm) || employerName.includes('@'))
+  )
+    return null;
   const locations = raw.locations.map(({ lines: _lines, ...l }) => l);
   const first = locations[0];
   const nation: Nation = raw.isNational ? 'UK-wide' : (first?.nation ?? 'Unknown');
