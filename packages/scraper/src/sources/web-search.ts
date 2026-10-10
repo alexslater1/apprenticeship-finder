@@ -140,7 +140,12 @@ export const webSearch: Source = {
         continue;
       }
       const posting = parseJobPosting(html);
-      const name = posting?.employer ?? employerFromPage(html) ?? hostLabel(h.url);
+      // ATS pages: the tenant/account names the company; never the host ('apply.workable.com').
+      const name =
+        posting?.employer ??
+        (detected ? atsName(detected.config) : undefined) ??
+        employerFromPage(html) ??
+        hostLabel(h.url);
       if (posting?.title && isCandidateTitle(posting.title)) {
         listings.push({
           source: 'web_search',
@@ -162,13 +167,13 @@ export const webSearch: Source = {
       // through the normal pipeline (UK filter, classifier) and learn their employer there.
       const text = `${h.title}\n${h.content}\n${htmlToText(html).slice(0, 20_000)}`;
       if (!posting && mentionsDataApprenticeship(text) && UK_TEXT.test(text)) {
-        const label = detected ? (atsName(detected.config) ?? name) : name;
         suggestions.push({
-          name: label,
+          name,
           origin: 'web_search',
           careersUrl: h.url,
           evidence,
           detected: null,
+          board: detected,
         });
       }
     }
@@ -191,7 +196,7 @@ export const webSearch: Source = {
 
 /** The organisation behind an ATS URL, from its config ('cloudflare' → 'Cloudflare'). */
 function atsName(cfg: Record<string, unknown>): string | undefined {
-  const raw = cfg.tenant ?? cfg.token ?? cfg.account ?? cfg.company ?? cfg.org;
+  const raw = cfg.tenant ?? cfg.token ?? cfg.account ?? cfg.company ?? cfg.org ?? cfg.companyId;
   if (typeof raw !== 'string') return undefined;
   return raw.charAt(0).toUpperCase() + raw.slice(1);
 }
