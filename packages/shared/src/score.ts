@@ -85,6 +85,7 @@ export interface ScoredListing {
   university?: string | null;
   entry?: EntryReq | null;
   start_date?: string | null;
+  start_precision?: 'day' | 'month' | 'year' | null;
   salary_min?: number | null;
   salary_max?: number | null;
   employer_id?: string | null;
@@ -121,9 +122,16 @@ function extraParts(l: ScoredListing, sp: ScorePrefs | undefined): PersonalPart[
     out.push({ label: 'Needs an A level you don’t take (Maths)', points: x.missingSubject });
   if (sp?.preferDegree && l.is_degree)
     out.push({ label: 'Degree apprenticeship (you prefer these)', points: x.preferDegree });
-  if (sp?.earliestStart && l.start_date && l.start_date < sp.earliestStart)
+  // A month or year only counts as too early if all of it is (2027 could be September).
+  const latestStart =
+    l.start_precision === 'year'
+      ? `${l.start_date?.slice(0, 4)}-12-31`
+      : l.start_precision === 'month'
+        ? `${l.start_date?.slice(0, 7)}-31`
+        : l.start_date;
+  if (sp?.earliestStart && l.start_date && latestStart! < sp.earliestStart)
     out.push({
-      label: `Starts ${fmtMonth(l.start_date)}, before you can`,
+      label: `Starts ${l.start_precision === 'year' ? l.start_date.slice(0, 4) : fmtMonth(l.start_date)}, before you can`,
       points: x.startsTooEarly,
     });
   const pay = l.salary_max ?? l.salary_min;

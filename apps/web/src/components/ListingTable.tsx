@@ -146,7 +146,9 @@ const columns = helper.columns([
           title={
             c.row.original.row.start_precision === 'month'
               ? 'The advert only gives the month'
-              : undefined
+              : c.row.original.row.start_precision === 'year'
+                ? 'The advert only gives the year'
+                : undefined
           }
         >
           {c.getValue()}
