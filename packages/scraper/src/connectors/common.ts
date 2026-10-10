@@ -70,6 +70,8 @@ function parseLenient(src: string): unknown {
   } catch {
     const cleaned = src
       .replace(/^\s*\/\/.*$/gm, '')
+      // Trailing comments after a comma ("…", // if null, include null) — not URLs inside strings.
+      .replace(/([,{[])[ \t]*\/\/[^\n"]*(?=\n)/g, '$1')
       .replace(/\/\*[\s\S]*?\*\//g, '')
       // eslint-disable-next-line no-control-regex -- raw control characters are the problem here
       .replace(/[\u0000-\u001f]+/g, ' ');
@@ -179,6 +181,22 @@ function parseMicrodata(html: string): PostingFields | null {
     locations: jobLocation ? [{ text: collapseSpaces(jobLocation) }] : [],
     employer: prop('hiringOrganization') ? htmlToText(prop('hiringOrganization')!) : undefined,
   };
+}
+
+/** The organisation a page belongs to: og:site_name, else the part of <title> after ' | '. */
+export function employerFromPage(html: string): string | undefined {
+  const site = /<meta[^>]+property=["']og:site_name["'][^>]+content=["']([^"']+)["']/i.exec(
+    html,
+  )?.[1];
+  if (site) return collapseSpaces(decodeEntities(site));
+  const title = /<title[^>]*>([\s\S]*?)<\/title>/i.exec(html)?.[1];
+  const tail = title
+    ? decodeEntities(title)
+        .split(/\s+[|–-]\s+/)
+        .at(-1)
+        ?.trim()
+    : undefined;
+  return tail && tail.length <= 60 ? tail : undefined;
 }
 
 /** `<title>` / og:title / h1 for pages with no JobPosting. */

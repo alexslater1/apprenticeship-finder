@@ -7,7 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       sources:
-        description: 'Comma-separated source ids to run (blank = all)'
+        description: 'Comma-separated source ids to run (blank = all; "employers" = every watched employer)'
+        required: false
+        default: ''
+      employers:
+        description: 'Comma-separated employer ids to check (blank = all)'
         required: false
         default: ''
       dry_run:
@@ -43,6 +47,7 @@ jobs:
       DIGEST_TO: ${{ secrets.DIGEST_TO }}
       DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
       SOURCES: ${{ inputs.sources }}
+      EMPLOYERS: ${{ inputs.employers }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -50,12 +55,16 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # The Amazing Apprenticeships source converts its PDF with pdftotext.
+      - name: Install poppler
+        run: command -v pdftotext || (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils)
 
       - name: Scrape
         run: |
           args=()
           [ "$DRY_RUN" = "true" ] && args+=(--dry-run)
           [ -n "$SOURCES" ] && args+=(--source "$SOURCES")
+          [ -n "$EMPLOYERS" ] && args+=(--employer "$EMPLOYERS")
           npm run scrape -w packages/scraper -- "${args[@]}"
 
       - name: Digest

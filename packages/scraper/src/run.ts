@@ -16,7 +16,10 @@ import {
   persist,
 } from './pipeline/persist.ts';
 import type { Employer } from './connectors/types.ts';
+import { saveSuggestions, suggestionsFromListings } from './discovery/learn.ts';
+import { processApproved } from './discovery/process.ts';
 import {
+  attributeToEmployer,
   employerMatcher,
   loadEmployerConfig,
   loadEmployers,
@@ -144,6 +147,14 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
   async function runAllEmployers() {
     if (!wantEmployers) return;
     if (!o.dryRun) log.info(`employers: synced ${await syncEmployers()} from config`);
+    // Companies approved in the Suggested tab (or auto-approved yesterday) are checked today.
+    try {
+      const disc = await processApproved({ ...ctx, log: log.child('discovery') });
+      stats.employersAdded = disc.added;
+      if (disc.needsReview.length) stats.employersNeedReview = disc.needsReview;
+    } catch (err) {
+      log.error(`discovery: ${(err as Error).message}`);
+    }
     const employers = await employersForRun(o);
     const known = o.dryRun ? new Map<string, Set<string>>() : await knownEmployerIds();
     const t0 = Date.now();
@@ -173,8 +184,10 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
     await geocodeAll(raw, ctx);
     const kept = raw.map(normalise).filter((l): l is NormalisedListing => l !== null);
     // Which watchlist employer each listing belongs to (FAA's 'BARCLAYS BANK UK PLC' → barclays).
-    const matchEmployer = employerMatcher(await loadEmployers().catch(() => []));
-    for (const l of kept) l.employerId ??= matchEmployer(l.employerNameNorm);
+    const storedEmployers = await loadEmployers().catch(() => []);
+    const matchEmployer = employerMatcher(storedEmployers);
+    const nameById = new Map(storedEmployers.map((x) => [x.id, x.name]));
+    for (const l of kept) attributeToEmployer(l, matchEmployer, (id) => nameById.get(id));
     const relevantBySource = new Map<string, number>();
     for (const l of kept)
       for (const s of l.sources)
@@ -201,6 +214,21 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
       (l) => new Set(l.sources.map((s) => s.source)).size > 1,
     ).length;
     const saved = await persist(merged, ctx);
+
+    // D1–D3: companies we don't watch yet, from strong listings and web search hits.
+    try {
+      const inputs = [
+        ...suggestionsFromListings(merged, today),
+        ...results.flatMap((r) => r.result.suggestions ?? []),
+      ];
+      stats.discovery = await saveSuggestions(
+        inputs,
+        { ...ctx, log: log.child('discovery') },
+        (norm) => matchEmployer(norm) !== null,
+      );
+    } catch (err) {
+      log.error(`suggestions: ${(err as Error).message}`);
+    }
     newListingIds = saved.newIds;
     let deactivated = 0;
     if (!o.dryRun) {

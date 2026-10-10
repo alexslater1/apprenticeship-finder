@@ -38,6 +38,8 @@ const COMPANY_SUFFIX =
 export function normaliseEmployerName(name: string): string {
   const n = decodeEntities(name)
     .toLowerCase()
+    // Workday company codes: '3631 Airbus Operations Limited'.
+    .replace(/^\s*\d{3,}\s+(?=[a-z])/, '')
     .replace(/&/g, ' and ')
     .replace(/\(uk\)/g, ' ')
     .replace(COMPANY_SUFFIX, ' ')

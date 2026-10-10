@@ -6,6 +6,8 @@ import type { ConnectorResult, Employer, EmployerStatus } from './connectors/typ
 import { db, must } from './db.ts';
 import { REPO_ROOT } from './env.ts';
 import { BlockedError } from './http.ts';
+import { dedupeKey } from './pipeline/dedupe.ts';
+import type { NormalisedListing } from './pipeline/normalise.ts';
 import type { Ctx } from './types.ts';
 
 /**
@@ -101,6 +103,41 @@ export function employerMatcher(employers: Array<Pick<Employer, 'id' | 'name' | 
     }
     return best?.id ?? null;
   };
+}
+
+/**
+ * Link a listing to its watchlist employer. Agencies post 'Data Scientist Degree Apprentice -
+ * Pfizer' under their own name: when the title's last segment is a watched employer, the
+ * listing is re-attributed to it (the agency becomes the provider) so it merges with the
+ * employer's own advert.
+ */
+export function attributeToEmployer(
+  l: NormalisedListing,
+  match: (norm: string) => string | null,
+  nameOf: (id: string) => string | undefined,
+): void {
+  if (l.employerId) return;
+  const id = match(l.employerNameNorm);
+  if (id) {
+    l.employerId = id;
+    return;
+  }
+  const m = /^(.+?)\s+[-–|]\s+([^-–|]+)$/.exec(l.title) ?? /^(.+?)\s+\(([^()]+)\)$/.exec(l.title);
+  if (!m) return;
+  const client = match(normaliseEmployerName(m[2]!));
+  const name = client ? nameOf(client) : undefined;
+  if (!client || !name) return;
+  l.providerName ??= l.employerName;
+  l.employerName = name;
+  l.employerNameNorm = normaliseEmployerName(name);
+  l.employerId = client;
+  l.title = m[1]!.trim();
+  l.dedupeKey = dedupeKey(
+    l.employerNameNorm,
+    l.title,
+    l.primaryCity,
+    l.locations.map((x) => x.city),
+  );
 }
 
 export interface EmployerRun {

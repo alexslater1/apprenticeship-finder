@@ -1,0 +1,1134 @@
+[
+  {
+    "name": "Aberdeen Group",
+    "sector": "Banking & Finance",
+    "bucket": "watch",
+    "reason": "Only L3 Data Analytics within 12-month school-leaver traineeship (Edinburgh)",
+    "early_careers_url": "https://www.aberdeenplc.com/en-gb/careers/early-careers",
+    "ats_family": "Workday",
+    "ats_host": "abrdn.wd3.myworkdayjobs.com",
+    "sources": [
+      "https://www.aberdeenplc.com/en-gb/careers/early-careers",
+      "https://higherin.com/review/75559/aberdeen/data-analytics-apprentice"
+    ]
+  },
+  {
+    "name": "BNY",
+    "sector": "Banking & Finance",
+    "bucket": "watch",
+    "reason": "UK apprenticeship (Manchester, 4 yrs) - functional areas not named; 2027 opens 9 Mar 2027",
+    "early_careers_url": "https://www.bny.com/corporate/global/en/about-us/careers/students/apprenticeship-program.html",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "eofe.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/BNY-Careers",
+    "sources": [
+      "https://www.bny.com/corporate/global/en/about-us/careers/students/apprenticeship-program.html",
+      "https://www.bny.com/corporate/global/en/about-us/careers/students.html"
+    ]
+  },
+  {
+    "name": "Citi",
+    "sector": "Banking & Finance",
+    "bucket": "watch",
+    "reason": "Belfast technology apprenticeship (Ulster/QUB) - no data pathway found",
+    "early_careers_url": "https://jobs.citi.com/early-career-programs-apprenticeships",
+    "ats_family": "Workday",
+    "ats_host": "citi.wd5.myworkdayjobs.com/2",
+    "sources": [
+      "https://jobs.citi.com/early-career-programs-apprenticeships",
+      "https://jobs.citi.com/apprenticeships"
+    ]
+  },
+  {
+    "name": "Kainos",
+    "sector": "Professional Services & Consulting",
+    "bucket": "watch",
+    "reason": "NI 'Earn as You Learn' Computing Systems degree (Ulster) - no data pathway",
+    "early_careers_url": "https://careers.kainos.com/gb/en/earn-as-you-learn",
+    "ats_family": "Workday",
+    "ats_host": "careers.kainos.com -> kainos.wd3.myworkdayjobs.com/Kainos",
+    "sources": [
+      "https://careers.kainos.com/gb/en/earn-as-you-learn",
+      "https://careers.kainos.com/gb/en/academy"
+    ]
+  },
+  {
+    "name": "Version 1",
+    "sector": "Professional Services & Consulting",
+    "bucket": "watch",
+    "reason": "Digital Academy 2027 (Birmingham/Belfast) - not a formal apprenticeship",
+    "early_careers_url": "https://www.version1.com/careers/early-careers/",
+    "ats_family": "SmartRecruiters",
+    "ats_host": "jobs.smartrecruiters.com/Version1",
+    "sources": [
+      "https://www.version1.com/careers/early-careers/",
+      "https://jobs.smartrecruiters.com/Version1/744000136465569-register-your-interest-for-our-2027-digital-academy-programme"
+    ]
+  },
+  {
+    "name": "Cisco UK",
+    "sector": "Technology & Telecoms",
+    "bucket": "watch",
+    "reason": "CX/Sales DTS degree apprenticeship - no data pathway",
+    "early_careers_url": "https://careers.cisco.com/global/en/apprenticeships",
+    "ats_family": "Workday",
+    "ats_host": "careers.cisco.com (Phenom); cisco.wd5.myworkdayjobs.com/Cisco_Careers",
+    "sources": [
+      "https://careers.cisco.com/global/en/apprenticeships",
+      "https://jobs.cisco.com/jobs/ProjectDetail/Customer-Experience-Apprentice-Program-Location-Greater-London-Feltham-Manchester-FY25/1431452",
+      "https://higherin.com/review/74603/cisco/degree-apprentice"
+    ]
+  },
+  {
+    "name": "Google UK",
+    "sector": "Technology & Telecoms",
+    "bucket": "watch",
+    "reason": "Only L3 Data Technician 'Digital Business Apprenticeship' (below target level)",
+    "early_careers_url": "https://www.google.com/about/careers/applications/buildyourfuture/apprenticeships",
+    "ats_family": "Own site",
+    "ats_host": "www.google.com/about/careers/applications",
+    "sources": [
+      "https://www.heysuccess.com/opportunity/Google-Digital-business-apprenticeship-(October-2026-start)-56933",
+      "https://buildyourfuture.withgoogle.com/programs/apprenticeships"
+    ]
+  },
+  {
+    "name": "Ocado Group",
+    "sector": "Technology & Telecoms",
+    "bucket": "watch",
+    "reason": "Higher & Degree Apprenticeship (Hatfield), subject not named",
+    "early_careers_url": "https://careers.ocadogroup.com/teams/early-careers/apprenticeships",
+    "ats_family": "Greenhouse",
+    "ats_host": "careers.ocadogroup.com/jobs/GH-<id>?gh_jid=<id> (Greenhouse-backed)",
+    "sources": [
+      "https://careers.ocadogroup.com/teams/early-careers/apprenticeships",
+      "https://careers.ocadogroup.com/teams/early-careers"
+    ]
+  },
+  {
+    "name": "Government Digital Service / DSIT (TechTrack)",
+    "sector": "Government & Public Sector",
+    "bucket": "watch",
+    "reason": "TechTrack L4 digital apprenticeships (software/DevOps/cyber) - no data role",
+    "early_careers_url": "https://www.civil-service-careers.gov.uk/techtrack/",
+    "ats_family": "Civil Service Jobs",
+    "ats_host": "www.civilservicejobs.service.gov.uk",
+    "sources": [
+      "https://www.civil-service-careers.gov.uk/techtrack/",
+      "https://www.gov.uk/government/organisations/government-digital-service/about/recruitment",
+      "https://www.gov.uk/government/organisations/department-for-science-innovation-and-technology/about/recruitment"
+    ]
+  },
+  {
+    "name": "HM Land Registry",
+    "sector": "Government & Public Sector",
+    "bucket": "watch",
+    "reason": "IT apprenticeship L3->L4 in DDaT team - no data role confirmed",
+    "early_careers_url": "https://www.gov.uk/government/organisations/land-registry/about/recruitment",
+    "ats_family": "Civil Service Jobs",
+    "ats_host": "www.civilservicejobs.service.gov.uk",
+    "sources": [
+      "https://www.gov.uk/government/organisations/land-registry/about/recruitment"
+    ]
+  },
+  {
+    "name": "Secret Intelligence Service (MI6)",
+    "sector": "Government & Public Sector",
+    "bucket": "watch",
+    "reason": "Joint intelligence-services Software Engineering DTS apprenticeship (see GCHQ row)",
+    "early_careers_url": "https://www.sis.gov.uk/careers/technologists/software-engineering-apprenticeship/",
+    "ats_family": "Networx",
+    "ats_host": "recruitmentservices.applicationtrack.com",
+    "sources": [
+      "https://www.sis.gov.uk/careers/technologists/software-engineering-apprenticeship/",
+      "https://recruitmentservices.applicationtrack.com/vx/lang-en-GB/mobile-0/appcentre-2/brand-6/xf-3c0625ac5d4c/candidate/so/pm/1/pl/5/opp/3850-Software-Engineering-Apprenticeship-Registration-of-Interest-Ref-3850/en-GB",
+      "https://uptree.co/opportunities/uks-intelligence-agencies/320874975"
+    ]
+  },
+  {
+    "name": "Sainsbury's",
+    "sector": "Retail & Consumer",
+    "bucket": "watch",
+    "reason": "Apprenticeships paused, 'coming in 2026' relaunch; data analysis listed by a third-party guide; FutureMaker data grad scheme is graduate-only",
+    "early_careers_url": "https://www.sainsburys.jobs/teams/early-careers/",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "hdhe.fa.em3.oraclecloud.com (front-end sainsburys.jobs)",
+    "sources": [
+      "https://www.sainsburys.jobs/teams/early-careers/",
+      "https://www.graduatesfirst.com/?p=68911",
+      "https://www.scotlandis.com/?p=20678"
+    ]
+  },
+  {
+    "name": "OVO",
+    "sector": "Energy & Utilities",
+    "bucket": "watch",
+    "reason": "Last data apprenticeship (Data Engineer with Makers) closed Jan 2023 - outside 2024-26 window",
+    "early_careers_url": "https://www.ovoenergy.com/careers",
+    "ats_family": "Greenhouse",
+    "ats_host": "Greenhouse board 'ovoenergy' (my.greenhouse.io job_board=ovoenergy; boards-api.greenhouse.io/v1/boards/ovoenergy)",
+    "sources": [
+      "https://www.escapethecity.org/opportunity/10776-data-engineer-apprenticeship-at-makers",
+      "https://diginomica.com/node/25182",
+      "https://www.ovoenergy.com/careers/jobs"
+    ]
+  },
+  {
+    "name": "American Express UK",
+    "sector": "Banking & Finance",
+    "bucket": "none",
+    "reason": "Apprentice requisitions India-only",
+    "early_careers_url": "https://careers.americanexpress.com/en/sites/CX_1",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "egug.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1 (custom domain careers.americanexpress.com)",
+    "sources": [
+      "https://careers.americanexpress.com/en/sites/CX_1"
+    ]
+  },
+  {
+    "name": "BlackRock",
+    "sector": "Banking & Finance",
+    "bucket": "none",
+    "reason": "School-leaver apprenticeship in business areas; no data pathway found",
+    "early_careers_url": "https://careers.blackrock.com/students-and-graduates-emea",
+    "ats_family": "Oleeo",
+    "ats_host": "blackrock.tal.net",
+    "sources": [
+      "https://careers.blackrock.com/students-and-graduates-emea",
+      "https://careers.blackrock.com/job/london/2027-placement-program-emea/45831/97150826704"
+    ]
+  },
+  {
+    "name": "Coventry Building Society",
+    "sector": "Banking & Finance",
+    "bucket": "none",
+    "reason": "Business-area apprenticeships only (credit control, mortgages)",
+    "early_careers_url": "https://www.coventrycareers.co.uk/career-programmes.aspx",
+    "ats_family": "Own site",
+    "ats_host": "www.coventrycareers.co.uk/vacancies/",
+    "sources": [
+      "https://www.coventrycareers.co.uk/career-programmes.aspx",
+      "https://www.coventrycareers.co.uk/"
+    ]
+  },
+  {
+    "name": "Fidelity International",
+    "sector": "Banking & Finance",
+    "bucket": "none",
+    "reason": "Higher apprenticeship across business teams; no data pathway found",
+    "early_careers_url": "https://careers.fidelityinternational.com/early-careers-overview/apprentices/",
+    "ats_family": "Workday",
+    "ats_host": "fidelityinternational.tal.net",
+    "sources": [
+      "https://careers.fidelityinternational.com/early-careers-overview/apprentices/",
+      "https://careers.fidelityinternational.com/"
+    ]
+  },
+  {
+    "name": "Hargreaves Lansdown",
+    "sector": "Banking & Finance",
+    "bucket": "none",
+    "reason": "No data apprenticeship found",
+    "early_careers_url": "https://careers.hl.co.uk/",
+    "ats_family": "Workday",
+    "ats_host": "hargreaveslansdown.wd3.myworkdayjobs.com/HargreavesLansdown",
+    "sources": [
+      "https://careers.hl.co.uk/",
+      "https://hargreaveslansdown.wd3.myworkdayjobs.com/HargreavesLansdown"
+    ]
+  },
+  {
+    "name": "Mastercard UK",
+    "sector": "Banking & Finance",
+    "bucket": "none",
+    "reason": "No UK data apprenticeship found",
+    "early_careers_url": "https://careers.mastercard.com/us/en/",
+    "ats_family": "Workday",
+    "ats_host": "mastercard.wd1.myworkdayjobs.com/CorporateCareers",
+    "sources": [
+      "https://careers.mastercard.com/us/en/search-results?keywords=apprentice"
+    ]
+  },
+  {
+    "name": "Schroders",
+    "sector": "Banking & Finance",
+    "bucket": "none",
+    "reason": "School-leaver apprenticeship, business area varies; no data pathway found",
+    "early_careers_url": "https://www.schroders.com/en/global/individual/careers/apprenticeships/",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "ekbq.fa.em2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2",
+    "sources": [
+      "https://www.schroders.com/en/global/individual/careers/apprenticeships/",
+      "https://www.schroders.com/en/global/individual/careers/emerging-talent/"
+    ]
+  },
+  {
+    "name": "Yorkshire Building Society",
+    "sector": "Banking & Finance",
+    "bucket": "none",
+    "reason": "No apprenticeship programme found",
+    "early_careers_url": "https://ybscareers.co.uk/",
+    "ats_family": "Jobtrain",
+    "ats_host": "www.jobtrain.co.uk/ybscareers",
+    "sources": [
+      "https://ybscareers.co.uk/",
+      "https://ybscareers.co.uk/our-teams/data"
+    ]
+  },
+  {
+    "name": "Arup",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "Apprenticeships incl. 'digital consulting' (2025 brochure) but no data pathway found",
+    "early_careers_url": "https://www.arup.com/careers/early-careers/apprenticeships/",
+    "ats_family": "eArcu",
+    "ats_host": "careers.arup.com (CNAME ea12.earcu.com)",
+    "sources": [
+      "https://www.arup.com/careers/early-careers/apprenticeships/",
+      "https://www.arup.com/globalassets/downloads/careers/arup-early-careers-brochure-2025.pdf"
+    ]
+  },
+  {
+    "name": "AtkinsRéalis",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "Civil/nuclear/rail/PM apprenticeships; no data pathway found",
+    "early_careers_url": "https://careers.atkinsrealis.com/en/early-careers/uk/apprentices",
+    "ats_family": "Unknown",
+    "ats_host": "careers.atkinsrealis.com (Investis Digital front-end; jobs API atkinsats-prod-api.connectid.cloud)",
+    "sources": [
+      "https://careers.atkinsrealis.com/en/early-careers/uk/apprentices",
+      "https://careers.atkinsrealis.com/en/early-careers/uk/careers-hub/apprenticeships/all-apprentice-roles"
+    ]
+  },
+  {
+    "name": "Baringa",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "States it runs no apprenticeships",
+    "early_careers_url": "https://www.baringa.com/en/careers/early-careers/",
+    "ats_family": "Greenhouse",
+    "ats_host": "job-boards.eu.greenhouse.io/baringa",
+    "sources": [
+      "https://www.baringa.com/en/careers/early-careers/"
+    ]
+  },
+  {
+    "name": "Cognizant UK",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "No UK apprenticeship listings found",
+    "early_careers_url": "https://careers.cognizant.com/uki-en/",
+    "ats_family": "Own site",
+    "ats_host": "careers.cognizant.com -> talent.cognizant.com",
+    "sources": [
+      "https://careers.cognizant.com/uki-en/",
+      "https://careers.cognizant.com/uki-en/jobs/?keyword=apprentice&pagesize=50"
+    ]
+  },
+  {
+    "name": "Forvis Mazars UK",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "School-leaver audit/tax programmes only",
+    "early_careers_url": "https://careers-uk.forvismazars.com/early-careers/school-leaver-and-graduates/",
+    "ats_family": "Workday",
+    "ats_host": "forvismazarsuk.wd107.myworkdayjobs.com/en-GB/FM_1",
+    "sources": [
+      "https://careers-uk.forvismazars.com/early-careers/school-leaver-and-graduates/",
+      "https://careers-uk.forvismazars.com/early-careers/"
+    ]
+  },
+  {
+    "name": "Infosys UK",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "No UK apprenticeship programme found",
+    "early_careers_url": "https://www.infosys.com/careers/",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.infosys.com/careers/"
+    ]
+  },
+  {
+    "name": "Mott MacDonald",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "Engineering-discipline apprenticeships; no data pathway found",
+    "early_careers_url": "https://www.mottmac.com/en-gb/careers/early-careers/uk-europe/apprenticeships/",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.mottmac.com/en-gb/careers/early-careers/uk-europe/apprenticeships/",
+      "https://www.mottmac.com/en/careers/early-careers/"
+    ]
+  },
+  {
+    "name": "NTT DATA UK",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "No UK apprenticeship listings found",
+    "early_careers_url": "https://nttdata.jobs/",
+    "ats_family": "Eploy",
+    "ats_host": "nttdata.jobs (global site careers.nttdata.com is Phenom)",
+    "sources": [
+      "https://nttdata.jobs/vacancies",
+      "https://careers.nttdata.com/global/en"
+    ]
+  },
+  {
+    "name": "Sopra Steria UK",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "No current UK apprenticeship programme found",
+    "early_careers_url": "https://careers.soprasteria.co.uk/uk/en",
+    "ats_family": "Cornerstone (csod)",
+    "ats_host": "careers.soprasteria.co.uk -> soprasteria-uk.csod.com",
+    "sources": [
+      "https://careers.soprasteria.co.uk/uk/en",
+      "https://careers.soprasteria.co.uk/uk/en/our-talent-programmes"
+    ]
+  },
+  {
+    "name": "Tata Consultancy Services UK",
+    "sector": "Professional Services & Consulting",
+    "bucket": "none",
+    "reason": "No UK school-leaver programme found",
+    "early_careers_url": "https://www.tcs.com/careers/united-kingdom",
+    "ats_family": "Own site",
+    "ats_host": "ibegin.tcsapps.com",
+    "sources": [
+      "https://www.tcs.com/careers/united-kingdom"
+    ]
+  },
+  {
+    "name": "Sage",
+    "sector": "Technology & Telecoms",
+    "bucket": "none",
+    "reason": "Only an L4 AI Automation apprentice in L&D; no data apprenticeship",
+    "early_careers_url": "https://www.sage.com/en-gb/company/careers/",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.findapprenticeship.service.gov.uk/apprenticeship/VAC2000047911",
+      "https://www.findapprenticeship.service.gov.uk/apprenticeship/VAC2000024857"
+    ]
+  },
+  {
+    "name": "Dun & Bradstreet UK",
+    "sector": "Data, Media & Information",
+    "bucket": "none",
+    "reason": "No UK apprenticeship found (India only)",
+    "early_careers_url": "https://www.dnb.com/en-us/about/careers.html",
+    "ats_family": "Lever",
+    "ats_host": "jobs.lever.co/dnb",
+    "sources": [
+      "https://www.dnb.com/en-us/about/careers.html",
+      "https://jobs.lever.co/dnb"
+    ]
+  },
+  {
+    "name": "Equifax UK",
+    "sector": "Data, Media & Information",
+    "bucket": "none",
+    "reason": "Only HR apprenticeship found",
+    "early_careers_url": "https://careers.equifax.com/en",
+    "ats_family": "Workday",
+    "ats_host": "equifax.wd5.myworkdayjobs.com/External",
+    "sources": [
+      "https://www.findapprenticeship.service.gov.uk/apprenticeship/VAC2000048396",
+      "https://equifax.wd5.myworkdayjobs.com/External"
+    ]
+  },
+  {
+    "name": "ITV",
+    "sector": "Data, Media & Information",
+    "bucket": "none",
+    "reason": "Software engineering apprentice / tech grad scheme only; no data apprenticeship",
+    "early_careers_url": "https://careers.itv.com/teams/early-careers",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "fa-euup-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
+    "sources": [
+      "https://careers.itv.com/teams/early-careers",
+      "https://careers.itv.com/jobs"
+    ]
+  },
+  {
+    "name": "Moody's (UK)",
+    "sector": "Data, Media & Information",
+    "bucket": "none",
+    "reason": "No UK apprenticeship found",
+    "early_careers_url": "https://careers.moodys.com/en/early-careers",
+    "ats_family": "SuccessFactors",
+    "ats_host": "careers.moodys.com (Radancy); career8.successfactors.com (career_company=MoodysProd)",
+    "sources": [
+      "https://careers.moodys.com/en/early-careers"
+    ]
+  },
+  {
+    "name": "Reach plc",
+    "sector": "Data, Media & Information",
+    "bucket": "none",
+    "reason": "Editorial apprenticeships only",
+    "early_careers_url": "https://www.reachplc.com/careers",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.reachplc.com/careers",
+      "https://higherin.com/review/75928/reach-plc/assistant-showbiz-editor"
+    ]
+  },
+  {
+    "name": "RELX / LexisNexis",
+    "sector": "Data, Media & Information",
+    "bucket": "none",
+    "reason": "UK early careers = graduate schemes",
+    "early_careers_url": "https://www.relx.com/careers/graduates-and-early-careers",
+    "ats_family": "Workday",
+    "ats_host": "relx.wd3.myworkdayjobs.com/relx",
+    "sources": [
+      "https://www.relx.com/careers/graduates-and-early-careers",
+      "https://relx.wd3.myworkdayjobs.com/relx",
+      "https://findapprenticeshiptraining.apprenticeships.education.gov.uk/providers/10023129"
+    ]
+  },
+  {
+    "name": "Civil Service Fast Track Apprenticeship (Data/Digital routes)",
+    "sector": "Government & Public Sector",
+    "bucket": "none",
+    "reason": "Scheme closed; replacement 'Career Launch' is Business Admin L3 only. Civil-service data apprenticeships now run via GSS/ONS, GORS and individual departments (see those rows)",
+    "early_careers_url": "https://www.gov.uk/government/organisations/civil-service-fast-track-apprenticeship",
+    "ats_family": "Civil Service Jobs",
+    "ats_host": "www.civilservicejobs.service.gov.uk",
+    "sources": [
+      "https://www.gov.uk/government/organisations/civil-service-fast-track-apprenticeship",
+      "https://www.gov.uk/guidance/civil-service-fast-track-apprenticeship-fast-track-schemes",
+      "https://www.civil-service-careers.gov.uk/apprenticeships/"
+    ]
+  },
+  {
+    "name": "Companies House",
+    "sector": "Government & Public Sector",
+    "bucket": "none",
+    "reason": "L4 Digital Infrastructure apprentice only",
+    "early_careers_url": "https://www.gov.uk/government/organisations/companies-house/about/recruitment",
+    "ats_family": "Civil Service Jobs",
+    "ats_host": "www.civilservicejobs.service.gov.uk",
+    "sources": [
+      "https://www.gov.uk/government/organisations/companies-house/about/recruitment",
+      "https://www.womenintech.co.uk/event/kick-start-your-digital-career-as-an-apprentice-configuration-analyst-at-companies-house/"
+    ]
+  },
+  {
+    "name": "Department for Education (DfE)",
+    "sector": "Government & Public Sector",
+    "bucket": "none",
+    "reason": "No DfE-specific data apprenticeship found (may host GSS apprentices - covered by ONS/GSS row)",
+    "early_careers_url": "https://www.gov.uk/government/organisations/department-for-education/about/recruitment",
+    "ats_family": "Civil Service Jobs",
+    "ats_host": "www.civilservicejobs.service.gov.uk",
+    "sources": [
+      "https://www.gov.uk/government/organisations/department-for-education/about/recruitment",
+      "https://westminsterbrief.co.uk/archive/pq/121189"
+    ]
+  },
+  {
+    "name": "Metropolitan Police Service",
+    "sector": "Government & Public Sector",
+    "bucket": "none",
+    "reason": "No data apprenticeship found",
+    "early_careers_url": "https://www.metpolicecareers.co.uk/",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.metpolicecareers.co.uk/",
+      "https://www.brightnetwork.co.uk/graduate-jobs/metropolitan-police/performance-analyst-placement-Westminster-2025"
+    ]
+  },
+  {
+    "name": "National Crime Agency (NCA)",
+    "sector": "Government & Public Sector",
+    "bucket": "none",
+    "reason": "Business-support apprenticeships only",
+    "early_careers_url": "https://www.nationalcrimeagency.gov.uk/careers/how-to-join-the-nca/entry-level-roles",
+    "ats_family": "Civil Service Jobs",
+    "ats_host": "www.civilservicejobs.service.gov.uk",
+    "sources": [
+      "https://www.nationalcrimeagency.gov.uk/careers/how-to-join-the-nca/entry-level-roles",
+      "https://www.nationalcrimeagency.gov.uk/careers/vacancies"
+    ]
+  },
+  {
+    "name": "Ordnance Survey",
+    "sector": "Government & Public Sector",
+    "bucket": "none",
+    "reason": "Graduate scheme only",
+    "early_careers_url": "https://www.ordnancesurvey.co.uk/careers",
+    "ats_family": "Workday",
+    "ats_host": "ordnancesurvey.wd3.myworkdayjobs.com",
+    "sources": [
+      "https://www.ordnancesurvey.co.uk/careers",
+      "https://ordnancesurvey.wd3.myworkdayjobs.com/OS_Careers",
+      "https://ordnancesurvey.co.uk/careers/graduate-scheme"
+    ]
+  },
+  {
+    "name": "UK Health Security Agency (UKHSA)",
+    "sector": "Government & Public Sector",
+    "bucket": "none",
+    "reason": "Healthcare/biomedical science apprenticeships only",
+    "early_careers_url": "https://www.gov.uk/government/organisations/uk-health-security-agency/about/recruitment",
+    "ats_family": "Civil Service Jobs",
+    "ats_host": "www.healthjobsuk.com",
+    "sources": [
+      "https://www.gov.uk/government/organisations/uk-health-security-agency/about/recruitment",
+      "https://www.healthjobsuk.com/job/Colindale/UK_Health_Security_Agency/Data_Science/Data_Science-v8234550",
+      "https://www.gov.uk/government/publications/working-for-ukhsa-information-for-applicants"
+    ]
+  },
+  {
+    "name": "Aldi UK",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Store/warehouse/driver apprenticeships only",
+    "early_careers_url": "https://www.aldirecruitment.co.uk/early-careers/apprenticeships",
+    "ats_family": "Unknown",
+    "ats_host": "careers.aldirecruitment.co.uk",
+    "sources": [
+      "https://www.aldirecruitment.co.uk/early-careers/apprenticeships",
+      "https://higherin.com/review/53759/aldi/business-analyst",
+      "https://higherin.com/review/41591/aldi/technical-analyst"
+    ]
+  },
+  {
+    "name": "Boots",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Past Digital UX DA (2024); no data apprenticeship",
+    "early_careers_url": "https://www.boots.jobs/early-careers",
+    "ats_family": "BrassRing (Kenexa)",
+    "ats_host": "krb-sjobs.brassring.com (partnerid=30042)",
+    "sources": [
+      "https://www.boots.jobs/early-careers",
+      "https://www.boots.jobs/digital-tech-data"
+    ]
+  },
+  {
+    "name": "Coca-Cola Europacific Partners (GB)",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Engineering/food tech/field sales apprenticeships",
+    "early_careers_url": "https://www.ccep.jobs/en/apprenticeships",
+    "ats_family": "Eightfold",
+    "ats_host": "ccep.eightfold.ai (front-end www.ccep.jobs)",
+    "sources": [
+      "https://www.ccep.jobs/en/apprenticeships",
+      "https://www.ccep.jobs/en/search-jobs/apprentice"
+    ]
+  },
+  {
+    "name": "Diageo",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Engineering/packaging apprenticeships; data science is graduate-only",
+    "early_careers_url": "https://www.diageo.com/en/careers/early-careers/apprenticeships/apprenticeship-programmes",
+    "ats_family": "Workday",
+    "ats_host": "diageo.wd3.myworkdayjobs.com/en-US/Diageo_Careers",
+    "sources": [
+      "https://www.diageo.com/en/careers/early-careers/apprenticeships/apprenticeship-programmes",
+      "https://scottishgrocer.co.uk/2022/04/01/diageo-goes-on-spirited-hiring-spree/"
+    ]
+  },
+  {
+    "name": "dunnhumby",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Data Science Graduate Programme only (degree required); apprenticeships mentioned generically",
+    "early_careers_url": "https://www.dunnhumby.com/careers/early-careers/",
+    "ats_family": "Greenhouse",
+    "ats_host": "job-boards.greenhouse.io/dunnhumby",
+    "sources": [
+      "https://www.dunnhumby.com/careers/early-careers/",
+      "https://job-boards.greenhouse.io/dunnhumby",
+      "https://brightnetwork.co.uk/graduate-jobs/dunnhumby/research-data-scientist-2025"
+    ]
+  },
+  {
+    "name": "JD Sports Fashion",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "No data apprenticeship found",
+    "early_careers_url": "https://careers.jdplc.com/en/early-careers",
+    "ats_family": "Own site",
+    "ats_host": "careers.jdplc.com (Voyse platform)",
+    "sources": [
+      "https://careers.jdplc.com/en/early-careers",
+      "https://jdplc.pagetiger.com/careers-site/apprenticeship-programmes"
+    ]
+  },
+  {
+    "name": "Kingfisher (B&Q / Screwfix)",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Retail/marketing/supply-chain apprenticeships",
+    "early_careers_url": "https://www.bandqcareers.com/what-we-offer/apprenticeships",
+    "ats_family": "iCIMS",
+    "ats_host": "kingfisher2.icims.com; generalconsideration-bandq.icims.com; generalconsideration-screwfix.icims.com",
+    "sources": [
+      "https://www.bandqcareers.com/what-we-offer/apprenticeships",
+      "https://jobs.screwfix.com/why-screwfix/early-careers",
+      "https://careers.kingfisher.com"
+    ]
+  },
+  {
+    "name": "Morrisons",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Corporate/retail/manufacturing degree apprenticeships only",
+    "early_careers_url": "https://www.morrisons.jobs/early-careers/degree-apprenticeships",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "eicg.fa.em2.oraclecloud.com (sites/MorrisonsJobs)",
+    "sources": [
+      "https://www.morrisons.jobs/early-careers/degree-apprenticeships",
+      "https://www.morrisons.jobs/early-careers/apprenticeships",
+      "https://www.findapprenticeship.service.gov.uk/apprenticeship/VAC2000050825"
+    ]
+  },
+  {
+    "name": "Next plc",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Tech entry via Mainframe Academy / trainee developer",
+    "early_careers_url": "https://careers.next.co.uk/early-careers",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "ekeq.fa.em2.oraclecloud.com (sites/CX_3001; front-end careers.next.co.uk)",
+    "sources": [
+      "https://careers.next.co.uk/early-careers",
+      "https://careers.next.co.uk/jobs/76878.md"
+    ]
+  },
+  {
+    "name": "Procter & Gamble UK",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Engineering/maintenance apprenticeships only",
+    "early_careers_url": "https://www.pgcareers.com/uk/en",
+    "ats_family": "Workday",
+    "ats_host": "pg.wd5.myworkdayjobs.com/1000",
+    "sources": [
+      "https://www.pgcareers.com/uk/en/search-results?keywords=apprentice"
+    ]
+  },
+  {
+    "name": "Reckitt",
+    "sector": "Retail & Consumer",
+    "bucket": "none",
+    "reason": "Graduates/interns only",
+    "early_careers_url": "https://careers.reckitt.com/go/Graduates-&-Interns_gb/3895301/",
+    "ats_family": "SuccessFactors",
+    "ats_host": "careers.reckitt.com (career2.successfactors.eu, company=reckittb01)",
+    "sources": [
+      "https://careers.reckitt.com/",
+      "https://careers.reckitt.com/lp/Early%20Careers%20Recruitment%20/7b48d3c467b9fa89/?locale=en_GB"
+    ]
+  },
+  {
+    "name": "Aon UK",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "Broking/client service/underwriting apprenticeships",
+    "early_careers_url": "https://www.aon.com/careers/early-careers/uk/apprenticeships",
+    "ats_family": "iCIMS",
+    "ats_host": "jobs.aon.com (iCIMS Jibe) -> uk-careers-aon.icims.com/jobs/<id>",
+    "sources": [
+      "https://www.aon.com/careers/early-careers/uk/apprenticeships",
+      "https://www.aon.com/careers/early-careers/uk"
+    ]
+  },
+  {
+    "name": "AXA UK",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "Data Academy L4 was for existing staff (2021)",
+    "early_careers_url": "https://careers.axa.co.uk/careers-uk/",
+    "ats_family": "iCIMS",
+    "ats_host": "careers.axa.co.uk (iCIMS Jibe) -> careers-dei-en-axa.icims.com / careers-en-axa.icims.com",
+    "sources": [
+      "https://careers.axa.co.uk/careers-uk/",
+      "https://www.axa.co.uk/newsroom/media-releases/2021/axa-invests-in-new-data-academy",
+      "https://www.avadolearning.com/press-releases/article/axa-uk-invests-in-apprenticeships-to-develop-data-skills-across-all-areas-of-its-business/"
+    ]
+  },
+  {
+    "name": "Beazley",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "HR/finance apprentices only",
+    "early_careers_url": "https://www.beazley.com/en-gb/who-we-are/work-us/early-careers-academy/early-careers-academy-uk-programmes/",
+    "ats_family": "iCIMS",
+    "ats_host": "careers.beazley.com (iCIMS Jibe)",
+    "sources": [
+      "https://www.beazley.com/en-gb/who-we-are/work-us/early-careers-academy/early-careers-academy-uk-programmes/",
+      "https://www.beazley.com/en-gb/who-we-are/work-us/early-careers-academy-uk/uk-graduates-and-apprentices/"
+    ]
+  },
+  {
+    "name": "Chubb UK",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "No UK data apprenticeship found",
+    "early_careers_url": "https://careers.chubb.com",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "fa-ewgu-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001",
+    "sources": [
+      "https://fa-ewgu-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001"
+    ]
+  },
+  {
+    "name": "Direct Line Group (now part of Aviva)",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "Acquired by Aviva (2025); careers redirect to Aviva - covered by Aviva row",
+    "early_careers_url": "https://careers.aviva.co.uk/early-careers/apprenticeships/",
+    "ats_family": "Workday",
+    "ats_host": "aviva.wd1.myworkdayjobs.com/External (via Aviva)",
+    "sources": [
+      "https://www.directlinegroup.co.uk/en/careers.html",
+      "https://careers.aviva.co.uk/early-careers/apprenticeships/",
+      "https://www.multiverse.io/en-GB/blog/direct-line-group-launches-innovative-skills-training-to-help-future-proof-its-business"
+    ]
+  },
+  {
+    "name": "Hiscox",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "Data-skills apprenticeships for existing staff only",
+    "early_careers_url": "https://www.hiscoxgroup.com/careers/early-careers",
+    "ats_family": "Workday",
+    "ats_host": "hiscox.wd3.myworkdayjobs.com/Hiscox_External_Site",
+    "sources": [
+      "https://www.hiscoxgroup.com/careers/early-careers",
+      "https://corndel.foleon.com/case-studies/hiscox-michaelas-story/hiscoxs-strategic-use-of-the-levy",
+      "https://www.ratemyapprenticeship.co.uk/apprenticeship-review/38842/hiscox"
+    ]
+  },
+  {
+    "name": "LV= (Liverpool Victoria)",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "No data apprenticeship found",
+    "early_careers_url": "https://www.jobs.lv.com/",
+    "ats_family": "Eploy",
+    "ats_host": "jobsportal.lv.com (Eploy; CNAME liverpoolvictoriaweb.eploy.net)",
+    "sources": [
+      "https://www.jobs.lv.com/",
+      "https://jobsportal.lv.com/vacancies/",
+      "https://www.hrmagazine.co.uk/content/news/lv-extends-its-apprenticeship-programme"
+    ]
+  },
+  {
+    "name": "Marsh McLennan UK (now Marsh)",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "No UK data apprenticeship found",
+    "early_careers_url": "https://careers.marsh.com/global/en",
+    "ats_family": "Workday",
+    "ats_host": "careers.marsh.com (Phenom; careers.marshmclennan.com redirects here) -> mmc.wd1.myworkdayjobs.com/MMC",
+    "sources": [
+      "https://careers.marsh.com/global/en/search-results?keywords=apprentice",
+      "https://mmc.wd1.myworkdayjobs.com/MMC"
+    ]
+  },
+  {
+    "name": "NFU Mutual",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "IT Business Analyst L4 / claims apprenticeships - no data standard",
+    "early_careers_url": "https://careers.nfumutual.co.uk/what-you-could-be-doing/apprenticeships",
+    "ats_family": "TalentLink (Cornerstone)",
+    "ats_host": "careers.nfumutual.co.uk/apply?jobId=... (Lumesse TalentLink; emea3.recruitmentplatform.com assets)",
+    "sources": [
+      "https://careers.nfumutual.co.uk/what-you-could-be-doing/apprenticeships",
+      "https://www.gradcracker.com/hub/1507/nfu-mutual/graduate-job/85050/data-digital-and-insight-graduate-scheme"
+    ]
+  },
+  {
+    "name": "Phoenix Group (now Standard Life plc)",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "No school-leaver data apprenticeship",
+    "early_careers_url": "https://www.standardlifeplc.com/careers",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "fa-enor-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX",
+    "sources": [
+      "https://www.standardlifeplc.com/careers",
+      "https://www.standardlifeplc.com/careers/actuarial-trainee-scheme",
+      "https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/1000306085"
+    ]
+  },
+  {
+    "name": "QBE (UK / Europe)",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "No UK data apprenticeship found",
+    "early_careers_url": "https://www.qbe.com/uk/careers",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.qbe.com/uk/careers"
+    ]
+  },
+  {
+    "name": "RSA (Intact Insurance UK)",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "Insurance practitioner/underwriting apprenticeships",
+    "early_careers_url": "https://www.rsainsurance.co.uk/careers/early-careers/apprenticeships/",
+    "ats_family": "TalentLink (Cornerstone)",
+    "ats_host": "rsainsurance.co.uk/careers/uk-job-list (JS-rendered; 'LOV' search keys suggest Lumesse TalentLink)",
+    "sources": [
+      "https://www.rsainsurance.co.uk/careers/early-careers/apprenticeships/",
+      "https://ratemyapprenticeship.co.uk/jobs/11405/rsa-insurance-ltd/assistant-underwriter-speciality-lines-apprenticeship"
+    ]
+  },
+  {
+    "name": "Swiss Re (UK)",
+    "sector": "Insurance",
+    "bucket": "none",
+    "reason": "No UK data apprenticeship found",
+    "early_careers_url": "https://careers.swissre.com/",
+    "ats_family": "SuccessFactors",
+    "ats_host": "careers.swissre.com (SAP SuccessFactors RMK; career2.successfactors.eu)",
+    "sources": [
+      "https://careers.swissre.com/",
+      "https://www.findapprenticeship.service.gov.uk/apprenticeship/1000253112"
+    ]
+  },
+  {
+    "name": "AWE (Atomic Weapons Establishment)",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Engineering/project apprenticeships only",
+    "early_careers_url": "https://www.awe.co.uk/careers/early-careers/apprenticeships/",
+    "ats_family": "Workday",
+    "ats_host": "awepeople.wd3.myworkdayjobs.com/Apprentice_Careers",
+    "sources": [
+      "https://www.awe.co.uk/careers/early-careers/apprenticeships/level-6-degree/",
+      "https://awepeople.wd3.myworkdayjobs.com/Apprentice_Careers/job/Reading-area/Apprenticeship-Register-Interest-2027_R29491"
+    ]
+  },
+  {
+    "name": "Boeing UK",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Aircraft maintenance / L3 IT apprenticeships",
+    "early_careers_url": "https://www.boeing.co.uk/working-at-boeing/graduates-apprentices-internships",
+    "ats_family": "Workday",
+    "ats_host": "jobs.boeing.com / boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS",
+    "sources": [
+      "https://www.boeing.co.uk/working-at-boeing/graduates-apprentices-internships"
+    ]
+  },
+  {
+    "name": "Dyson",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Dyson Institute BEng engineering (software/electronics/mechanical) - no data pathway",
+    "early_careers_url": "https://www.dysoninstitute.ac.uk/undergraduate-programme/applying/",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.dysoninstitute.ac.uk/undergraduate-programme/applying/",
+      "https://www.dysoninstitute.ac.uk/undergraduate-programme/working-at-dyson/engineering-specialisms/"
+    ]
+  },
+  {
+    "name": "GE Aerospace UK",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Engineering/manufacturing apprenticeships",
+    "early_careers_url": "https://careers.geaerospace.com/global/en",
+    "ats_family": "Workday",
+    "ats_host": "geaerospace.wd5.myworkdayjobs.com/GE_ExternalSite",
+    "sources": [
+      "https://careers.geaerospace.com/global/en/search-results?keywords=apprenticeship"
+    ]
+  },
+  {
+    "name": "GKN Aerospace",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Aerospace engineering DA only",
+    "early_careers_url": "https://www.gknaerospace.com/careers/",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.findapprenticeship.service.gov.uk/apprenticeship/VAC2000057138"
+    ]
+  },
+  {
+    "name": "JCB",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Craft/technical/engineering apprenticeships",
+    "early_careers_url": "https://careers.jcb.com/early-careers",
+    "ats_family": "Own site",
+    "ats_host": "gats-iq-sf-api.ats.careers (API used by careers.jcb.com SPA)",
+    "sources": [
+      "https://careers.jcb.com/early-careers"
+    ]
+  },
+  {
+    "name": "Lockheed Martin UK",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Procurement etc.; no data pathway",
+    "early_careers_url": "https://www.lockheedmartin.com/en-gb/careers/early-careers.html",
+    "ats_family": "Eightfold",
+    "ats_host": "lockheedmartin.eightfold.ai",
+    "sources": [
+      "https://www.lockheedmartin.com/en-gb/careers/early-careers.html"
+    ]
+  },
+  {
+    "name": "Nissan UK",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "No data apprenticeship found",
+    "early_careers_url": "https://www.nissan.co.uk/nissan-careers.html",
+    "ats_family": "Unknown",
+    "ats_host": null,
+    "sources": [
+      "https://www.nissan.co.uk/nissan-careers.html",
+      "https://www.findapprenticeship.service.gov.uk/apprenticeship/VAC2000057213"
+    ]
+  },
+  {
+    "name": "Renishaw",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Engineering apprenticeships only",
+    "early_careers_url": "https://www.renishaw.com/en/early-careers--47201",
+    "ats_family": "Workday",
+    "ats_host": "renishaw.wd3.myworkdayjobs.com/Renishaw",
+    "sources": [
+      "https://www.renishaw.com/en/early-careers--47201",
+      "https://www.grb.uk.com/apprenticeships/renishaw-apprenticeships-register-interest-wotton-under-edge-37939/"
+    ]
+  },
+  {
+    "name": "RTX / Raytheon UK",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "No UK data apprenticeship found",
+    "early_careers_url": "https://careers.rtx.com/global/en/raytheon-uk",
+    "ats_family": "Workday",
+    "ats_host": "globalhr.wd5.myworkdayjobs.com/REC_RTX_Ext_Gateway (talent community on raytheon.avature.net)",
+    "sources": [
+      "https://careers.rtx.com/global/en/raytheon-uk"
+    ]
+  },
+  {
+    "name": "Siemens UK",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Business & engineering apprenticeships; no data pathway (see Siemens Energy row)",
+    "early_careers_url": "https://www.siemens.com/en-gb/company/jobs/early-careers/",
+    "ats_family": "Avature",
+    "ats_host": "jobs.siemens.com/en_US/externaljobs (Avature portal)",
+    "sources": [
+      "https://jobs.siemens.com/en_US/externaljobs/JobDetail/512192",
+      "https://www.siemens.com/en-gb/company/jobs/early-careers/"
+    ]
+  },
+  {
+    "name": "Toyota Manufacturing UK",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Production/maintenance apprenticeships only",
+    "early_careers_url": "https://recruitment.toyotauk.com/apprenticeships/",
+    "ats_family": "Own site",
+    "ats_host": "recruitment.toyotauk.com",
+    "sources": [
+      "https://recruitment.toyotauk.com/",
+      "https://www.toyotauk.com/"
+    ]
+  },
+  {
+    "name": "UKAEA (UK Atomic Energy Authority)",
+    "sector": "Engineering, Defence & Manufacturing",
+    "bucket": "none",
+    "reason": "Engineering/technician/PM apprenticeships",
+    "early_careers_url": "https://careers.ukaea.uk/early-careers/apprenticeships/",
+    "ats_family": "SmartRecruiters",
+    "ats_host": "jobs.smartrecruiters.com/UKAtomicEnergyAuthority",
+    "sources": [
+      "https://careers.ukaea.uk/early-careers/apprenticeships/"
+    ]
+  },
+  {
+    "name": "Cadent",
+    "sector": "Energy & Utilities",
+    "bucket": "none",
+    "reason": "Engineering/field apprenticeships only",
+    "early_careers_url": "https://careers.cadentgas.com/?org=all",
+    "ats_family": "SuccessFactors",
+    "ats_host": "careers.cadentgas.com (career2.successfactors.eu)",
+    "sources": [
+      "https://careers.cadentgas.com/?org=all",
+      "https://www.brightnetwork.co.uk/graduate-jobs/cadent-gas/data-analyst-professional-programme-coventry-2023"
+    ]
+  },
+  {
+    "name": "Octopus Energy (incl. Kraken)",
+    "sector": "Energy & Utilities",
+    "bucket": "none",
+    "reason": "No apprenticeship scheme found; hires data roles directly",
+    "early_careers_url": "https://octopus.energy/careers/",
+    "ats_family": "Lever",
+    "ats_host": "jobs.lever.co/octoenergy",
+    "sources": [
+      "https://octopus.energy/careers/",
+      "https://jobs.lever.co/octoenergy"
+    ]
+  },
+  {
+    "name": "easyJet",
+    "sector": "Transport & Infrastructure",
+    "bucket": "none",
+    "reason": "Engineering apprenticeships; data apprenticeships internal only",
+    "early_careers_url": "https://careers.easyjet.com/en/career-areas/early-careers/apprenticeships",
+    "ats_family": "Taleo",
+    "ats_host": "easyjet.taleo.net/careersection/2/jobdetail.ftl?job=...",
+    "sources": [
+      "https://careers.easyjet.com/en/career-areas/early-careers/apprenticeships",
+      "https://www.cambridgespark.com/case-studies/transforming-potential-with-data-ai-apprenticeships-at-easyjet"
+    ]
+  },
+  {
+    "name": "Heathrow Airport",
+    "sector": "Transport & Infrastructure",
+    "bucket": "none",
+    "reason": "Engineering apprenticeships; data academy internal only",
+    "early_careers_url": "https://www.heathrow.com/company/careers/early-careers",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "encd.fa.em3.oraclecloud.com (site CX_3001)",
+    "sources": [
+      "https://www.heathrow.com/company/careers/early-careers",
+      "https://www.multiverse.io/en-GB/blog/heathrow-airport-launches-data-academy-to-upskill-staff-across-the-business"
+    ]
+  },
+  {
+    "name": "HS2",
+    "sector": "Transport & Infrastructure",
+    "bucket": "none",
+    "reason": "Business/project apprenticeships; no HS2 Ltd data apprenticeship",
+    "early_careers_url": "https://www.hs2.org.uk/careers/early-careers/",
+    "ats_family": "Oracle Cloud HCM",
+    "ats_host": "jobs.hs2.org.uk (egif.fa.em1.ukg.oraclecloud.com, site CX_1001)",
+    "sources": [
+      "https://www.hs2.org.uk/careers/early-careers/",
+      "https://www.hs2.org.uk/about-us/documents/hs2-apprentice-programme-frequently-asked-questions-faqs"
+    ]
+  }
+]

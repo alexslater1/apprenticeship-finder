@@ -1,0 +1,246 @@
+{
+ "refineSearch": {
+  "status": 200,
+  "hits": 3,
+  "totalHits": 257,
+  "data": {
+   "jobs": [
+    {
+     "descriptionTeaser": "Job title : Air Freight Systems & Digital Delivery Manager . Location: Bonn, Germany . DHL Global Forwarding (DGF) is the world leader in air freight services and one of the leading providers of oc...",
+     "state": "Nordrhein-Westfalen",
+     "siteType": "external",
+     "multi_category": [
+      "Operations"
+     ],
+     "reqId": "AV-365075",
+     "city": "Bonn",
+     "latitude": "50.73438",
+     "multi_location": [
+      "Bonn, Nordrhein-Westfalen, Germany",
+      "Berlin, Berlin, Germany",
+      "London, England, United Kingdom",
+      "Plantation, Florida, United States of America",
+      "San Francisco, California, United States of America"
+     ],
+     "applyUrl": "https://dpdhlgroup.avature.net/de_DE/jobs/ApplicationMethods?jobId=365075&source=careers.dhl.com",
+     "externalApply": true,
+     "cityState": "Bonn, Nordrhein-Westfalen",
+     "country": "Germany",
+     "contractType1": "Permanent",
+     "visibilityType": "External",
+     "longitude": "7.09549",
+     "careerLevel1": "Professionals",
+     "jobId": "AV-365075",
+     "workHours": "Full-time",
+     "locale": "en_GLOBAL",
+     "title": "Air Freight Systems & Digital Delivery Manager",
+     "jobSeqNo": "DPDHGLOBALAV365075ENGLOBALEXTERNAL",
+     "postedDate": "2026-10-05T11:55:53.196+0000",
+     "dateCreated": "2026-07-22T14:03:03.296+0000",
+     "cityStateCountry": "Bonn, Nordrhein-Westfalen, Germany",
+     "hoursPerWeek": "40",
+     "jobVisibility": [
+      "internal",
+      "external"
+     ],
+     "workHours1": "Full-time",
+     "careerLevel": "Professionals",
+     "location": "Bonn, Nordrhein-Westfalen, Germany",
+     "isMultiLocation": true,
+     "multi_location_array": [
+      {
+       "latlong": {
+        "lon": 7.09549,
+        "lat": 50.73438
+       },
+       "location": "Bonn, Nordrhein-Westfalen, Germany"
+      },
+      {
+       "latlong": {
+        "lon": 13.41053,
+        "lat": 52.52437
+       },
+       "location": "Berlin, Berlin, Germany"
+      },
+      {
+       "latlong": {
+        "lon": -0.12574,
+        "lat": 51.50853
+       },
+       "location": "London, England, United Kingdom"
+      },
+      {
+       "latlong": {
+        "lon": -80.23184,
+        "lat": 26.13421
+       },
+       "location": "Plantation, Florida, United States of America"
+      },
+      {
+       "latlong": {
+        "lon": -122.41942,
+        "lat": 37.77493
+       },
+       "location": "San Francisco, California, United States of America"
+      }
+     ],
+     "isMultiCategory": true,
+     "multi_category_array": [
+      {
+       "category": "Operations"
+      }
+     ],
+     "badge": ""
+    },
+    {
+     "type": "Permanent",
+     "descriptionTeaser": "Grade: RCS K. Contract Type: Permanent (Full-Time). Location: Heathrow \u2013 TW6 2GA. PLEASE NOTE: The role is based within an airport. You will be required to undergo a security/background check if yo...",
+     "state": "London",
+     "siteType": "external",
+     "multi_category": [
+      "Freight Transportations and Aviation",
+      "Operations"
+     ],
+     "reqId": "44269",
+     "city": "London",
+     "latitude": "51.50853",
+     "multi_location": [
+      "London, London, TW6 2GA, United Kingdom"
+     ],
+     "address": "Heathrow:BA Cabin Cleaning",
+     "applyUrl": "https://careers.uki.dsc.dhl/jobs/vacancy/health-and-safety-business-partner---bacc-44269-heathrowba-cabin-cleaning-london/44290/description/action/apply?_channelid=30",
+     "externalApply": true,
+     "cityState": "London, London",
+     "country": "United Kingdom",
+     "contractType1": "Permanent",
+     "visibilityType": "External",
+     "longitude": "-0.12574",
+     "careerLevel1": "",
+     "jobId": "44269",
+     "workHours": "Full-time",
+     "locale": "en_GLOBAL",
+     "title": "Health and Safety Business Partner - BACC",
+     "jobSeqNo": "DPDHGLOBAL44269ENGLOBALEXTERNALEARCU",
+     "postedDate": "2026-09-28T15:48:44.000+0000",
+     "dateCreated": "2026-09-28T16:27:23.773+0000",
+     "cityStateCountry": "London, London, United Kingdom",
+     "jobVisibility": [
+      "external",
+      "internal"
+     ],
+     "workHours1": "Full-time",
+     "careerLevel": "Not Specified",
+     "location": "London, London, TW6 2GA, United Kingdom",
+     "category": "Operations",
+     "isMultiLocation": true,
+     "multi_location_array": [
+      {
+       "latlong": {
+        "lon": -0.12574,
+        "lat": 51.50853
+       },
+       "location": "London, London, TW6 2GA, United Kingdom"
+      }
+     ],
+     "isMultiCategory": true,
+     "multi_category_array": [
+      {
+       "category": "Freight Transportations and Aviation"
+      },
+      {
+       "category": "Operations"
+      }
+     ],
+     "badge": ""
+    },
+    {
+     "descriptionTeaser": "Job title : Air Freight Systems & Digital Delivery Manager . Location: Bonn, Germany . DHL Global Forwarding (DGF) is the world leader in air freight services and one of the leading providers of oc...",
+     "state": "Nordrhein-Westfalen",
+     "siteType": "external",
+     "multi_category": [
+      "Operations"
+     ],
+     "reqId": "AV-365075",
+     "city": "Bonn",
+     "latitude": "50.73438",
+     "multi_location": [
+      "Bonn, Nordrhein-Westfalen, Germany",
+      "Berlin, Berlin, Germany",
+      "London, England, United Kingdom",
+      "Plantation, Florida, United States of America",
+      "San Francisco, California, United States of America"
+     ],
+     "applyUrl": "https://dpdhlgroup.avature.net/de_DE/jobs/ApplicationMethods?jobId=365075&source=careers.dhl.com",
+     "externalApply": true,
+     "cityState": "Bonn, Nordrhein-Westfalen",
+     "country": "Germany",
+     "contractType1": "Permanent",
+     "visibilityType": "External",
+     "longitude": "7.09549",
+     "careerLevel1": "Professionals",
+     "jobId": "AV-365075",
+     "workHours": "Full-time",
+     "locale": "en_GLOBAL",
+     "title": "Air Freight Systems & Digital Delivery Manager",
+     "jobSeqNo": "DPDHGLOBALAV365075ENGLOBALEXTERNAL",
+     "postedDate": "2026-10-05T11:55:53.196+0000",
+     "dateCreated": "2026-07-22T14:03:03.296+0000",
+     "cityStateCountry": "Bonn, Nordrhein-Westfalen, Germany",
+     "hoursPerWeek": "40",
+     "jobVisibility": [
+      "internal",
+      "external"
+     ],
+     "workHours1": "Full-time",
+     "careerLevel": "Professionals",
+     "location": "Bonn, Nordrhein-Westfalen, Germany",
+     "isMultiLocation": true,
+     "multi_location_array": [
+      {
+       "latlong": {
+        "lon": 7.09549,
+        "lat": 50.73438
+       },
+       "location": "Bonn, Nordrhein-Westfalen, Germany"
+      },
+      {
+       "latlong": {
+        "lon": 13.41053,
+        "lat": 52.52437
+       },
+       "location": "Berlin, Berlin, Germany"
+      },
+      {
+       "latlong": {
+        "lon": -0.12574,
+        "lat": 51.50853
+       },
+       "location": "London, England, United Kingdom"
+      },
+      {
+       "latlong": {
+        "lon": -80.23184,
+        "lat": 26.13421
+       },
+       "location": "Plantation, Florida, United States of America"
+      },
+      {
+       "latlong": {
+        "lon": -122.41942,
+        "lat": 37.77493
+       },
+       "location": "San Francisco, California, United States of America"
+      }
+     ],
+     "isMultiCategory": true,
+     "multi_category_array": [
+      {
+       "category": "Operations"
+      }
+     ],
+     "badge": ""
+    }
+   ]
+  }
+ }
+}
