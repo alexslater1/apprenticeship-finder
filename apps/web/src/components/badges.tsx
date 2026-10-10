@@ -1,6 +1,5 @@
-import { matchTier, type GradeFit, type ListingRow } from '@af/shared';
+import { matchTier, type GradeFit } from '@af/shared';
 import { cn } from '@/lib/utils';
-import { SOURCE_LABELS, SOURCE_SHORT, sourceKey } from '@/lib/derive';
 import { closingLabel, levelLabel } from '@/lib/format';
 
 const TIER_STYLE = {
@@ -60,40 +59,6 @@ export function ClosingBadge({ days, className }: { days: number | null; classNa
       )}
     >
       {label}
-    </span>
-  );
-}
-
-export function SourceBadges({ sources }: { sources: ListingRow['sources'] }) {
-  // One tag per source; a source whose only link now says "job not found" is struck through.
-  const seen = new Map<string, { url: string; dead: boolean }>();
-  for (const s of sources) {
-    const prev = seen.get(sourceKey(s.source));
-    if (!prev || (prev.dead && !s.dead))
-      seen.set(sourceKey(s.source), { url: s.url, dead: !!s.dead });
-  }
-  return (
-    <span className="flex flex-wrap gap-1">
-      {[...seen.entries()].map(([key, { url, dead }]) => (
-        <a
-          key={key}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          title={
-            dead
-              ? `${SOURCE_LABELS[key] ?? key}: this link no longer works`
-              : (SOURCE_LABELS[key] ?? key)
-          }
-          className={cn(
-            'inline-flex h-5 items-center rounded border px-1.5 text-[11px] text-muted-foreground hover:bg-muted hover:text-foreground',
-            dead && 'line-through opacity-60',
-          )}
-        >
-          {SOURCE_SHORT[key] ?? key}
-        </a>
-      ))}
     </span>
   );
 }

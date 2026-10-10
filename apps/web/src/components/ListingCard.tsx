@@ -11,7 +11,6 @@ import {
   MatchChip,
   NewDot,
   PreRegisterBadge,
-  SourceBadges,
 } from './badges';
 import { useOpenListing } from '@/lib/useOpenListing';
 import { StatusSelect } from './StatusSelect';
@@ -79,9 +78,6 @@ export function ListingCard({ d }: { d: Derived }) {
         {salary && <span>{salary}</span>}
         <ClosingBadge days={d.daysToClose} />
       </p>
-      <div className="relative z-10 mt-2 flex flex-wrap items-center gap-1.5">
-        <SourceBadges sources={r.sources} />
-      </div>
       <div className="relative z-10 mt-2 flex items-center gap-2">
         <StatusSelect row={r} compact />
         <span className="ml-auto flex items-center gap-1">
