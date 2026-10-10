@@ -140,6 +140,7 @@ const SORTS: Record<SortKey, { value: (d: Derived) => SortValue; dir: 1 | -1 }> 
   // Adverts his grades meet first, then close, then below; adverts that don't say, last.
   grades: { value: (d) => (d.fit ? FIT_ORDER[d.fit] : null), dir: 1 },
   posted: { value: (d) => d.row.posted_date ?? d.row.first_seen_at.slice(0, 10), dir: -1 },
+  start: { value: (d) => d.row.start_date, dir: 1 },
   status: { value: (d) => STATUS_ORDER[d.row.status] ?? null, dir: 1 },
 };
 
