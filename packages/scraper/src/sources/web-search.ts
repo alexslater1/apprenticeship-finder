@@ -71,6 +71,7 @@ export const tavily: SearchProvider = {
 
 const SEEN_KEY = 'tavily:seen';
 const SEEN_DAYS = 60;
+const UK_TEXT = /\b(UK|United Kingdom|England|Scotland|Wales|Northern Ireland|London)\b/;
 
 /** A page worth suggesting: it talks about an apprenticeship and data/AI work. */
 export function mentionsDataApprenticeship(text: string): boolean {
@@ -156,11 +157,19 @@ export const webSearch: Source = {
           locations: posting.locations,
         });
       }
-      if (
-        detected ||
-        mentionsDataApprenticeship(`${h.title}\n${h.content}\n${htmlToText(html).slice(0, 20_000)}`)
-      ) {
-        suggestions.push({ name, origin: 'web_search', careersUrl: h.url, evidence, detected });
+      // A page about a data apprenticeship (not a job ad) is a suggestion to look at, never
+      // auto-watched: ATS pages found this way are often other countries' jobs. Job ads above go
+      // through the normal pipeline (UK filter, classifier) and learn their employer there.
+      const text = `${h.title}\n${h.content}\n${htmlToText(html).slice(0, 20_000)}`;
+      if (!posting && mentionsDataApprenticeship(text) && UK_TEXT.test(text)) {
+        const label = detected ? (atsName(detected.config) ?? name) : name;
+        suggestions.push({
+          name: label,
+          origin: 'web_search',
+          careersUrl: h.url,
+          evidence,
+          detected: null,
+        });
       }
     }
     await ctx.state.set(SEEN_KEY, seen);
@@ -179,6 +188,13 @@ export const webSearch: Source = {
     };
   },
 };
+
+/** The organisation behind an ATS URL, from its config ('cloudflare' → 'Cloudflare'). */
+function atsName(cfg: Record<string, unknown>): string | undefined {
+  const raw = cfg.tenant ?? cfg.token ?? cfg.account ?? cfg.company ?? cfg.org;
+  if (typeof raw !== 'string') return undefined;
+  return raw.charAt(0).toUpperCase() + raw.slice(1);
+}
 
 /** 'careers.example.co.uk' → 'Example'; ATS hosts → the tenant ('barclays.wd3…' → 'Barclays'). */
 export function hostLabel(url: string): string {

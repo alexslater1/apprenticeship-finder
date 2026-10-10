@@ -14,6 +14,8 @@ const Config = z.object({
   domain: z.string(),
   api: z.enum(['v2', 'pcsx']).default('pcsx'),
   omitLocation: z.boolean().optional(),
+  /** Search instead of reading the whole board (Microsoft rate-limits paging). */
+  query: z.string().optional(),
 });
 type Config = z.infer<typeof Config>;
 
@@ -75,13 +77,14 @@ async function list(
   const out: Position[] = [];
   let total: number | null = null;
   const loc = c.omitLocation ? '' : '&location=United%20Kingdom';
+  const q = encodeURIComponent(c.query ?? '');
   for (let page = 0; page < MAX_PAGES; page++) {
     const start = page * 10;
     let batch: Position[];
     if (c.api === 'pcsx') {
       const body = PcsxPage.parse(
         await ctx.http.json(
-          `https://${c.host}/api/pcsx/search?domain=${encodeURIComponent(c.domain)}&query=${loc}&start=${start}`,
+          `https://${c.host}/api/pcsx/search?domain=${encodeURIComponent(c.domain)}&query=${q}${loc}&start=${start}`,
           { robots: true },
         ),
       );
@@ -104,7 +107,7 @@ async function list(
     } else {
       const body = V2Page.parse(
         await ctx.http.json(
-          `https://${c.host}/api/apply/v2/jobs?domain=${encodeURIComponent(c.domain)}&start=${start}&num=10${loc}`,
+          `https://${c.host}/api/apply/v2/jobs?domain=${encodeURIComponent(c.domain)}&query=${q}&start=${start}&num=10${loc}`,
           { robots: true },
         ),
       );

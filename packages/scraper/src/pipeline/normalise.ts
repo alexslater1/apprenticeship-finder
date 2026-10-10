@@ -15,6 +15,7 @@ import { placeByName } from '@af/shared/places';
 import { findUniversity } from '@af/shared/universities';
 import sanitizeHtml from 'sanitize-html';
 import { dedupeKey } from './dedupe.ts';
+import { isUk } from './uk.ts';
 
 /** Scraped HTML is untrusted: keep simple formatting and links only (the UI sanitises again). */
 export function sanitize(html: string): string {
@@ -172,6 +173,8 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     knownDegree: raw.isDegree,
   });
   if (!classification.relevant) return null;
+  // Global boards (Google Jobs, web pages, employer ATSs) carry jobs abroad: keep the UK ones.
+  if (raw.locations.length && raw.locations.every((l) => isUk(l) === false)) return null;
 
   const salary =
     raw.salaryMin !== undefined

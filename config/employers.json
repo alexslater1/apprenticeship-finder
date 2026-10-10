@@ -1935,7 +1935,8 @@
     "connector_config": {
       "host": "apply.careers.microsoft.com",
       "domain": "microsoft.com",
-      "api": "pcsx"
+      "api": "pcsx",
+      "query": "apprentice"
     },
     "data_schemes": [
       "Sales Data Analyst Apprentice – Level 6 (2.5 yrs, Sept 2026 start, London)",
@@ -1955,7 +1956,7 @@
       "https://ukstories.microsoft.com/features/national-apprenticeship-week-just-say-yes-and-go-for-it/",
       "https://careers.microsoft.com/v2/global/en/students"
     ],
-    "connector_note": "v2 returns 403 'Not authorized for PCSX' -> pcsx. 87 UK; query=apprentice -> 0 (2027 UK apprenticeships not posted yet). Eightfold is Microsoft's own ATS here (atsJobId = displayJobId).",
+    "connector_note": "v2 returns 403 'Not authorized for PCSX' -> pcsx. 87 UK; query=apprentice -> 0 (2027 UK apprenticeships not posted yet). Eightfold is Microsoft's own ATS here (atsJobId = displayJobId). [Searches \"apprentice\" rather than paging the board: the API answers 429 to paging.]",
     "verified_2026_10_09": {
       "ok": true,
       "total": 87,
