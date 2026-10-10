@@ -17,14 +17,7 @@ import { formatDate, formatSalary, milesLabel, providerLabel } from '@/lib/forma
 import { WhyThisMatch } from './WhyThisMatch';
 import { useEmployers } from '@/lib/companies';
 import { useListingDetail, useSetHidden, useUpdateTracking } from '@/lib/queries';
-import {
-  AdzunaAttribution,
-  ClosingBadge,
-  GradeFitBadge,
-  LevelBadge,
-  MatchChip,
-  PreRegisterBadge,
-} from './badges';
+import { ClosingBadge, GradeFitBadge, LevelBadge, MatchChip, PreRegisterBadge } from './badges';
 import { Notes } from './Notes';
 import { StatusSelect } from './StatusSelect';
 
@@ -341,9 +334,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                     </li>
                   )}
                 </ul>
-                <div className="mt-2">
-                  <AdzunaAttribution sources={r.sources} />
-                </div>
+                <div className="mt-2"></div>
                 {r.sources.some((s) => s.source === 'faa') && (
                   <p className="mt-2 text-xs text-muted-foreground">
                     Contains public sector information licensed under the Open Government Licence
