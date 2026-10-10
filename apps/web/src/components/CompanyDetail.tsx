@@ -13,7 +13,7 @@ import {
 import { CONNECTOR_LABELS, careersUrl, useSetWatch, usualWindow } from '@/lib/companies';
 import { ago, formatDate } from '@/lib/format';
 import { useFilters } from '@/store/filters';
-import { OriginBadge, StatusPill } from './CompanyCard';
+import { FavouriteButton, OriginBadge, StatusPill } from './CompanyCard';
 import { Notes } from './Notes';
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {
@@ -79,6 +79,7 @@ export function CompanyDetail({ e, onClose }: { e: EmployerRow | undefined; onCl
                     </a>
                   </Button>
                 )}
+                <FavouriteButton id={e.id} name={e.name} />
                 <Button
                   variant="ghost"
                   onClick={() => setWatch.mutate({ id: e.id, watch: !e.watch })}

@@ -1,8 +1,9 @@
-import { MIN_LEVEL, baseScore, londonDate } from '@af/shared';
+import { MIN_LEVEL, baseScore, extractEntry, londonDate } from '@af/shared';
+import { findUniversity } from '@af/shared/universities';
 import { db, must } from '../db.ts';
 import type { Ctx } from '../types.ts';
 import type { Matchable } from './dedupe.ts';
-import { plausibleDeadline, type NormalisedListing } from './normalise.ts';
+import { plausibleDeadline, providerFromText, type NormalisedListing } from './normalise.ts';
 
 export interface ExistingRow {
   id: string;
@@ -21,6 +22,7 @@ export interface ExistingRow {
   provider_name?: string | null;
   employer_id?: string | null;
   university?: string | null;
+  entry?: NormalisedListing['entry'];
   salary_min?: number | null;
   salary_max?: number | null;
   salary_text?: string | null;
@@ -33,7 +35,7 @@ export interface ExistingRow {
 }
 
 const EXISTING_COLUMNS =
-  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,employer_id,university,salary_min,salary_max,salary_text,start_date,locations,primary_city,region,nation,details';
+  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,employer_id,university,entry,salary_min,salary_max,salary_text,start_date,locations,primary_city,region,nation,details';
 
 const chunk = <T>(xs: T[], n: number): T[][] =>
   Array.from({ length: Math.ceil(xs.length / n) }, (_, i) => xs.slice(i * n, i * n + n));
@@ -76,6 +78,20 @@ export function toRow(
   });
   const c = l.classification;
   const level = c.level ?? ex?.level ?? null;
+  // Cached sources send no description: read these from the description we keep.
+  const providerName =
+    l.providerName ?? ex?.provider_name ?? providerFromText(descriptionText) ?? null;
+  const university =
+    l.university ??
+    ex?.university ??
+    findUniversity({
+      provider: providerName,
+      employer: l.employerName,
+      texts: [l.title, descriptionText],
+    });
+  const quals = (l.details?.qualifications ?? ex?.details?.qualifications) as
+    Parameters<typeof extractEntry>[1] | undefined;
+  const entry = l.entry ?? extractEntry(descriptionText, quals ?? []) ?? ex?.entry ?? null;
   const closedReason =
     closingDate && closingDate < today
       ? 'closing_date_passed'
@@ -100,8 +116,9 @@ export function toRow(
     lars_code: l.larsCode ?? ex?.lars_code ?? null,
     standard_title: l.standardTitle ?? ex?.standard_title ?? null,
     employer_id: l.employerId ?? ex?.employer_id ?? null,
-    provider_name: l.providerName ?? ex?.provider_name ?? null,
-    university: l.university ?? ex?.university ?? null,
+    provider_name: providerName,
+    university,
+    entry,
     role_type: c.roleType,
     score: score.total,
     score_breakdown: score,

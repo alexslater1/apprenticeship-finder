@@ -49,6 +49,18 @@ const k = keywordsJson as unknown as {
     role: { high: number; maybe: number };
     level: { high: number; maybe: number };
     withinDistance: number;
+    extras: {
+      universityBands: Array<[number, number]>;
+      universityWeight: Record<'off' | 'some' | 'lots', number>;
+      gradesMeet: number;
+      gradesClose: number;
+      gradesBelow: number;
+      missingSubject: number;
+      preferDegree: number;
+      startsTooEarly: number;
+      belowMinSalary: number;
+      favourite: number;
+    };
   };
   providers: { names: string[]; inText?: Array<{ name: string; re: string }> };
 };

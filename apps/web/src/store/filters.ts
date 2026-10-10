@@ -21,6 +21,8 @@ export interface Filters {
   degreeOnly: boolean;
   /** Set from the Companies page ("View listings"). */
   employerId: string | null;
+  /** Hide listings asking for more than his predicted grades (or an A level he doesn't take). */
+  withinGrades: boolean;
   includeHidden: boolean;
   includeClosed: boolean;
   sort: SortKey;
@@ -41,6 +43,7 @@ export const DEFAULT_FILTERS: Filters = {
   sources: [],
   degreeOnly: false,
   employerId: null,
+  withinGrades: false,
   includeHidden: false,
   includeClosed: false,
   sort: 'score',
@@ -105,6 +108,7 @@ export function activeFilterCount(f: Filters): number {
   if (f.sources.length) n++;
   if (f.degreeOnly) n++;
   if (f.employerId) n++;
+  if (f.withinGrades) n++;
   if (f.includeHidden) n++;
   if (f.includeClosed) n++;
   if (f.onlyKnownLocation) n++;

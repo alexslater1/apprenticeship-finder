@@ -130,6 +130,7 @@ export async function gatherDigest(
     roles: settings.role_prefs ?? {},
     levels: settings.level_prefs ?? {},
     defaultDistanceMiles: settings.default_distance_miles,
+    score: settings.score_prefs ?? {},
   };
   const home =
     settings.home_lat != null && settings.home_lon != null

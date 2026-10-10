@@ -1,9 +1,10 @@
 import type { EmployerRow } from '@af/shared';
-import { Bell, BellOff, ExternalLink, MessageSquare } from 'lucide-react';
+import { Bell, BellOff, ExternalLink, MessageSquare, Star } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { careersUrl, sectionOf, statusLabel, useSetWatch, usualWindow } from '@/lib/companies';
 import { ago, formatDate } from '@/lib/format';
+import { useSettings, useUpdateScorePrefs } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import { useFilters } from '@/store/filters';
 
@@ -36,6 +37,26 @@ export function OriginBadge({ origin }: { origin: EmployerRow['origin'] }) {
     <span className="inline-flex h-6 items-center rounded-md bg-secondary px-1.5 text-xs text-secondary-foreground">
       {origin === 'manual' ? 'Added by you' : 'Discovered'}
     </span>
+  );
+}
+
+/** Star a company: its listings get a bonus in the match score (Settings → What else counts). */
+export function FavouriteButton({ id, name }: { id: string; name: string }) {
+  const { data: settings } = useSettings();
+  const save = useUpdateScorePrefs();
+  const favs = settings?.score_prefs?.favourites ?? [];
+  const on = favs.includes(id);
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-pressed={on}
+      aria-label={on ? `Remove ${name} from favourites` : `Add ${name} to favourites`}
+      title={on ? 'Favourite (boosts its listings)' : 'Add to favourites'}
+      onClick={() => save({ favourites: on ? favs.filter((f) => f !== id) : [...favs, id] })}
+    >
+      <Star className={on ? 'fill-match-medium text-match-medium' : undefined} />
+    </Button>
   );
 }
 
@@ -106,6 +127,7 @@ export function CompanyCard({ e, onOpen }: { e: EmployerRow; onOpen: () => void 
               {e.notes_count}
             </span>
           )}
+          <FavouriteButton id={e.id} name={e.name} />
           <Button
             variant="ghost"
             size="icon"

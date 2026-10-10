@@ -16,6 +16,7 @@ import { Link } from 'react-router';
 import { toast } from 'sonner';
 import { Page } from '@/components/Layout';
 import { PasswordForm } from '@/components/PasswordForm';
+import { ExtrasCard, GradesCard } from '@/components/ScoreSettings';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -241,6 +242,9 @@ export default function Settings() {
             )}
           </CardContent>
         </Card>
+
+        {s && <GradesCard s={s} />}
+        {s && <ExtrasCard s={s} />}
 
         <Card>
           <CardHeader>

@@ -64,6 +64,21 @@ describe('normalise', () => {
     expect(normalise({ ...base, level: 3 })).toBeNull();
     expect(normalise({ ...base, level: 4 })).not.toBeNull();
   });
+  it('reads entry requirements from FAA qualifications or the advert text', () => {
+    const faa = normalise({
+      ...base,
+      details: {
+        qualifications: [{ qualificationType: 'A Level', subject: 'Maths', grade: 'BBC' }],
+      },
+    })!;
+    expect(faa.entry).toMatchObject({ ucas: 112 });
+    const text = normalise({
+      ...base,
+      descriptionText: 'You will need 112 UCAS points or equivalent.',
+    })!;
+    expect(text.entry).toMatchObject({ summary: '112 UCAS points', ucas: 112 });
+    expect(normalise(base)!.entry).toBeNull();
+  });
   it('picks up a training provider named in the advert', () => {
     const n = normalise({
       ...base,
@@ -367,6 +382,31 @@ describe('persist merge rules', () => {
     closingDate: '2026-11-01',
     descriptionText: 'short',
   })!;
+  it('reads entry requirements and the university from the stored description', () => {
+    const cached = {
+      ...n,
+      descriptionText: null,
+      descriptionHtml: null,
+      entry: null,
+      university: null,
+    };
+    const row = toRow(
+      cached,
+      {
+        id: 'x',
+        dedupe_key: n.dedupeKey,
+        first_seen_at: '2026-09-01T10:00:00Z',
+        description_html: null,
+        description_text: 'You will study with the University of Exeter. You need 112 UCAS points.',
+        posted_date: null,
+        closing_date: null,
+      },
+      '2026-10-09',
+      '2026-10-09T06:30:00Z',
+    );
+    expect(row.university).toBe('University of Exeter');
+    expect(row.entry).toMatchObject({ ucas: 112 });
+  });
   it('keeps a stored level 2–3 listing closed when another source has no level', () => {
     const noLevel = { ...n, classification: { ...n.classification, level: null } };
     const row = toRow(
