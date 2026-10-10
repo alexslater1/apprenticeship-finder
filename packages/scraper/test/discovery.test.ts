@@ -69,6 +69,17 @@ describe('learning employers from listings', () => {
     expect(s).toMatchObject({ name: 'Acme Analytics Ltd', origin: 'listing' });
     expect(s!.detected?.connector).toBe('workday');
   });
+  it('never auto-watches companies found on web pages (their names are guesses)', () => {
+    const l = normalise({
+      ...base,
+      source: 'web_search',
+      url: 'https://acme.wd3.myworkdayjobs.com/External/job/x_R-1',
+      applyUrl: undefined,
+    })!;
+    const [s] = suggestionsFromListings([l], '2026-10-10');
+    expect(s!.detected).toBeNull();
+    expect(s!.board?.connector).toBe('workday');
+  });
   it('ignores watched employers, providers and weak listings', () => {
     const watched = { ...normalise(base)!, employerId: 'acme' };
     const provider = normalise({ ...base, employerName: 'QA Limited' })!;
