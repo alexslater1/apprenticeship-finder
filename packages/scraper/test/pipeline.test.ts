@@ -64,6 +64,21 @@ describe('normalise', () => {
     expect(normalise({ ...base, level: 3 })).toBeNull();
     expect(normalise({ ...base, level: 4 })).not.toBeNull();
   });
+  it('picks up a training provider named in the advert', () => {
+    const n = normalise({
+      ...base,
+      descriptionText:
+        'Data Analyst Apprenticeship professional qualification - delivered by our trusted partner Firebrand.',
+    })!;
+    expect(n.providerName).toBe('Firebrand');
+    expect(
+      normalise({ ...base, descriptionText: 'Experience of QA testing is useful.' })!.providerName,
+    ).toBeNull();
+    expect(
+      normalise({ ...base, descriptionText: 'You will train with QA towards a Level 4.' })!
+        .providerName,
+    ).toBe('QA');
+  });
   it('names the university from the provider or the advert', () => {
     expect(normalise({ ...base, providerName: 'BPP UNIVERSITY LIMITED' })!.university).toBe(
       'BPP University',

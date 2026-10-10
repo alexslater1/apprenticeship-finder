@@ -1,7 +1,7 @@
-import { EyeOff, Eye, GraduationCap, MessageSquare } from 'lucide-react';
+import { BookOpen, EyeOff, Eye, GraduationCap, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Derived } from '@/lib/derive';
-import { formatSalary, locationLabel, milesLabel } from '@/lib/format';
+import { formatSalary, locationLabel, milesLabel, studyWith } from '@/lib/format';
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import {
@@ -22,6 +22,7 @@ export function ListingCard({ d }: { d: Derived }) {
   const open = useOpenListing();
   const salary = formatSalary(r);
   const miles = milesLabel(d.distance);
+  const study = studyWith(r);
   return (
     <article
       className={cn(
@@ -53,10 +54,16 @@ export function ListingCard({ d }: { d: Derived }) {
         {r.employer_name} · {locationLabel(r)}
         {miles && ` · ${miles}`}
       </p>
-      {r.university && (
+      {study && (
         <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
-          <GraduationCap className="size-4 shrink-0" aria-label="University" />
-          <span className="min-w-0 break-words">{r.university}</span>
+          {study.kind === 'university' ? (
+            <GraduationCap className="size-4 shrink-0" aria-label="University" />
+          ) : (
+            <BookOpen className="size-4 shrink-0" aria-label="Training provider" />
+          )}
+          <span className="min-w-0 break-words">
+            {study.kind === 'provider' ? `Training with ${study.name}` : study.name}
+          </span>
         </p>
       )}
       <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">

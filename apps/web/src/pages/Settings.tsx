@@ -213,21 +213,29 @@ export default function Settings() {
                   </p>
                 </fieldset>
                 <div className="grid gap-1.5">
-                  <Label htmlFor="distance">Happy to travel up to</Label>
+                  <Label htmlFor="distance">Where</Label>
                   <select
                     id="distance"
-                    value={s.default_distance_miles}
+                    value={s.default_distance_miles ?? 'any'}
                     onChange={(e) =>
-                      update.mutate({ default_distance_miles: Number(e.target.value) })
+                      update.mutate({
+                        default_distance_miles:
+                          e.target.value === 'any' ? null : Number(e.target.value),
+                      })
                     }
-                    className="h-10 max-w-48 rounded-lg border border-input bg-background px-2.5 text-sm sm:h-8 dark:bg-input/30"
+                    className="h-10 w-full max-w-xs rounded-lg border border-input bg-background px-2.5 text-sm sm:h-8 dark:bg-input/30"
                   >
+                    <option value="any">Anywhere (happy to move)</option>
                     {[10, 25, 50, 75, 100, 150, 250].map((m) => (
                       <option key={m} value={m}>
-                        {m} miles
+                        Within {m} miles of home
                       </option>
                     ))}
                   </select>
+                  <p className="text-xs text-muted-foreground">
+                    “Anywhere” means distance never changes the order. Distances still show on each
+                    listing if a postcode is set.
+                  </p>
                 </div>
               </>
             )}
