@@ -19,7 +19,6 @@ import { formatDate, formatSalary, locationLabel, milesLabel, studyWith } from '
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import {
-  AdzunaAttribution,
   ClosingBadge,
   GradeFitBadge,
   LevelBadge,
@@ -139,7 +138,6 @@ const columns = helper.columns([
     cell: (c) => (
       <div className="grid gap-1">
         <SourceBadges sources={c.getValue()} />
-        <AdzunaAttribution sources={c.getValue()} />
       </div>
     ),
   }),

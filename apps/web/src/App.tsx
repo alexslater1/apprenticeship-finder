@@ -10,7 +10,6 @@ import Listings from '@/pages/Listings';
 import Login from '@/pages/Login';
 import SetPassword from '@/pages/SetPassword';
 import Health from '@/pages/Health';
-import Hidden from '@/pages/Hidden';
 import Settings from '@/pages/Settings';
 import Tracker from '@/pages/Tracker';
 
@@ -57,7 +56,6 @@ export default function App() {
                   <Route path="/tracker" element={<Tracker />} />
                   <Route path="/companies" element={<Companies />} />
                   <Route path="/companies/:id" element={<Companies />} />
-                  <Route path="/hidden" element={<Hidden />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/health" element={<Health />} />
                   <Route path="*" element={<Navigate to="/" replace />} />

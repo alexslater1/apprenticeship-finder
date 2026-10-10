@@ -173,7 +173,7 @@ export function useSetHidden() {
     m.mutate({ id, patch: { hidden } });
     if (opts.undo && hidden) {
       toast('Hidden', {
-        description: 'Find it again under Hidden.',
+        description: 'Tick “Show the ones you hid” on Listings to see it again.',
         action: { label: 'Undo', onClick: () => m.mutate({ id, patch: { hidden: false } }) },
       });
     }
