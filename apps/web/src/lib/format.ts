@@ -26,6 +26,15 @@ export function formatDate(iso: string | null | undefined, opts: { year?: boolea
   });
 }
 
+/** "6 Sept 2027", or "Sept 2027" when the advert only gives the month. */
+export function formatStart(r: Pick<ListingRow, 'start_date' | 'start_precision'>): string | null {
+  if (!r.start_date) return null;
+  const d = new Date(`${r.start_date}T12:00:00Z`);
+  return r.start_precision === 'month'
+    ? d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
+    : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 export function formatDateTime(iso: string | null | undefined): string {
   if (!iso) return '—';
   return new Date(iso).toLocaleString('en-GB', {

@@ -691,6 +691,7 @@ export function toRawListing(
     salaryText: e.salary?.replace(/(\d),\s+(\d{3})\b/g, '$1,$2'),
     closingDate: monthEnd(closes),
     startDate: start ? iso(start.year, start.month, 1) : undefined,
+    startPrecision: start ? 'month' : undefined,
     locations,
     isNational: isNational || undefined,
     knownApprenticeship: true,

@@ -25,7 +25,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { sortsAscending, type Derived } from '@/lib/derive';
 import { SORT_LABELS, useFilters, type SortKey } from '@/store/filters';
-import { formatDate, formatSalary, locationLabel, milesLabel, studyWith } from '@/lib/format';
+import {
+  formatDate,
+  formatSalary,
+  formatStart,
+  locationLabel,
+  milesLabel,
+  studyWith,
+} from '@/lib/format';
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import {
@@ -73,7 +80,7 @@ const columns = helper.columns([
     cell: (c) => {
       const d = c.row.original;
       return (
-        <div className="max-w-[24rem] min-w-[14rem]">
+        <div className="max-w-[20rem] min-w-[13rem]">
           <div className="font-medium">{d.row.title}</div>
           <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
             {d.row.employer_name}
@@ -117,7 +124,7 @@ const columns = helper.columns([
   helper.accessor((d) => formatSalary(d.row), {
     id: 'salary',
     header: 'Salary',
-    cell: (c) => <span className="whitespace-nowrap">{c.getValue() ?? '—'}</span>,
+    cell: (c) => <span className="block max-w-[7rem]">{c.getValue() ?? '—'}</span>,
   }),
   helper.accessor((d) => d.row.closing_date, {
     id: 'closing',
@@ -129,6 +136,27 @@ const columns = helper.columns([
       </span>
     ),
   }),
+  helper.accessor((d) => formatStart(d.row), {
+    id: 'start',
+    header: 'Starts',
+    cell: (c) =>
+      c.getValue() ? (
+        <span
+          className="whitespace-nowrap"
+          title={
+            c.row.original.row.start_precision === 'month'
+              ? 'The advert only gives the month'
+              : undefined
+          }
+        >
+          {c.getValue()}
+        </span>
+      ) : (
+        <span className="text-muted-foreground" title="The advert doesn’t say">
+          —
+        </span>
+      ),
+  }),
   helper.accessor((d) => d.row.posted_date ?? d.row.first_seen_at, {
     id: 'posted',
     header: 'Posted',
@@ -139,7 +167,7 @@ const columns = helper.columns([
     header: 'Grades needed',
     cell: (c) =>
       c.getValue() ? (
-        <div className="grid max-w-[12rem] min-w-[8rem] justify-items-start gap-1">
+        <div className="grid max-w-[10rem] min-w-[7rem] justify-items-start gap-1">
           {c.getValue()}
           <GradeFitBadge fit={c.row.original.fit} />
         </div>
@@ -173,6 +201,7 @@ const COLUMN_SORT: Record<string, SortKey> = {
   salary: 'salary',
   closing: 'closing',
   posted: 'posted',
+  start: 'start',
   grades: 'grades',
   status: 'status',
 };
@@ -209,6 +238,7 @@ const COLUMN_LABELS: Record<string, string> = {
   role: 'Role',
   salary: 'Salary',
   closing: 'Closes',
+  start: 'Starts',
   posted: 'Posted',
   grades: 'Grades needed',
 };

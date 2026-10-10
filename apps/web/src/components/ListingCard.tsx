@@ -1,7 +1,7 @@
 import { BookOpen, ClipboardCheck, EyeOff, Eye, GraduationCap, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Derived } from '@/lib/derive';
-import { formatSalary, locationLabel, milesLabel, studyWith } from '@/lib/format';
+import { formatSalary, formatStart, locationLabel, milesLabel, studyWith } from '@/lib/format';
 import { useSetHidden } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import {
@@ -76,6 +76,7 @@ export function ListingCard({ d }: { d: Derived }) {
       )}
       <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
         {salary && <span>{salary}</span>}
+        {formatStart(r) && <span className="text-muted-foreground">Starts {formatStart(r)}</span>}
         <ClosingBadge days={d.daysToClose} />
       </p>
       <div className="relative z-10 mt-2 flex items-center gap-2">

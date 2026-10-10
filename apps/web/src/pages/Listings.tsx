@@ -11,7 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { downloadCsv } from '@/lib/csv';
 import { matches, prefsFrom, sortDerived, type Derived } from '@/lib/derive';
-import { formatSalary, locationLabel } from '@/lib/format';
+import { formatSalary, formatStart, locationLabel } from '@/lib/format';
 import { useListingData } from '@/lib/useListingData';
 import { useMediaQuery } from '@/lib/useMediaQuery';
 import { useFilters } from '@/store/filters';
@@ -30,6 +30,7 @@ function exportListings(rows: Derived[]) {
       'University',
       'Salary',
       'Closing date',
+      'Start date',
       'Status',
       'Link',
     ],
@@ -43,6 +44,7 @@ function exportListings(rows: Derived[]) {
       d.row.university ?? '',
       formatSalary(d.row) ?? '',
       d.row.closing_date ?? '',
+      formatStart(d.row) ?? '',
       d.row.status === 'none' ? '' : d.row.status,
       rankLinks(d.row)[0]?.url ?? d.row.url,
     ]),

@@ -1,4 +1,11 @@
-import { MIN_LEVEL, baseScore, extractEntry, extractSkills, londonDate } from '@af/shared';
+import {
+  MIN_LEVEL,
+  baseScore,
+  extractEntry,
+  extractSkills,
+  extractStartDate,
+  londonDate,
+} from '@af/shared';
 import { findUniversity } from '@af/shared/universities';
 import { db, must } from '../db.ts';
 import type { Ctx } from '../types.ts';
@@ -27,6 +34,7 @@ export interface ExistingRow {
   salary_max?: number | null;
   salary_text?: string | null;
   start_date?: string | null;
+  start_precision?: 'day' | 'month' | null;
   locations?: NormalisedListing['locations'];
   primary_city?: string | null;
   region?: string | null;
@@ -35,7 +43,7 @@ export interface ExistingRow {
 }
 
 const EXISTING_COLUMNS =
-  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,employer_id,university,entry,salary_min,salary_max,salary_text,start_date,locations,primary_city,region,nation,details';
+  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,employer_id,university,entry,salary_min,salary_max,salary_text,start_date,start_precision,locations,primary_city,region,nation,details';
 
 const chunk = <T>(xs: T[], n: number): T[][] =>
   Array.from({ length: Math.ceil(xs.length / n) }, (_, i) => xs.slice(i * n, i * n + n));
@@ -92,6 +100,12 @@ export function toRow(
   const quals = (l.details?.qualifications ?? ex?.details?.qualifications) as
     Parameters<typeof extractEntry>[1] | undefined;
   const entry = l.entry ?? extractEntry(descriptionText, quals ?? []) ?? ex?.entry ?? null;
+  // The source's start date, else one the advert states, else what we had.
+  const advertStart = l.startDate ? null : extractStartDate(l.title, descriptionText, today);
+  const start = l.startDate
+    ? { date: l.startDate, precision: l.startPrecision ?? 'day' }
+    : (advertStart ??
+      (ex?.start_date ? { date: ex.start_date, precision: ex.start_precision ?? 'day' } : null));
   const closedReason =
     closingDate && closingDate < today
       ? 'closing_date_passed'
@@ -128,7 +142,8 @@ export function toRow(
     salary_text: l.salaryText ?? ex?.salary_text ?? null,
     posted_date: postedDate,
     closing_date: closingDate,
-    start_date: l.startDate ?? ex?.start_date ?? null,
+    start_date: start?.date ?? null,
+    start_precision: start?.precision ?? null,
     locations: keepLocation ? ex!.locations! : l.locations,
     primary_city: keepLocation ? (ex?.primary_city ?? null) : l.primaryCity,
     region: keepLocation ? (ex?.region ?? null) : l.region,

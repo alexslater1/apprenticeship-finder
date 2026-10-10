@@ -1,5 +1,5 @@
 {
-  "$comment": "Skills the Skills page ranks. Each pattern is a case-insensitive regular expression (unless caseSensitive) matched against advert text. Built from the adverts collected in Oct 2026. `npm run cli -w packages/scraper -- skill-candidates` lists frequent requirement phrases no skill covers yet; after editing, `npm run cli -w packages/scraper -- reskill` re-tags every listing.",
+  "$comment": "Skills the Skills page ranks. Each pattern is a case-insensitive regular expression (unless caseSensitive) matched against advert text. Built from the adverts collected in Oct 2026. `npm run cli -w packages/scraper -- skill-candidates` lists frequent requirement phrases no skill covers yet; after editing, `npm run cli -w packages/scraper -- rederive` re-tags every listing.",
   "categories": {
     "technical": "Technical skills",
     "tools": "Languages and tools",

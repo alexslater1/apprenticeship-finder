@@ -8,3 +8,4 @@ export * from './geo.ts';
 export * from './fit.ts';
 export * from './links.ts';
 export * from './skills.ts';
+export * from './start.ts';

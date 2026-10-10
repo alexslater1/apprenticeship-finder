@@ -1,15 +1,26 @@
-import { classifiedSegments, extractSkills, MIN_SKILL_TEXT, withoutKnownSkills } from '@af/shared';
+import {
+  classifiedSegments,
+  extractSkills,
+  extractStartDate,
+  londonToday,
+  MIN_SKILL_TEXT,
+  withoutKnownSkills,
+} from '@af/shared';
 import { db, must } from '../db.ts';
 
 /**
- * Skill tags for every stored listing. The daily scrape tags the listings it sees; this re-tags
- * the rest after config/skills.json changes (`cli reskill`).
+ * Fields worked out from the advert text, for every stored listing. The daily scrape does this
+ * for the listings it sees; `cli rederive` redoes the rest after config/skills.json or the start
+ * date rules change.
  */
 
 interface Row {
   id: string;
+  title?: string;
   description_text: string | null;
   skills: unknown;
+  start_date?: string | null;
+  start_precision?: 'day' | 'month' | null;
 }
 
 async function allListings(columns: string, activeOnly = false): Promise<Row[]> {
@@ -27,19 +38,33 @@ async function allListings(columns: string, activeOnly = false): Promise<Row[]> 
   }
 }
 
-export async function reskill(
+/** Re-tag skills; fill start dates the advert gives where there's none, or only a month. */
+export async function rederive(
   opts: { dryRun?: boolean } = {},
-): Promise<{ checked: number; changed: number }> {
-  const rows = await allListings('id,description_text,skills');
-  let changed = 0;
+): Promise<{ checked: number; skills: number; starts: number }> {
+  const today = londonToday();
+  const rows = await allListings('id,title,description_text,skills,start_date,start_precision');
+  let skillsChanged = 0;
+  let starts = 0;
   for (const r of rows) {
+    const patch: Record<string, unknown> = {};
     const skills = extractSkills(r.description_text);
-    if (JSON.stringify(skills) === JSON.stringify(r.skills ?? null)) continue;
-    changed++;
-    if (!opts.dryRun)
-      must(await db().from('listings').update({ skills }).eq('id', r.id), 'save skills');
+    if (JSON.stringify(skills) !== JSON.stringify(r.skills ?? null)) {
+      patch.skills = skills;
+      skillsChanged++;
+    }
+    if (!r.start_date || r.start_precision === 'month') {
+      const s = extractStartDate(r.title, r.description_text, today);
+      if (s && (!r.start_date || s.precision === 'day')) {
+        patch.start_date = s.date;
+        patch.start_precision = s.precision;
+        starts++;
+      }
+    }
+    if (Object.keys(patch).length && !opts.dryRun)
+      must(await db().from('listings').update(patch).eq('id', r.id), 'save derived fields');
   }
-  return { checked: rows.length, changed };
+  return { checked: rows.length, skills: skillsChanged, starts };
 }
 
 const STOP = new Set(
