@@ -15,6 +15,7 @@ import { placeByName } from '@af/shared/places';
 import { findUniversity } from '@af/shared/universities';
 import sanitizeHtml from 'sanitize-html';
 import { dedupeKey } from './dedupe.ts';
+import { isUk } from './uk.ts';
 
 /** Scraped HTML is untrusted: keep simple formatting and links only (the UI sanitises again). */
 export function sanitize(html: string): string {
@@ -73,6 +74,8 @@ export interface NormalisedListing {
   title: string;
   employerName: string;
   employerNameNorm: string;
+  /** Watchlist employer this listing belongs to (set by employer connectors or name matching). */
+  employerId: string | null;
   url: string;
   applyUrl: string | null;
   descriptionHtml: string | null;
@@ -167,8 +170,11 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     standardTitle: raw.standardTitle,
     roleHint: raw.roleHint,
     knownApprenticeship: raw.knownApprenticeship,
+    knownDegree: raw.isDegree,
   });
   if (!classification.relevant) return null;
+  // Global boards (Google Jobs, web pages, employer ATSs) carry jobs abroad: keep the UK ones.
+  if (raw.locations.length && raw.locations.every((l) => isUk(l) === false)) return null;
 
   const salary =
     raw.salaryMin !== undefined
@@ -191,6 +197,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     title,
     employerName,
     employerNameNorm,
+    employerId: raw.employerId ?? null,
     url: raw.url,
     applyUrl: raw.applyUrl ?? null,
     descriptionHtml: descriptionHtml || null,
@@ -241,6 +248,7 @@ export function mergeWithinRun(listings: NormalisedListing[]): NormalisedListing
     if (l.closingDate && (!prev.closingDate || l.closingDate > prev.closingDate))
       prev.closingDate = l.closingDate;
     prev.applyUrl ??= l.applyUrl;
+    prev.employerId ??= l.employerId;
     prev.university ??= l.university;
     prev.salaryMin ??= l.salaryMin;
     prev.salaryMax ??= l.salaryMax;

@@ -28,6 +28,7 @@ const base: DigestData = {
   newBelowThreshold: 0,
   closingSoon: [],
   openedEmployers: [],
+  newCompanies: { auto: [], pending: 0 },
   health: [],
   dashboardUrl: 'https://example.test/',
 };

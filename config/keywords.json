@@ -1,6 +1,11 @@
 {
   "$comment": "Classification rules (PLAN.md §7). Patterns are case-insensitive regex source strings unless given as {\"re\": ..., \"cs\": true}. Edit freely; tests in packages/shared/test pin the behaviour.",
-  "apprenticeship": ["apprentic", "graduate apprenticeship(?!s? scheme)", "\\blevel [3-7]\\b"],
+  "apprenticeship": [
+    "apprentic",
+    "graduate apprenticeship(?!s? scheme)",
+    "\\blevel [3-7]\\b",
+    "school[- ]?leaver"
+  ],
   "noise": {
     "title": [
       "\\b(coach|assessor|tutor|trainer|lecturer|IQA|internal quality|recruiter|mentor|skills coach|programme manager|apprenticeship manager|apprenticeship officer|apprenticeship co-?ordinator)\\b",
@@ -11,7 +16,9 @@
   "roles": [
     {
       "role": "data_science",
-      "patterns": ["data scien"]
+      "patterns": [
+        "data scien"
+      ]
     },
     {
       "role": "ml_ai",
@@ -27,7 +34,9 @@
     },
     {
       "role": "data_engineering",
-      "patterns": ["data engineer"]
+      "patterns": [
+        "data engineer"
+      ]
     },
     {
       "role": "data_analyst",
@@ -65,7 +74,9 @@
   "weakTitle": {
     "$comment": "A bare 'data' in the title (e.g. 'HR Data & Systems Apprentice') counts as data_analyst with fewer points and no specificity bonus.",
     "role": "data_analyst",
-    "patterns": ["\\bdata\\b"],
+    "patterns": [
+      "\\bdata\\b"
+    ],
     "exclude": "data (centre|center|entry|input)"
   },
   "dataWords": "data|analytics|machine learning|artificial intelligence|\\bAI\\b|statistic|insight",

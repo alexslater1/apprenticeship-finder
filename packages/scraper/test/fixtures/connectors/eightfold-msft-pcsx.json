@@ -1,0 +1,60 @@
+{
+ "status": 200,
+ "error": {
+  "message": "",
+  "body": ""
+ },
+ "data": {
+  "positions": [
+   {
+    "id": 1970393557002152,
+    "displayJobId": "200056895",
+    "name": "Cloud Solution Architect",
+    "locations": [
+     "United Kingdom, Multiple Locations, Multiple Locations",
+     "United Kingdom, London, London"
+    ],
+    "standardizedLocations": [
+     "GB",
+     "London, England, GB"
+    ],
+    "postedTs": 1791479029,
+    "solrScore": null,
+    "stars": 0,
+    "department": "Cloud Solution Architecture",
+    "creationTs": 1789721016,
+    "isHot": 0,
+    "workLocationOption": "onsite",
+    "locationFlexibility": null,
+    "atsJobId": "200056895",
+    "positionUrl": "/careers/job/1970393557002152"
+   },
+   {
+    "id": 1970393556943991,
+    "displayJobId": "200045337",
+    "name": "AI Business Process Sales Specialist - Retail",
+    "locations": [
+     "United Kingdom, Multiple Locations, Multiple Locations",
+     "United Kingdom, London, London"
+    ],
+    "standardizedLocations": [
+     "GB",
+     "London, England, GB"
+    ],
+    "postedTs": 1790065206,
+    "solrScore": null,
+    "stars": 0,
+    "department": "Solution Area Specialists",
+    "creationTs": 1784893939,
+    "isHot": 0,
+    "workLocationOption": "onsite",
+    "locationFlexibility": null,
+    "atsJobId": "200045337",
+    "positionUrl": "/careers/job/1970393556943991"
+   }
+  ],
+  "count": 87,
+  "sortBy": "distance"
+ },
+ "metadata": null
+}

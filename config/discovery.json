@@ -1,0 +1,165 @@
+{
+  "$comment": "Discovery (PLAN.md §6.5): queries for Google Jobs (SerpApi) and Tavily, monthly budgets, and names that are never employers. See research/discovery.md.",
+  "googleJobs": {
+    "monthlyBudget": 230,
+    "dateFilter": " in the last 3 days",
+    "queries": [
+      "data science apprenticeship",
+      "data analyst apprenticeship",
+      "degree apprenticeship data",
+      "machine learning apprenticeship",
+      "data engineer apprenticeship",
+      "graduate apprenticeship data science"
+    ],
+    "weeklyQueries": [
+      "level 6 apprenticeship data",
+      "digital and technology solutions apprenticeship"
+    ]
+  },
+  "tavily": {
+    "monthlyBudget": 900,
+    "maxPageFetches": 12,
+    "queries": [
+      {
+        "query": "data science degree apprenticeship 2027 applications open UK"
+      },
+      {
+        "query": "data analyst apprenticeship September 2027 UK"
+      },
+      {
+        "query": "level 6 data scientist apprenticeship employer UK"
+      },
+      {
+        "query": "AI machine learning degree apprenticeship 2027 UK"
+      },
+      {
+        "query": "graduate apprenticeship data science Scotland 2027"
+      },
+      {
+        "query": "apprenticeship data UK",
+        "include_domains": [
+          "myworkdayjobs.com",
+          "myworkdaysite.com"
+        ]
+      },
+      {
+        "query": "apprenticeship data UK",
+        "include_domains": [
+          "tal.net",
+          "avature.net",
+          "eightfold.ai"
+        ]
+      },
+      {
+        "query": "apprenticeship data UK",
+        "include_domains": [
+          "successfactors.eu",
+          "successfactors.com",
+          "jobs2web.com"
+        ]
+      },
+      {
+        "query": "apprenticeship data UK",
+        "include_domains": [
+          "teamtailor.com",
+          "greenhouse.io",
+          "lever.co",
+          "ashbyhq.com",
+          "workable.com"
+        ]
+      },
+      {
+        "query": "data apprenticeship 2027 school leavers UK",
+        "include_domains": [
+          "oraclecloud.com",
+          "pinpointhq.com",
+          "smartrecruiters.com",
+          "icims.com"
+        ]
+      }
+    ],
+    "excludeDomains": [
+      "facebook.com",
+      "instagram.com",
+      "reddit.com",
+      "linkedin.com",
+      "x.com",
+      "twitter.com",
+      "tiktok.com",
+      "youtube.com",
+      "threads.net",
+      "pinterest.com"
+    ]
+  },
+  "ignoreEmployers": [
+    "Unknown employer",
+    "Confidential",
+    "InternHunt",
+    "Talents By StudySmarter",
+    "StudySmarter",
+    "Jobrapido",
+    "JobLeads",
+    "Early Bird",
+    "Earlybird",
+    "LinkedIn",
+    "Indeed",
+    "Totaljobs",
+    "Reed",
+    "Adzuna",
+    "Higherin",
+    "RateMyApprenticeship",
+    "Not Going To Uni",
+    "Find an apprenticeship",
+    "Amazing Apprenticeships"
+  ],
+  "aggregatorHosts": [
+    "ac.uk",
+    "adzuna.co.uk",
+    "apprentify.com",
+    "baltictraining.com",
+    "bebee.com",
+    "brightnetwork.co.uk",
+    "careerjet.co.uk",
+    "corndel.com",
+    "cv-library.co.uk",
+    "earlybirdhq.com",
+    "findapprenticeship.service.gov.uk",
+    "firebrand.training",
+    "getmyfirstjob.co.uk",
+    "glassdoor.co.uk",
+    "glassdoor.com",
+    "gradcracker.com",
+    "higherin.com",
+    "indeed.co.uk",
+    "indeed.com",
+    "itcareerswitch.co.uk",
+    "jobleads.com",
+    "jobrapido.com",
+    "jooble.org",
+    "jotform.com",
+    "justit.co.uk",
+    "learn4good.com",
+    "leep-talent.com",
+    "lifetimetraining.co.uk",
+    "linkedin.com",
+    "multiverse.io",
+    "notgoingtouni.co.uk",
+    "nowskills.co.uk",
+    "prospects.ac.uk",
+    "qa.com",
+    "ratemyapprenticeship.co.uk",
+    "reed.co.uk",
+    "s1jobs.com",
+    "simplyhired.co.uk",
+    "springpod.com",
+    "studysmarter.co.uk",
+    "swe.org",
+    "talent.com",
+    "targetcareers.co.uk",
+    "thecodersguild.org.uk",
+    "totaljobs.com",
+    "whitehatgroup.co.uk",
+    "ziprecruiter.co.uk"
+  ],
+  "ignoreNamePattern": "\\b(university|college|apprenticeships|recruitment|recruiting|training|careers|jobs)\\b"
+}

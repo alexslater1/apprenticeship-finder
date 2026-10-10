@@ -1,0 +1,36 @@
+{
+ "total": 19,
+ "jobPostings": [
+  {
+   "title": "2027 Risk Analyst Higher Apprenticeship Programme Northampton",
+   "externalPath": "/job/Northampton-Barclays-Campus-Pavilion-Drive/XMLNAME-2027-Risk-Analyst-Higher-Apprenticeship-Programme-Northampton_JR-0000129125",
+   "timeType": "Full time",
+   "locationsText": "Northampton, Barclays Campus, Pavilion Drive",
+   "postedOn": "Posted 2 Days Ago",
+   "bulletFields": [
+    "JR-0000129125"
+   ]
+  },
+  {
+   "title": "UK Corporate Banking Degree Apprenticeship Programme 2027 Belfast",
+   "externalPath": "/job/Belfast-Bedford-Street/UK-Corporate-Banking-Degree-Apprenticeship-Programme-2027-Belfast_JR-0000131878",
+   "timeType": "Full time",
+   "locationsText": "Belfast, Bedford Street",
+   "postedOn": "Posted 11 Days Ago",
+   "bulletFields": [
+    "JR-0000131878"
+   ]
+  },
+  {
+   "title": "2027 Technology Developer Degree Apprenticeship Programme Northampton",
+   "externalPath": "/job/Northampton-Barclays-Campus-Pavilion-Drive/XMLNAME-2027-Technology-Developer-Degree-Apprenticeship-Programme-Northampton_JR-0000129431",
+   "timeType": "Full time",
+   "locationsText": "Northampton, Barclays Campus, Pavilion Drive",
+   "postedOn": "Posted 14 Days Ago",
+   "bulletFields": [
+    "JR-0000129431"
+   ]
+  }
+ ],
+ "userAuthenticated": false
+}

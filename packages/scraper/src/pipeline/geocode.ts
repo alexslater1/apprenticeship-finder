@@ -34,7 +34,10 @@ const canonicalRegion = (r: string | null | undefined) =>
 
 /** Pick a human city name for one location (PLAN.md §5.2). */
 export function cityFor(loc: Location, info: PostcodeInfo | null): string | undefined {
-  const lines = loc.lines ?? [];
+  // Sources without address lines give 'Glasgow, Lanarkshire, G51 4BZ'; postcodes aren't towns.
+  const lines = (loc.lines ?? loc.text.split(','))
+    .map((l) => l.trim())
+    .filter((l) => l && !POSTCODE_RE.test(l));
   for (const line of [...lines].reverse()) {
     const p = placeByName(line);
     if (p && p.lat !== null) return p.name;

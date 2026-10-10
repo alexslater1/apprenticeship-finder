@@ -1,0 +1,223 @@
+{
+ "jobs": [
+  {
+   "absolute_url": "https://job-boards.eu.greenhouse.io/autotrader/jobs/4999276101",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": true
+    }
+   ],
+   "internal_job_id": 4532537101,
+   "location": {
+    "name": "London"
+   },
+   "metadata": [
+    {
+     "id": 4016344101,
+     "name": "FTE Type",
+     "value": [
+      "Full Time"
+     ],
+     "value_type": "multi_select"
+    },
+    {
+     "id": 4016345101,
+     "name": "Working Hours",
+     "value": "37.5",
+     "value_type": "number"
+    },
+    {
+     "id": 4016347101,
+     "name": "Careers Page Group",
+     "value": "Sales & Partnerships",
+     "value_type": "single_select"
+    },
+    {
+     "id": 4028798101,
+     "name": "Salary - Min salary for Manchester - \u00a326,300 Min for London - \u00a328,860",
+     "value": "\u00a332,000-\u00a345,000",
+     "value_type": "short_text"
+    },
+    {
+     "id": 4028799101,
+     "name": "LinkedIn Tag",
+     "value": "#LI-AJ1 #LI-Hybrid",
+     "value_type": "short_text"
+    },
+    {
+     "id": 4030195101,
+     "name": "Careers Site Job Opening",
+     "value": "As a Performance Manager in Autotrader's Brand Partnerships team, you'll support automotive brands and their media partners. The role combines account management, digital delivery and reporting to keep projects on track and support commercial success.",
+     "value_type": "long_text"
+    },
+    {
+     "id": 4031936101,
+     "name": "Close Date",
+     "value": "2026-10-16",
+     "value_type": "date"
+    }
+   ],
+   "id": 4999276101,
+   "updated_at": "2026-10-09T03:53:40-04:00",
+   "requisition_id": "656",
+   "title": "Account Manager (Brand Partnerships)",
+   "company_name": "Autotrader",
+   "first_published": "2026-10-09T03:53:22-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": ""
+  },
+  {
+   "absolute_url": "https://job-boards.eu.greenhouse.io/autotrader/jobs/4997404101",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": true
+    }
+   ],
+   "internal_job_id": 4503442101,
+   "location": {
+    "name": "Remote "
+   },
+   "metadata": [
+    {
+     "id": 4016344101,
+     "name": "FTE Type",
+     "value": [
+      "Full Time"
+     ],
+     "value_type": "multi_select"
+    },
+    {
+     "id": 4016345101,
+     "name": "Working Hours",
+     "value": "37.5",
+     "value_type": "number"
+    },
+    {
+     "id": 4016347101,
+     "name": "Careers Page Group",
+     "value": "Sales & Partnerships",
+     "value_type": "single_select"
+    },
+    {
+     "id": 4028798101,
+     "name": "Salary - Min salary for Manchester - \u00a326,300 Min for London - \u00a328,860",
+     "value": "\u00a340,000-\u00a355,000 + \u00a36,000 car allowance",
+     "value_type": "short_text"
+    },
+    {
+     "id": 4028799101,
+     "name": "LinkedIn Tag",
+     "value": "#LI-AJ1 #LI-Remote",
+     "value_type": "short_text"
+    },
+    {
+     "id": 4030195101,
+     "name": "Careers Site Job Opening",
+     "value": "Our Partnerships community is looking for an Account Manager/Partnerships Manager to join the team, covering the South West of England, including Exeter, Plymouth, Torquay, among others, as part of your patch. \n\nIn this role, you\u2019ll be a trusted business partner and the face of Autotrader across the region, supporting our independent customers and identifying new business opportunities.",
+     "value_type": "long_text"
+    },
+    {
+     "id": 4031936101,
+     "name": "Close Date",
+     "value": "2026-10-16",
+     "value_type": "date"
+    }
+   ],
+   "id": 4997404101,
+   "updated_at": "2026-10-05T09:36:19-04:00",
+   "requisition_id": "631",
+   "title": "Account Manager (Field based) ",
+   "company_name": "Autotrader",
+   "first_published": "2026-10-05T07:49:52-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": ""
+  },
+  {
+   "absolute_url": "https://job-boards.eu.greenhouse.io/autotrader/jobs/4863808101",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": true
+    }
+   ],
+   "internal_job_id": 4468193101,
+   "location": {
+    "name": "Manchester"
+   },
+   "metadata": [
+    {
+     "id": 4016344101,
+     "name": "FTE Type",
+     "value": [
+      "Full Time"
+     ],
+     "value_type": "multi_select"
+    },
+    {
+     "id": 4016345101,
+     "name": "Working Hours",
+     "value": "37.5",
+     "value_type": "number"
+    },
+    {
+     "id": 4016347101,
+     "name": "Careers Page Group",
+     "value": "Product & Technology",
+     "value_type": "single_select"
+    },
+    {
+     "id": 4028798101,
+     "name": "Salary - Min salary for Manchester - \u00a326,300 Min for London - \u00a328,860",
+     "value": "\u00a335,000-\u00a360,000",
+     "value_type": "short_text"
+    },
+    {
+     "id": 4028799101,
+     "name": "LinkedIn Tag",
+     "value": "#LI-DNI",
+     "value_type": "short_text"
+    },
+    {
+     "id": 4030195101,
+     "name": "Careers Site Job Opening",
+     "value": "Every week, millions of people use the Autotrader online marketplace. Our consumer experience isn\u2019t just about finding a vehicle; it\u2019s multi-faceted, allowing consumers to research, refine, and buy in one place. We are looking for Data Analysts with experience of complex consumer journeys to help us build and evolve our consumer products.",
+     "value_type": "long_text"
+    },
+    {
+     "id": 4031936101,
+     "name": "Close Date",
+     "value": "2026-10-16",
+     "value_type": "date"
+    }
+   ],
+   "id": 4863808101,
+   "updated_at": "2026-10-06T12:22:58-04:00",
+   "requisition_id": "611",
+   "title": "Data Analyst ",
+   "company_name": "Autotrader",
+   "first_published": "2026-05-11T11:29:16-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": ""
+  }
+ ],
+ "meta": {
+  "total": 18
+ }
+}

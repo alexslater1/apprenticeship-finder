@@ -1,6 +1,7 @@
 import { STATUS_LABELS, type TrackStatus } from '@af/shared';
-import { AlarmClock, Download } from 'lucide-react';
+import { AlarmClock, Download, EyeOff } from 'lucide-react';
 import { useMemo } from 'react';
+import { Link } from 'react-router';
 import { ClosingBadge, LevelBadge } from '@/components/badges';
 import { STATUS_DOT } from '@/lib/status';
 import { useOpenListing } from '@/lib/useOpenListing';
@@ -9,6 +10,7 @@ import { StatusSelect } from '@/components/StatusSelect';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Derived } from '@/lib/derive';
+import { downloadCsv } from '@/lib/csv';
 import { formatDate, locationLabel } from '@/lib/format';
 import { useListingData } from '@/lib/useListingData';
 import { cn } from '@/lib/utils';
@@ -52,46 +54,34 @@ function Row({ d }: { d: Derived }) {
   );
 }
 
-function csvCell(v: unknown): string {
-  const s = v === null || v === undefined ? '' : String(v);
-  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-}
-
 function exportCsv(rows: Derived[]) {
-  const header = [
-    'Status',
-    'Title',
-    'Employer',
-    'Location',
-    'Level',
-    'Closing date',
-    'Applied on',
-    'Apply link',
-    'Notes',
-  ];
-  const lines = rows.map((d) =>
+  downloadCsv(
+    `apprenticeship-tracker-${new Date().toLocaleDateString('en-CA')}.csv`,
     [
+      'Status',
+      'Title',
+      'Employer',
+      'Location',
+      'Level',
+      'University',
+      'Closing date',
+      'Applied on',
+      'Apply link',
+      'Notes',
+    ],
+    rows.map((d) => [
       STATUS_LABELS[d.row.status],
       d.row.title,
       d.row.employer_name,
       locationLabel(d.row),
       d.row.level ?? '',
+      d.row.university ?? '',
       d.row.closing_date ?? '',
       d.row.applied_at ?? '',
       d.row.apply_url || d.row.url,
       d.row.notes_count,
-    ]
-      .map(csvCell)
-      .join(','),
+    ]),
   );
-  const blob = new Blob([[header.join(','), ...lines].join('\n')], {
-    type: 'text/csv;charset=utf-8',
-  });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `apprenticeship-tracker-${new Date().toLocaleDateString('en-CA')}.csv`;
-  a.click();
-  URL.revokeObjectURL(a.href);
 }
 
 export default function Tracker() {
@@ -116,11 +106,18 @@ export default function Tracker() {
     <Page
       title="Tracker"
       actions={
-        tracked.length > 0 && (
-          <Button variant="outline" size="sm" onClick={() => exportCsv(tracked)}>
-            <Download /> Export CSV
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/hidden">
+              <EyeOff /> Hidden
+            </Link>
           </Button>
-        )
+          {tracked.length > 0 && (
+            <Button variant="outline" size="sm" onClick={() => exportCsv(tracked)}>
+              <Download /> Export CSV
+            </Button>
+          )}
+        </div>
       }
     >
       {isLoading ? (
