@@ -164,6 +164,15 @@ const columns = helper.columns([
     header: 'Posted',
     cell: (c) => <span className="whitespace-nowrap">{formatDate(c.getValue())}</span>,
   }),
+  helper.accessor((d) => d.row.first_seen_at, {
+    id: 'found',
+    header: 'Found',
+    cell: (c) => (
+      <span className="whitespace-nowrap" title="When the scraper first found it">
+        {formatDate(c.getValue())}
+      </span>
+    ),
+  }),
   helper.accessor((d) => d.row.entry?.summary ?? null, {
     id: 'grades',
     header: 'Grades needed',
@@ -203,6 +212,7 @@ const COLUMN_SORT: Record<string, SortKey> = {
   salary: 'salary',
   closing: 'closing',
   posted: 'posted',
+  found: 'newest',
   start: 'start',
   grades: 'grades',
   status: 'status',
@@ -242,6 +252,7 @@ const COLUMN_LABELS: Record<string, string> = {
   closing: 'Closes',
   start: 'Starts',
   posted: 'Posted',
+  found: 'Found',
   grades: 'Grades needed',
 };
 

@@ -22,7 +22,7 @@ export type SortKey =
 export const SORT_LABELS: Record<SortKey, [string, string]> = {
   score: ['Best match', 'Weakest match'],
   closing: ['Closing soonest', 'Closing latest'],
-  newest: ['Newest', 'Oldest'],
+  newest: ['Newest found', 'Oldest found'],
   salary: ['Highest salary', 'Lowest salary'],
   distance: ['Nearest', 'Furthest'],
   title: ['Title A–Z', 'Title Z–A'],

@@ -223,6 +223,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                 <Fact label="Posted">
                   {formatDate(r.posted_date ?? r.first_seen_at, { year: true })}
                 </Fact>
+                <Fact label="First found">{formatDate(r.first_seen_at, { year: true })}</Fact>
                 <Fact label="Positions">{(det.positions as number) ?? '—'}</Fact>
                 <Fact label="Locations">
                   {r.is_national
