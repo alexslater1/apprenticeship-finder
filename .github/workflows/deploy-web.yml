@@ -1,14 +1,11 @@
 name: deploy-web
 
+# Deploys only after ci passes on a push to main.
 on:
-  push:
+  workflow_run:
+    workflows: [ci]
+    types: [completed]
     branches: [main]
-    paths:
-      - 'apps/web/**'
-      - 'packages/shared/**'
-      - 'config/**'
-      - 'package-lock.json'
-      - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
 permissions: {}
@@ -19,12 +16,18 @@ concurrency:
 
 jobs:
   build:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The commit ci checked, not whatever main is now.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
       - uses: actions/setup-node@v7
         with:
           node-version: 24
