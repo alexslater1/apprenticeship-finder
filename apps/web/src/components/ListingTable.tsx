@@ -108,7 +108,7 @@ const columns = helper.columns([
     cell: (c) => {
       const miles = milesLabel(c.row.original.distance);
       return (
-        <span className="whitespace-nowrap">
+        <span className="block max-w-[7rem]">
           {c.getValue()}
           {miles && <span className="block text-xs text-muted-foreground">{miles}</span>}
         </span>
@@ -313,7 +313,7 @@ export function ListingTable({ data }: { data: Derived[] }) {
                             : 'descending'
                           : undefined
                       }
-                      className="px-3 py-2 font-medium whitespace-nowrap"
+                      className="px-2 py-2 font-medium whitespace-nowrap"
                     >
                       {header.isPlaceholder ? null : key ? (
                         <SortHeader sortKey={key}>
@@ -343,7 +343,7 @@ export function ListingTable({ data }: { data: Derived[] }) {
                 )}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-3 py-2.5">
+                  <td key={cell.id} className="px-2 py-2.5">
                     <table.FlexRender cell={cell} />
                   </td>
                 ))}
