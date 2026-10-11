@@ -113,3 +113,58 @@ describe('gradeFit', () => {
     expect(gradeFit(maths, 'AAA', [])).toBe('meets');
   });
 });
+
+describe('gradeFit without UCAS points', () => {
+  const subjects = ['Maths', 'Chemistry', 'Biology'];
+  it('meets adverts that ask for no A-level grades', () => {
+    expect(
+      gradeFit(extractEntry('Minimum of 5 GCSEs including English and Maths.'), 'ABB', subjects),
+    ).toBe('meets');
+    expect(
+      gradeFit(
+        extractEntry('Level 3 qualification (apprenticeship/A-levels/BTEC, etc)'),
+        'ABB',
+        subjects,
+      ),
+    ).toBe('meets');
+  });
+  it('counts A levels when any grades will do', () => {
+    expect(gradeFit(extractEntry('You will need 2 A levels.'), 'ABB', subjects)).toBe('meets');
+    expect(gradeFit(extractEntry('You will need 3 A levels.'), 'AB', ['Maths', 'Chemistry'])).toBe(
+      'below',
+    );
+  });
+  it('checks a subject grade when all his grades clear it (or none do)', () => {
+    const maths = extractEntry('Three A Levels Grade B or above in Maths');
+    expect(maths?.summary).toBe('3 A levels, incl. Maths at B or above');
+    expect(gradeFit(maths, 'ABB', subjects)).toBe('meets');
+    expect(gradeFit(maths, 'CCD', subjects)).toBe('below');
+    // Mixed: it depends which grade is Maths, which Settings doesn't say.
+    expect(gradeFit(maths, 'ABC', subjects)).toBeNull();
+  });
+  it("reads Find an Apprenticeship's A-level lines", () => {
+    const anyThree = extractEntry('', [
+      { qualificationType: 'A Level', subject: 'Any x3', grade: 'A-D', weighting: 'Essential' },
+    ]);
+    expect(gradeFit(anyThree, 'ABB', subjects)).toBe('meets');
+    const ict = extractEntry('', [
+      {
+        qualificationType: 'A Level',
+        subject: 'ICT',
+        grade: 'C, or  above',
+        weighting: 'Essential',
+      },
+    ]);
+    expect(gradeFit(ict, 'ABB', subjects)).toBe('subject');
+    expect(gradeFit(ict, 'ABB', ['Computer Science', 'Maths', 'Physics'])).toBe('meets');
+    const similar = extractEntry('', [
+      {
+        qualificationType: 'A Level',
+        subject: 'Maths, Science, Computer Science or similar',
+        grade: 'A - C',
+        weighting: 'Essential',
+      },
+    ]);
+    expect(gradeFit(similar, 'ABB', subjects)).toBe('meets');
+  });
+});

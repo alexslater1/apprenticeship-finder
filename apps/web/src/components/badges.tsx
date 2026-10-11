@@ -96,7 +96,7 @@ const FIT: Record<GradeFit, { label: string; className: string }> = {
     className: 'bg-destructive/10 text-destructive ring-destructive/30',
   },
   subject: {
-    label: 'Needs A-level Maths',
+    label: 'Needs an A level he doesn’t take',
     className: 'bg-match-medium/15 text-match-medium ring-match-medium/30',
   },
 };
