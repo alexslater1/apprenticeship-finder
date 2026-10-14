@@ -18,8 +18,8 @@ commands:
   digest [--dry-run]                                  send the daily email (dry run writes logs/digest.html)
   notify-failure                                      email both of you that the workflow failed
   migrate [--dry-run]                                 apply supabase/migrations/*.sql
-  rederive [--dry-run]                                re-tag skills and fill start dates from stored adverts
-                                                      (after config/skills.json or start.ts changes)
+  rederive [--dry-run]                                re-tag skills and fill start/closing dates and salaries
+                                                      from stored adverts (after config/skills.json or start.ts changes)
   skill-candidates                                    frequent requirement phrases no skill in config/skills.json covers
 `;
 
@@ -86,7 +86,7 @@ async function main(): Promise<number> {
     case 'reskill': {
       const r = await rederive({ dryRun });
       console.log(
-        `${dryRun ? '[dry] ' : ''}${r.checked} listings: ${r.entries} entry requirements, ${r.skills} re-tagged, ${r.starts} start dates filled`,
+        `${dryRun ? '[dry] ' : ''}${r.checked} listings: ${r.entries} entry requirements, ${r.skills} re-tagged, ${r.starts} start dates, ${r.closings} closing dates and ${r.salaries} salaries filled`,
       );
       return 0;
     }

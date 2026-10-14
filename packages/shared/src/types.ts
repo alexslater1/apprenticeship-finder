@@ -224,7 +224,14 @@ export interface ListingRow {
   entry: { summary: string; ucas: number | null; subjects: string[] } | null;
   /** Skills the advert mentions (skills.ts); null when the description is too short to judge. */
   skills: Array<{ id: string; ctx: 'asked' | 'taught' | 'job' }> | null;
+  /** Details corrected by hand on the dashboard; scrapes keep them. */
+  edits: ListingEdits | null;
 }
+
+/** Listing columns set by hand. A key that's present wins, even when it's null (left blank). */
+export type ListingEdits = Partial<
+  Pick<ListingRow, 'salary_min' | 'salary_max' | 'salary_text' | 'closing_date' | 'start_date'>
+>;
 
 /** Settings → "Your grades and start" and "What else counts" (all optional). */
 export interface ScorePrefs {

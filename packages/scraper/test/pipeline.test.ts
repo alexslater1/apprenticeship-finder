@@ -493,6 +493,52 @@ describe('persist merge rules', () => {
       lars_code: 337,
     });
   });
+  it('reads the closing date and salary from the advert when no source gives them', () => {
+    const workday = normalise({
+      ...base,
+      salaryText: undefined,
+      closingDate: undefined,
+      descriptionText:
+        'The Benefits: A starting salary of £24,500 yearly, increasing to £26,000 in Year 2. This vacancy will close on 8th November 2026, but we review applications as they come in.',
+    })!;
+    const row = toRow(workday, undefined, '2026-10-09', '2026-10-09T06:30:00Z');
+    expect(row).toMatchObject({
+      salary_min: 24500,
+      salary_max: null,
+      salary_text: '£24,500 yearly',
+      closing_date: '2026-11-08',
+    });
+  });
+  it('keeps details corrected by hand, blanks included', () => {
+    const row = toRow(
+      n,
+      {
+        id: 'x',
+        dedupe_key: n.dedupeKey,
+        first_seen_at: '2026-09-01T10:00:00Z',
+        description_html: null,
+        description_text: null,
+        posted_date: null,
+        closing_date: '2026-10-01',
+        edits: {
+          closing_date: '2026-12-01',
+          salary_text: '£25,000 a year',
+          salary_min: 25000,
+          salary_max: null,
+          start_date: null,
+        },
+      },
+      '2026-10-09',
+      '2026-10-09T06:30:00Z',
+    );
+    expect(row).toMatchObject({
+      closing_date: '2026-12-01',
+      is_active: true,
+      salary_min: 25000,
+      salary_text: '£25,000 a year',
+      start_date: null,
+    });
+  });
   it('far-future placeholder deadlines are treated as none', () => {
     const now = new Date('2026-10-09T12:00:00Z');
     expect(plausibleDeadline('2036-01-01', now)).toBeNull();

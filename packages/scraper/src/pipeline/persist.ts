@@ -1,10 +1,13 @@
 import {
   MIN_LEVEL,
   baseScore,
+  extractClosingDate,
   extractEntry,
   extractSkills,
   extractStartDate,
   londonDate,
+  salaryFromText,
+  type ListingEdits,
 } from '@af/shared';
 import { findUniversity } from '@af/shared/universities';
 import { db, must } from '../db.ts';
@@ -42,10 +45,11 @@ export interface ExistingRow {
   region?: string | null;
   nation?: NormalisedListing['nation'];
   details?: Record<string, unknown> | null;
+  edits?: ListingEdits | null;
 }
 
 const EXISTING_COLUMNS =
-  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,employer_id,university,entry,salary_min,salary_max,salary_text,start_date,start_precision,locations,primary_city,region,nation,details';
+  'id,dedupe_key,first_seen_at,description_html,description_text,posted_date,closing_date,apply_url,level,level_source,is_degree,lars_code,standard_title,provider_name,employer_id,university,entry,salary_min,salary_max,salary_text,start_date,start_precision,locations,primary_city,region,nation,details,edits';
 
 const chunk = <T>(xs: T[], n: number): T[][] =>
   Array.from({ length: Math.ceil(xs.length / n) }, (_, i) => xs.slice(i * n, i * n + n));
@@ -75,7 +79,14 @@ export function toRow(
   const descriptionText = keepOldDescription ? ex!.description_text : l.descriptionText;
   const postedDate =
     [l.postedDate, ex?.posted_date].filter((d): d is string => !!d).sort()[0] ?? null;
-  const closingDate = l.closingDate ?? plausibleDeadline(ex?.closing_date ?? undefined);
+  // Corrections made on the dashboard win over every source.
+  const edits = ex?.edits ?? {};
+  const closingDate =
+    'closing_date' in edits
+      ? (edits.closing_date ?? null)
+      : (l.closingDate ??
+        plausibleDeadline(ex?.closing_date ?? undefined) ??
+        extractClosingDate(descriptionText, today));
   const firstSeen = ex ? londonDate(new Date(ex.first_seen_at)) : today;
   const score = baseScore({
     title: l.title,
@@ -107,11 +118,16 @@ export function toRow(
   const had = ex?.start_date
     ? { date: ex.start_date, precision: ex.start_precision ?? 'day' }
     : null;
-  const start = l.startDate
-    ? { date: l.startDate, precision: l.startPrecision ?? 'day' }
-    : advertStart && (!had || PRECISION[advertStart.precision] >= PRECISION[had.precision])
-      ? advertStart
-      : had;
+  const start =
+    'start_date' in edits
+      ? edits.start_date
+        ? { date: edits.start_date, precision: 'day' as const }
+        : null
+      : l.startDate
+        ? { date: l.startDate, precision: l.startPrecision ?? 'day' }
+        : advertStart && (!had || PRECISION[advertStart.precision] >= PRECISION[had.precision])
+          ? advertStart
+          : had;
   const closedReason =
     closingDate && closingDate < today
       ? 'closing_date_passed'
@@ -121,6 +137,22 @@ export function toRow(
   // Fill gaps, never blank out what another source told us (e.g. Higherin has no apply link
   // for a Thales job FAA links straight to Workday).
   const keepLocation = !l.locations.length && !!ex?.locations?.length;
+  const textSalary =
+    l.salaryMin === null && !ex?.salary_min ? salaryFromText(descriptionText) : null;
+  const salary =
+    'salary_text' in edits
+      ? {
+          min: edits.salary_min ?? null,
+          max: edits.salary_max ?? null,
+          text: edits.salary_text ?? null,
+        }
+      : textSalary
+        ? textSalary
+        : {
+            min: l.salaryMin ?? ex?.salary_min ?? null,
+            max: l.salaryMin !== null ? l.salaryMax : (ex?.salary_max ?? null),
+            text: l.salaryText ?? ex?.salary_text ?? null,
+          };
   return {
     dedupe_key: l.dedupeKey,
     title: l.title,
@@ -143,9 +175,9 @@ export function toRow(
     role_type: c.roleType,
     score: score.total,
     score_breakdown: score,
-    salary_min: l.salaryMin ?? ex?.salary_min ?? null,
-    salary_max: l.salaryMin !== null ? l.salaryMax : (ex?.salary_max ?? null),
-    salary_text: l.salaryText ?? ex?.salary_text ?? null,
+    salary_min: salary.min,
+    salary_max: salary.max,
+    salary_text: salary.text,
     posted_date: postedDate,
     closing_date: closingDate,
     start_date: start?.date ?? null,

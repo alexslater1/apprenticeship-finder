@@ -10,6 +10,7 @@ import {
   normaliseTitle,
   parseDate,
   parseSalary,
+  salaryFromText,
 } from '../src/index.ts';
 import { findPlace, nearestPlace, placeByName } from '../src/places.ts';
 
@@ -26,6 +27,39 @@ describe('parseSalary (real FAA wage strings)', () => {
     ['', null, null],
   ])('%s', (text, min, max) => {
     expect(parseSalary(text)).toEqual({ min, max });
+  });
+});
+
+describe('salaryFromText (pay written in the advert)', () => {
+  it.each([
+    [
+      'The Benefits: A starting salary of £24,500 yearly, increasing to £26,000 in Year 2',
+      '£24,500 yearly',
+      24500,
+      null,
+    ],
+    ['Level 4 Data Analyst Salary - £20,500 per annum Benefits', '£20,500 per annum', 20500, null],
+    ['Level: SCQF Level 10 Salary: Year 1: £18,819 Year 2: £22,857', '£18,819', 18819, null],
+    ['Salary Range £24,579 - £35,503 Agile Working', '£24,579 - £35,503', 24579, 35503],
+    ['Competitive starting salary: £27k or higher', '£27k', 27000, null],
+    [
+      "you'll start on a salary of £26,299 per year, plus a £2,000 completion bonus",
+      '£26,299 per year',
+      26299,
+      null,
+    ],
+  ])('%s', (text, snippet, min, max) => {
+    expect(salaryFromText(text)).toEqual({ text: snippet, min, max });
+  });
+
+  it.each([
+    'Tech and digital professionals in London earn an average salary of £52,500 per year',
+    'By the end of your apprenticeship you can expect to earn a competitive salary exceeding £36,000.',
+    'a business with a turnover of nearly £2 billion',
+    'We pay your tuition fees worth £27,000 and a competitive salary.',
+    'Salary: Competitive',
+  ])('no pay in: %s', (text) => {
+    expect(salaryFromText(text)).toBeNull();
   });
 });
 
