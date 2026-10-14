@@ -1,4 +1,11 @@
-import type { ListingRow, ScorePrefs, SettingsRow, SkillMention, TrackStatus } from '@af/shared';
+import type {
+  ListingEdits,
+  ListingRow,
+  ScorePrefs,
+  SettingsRow,
+  SkillMention,
+  TrackStatus,
+} from '@af/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { supabase } from './supabase';
@@ -152,6 +159,30 @@ export function useUpdateTracking() {
       if (ctx?.prev) qc.setQueryData(keys.listings, ctx.prev);
       toast.error((err as Error).message);
     },
+  });
+}
+
+/** Correct a listing's salary or dates by hand; later scrapes keep the correction. */
+export function useEditListing() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, edits }: { id: string; edits: ListingEdits }) => {
+      const { error } = await supabase.rpc('edit_listing', { p_id: id, p_edits: edits });
+      fail('Saving', error);
+    },
+    onMutate: async ({ id, edits }) => {
+      await qc.cancelQueries({ queryKey: keys.listings });
+      const row = qc.getQueryData<ListingRow[]>(keys.listings)?.find((r) => r.id === id);
+      const patch: Partial<ListingRow> = { ...edits, edits: { ...row?.edits, ...edits } };
+      if ('start_date' in edits) patch.start_precision = edits.start_date ? 'day' : null;
+      return { prev: patchListing(qc, id, patch) };
+    },
+    onError: (err, _vars, ctx) => {
+      if (ctx?.prev) qc.setQueryData(keys.listings, ctx.prev);
+      toast.error((err as Error).message);
+    },
+    // Reopening or closing it on the new closing date happens in the database.
+    onSettled: () => qc.invalidateQueries({ queryKey: keys.listings }),
   });
 }
 

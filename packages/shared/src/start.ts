@@ -1,5 +1,5 @@
 /**
- * Start dates written in the advert, as exact as the advert allows (a day, else
+ * Dates written in the advert. Start dates, as exact as the advert allows (a day, else
  * a month). Most sources don't give a
  * start date, but adverts usually say: "Start Date: 06 September 2027", "October 2026 start",
  * "Induction week … Monday 6 September … 2027", "your apprenticeship (August 2027 to August 2031)",
@@ -156,4 +156,64 @@ export function extractStartDate(
     found[0] ??
     null
   );
+}
+
+/** Words that introduce a closing date ("Closing date:", "will close on", "open until"). */
+const CLOSE_CUE =
+  /\b(?:clos(?:e|es|ing)(?: date)?|deadline|apply by|(?:final|last) (?:application )?date|open until|(?:received|submitted) by)\b/gi;
+/** A start date or the next step after the cue: the date there isn't the deadline. */
+const CLOSE_STOP = /[.;\n]\s|\b(?:start\w*|commenc\w*|begin\w*|join\w*|assessment|interview\w*)\b/i;
+const CLOSE_DATE = [
+  // 8th November 2026, Monday 30 November 2026, 20thMarch 2026, 15th July, 2026, 4th March
+  {
+    re: new RegExp(`^[^.;\\n]{0,60}?\\b${DAY}\\s*${MONTH}\\b(?:,?\\s+${YEAR})?`, 'i'),
+    day: 1,
+    month: 2,
+    year: 3,
+  },
+  // November 8, 2026
+  {
+    re: new RegExp(`^[^.;\\n]{0,60}?\\b${MONTH}\\s+${DAY},?\\s+${YEAR}`, 'i'),
+    day: 2,
+    month: 1,
+    year: 3,
+  },
+  // 08/11/2026 (UK order)
+  { re: /^[^.;\n]{0,60}?\b(\d{1,2})[/.](\d{1,2})[/.](20\d\d)\b/, day: 1, month: 2, year: 3 },
+] as const;
+
+/**
+ * The application deadline the advert gives ("This vacancy will close on 8th November 2026",
+ * "Closing Date: Monday 30 November 2026", "Applications will be open until 26 October 2026").
+ * Without a year ("The final application date is 4th March") it's the next such day, if that's
+ * within about six months. A deadline up to a year past counts: the advert says it has closed.
+ */
+export function extractClosingDate(text: string | null | undefined, today: string): string | null {
+  const body = (text ?? '').replace(/[ \t\u00a0]+/g, ' ');
+  const t = new Date(`${today}T00:00:00Z`).getTime();
+  const days = (date: string) => (new Date(`${date}T00:00:00Z`).getTime() - t) / 86_400_000;
+  for (const cue of body.matchAll(CLOSE_CUE)) {
+    let rest = body.slice(cue.index + cue[0].length, cue.index + cue[0].length + 120);
+    const stop = CLOSE_STOP.exec(rest);
+    if (stop) rest = rest.slice(0, stop.index);
+    for (const p of CLOSE_DATE) {
+      const m = p.re.exec(rest);
+      if (!m) continue;
+      const month = /^\d+$/.test(m[p.month]!) ? Number(m[p.month]) - 1 : monthIndex(m[p.month]!);
+      const day = Number(m[p.day]);
+      if (month < 0) break;
+      if (m[p.year]) {
+        const date = iso(Number(m[p.year]), month, day);
+        if (date && days(date) >= -365 && days(date) <= 2 * 365) return date;
+      } else {
+        const year = Number(today.slice(0, 4));
+        const date = [iso(year, month, day), iso(year + 1, month, day)].find(
+          (d) => d && days(d) >= 0,
+        );
+        if (date && days(date) <= 190) return date;
+      }
+      break;
+    }
+  }
+  return null;
 }

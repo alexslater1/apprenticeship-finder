@@ -82,6 +82,7 @@ export function listing(over: Partial<ListingRow> = {}): ListingRow {
     is_lead: false,
     entry: null,
     start_precision: null,
+    edits: null,
     skills: [
       { id: 'python', ctx: 'taught' },
       { id: 'teamwork', ctx: 'asked' },

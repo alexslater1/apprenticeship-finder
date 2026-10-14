@@ -19,6 +19,7 @@ import { WhyThisMatch } from './WhyThisMatch';
 import { useEmployers } from '@/lib/companies';
 import { useListingDetail, useSetHidden, useUpdateTracking } from '@/lib/queries';
 import { AdvertSkills } from './AdvertSkills';
+import { EditDetails } from './EditDetails';
 import { ClosingBadge, GradeFitBadge, LevelBadge, MatchChip, PreRegisterBadge } from './badges';
 import { Notes } from './Notes';
 import { StatusSelect } from './StatusSelect';
@@ -140,6 +141,9 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
   const employer = r?.employer_id ? employers?.find((e) => e.id === r.employer_id) : undefined;
   const det = (detail?.details ?? {}) as Record<string, unknown>;
   const quals = (det.qualifications as Qualification[] | undefined) ?? [];
+  // Facts corrected by hand say so.
+  const edited = (label: string, key: keyof NonNullable<Derived['row']['edits']>) =>
+    r?.edits && key in r.edits ? `${label} · edited` : label;
 
   return (
     <Sheet open={!!d} onOpenChange={(o) => !o && onClose()}>
@@ -180,70 +184,78 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
             </SheetHeader>
 
             <div className="grid gap-6 p-4">
-              <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3">
-                <Fact label="Closes">
-                  {formatDate(r.closing_date, { year: true })}{' '}
-                  <ClosingBadge days={d.daysToClose} className="block" />
-                </Fact>
-                <Fact label="Salary">{formatSalary(r) ?? r.salary_text ?? '—'}</Fact>
-                <Fact label="Starts">{formatStart(r) ?? '—'}</Fact>
-                <Fact label="Standard">
-                  {standard ? (
-                    <a
-                      href={standardUrl(standard.ref)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary underline-offset-2 hover:underline"
-                    >
-                      {r.standard_title ?? standard.title}
-                    </a>
-                  ) : (
-                    (r.standard_title ?? '—')
-                  )}
-                  {r.lars_code ? (
-                    <span className="text-xs text-muted-foreground"> · LARS {r.lars_code}</span>
-                  ) : null}
-                </Fact>
-                <Fact label="Where you’d study">
-                  {r.university ??
-                    (r.provider_name
-                      ? `${providerLabel(r.provider_name)} (training provider)`
-                      : 'Not named in this advert')}
-                  {!r.university && employer?.training_provider && (
-                    <span className="block text-xs text-muted-foreground">
-                      Last cycle at {employer.name}: {employer.training_provider}
-                    </span>
-                  )}
-                </Fact>
-                {r.university && r.provider_name && universityDiffers(r) && (
-                  <Fact label="Training provider">{providerLabel(r.provider_name)}</Fact>
-                )}
-                <Fact label="Duration">{(det.duration as string) ?? '—'}</Fact>
-                <Fact label="Hours">{det.hoursPerWeek ? `${det.hoursPerWeek} a week` : '—'}</Fact>
-                <Fact label="Posted">
-                  {formatDate(r.posted_date ?? r.first_seen_at, { year: true })}
-                </Fact>
-                <Fact label="First found">{formatDate(r.first_seen_at, { year: true })}</Fact>
-                <Fact label="Positions">{(det.positions as number) ?? '—'}</Fact>
-                <Fact label="Locations">
-                  {r.is_national
-                    ? 'Nationwide'
-                    : (r.locations ?? []).map((l) => l.text).join('; ') || r.nation}
-                </Fact>
-                {r.status === 'applied' || r.applied_at ? (
-                  <Fact label="Applied on">
-                    <Input
-                      type="date"
-                      aria-label="Applied on"
-                      value={r.applied_at ?? ''}
-                      onChange={(e) =>
-                        tracking.mutate({ id: r.id, patch: { applied_at: e.target.value || null } })
-                      }
-                      className="h-9"
-                    />
+              <div className="grid gap-2">
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3">
+                  <Fact label={edited('Closes', 'closing_date')}>
+                    {formatDate(r.closing_date, { year: true })}{' '}
+                    <ClosingBadge days={d.daysToClose} className="block" />
                   </Fact>
-                ) : null}
-              </dl>
+                  <Fact label={edited('Salary', 'salary_text')}>
+                    {formatSalary(r) ?? r.salary_text ?? '—'}
+                  </Fact>
+                  <Fact label={edited('Starts', 'start_date')}>{formatStart(r) ?? '—'}</Fact>
+                  <Fact label="Standard">
+                    {standard ? (
+                      <a
+                        href={standardUrl(standard.ref)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary underline-offset-2 hover:underline"
+                      >
+                        {r.standard_title ?? standard.title}
+                      </a>
+                    ) : (
+                      (r.standard_title ?? '—')
+                    )}
+                    {r.lars_code ? (
+                      <span className="text-xs text-muted-foreground"> · LARS {r.lars_code}</span>
+                    ) : null}
+                  </Fact>
+                  <Fact label="Where you’d study">
+                    {r.university ??
+                      (r.provider_name
+                        ? `${providerLabel(r.provider_name)} (training provider)`
+                        : 'Not named in this advert')}
+                    {!r.university && employer?.training_provider && (
+                      <span className="block text-xs text-muted-foreground">
+                        Last cycle at {employer.name}: {employer.training_provider}
+                      </span>
+                    )}
+                  </Fact>
+                  {r.university && r.provider_name && universityDiffers(r) && (
+                    <Fact label="Training provider">{providerLabel(r.provider_name)}</Fact>
+                  )}
+                  <Fact label="Duration">{(det.duration as string) ?? '—'}</Fact>
+                  <Fact label="Hours">{det.hoursPerWeek ? `${det.hoursPerWeek} a week` : '—'}</Fact>
+                  <Fact label="Posted">
+                    {formatDate(r.posted_date ?? r.first_seen_at, { year: true })}
+                  </Fact>
+                  <Fact label="First found">{formatDate(r.first_seen_at, { year: true })}</Fact>
+                  <Fact label="Positions">{(det.positions as number) ?? '—'}</Fact>
+                  <Fact label="Locations">
+                    {r.is_national
+                      ? 'Nationwide'
+                      : (r.locations ?? []).map((l) => l.text).join('; ') || r.nation}
+                  </Fact>
+                  {r.status === 'applied' || r.applied_at ? (
+                    <Fact label="Applied on">
+                      <Input
+                        type="date"
+                        aria-label="Applied on"
+                        value={r.applied_at ?? ''}
+                        onChange={(e) =>
+                          tracking.mutate({
+                            id: r.id,
+                            patch: { applied_at: e.target.value || null },
+                          })
+                        }
+                        className="h-9"
+                      />
+                    </Fact>
+                  ) : null}
+                </dl>
+                <EditDetails r={r} />
+              </div>
 
               <WhyThisMatch d={d} />
 

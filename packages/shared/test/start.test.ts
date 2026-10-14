@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { extractStartDate } from '../src/start.ts';
+import { extractClosingDate, extractStartDate } from '../src/start.ts';
 
 const today = '2026-10-10';
 const start = (text: string, title = 'Data Apprentice') => extractStartDate(title, text, today);
@@ -81,5 +81,48 @@ describe('extractStartDate', () => {
     expect(start('Closing date: 17 February 2027. Apply early.')).toBeNull();
     expect(start('Start date: TBC. Applications close 17 February 2027.')).toBeNull();
     expect(start('We started in March 2019 and now employ 300 people.')).toBeNull();
+  });
+});
+
+describe('extractClosingDate', () => {
+  const close = (text: string) => extractClosingDate(text, today);
+
+  it('reads the deadline the advert gives', () => {
+    expect(
+      close(
+        'Recruitment Process This vacancy will close on 8th November 2026 , but we review applications as they come in',
+      ),
+    ).toBe('2026-11-08');
+    expect(close('Closing Date: Monday 30 November 2026 Please let us know')).toBe('2026-11-30');
+    expect(
+      close('Application closing date: Applications will be open until 26 October 2026.'),
+    ).toBe('2026-10-26');
+    expect(
+      close('Key dates Applications close: 8 November 2026 Assessment centre: 16 February 2027'),
+    ).toBe('2026-11-08');
+    expect(close('Deadline: 05/12/2026')).toBe('2026-12-05');
+  });
+
+  it('fills in a missing year with the next such day', () => {
+    expect(
+      close('The final application date is 4th March, but we may close before 4th March'),
+    ).toBe('2027-03-04');
+    expect(close('Applications close 4th August.')).toBeNull(); // ten months off: too vague
+  });
+
+  it('counts a deadline that has passed', () => {
+    expect(close('Closing Date for Applications - 20thMarch 2026 To Apply')).toBe('2026-03-20');
+  });
+
+  it('ignores closing words without a deadline after them', () => {
+    expect(
+      close(
+        'if applications are high the role will close before the closing date given. Job title: Data Scientist, starting 1 September 2027',
+      ),
+    ).toBeNull();
+    expect(close('Close attention to detail. Start date: 1 September 2027')).toBeNull();
+    expect(
+      close('Applications close when we have enough, with a start date of 6 September 2027.'),
+    ).toBeNull();
   });
 });

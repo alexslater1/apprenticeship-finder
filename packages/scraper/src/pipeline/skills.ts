@@ -1,18 +1,21 @@
 import {
   classifiedSegments,
+  extractClosingDate,
   extractEntry,
   extractSkills,
   extractStartDate,
   londonToday,
   MIN_SKILL_TEXT,
+  salaryFromText,
   withoutKnownSkills,
+  type ListingEdits,
 } from '@af/shared';
 import { db, must } from '../db.ts';
 
 /**
  * Fields worked out from the advert text, for every stored listing. The daily scrape does this
- * for the listings it sees; `cli rederive` redoes the rest after config/skills.json or the start
- * date rules change.
+ * for the listings it sees; `cli rederive` redoes the rest after config/skills.json or the date
+ * and salary rules change.
  */
 
 const EXACTNESS = { year: 0, month: 1, day: 2 } as const;
@@ -26,6 +29,9 @@ interface Row {
   start_precision?: 'day' | 'month' | 'year' | null;
   entry?: unknown;
   details?: { qualifications?: Parameters<typeof extractEntry>[1] } | null;
+  closing_date?: string | null;
+  salary_min?: number | null;
+  edits?: ListingEdits | null;
 }
 
 async function allListings(columns: string, activeOnly = false): Promise<Row[]> {
@@ -43,17 +49,27 @@ async function allListings(columns: string, activeOnly = false): Promise<Row[]> 
   }
 }
 
-/** Re-read entry requirements, re-tag skills, and fill start dates where we have a vaguer one. */
-export async function rederive(
-  opts: { dryRun?: boolean } = {},
-): Promise<{ checked: number; skills: number; starts: number; entries: number }> {
+/**
+ * Re-read entry requirements, re-tag skills, fill start dates where we have a vaguer one, and
+ * closing dates and salaries where we have none. Fields corrected by hand are left alone.
+ */
+export async function rederive(opts: { dryRun?: boolean } = {}): Promise<{
+  checked: number;
+  skills: number;
+  starts: number;
+  entries: number;
+  closings: number;
+  salaries: number;
+}> {
   const today = londonToday();
   const rows = await allListings(
-    'id,title,description_text,skills,start_date,start_precision,entry,details',
+    'id,title,description_text,skills,start_date,start_precision,entry,details,closing_date,salary_min,edits',
   );
   let skillsChanged = 0;
   let starts = 0;
   let entries = 0;
+  let closings = 0;
+  let salaries = 0;
   for (const r of rows) {
     const patch: Record<string, unknown> = {};
     const entry = extractEntry(r.description_text, r.details?.qualifications ?? []);
@@ -66,7 +82,8 @@ export async function rederive(
       patch.skills = skills;
       skillsChanged++;
     }
-    if (!r.start_date || r.start_precision !== 'day') {
+    const edits = r.edits ?? {};
+    if (!('start_date' in edits) && (!r.start_date || r.start_precision !== 'day')) {
       const s = extractStartDate(r.title, r.description_text, today);
       if (s && (!r.start_date || EXACTNESS[s.precision] > EXACTNESS[r.start_precision ?? 'day'])) {
         patch.start_date = s.date;
@@ -74,10 +91,26 @@ export async function rederive(
         starts++;
       }
     }
+    if (!r.closing_date && !('closing_date' in edits)) {
+      const c = extractClosingDate(r.description_text, today);
+      if (c) {
+        patch.closing_date = c;
+        closings++;
+      }
+    }
+    if (!r.salary_min && !('salary_text' in edits)) {
+      const s = salaryFromText(r.description_text);
+      if (s) {
+        patch.salary_min = s.min;
+        patch.salary_max = s.max;
+        patch.salary_text = s.text;
+        salaries++;
+      }
+    }
     if (Object.keys(patch).length && !opts.dryRun)
       must(await db().from('listings').update(patch).eq('id', r.id), 'save derived fields');
   }
-  return { checked: rows.length, skills: skillsChanged, starts, entries };
+  return { checked: rows.length, skills: skillsChanged, starts, entries, closings, salaries };
 }
 
 const STOP = new Set(
