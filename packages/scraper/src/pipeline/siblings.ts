@@ -19,6 +19,7 @@ interface Row {
   locations: Array<{ city?: string }> | null;
   level?: number | null;
   is_degree?: boolean | null;
+  details?: { manual?: boolean } | null;
 }
 
 const cities = (r: Row) =>
@@ -43,7 +44,7 @@ export async function inheritLevels(
   const blank = must<Row[]>(
     await db()
       .from('listings')
-      .select('id,title,employer_name_norm,primary_city,locations,is_degree')
+      .select('id,title,employer_name_norm,primary_city,locations,is_degree,details')
       .eq('is_active', true)
       .is('level', null),
     'listings without a level',
@@ -64,7 +65,8 @@ export async function inheritLevels(
     const levels = new Set(matches.map((m) => m.level));
     if (levels.size !== 1) continue; // none, or copies that disagree
     const level = matches[0]!.level!;
-    const below = level < MIN_LEVEL;
+    // A job added by hand stays open whatever its level.
+    const below = level < MIN_LEVEL && !b.details?.manual;
     filled++;
     if (below) closed++;
     if (!opts.dryRun)

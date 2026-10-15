@@ -2,6 +2,7 @@ import { rankLinks } from '@af/shared';
 import { Download, RefreshCw } from 'lucide-react';
 import { useMemo } from 'react';
 import { Link } from 'react-router';
+import { AddJob } from '@/components/AddJob';
 import { FilterBar } from '@/components/FilterBar';
 import { Page } from '@/components/Layout';
 import { ListingCard } from '@/components/ListingCard';
@@ -104,6 +105,7 @@ export default function Listings() {
           >
             <RefreshCw className={isFetching ? 'animate-spin' : undefined} /> Refresh
           </Button>
+          <AddJob />
         </div>
       }
     >

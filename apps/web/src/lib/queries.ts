@@ -18,6 +18,7 @@ export const keys = {
   employers: ['employers'] as const,
   suggestions: ['suggestions'] as const,
   runs: ['scrape_runs'] as const,
+  manualJobs: ['manual_jobs'] as const,
 };
 
 function fail(what: string, error: { message: string } | null): void {

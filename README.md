@@ -12,7 +12,7 @@ packages/shared     types, classification + scoring rules, parsers (used by both
 packages/scraper    CLI: scrape, digest, migrate, sync-employers, detect-ats, rederive, skill-candidates
                     (runs in GitHub Actions)
   src/sources/      aggregators: faa, higherin, reed, adzuna, scot, wales, ni, amazing, ngtu,
-                    google-jobs (SerpApi), web-search (Tavily)
+                    google-jobs (SerpApi), web-search (Tavily), manual (jobs added with "Add a job")
   src/connectors/   employer job systems (Workday, SuccessFactors, Oracle, Avature, Oleeo, Eightfold,
                     Phenom, Greenhouse, …) plus generic jsonld / pagehash / manual
   src/discovery/    suggestions: learn employers from listings, turn approved ones into employers

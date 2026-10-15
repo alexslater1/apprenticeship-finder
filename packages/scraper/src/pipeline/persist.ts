@@ -128,10 +128,11 @@ export function toRow(
         : advertStart && (!had || PRECISION[advertStart.precision] >= PRECISION[had.precision])
           ? advertStart
           : had;
+  const byHand = !!(l.details?.manual || ex?.details?.manual);
   const closedReason =
     closingDate && closingDate < today
       ? 'closing_date_passed'
-      : level !== null && level < MIN_LEVEL
+      : level !== null && level < MIN_LEVEL && !byHand
         ? 'below_min_level'
         : null;
   // Fill gaps, never blank out what another source told us (e.g. Higherin has no apply link

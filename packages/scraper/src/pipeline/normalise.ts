@@ -190,9 +190,11 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     knownApprenticeship: raw.knownApprenticeship,
     knownDegree: raw.isDegree,
   });
-  if (!classification.relevant) return null;
+  // A job added by hand is wanted whatever it is.
+  const byHand = !!raw.addedByHand;
+  if (!classification.relevant && !byHand) return null;
   // Global boards (Google Jobs, web pages, employer ATSs) carry jobs abroad: keep the UK ones.
-  if (raw.locations.length && raw.locations.every((l) => isUk(l) === false)) return null;
+  if (!byHand && raw.locations.length && raw.locations.every((l) => isUk(l) === false)) return null;
 
   const salary =
     raw.salaryMin !== undefined
@@ -258,6 +260,7 @@ export function normalise(raw: RawListing): NormalisedListing | null {
     details: compact({
       ...raw.details,
       preRegister: Boolean(raw.details?.preRegister) || isRegisterInterest(title),
+      manual: byHand || undefined,
     }),
     isLead: !!raw.isLead,
     sources: [
@@ -295,6 +298,7 @@ export function mergeWithinRun(listings: NormalisedListing[]): NormalisedListing
     // One source with the real advert means it's open, whatever the others say.
     if (prev.details?.preRegister && !l.details?.preRegister)
       prev.details = { ...prev.details, preRegister: false };
+    if (l.details?.manual) prev.details = { ...prev.details, manual: true };
     prev.employerId ??= l.employerId;
     prev.university ??= l.university;
     prev.entry ??= l.entry;

@@ -60,7 +60,12 @@ export function derive(
       rank: personalScore(row, prefs, distance, { clamp: false }),
       daysToClose: row.closing_date ? daysBetween(today, row.closing_date) : null,
       isNew: daysBetween(row.first_seen_at.slice(0, 10), today) <= 3,
-      excluded: row.level !== null && row.level < MIN_LEVEL ? 'level' : excludedByPrefs(row, prefs),
+      // A job added by hand is shown whatever Settings say.
+      excluded: row.is_manual
+        ? null
+        : row.level !== null && row.level < MIN_LEVEL
+          ? 'level'
+          : excludedByPrefs(row, prefs),
       fit: gradeFit(row.entry, prefs.score?.predictedGrades, prefs.score?.subjects ?? []),
     };
   });
@@ -196,4 +201,5 @@ export const SOURCE_LABELS: Record<string, string> = {
   ni: 'JobApplyNI',
   amazing: 'Amazing Apprenticeships',
   ngtu: 'Not Going To Uni',
+  manual: 'Added by you',
 };

@@ -238,8 +238,12 @@ export async function runScrape(o: RunOptions): Promise<RunSummary> {
     if (!o.dryRun) {
       for (const { source, result } of results) {
         // A "complete" sync that returned nothing is more likely an outage than an empty market
-        // (employer boards also count as healthy when they list other jobs).
-        if (result.complete && (result.listings.length > 0 || (result.total ?? 0) > 0)) {
+        // (employer boards also count as healthy when they list other jobs). The list of jobs
+        // added by hand really can be empty.
+        if (
+          result.complete &&
+          (result.listings.length > 0 || (result.total ?? 0) > 0 || source === 'manual')
+        ) {
           deactivated += await markMissing(source, startedAt.toISOString(), INCREMENTAL);
         }
       }

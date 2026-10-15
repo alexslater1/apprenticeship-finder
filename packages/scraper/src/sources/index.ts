@@ -4,6 +4,7 @@ import { amazing } from './amazing.ts';
 import { faa } from './faa.ts';
 import { googleJobs } from './google-jobs.ts';
 import { higherin } from './higherin.ts';
+import { manual } from './manual.ts';
 import { ngtu } from './ngtu.ts';
 import { ni } from './ni.ts';
 import { reed } from './reed.ts';
@@ -24,4 +25,5 @@ export const SOURCES: Source[] = [
   ngtu,
   googleJobs,
   webSearch,
+  manual,
 ];

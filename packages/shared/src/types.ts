@@ -127,6 +127,8 @@ export interface RawListing {
   isDegree?: boolean;
   /** Page-hash leads get their score capped. */
   isLead?: boolean;
+  /** Added by hand on the dashboard: kept whatever the classifier thinks of it. */
+  addedByHand?: boolean;
   /** A source's own category, e.g. Higherin 'Data analysis'; used for role when the title says nothing. */
   roleHint?: string;
   raw?: unknown;
@@ -220,6 +222,8 @@ export interface ListingRow {
   pre_register: boolean;
   /** A line on a careers page ("applications open in November"), not a job advert. */
   is_lead: boolean;
+  /** Added by hand ("Add a job"): shown whatever Settings say about its role or level. */
+  is_manual: boolean;
   /** Entry requirements read from the advert (fit.ts `EntryReq`). */
   entry: { summary: string; ucas: number | null; subjects: string[] } | null;
   /** Skills the advert mentions (skills.ts); null when the description is too short to judge. */

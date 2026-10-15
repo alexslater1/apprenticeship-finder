@@ -80,6 +80,7 @@ export function listing(over: Partial<ListingRow> = {}): ListingRow {
     notes_count: 0,
     pre_register: false,
     is_lead: false,
+    is_manual: false,
     entry: null,
     start_precision: null,
     edits: null,

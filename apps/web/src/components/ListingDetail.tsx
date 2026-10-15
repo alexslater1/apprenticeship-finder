@@ -158,6 +158,7 @@ export function ListingDetail({ d, onClose }: { d: Derived | undefined; onClose:
                 <MatchChip score={d.score} />
                 <LevelBadge level={r.level} isDegree={r.is_degree} />
                 {r.pre_register && <PreRegisterBadge />}
+                {r.is_manual && <span className="text-xs text-muted-foreground">Added by you</span>}
                 <span className="text-xs text-muted-foreground">{ROLE_LABELS[r.role_type]}</span>
                 {!r.is_active && (
                   <span className="text-xs font-medium text-destructive">Closed</span>
