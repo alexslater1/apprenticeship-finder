@@ -1,46 +1,46 @@
 {
-  "date": "2026-10-18",
-  "finished_at": "2026-10-18T11:34:32.065Z",
+  "date": "2026-10-19",
+  "finished_at": "2026-10-19T13:48:53.611Z",
   "status": "ok",
   "trigger": "schedule",
   "stats": {
     "employersAdded": [],
     "faa": {
-      "vacancies": 3559,
+      "vacancies": 3569,
       "pages": 36,
-      "relevant": 35,
-      "detailFetched": 0,
+      "relevant": 40,
+      "detailFetched": 5,
       "detailErrors": 0,
       "invalid": 0,
-      "fetched": 35,
-      "ms": 70650
+      "fetched": 40,
+      "ms": 80175
     },
     "higherin": {
-      "sitemapJobs": 2509,
-      "carded": 68,
-      "candidates": 80,
-      "pagesFetched": 0,
+      "sitemapJobs": 2358,
+      "carded": 69,
+      "candidates": 81,
+      "pagesFetched": 1,
       "pageErrors": 0,
       "categoryErrors": 0,
       "capped": "no",
-      "fetched": 80,
-      "ms": 12108
+      "fetched": 81,
+      "ms": 13467
     },
     "reed": {
-      "results": 226,
+      "results": 227,
       "kept": 1,
       "detailFetched": 0,
       "errors": 0,
       "fetched": 1,
-      "ms": 10724
+      "ms": 9809
     },
     "adzuna": {
       "days": 3,
       "calls": 8,
       "errors": 0,
-      "results": 48,
-      "fetched": 48,
-      "ms": 21569
+      "results": 52,
+      "fetched": 52,
+      "ms": 21782
     },
     "scot": {
       "scope": "all GA + MA keyword search",
@@ -55,7 +55,7 @@
       "invalid": 0,
       "capped": "no",
       "fetched": 3,
-      "ms": 2353
+      "ms": 3160
     },
     "wales": {
       "scope": "sector 10 + keyword \"data\"",
@@ -67,7 +67,7 @@
       "errors": 0,
       "invalid": 0,
       "fetched": 0,
-      "ms": 1857
+      "ms": 1904
     },
     "ni": {
       "sectorTotal": 7,
@@ -79,7 +79,7 @@
       "detailErrors": 0,
       "errors": 0,
       "fetched": 0,
-      "ms": 2593
+      "ms": 2713
     },
     "amazing": {
       "pdf": "https://www.amazingapprenticeships.com/wp-content/uploads/2026/10/HD-Listing-October-2026-1.pdf",
@@ -87,7 +87,7 @@
       "checked": "no",
       "lastCheck": "2026-10-16",
       "fetched": 50,
-      "ms": 581
+      "ms": 619
     },
     "ngtu": {
       "total": 82,
@@ -97,51 +97,52 @@
       "detailErrors": 0,
       "capped": "no",
       "fetched": 16,
-      "ms": 988
+      "ms": 1131
     },
     "google_jobs": {
-      "queries": 6,
-      "results": 1,
+      "queries": 8,
+      "results": 2,
       "errors": 0,
       "budgetStop": "no",
-      "fetched": 1,
-      "ms": 68586
+      "fetched": 2,
+      "ms": 113290
     },
     "web_search": {
       "queries": 10,
-      "newUrls": 15,
-      "fetched": 2,
-      "listings": 2,
+      "newUrls": 8,
+      "fetched": 1,
+      "listings": 1,
       "suggestions": 3,
       "budgetStop": "no",
-      "ms": 95172
+      "ms": 32995
     },
     "manual": {
       "jobs": 0,
       "unread": 0,
       "fetched": 0,
-      "ms": 246
+      "ms": 237
     },
     "discovery": {
-      "added": 0,
+      "added": 1,
       "auto": 0,
       "updated": 0
     },
     "links": {
-      "checked": 22,
-      "dead": 5,
-      "closed": 1,
+      "checked": 54,
+      "dead": 3,
+      "closed": 0,
       "applyClosed": 0
     },
     "openedEmployers": [
-      "leonardo"
+      "british-airways"
     ],
     "employers": {
       "checked": 151,
       "manual": 15,
-      "closed": 124,
+      "closed": 123,
       "open": 12,
       "outage": 1,
+      "blocked": 1,
       "byId": {
         "kpmg": {
           "status": "manual",
@@ -155,112 +156,98 @@
           "total": 13,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1258
+          "ms": 1227
+        },
+        "dwp": {
+          "status": "closed",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1471
         },
         "pearson": {
           "status": "closed",
-          "total": 81,
+          "total": 82,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2006
+          "ms": 2164
         },
         "fca": {
           "status": "closed",
-          "total": 20,
+          "total": 19,
           "candidates": 0,
           "relevant": 0,
-          "ms": 3566
+          "ms": 4169
+        },
+        "vodafonethree": {
+          "status": "closed",
+          "total": 1279,
+          "candidates": 4,
+          "relevant": 0,
+          "ms": 8431
         },
         "jpmorgan-chase": {
           "status": "closed",
-          "total": 674,
+          "total": 676,
           "candidates": 0,
           "relevant": 0,
-          "ms": 5519
-        },
-        "capgemini": {
-          "status": "open",
-          "total": 542,
-          "candidates": 5,
-          "relevant": 3,
-          "ms": 7691
+          "ms": 7130
         },
         "homes-england": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 260
+          "ms": 332
         },
-        "vodafonethree": {
+        "lidl-gb": {
           "status": "closed",
-          "total": 1294,
-          "candidates": 4,
+          "total": 251,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 8017
+          "ms": 9015
         },
         "m-and-g": {
           "status": "closed",
           "total": 95,
           "candidates": 0,
           "relevant": 0,
-          "ms": 8614
+          "ms": 17451
         },
         "hsbc": {
           "status": "closed",
-          "total": 96,
-          "candidates": 2,
-          "relevant": 0,
-          "ms": 4292
-        },
-        "lidl-gb": {
-          "status": "closed",
-          "total": 234,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 7195
-        },
-        "amazon": {
-          "status": "closed",
-          "total": 781,
+          "total": 91,
           "candidates": 3,
           "relevant": 0,
-          "ms": 12799
+          "ms": 9552
         },
         "newcastle-building-society": {
           "status": "closed",
-          "total": 5,
+          "total": 6,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1706
+          "ms": 2242
         },
         "tesco": {
           "status": "closed",
-          "total": 0,
+          "total": 2698,
           "candidates": 0,
           "relevant": 0,
-          "ms": 4602
+          "ms": 3252
+        },
+        "amazon": {
+          "status": "closed",
+          "total": 766,
+          "candidates": 3,
+          "relevant": 0,
+          "ms": 12087
         },
         "ministry-of-defence": {
           "status": "open",
           "total": null,
           "candidates": 2,
           "relevant": 2,
-          "ms": 1220
-        },
-        "allianz": {
-          "status": "closed",
-          "total": 82,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 2999
-        },
-        "bnp-paribas": {
-          "status": "closed",
-          "total": 12,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 2718
+          "ms": 1281
         },
         "nhs-england": {
           "status": "manual",
@@ -274,42 +261,49 @@
           "total": 31,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2260
+          "ms": 1754
+        },
+        "bnp-paribas": {
+          "status": "closed",
+          "total": 3,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 3365
         },
         "goldman-sachs": {
           "status": "closed",
-          "total": 221,
+          "total": 222,
           "candidates": 3,
           "relevant": 0,
-          "ms": 3102
+          "ms": 3127
         },
-        "asda": {
-          "status": "closed",
-          "total": 452,
+        "whitbread": {
+          "status": "manual",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 34663
+          "ms": 0
         },
-        "bloomberg": {
+        "morgan-stanley": {
           "status": "closed",
-          "total": 341,
+          "total": 83,
           "candidates": 0,
           "relevant": 0,
-          "ms": 43941
+          "ms": 12653
         },
         "nationwide": {
           "status": "closed",
-          "total": 151,
+          "total": 154,
           "candidates": 0,
           "relevant": 0,
-          "ms": 3277
+          "ms": 3556
         },
         "st-jamess-place": {
           "status": "closed",
-          "total": 21,
+          "total": 22,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1848
+          "ms": 1494
         },
         "deloitte": {
           "status": "manual",
@@ -323,112 +317,126 @@
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1
+          "ms": 0
+        },
+        "pfizer": {
+          "status": "closed",
+          "total": 14,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1663
+        },
+        "bloomberg": {
+          "status": "closed",
+          "total": 337,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 44262
         },
         "accenture": {
           "status": "closed",
-          "total": 25,
+          "total": 27,
           "candidates": 1,
           "relevant": 0,
-          "ms": 1422
+          "ms": 1427
         },
         "marks-and-spencer": {
           "status": "closed",
-          "total": 77,
+          "total": 84,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1939
-        },
-        "london-stock-exchange": {
-          "status": "closed",
-          "total": 692,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 53811
-        },
-        "entain": {
-          "status": "closed",
-          "total": 224,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 3459
+          "ms": 1742
         },
         "royal-london": {
           "status": "closed",
-          "total": 30,
+          "total": 31,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1413
+          "ms": 1379
+        },
+        "allianz": {
+          "status": "closed",
+          "total": 82,
+          "candidates": 1,
+          "relevant": 0,
+          "ms": 4894
         },
         "ageas": {
           "status": "closed",
-          "total": 10,
+          "total": 11,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1148
+          "ms": 1329
+        },
+        "zurich": {
+          "status": "closed",
+          "total": 770,
+          "candidates": 3,
+          "relevant": 0,
+          "ms": 5481
         },
         "arm": {
           "status": "closed",
-          "total": 416,
+          "total": 421,
           "candidates": 0,
           "relevant": 0,
-          "ms": 649
+          "ms": 656
         },
         "computacenter": {
           "status": "closed",
           "total": 130,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1954
+          "ms": 1409
         },
-        "zurich": {
+        "london-stock-exchange": {
           "status": "closed",
-          "total": 801,
-          "candidates": 3,
-          "relevant": 0,
-          "ms": 5494
-        },
-        "morgan-stanley": {
-          "status": "closed",
-          "total": 108,
+          "total": 696,
           "candidates": 0,
           "relevant": 0,
-          "ms": 21692
-        },
-        "fujitsu": {
-          "status": "closed",
-          "total": 657,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1551
-        },
-        "ministry-of-justice": {
-          "status": "closed",
-          "total": 489,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 60700
+          "ms": 55520
         },
         "arcadis": {
           "status": "closed",
-          "total": 242,
+          "total": 244,
           "candidates": 0,
           "relevant": 0,
-          "ms": 6128
+          "ms": 6833
+        },
+        "mha": {
+          "status": "closed",
+          "total": 142,
+          "candidates": 29,
+          "relevant": 0,
+          "ms": 45099
+        },
+        "fujitsu": {
+          "status": "closed",
+          "total": 655,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 2228
+        },
+        "ministry-of-justice": {
+          "status": "closed",
+          "total": 526,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 61167
         },
         "channel-4": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 609
+          "ms": 858
         },
         "audit-wales": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1419
+          "ms": 1784
         },
         "dvla": {
           "status": "manual",
@@ -442,14 +450,7 @@
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 804
-        },
-        "mha": {
-          "status": "closed",
-          "total": 138,
-          "candidates": 27,
-          "relevant": 0,
-          "ms": 41865
+          "ms": 859
         },
         "cgi": {
           "status": "manual",
@@ -463,14 +464,21 @@
           "total": null,
           "candidates": 1,
           "relevant": 1,
-          "ms": 1550
+          "ms": 772
+        },
+        "bae-systems": {
+          "status": "closed",
+          "total": 332,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 8243
         },
         "clarionhg": {
           "status": "closed",
-          "total": 34,
+          "total": 33,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2952
+          "ms": 3082
         },
         "hse": {
           "status": "manual",
@@ -479,61 +487,47 @@
           "relevant": 0,
           "ms": 0
         },
-        "ofcom": {
-          "status": "closed",
-          "total": 17,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 2068
-        },
-        "bae-systems": {
-          "status": "closed",
-          "total": 325,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 7507
-        },
-        "bentley-motors": {
-          "status": "closed",
-          "total": 46,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1895
-        },
-        "schneider-electric": {
-          "status": "closed",
-          "total": 65,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 744
-        },
         "virgin-media-o2": {
           "status": "closed",
-          "total": 177,
+          "total": 171,
           "candidates": 0,
           "relevant": 0,
-          "ms": 37006
+          "ms": 35567
+        },
+        "babcock-international": {
+          "status": "open",
+          "total": 314,
+          "candidates": 36,
+          "relevant": 2,
+          "ms": 52578
+        },
+        "ofcom": {
+          "status": "closed",
+          "total": 14,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 2149
         },
         "auto-trader": {
           "status": "closed",
           "total": 17,
           "candidates": 0,
           "relevant": 0,
-          "ms": 109
+          "ms": 138
         },
         "ons": {
           "status": "open",
           "total": null,
           "candidates": 4,
           "relevant": 4,
-          "ms": 1721
+          "ms": 1600
         },
-        "grant-thornton": {
+        "bentley-motors": {
           "status": "closed",
-          "total": 76,
-          "candidates": 25,
+          "total": 46,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 48085
+          "ms": 1475
         },
         "acas": {
           "status": "manual",
@@ -542,33 +536,82 @@
           "relevant": 0,
           "ms": 0
         },
+        "grant-thornton": {
+          "status": "closed",
+          "total": 76,
+          "candidates": 25,
+          "relevant": 0,
+          "ms": 44110
+        },
         "john-lewis-partnership": {
           "status": "closed",
-          "total": 89,
+          "total": 67,
           "candidates": 0,
           "relevant": 0,
-          "ms": 8385
+          "ms": 6812
         },
-        "severn-trent": {
+        "qinetiq": {
           "status": "closed",
-          "total": 75,
-          "candidates": 1,
+          "total": 163,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 2613
+          "ms": 1595
         },
-        "hyperiongrp": {
+        "santander": {
           "status": "closed",
-          "total": 337,
-          "candidates": 21,
+          "total": 1031,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 56756
+          "ms": 117204
+        },
+        "schneider-electric": {
+          "status": "closed",
+          "total": 66,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 660
         },
         "airbus": {
           "status": "open",
-          "total": 197,
+          "total": 199,
           "candidates": 40,
           "relevant": 5,
-          "ms": 70538
+          "ms": 70571
+        },
+        "gchq": {
+          "status": "closed",
+          "total": 12,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 2134
+        },
+        "mbda": {
+          "status": "closed",
+          "total": 224,
+          "candidates": 7,
+          "relevant": 0,
+          "ms": 28595
+        },
+        "hyperiongrp": {
+          "status": "closed",
+          "total": 331,
+          "candidates": 21,
+          "relevant": 0,
+          "ms": 57000
+        },
+        "national-grid": {
+          "status": "closed",
+          "total": 141,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1205
+        },
+        "ey": {
+          "status": "closed",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1326
         },
         "scottishpower": {
           "status": "manual",
@@ -577,96 +620,82 @@
           "relevant": 0,
           "ms": 0
         },
-        "national-grid": {
+        "anglian-water": {
           "status": "closed",
-          "total": 141,
+          "total": 59,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1106
-        },
-        "gchq": {
-          "status": "closed",
-          "total": 11,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1808
-        },
-        "ey": {
-          "status": "closed",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1362
+          "ms": 4825
         },
         "co-op": {
           "status": "closed",
-          "total": 290,
+          "total": 303,
           "candidates": 0,
           "relevant": 0,
-          "ms": 4450
-        },
-        "santander": {
-          "status": "closed",
-          "total": 1044,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 118237
+          "ms": 4515
         },
         "mars": {
           "status": "closed",
-          "total": 30,
+          "total": 28,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1594
+          "ms": 1771
         },
         "ubs": {
           "status": "closed",
-          "total": 95,
+          "total": 88,
           "candidates": 0,
           "relevant": 0,
-          "ms": 3672
+          "ms": 4147
         },
         "thg": {
           "status": "closed",
           "total": 105,
           "candidates": 0,
           "relevant": 0,
-          "ms": 211
-        },
-        "sanofi": {
-          "status": "closed",
-          "total": 989,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 75337
+          "ms": 224
         },
         "bank-of-america": {
           "status": "closed",
-          "total": 52,
+          "total": 45,
           "candidates": 0,
           "relevant": 0,
-          "ms": 11669
+          "ms": 1944
+        },
+        "severn-trent": {
+          "status": "closed",
+          "total": 74,
+          "candidates": 1,
+          "relevant": 0,
+          "ms": 2626
+        },
+        "natwest": {
+          "status": "closed",
+          "total": 99,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 8047
         },
         "shell": {
           "status": "closed",
           "total": 140,
           "candidates": 0,
           "relevant": 0,
-          "ms": 10779
+          "ms": 10796
         },
-        "yorkshire-water": {
+        "sse": {
           "status": "closed",
-          "total": 40,
+          "total": 116,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1465
+          "ms": 1490
         },
         "microsoft": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 150,
+          "ms": 189,
           "error": "HTTP 429 for https://apply.careers.microsoft.com/api/pcsx/search?domain=microsoft.com&query=apprentice&location=United%20Kingdom&start=0: Please try again later"
         },
         "sky": {
@@ -674,77 +703,217 @@
           "total": 91,
           "candidates": 0,
           "relevant": 0,
-          "ms": 596
+          "ms": 647
         },
-        "natwest": {
+        "sanofi": {
           "status": "closed",
-          "total": 99,
+          "total": 995,
           "candidates": 0,
           "relevant": 0,
-          "ms": 8058
+          "ms": 75469
         },
         "bbc": {
           "status": "closed",
-          "total": 43,
+          "total": 38,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1042
+          "ms": 1109
         },
         "bmw": {
           "status": "closed",
-          "total": 915,
+          "total": 773,
           "candidates": 9,
           "relevant": 0,
-          "ms": 15408
-        },
-        "bank-of-england": {
-          "status": "closed",
-          "total": 27,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 2065
+          "ms": 15175
         },
         "siemens-energy": {
           "status": "closed",
-          "total": 144,
+          "total": 143,
           "candidates": 2,
           "relevant": 0,
-          "ms": 24230
+          "ms": 26193
+        },
+        "power-networks": {
+          "status": "closed",
+          "total": 17,
+          "candidates": 1,
+          "relevant": 0,
+          "ms": 6551
+        },
+        "bank-of-england": {
+          "status": "closed",
+          "total": 24,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 2112
+        },
+        "yorkshire-water": {
+          "status": "closed",
+          "total": 40,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 4240
         },
         "nestle": {
           "status": "closed",
-          "total": 2077,
-          "candidates": 4,
+          "total": 2087,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 7365
+          "ms": 1748
         },
-        "leonardo": {
+        "balfour-beatty": {
+          "status": "closed",
+          "total": 100,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1503
+        },
+        "barclays": {
           "status": "open",
-          "total": 825,
-          "candidates": 15,
-          "relevant": 3,
-          "ms": 85301
+          "total": 706,
+          "candidates": 19,
+          "relevant": 4,
+          "ms": 77884
         },
         "lloyds-banking-group": {
           "status": "closed",
-          "total": 75,
+          "total": 78,
           "candidates": 0,
           "relevant": 0,
-          "ms": 7643
-        },
-        "lloyds-of-london": {
-          "status": "closed",
-          "total": 9,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 3219
+          "ms": 7868
         },
         "aviva": {
           "status": "closed",
           "total": 128,
           "candidates": 0,
           "relevant": 0,
-          "ms": 10245
+          "ms": 10670
+        },
+        "lloyds-of-london": {
+          "status": "closed",
+          "total": 11,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 3100
+        },
+        "jaguar-land-rover": {
+          "status": "closed",
+          "total": 34,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1755
+        },
+        "centrica-british-gas": {
+          "status": "closed",
+          "total": 48,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 4854
+        },
+        "grosvenor": {
+          "status": "closed",
+          "total": 6,
+          "candidates": 1,
+          "relevant": 0,
+          "ms": 4312
+        },
+        "mace": {
+          "status": "closed",
+          "total": 250,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 5240
+        },
+        "awepeople": {
+          "status": "open",
+          "total": 15,
+          "candidates": 15,
+          "relevant": 1,
+          "ms": 22200
+        },
+        "job-boards": {
+          "status": "closed",
+          "total": 435,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 663
+        },
+        "leonardo": {
+          "status": "open",
+          "total": 849,
+          "candidates": 26,
+          "relevant": 4,
+          "ms": 98903
+        },
+        "deutsche-bank": {
+          "status": "closed",
+          "total": 1185,
+          "candidates": 1,
+          "relevant": 0,
+          "ms": 96530
+        },
+        "transport-for-london": {
+          "status": "closed",
+          "total": 36,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1550
+        },
+        "jet2": {
+          "status": "closed",
+          "total": 42,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 2435
+        },
+        "wtw": {
+          "status": "closed",
+          "total": 653,
+          "candidates": 10,
+          "relevant": 0,
+          "ms": 51636
+        },
+        "wwl-nhs": {
+          "status": "manual",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1
+        },
+        "bdo": {
+          "status": "closed",
+          "total": 29,
+          "candidates": 24,
+          "relevant": 0,
+          "ms": 42030
+        },
+        "manchester-airports": {
+          "status": "closed",
+          "total": 50,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1662
+        },
+        "entain": {
+          "status": "closed",
+          "total": 229,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 3626
+        },
+        "stoke-on-trent-city-council": {
+          "status": "manual",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1
+        },
+        "capgemini": {
+          "status": "open",
+          "total": 544,
+          "candidates": 5,
+          "relevant": 3,
+          "ms": 7672
         },
         "nhsbsa": {
           "status": "manual",
@@ -753,133 +922,21 @@
           "relevant": 0,
           "ms": 0
         },
-        "jaguar-land-rover": {
-          "status": "closed",
-          "total": 34,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1843
-        },
-        "centrica-british-gas": {
-          "status": "closed",
-          "total": 49,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 4661
-        },
-        "grosvenor": {
-          "status": "closed",
-          "total": 6,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 4290
-        },
-        "barclays": {
-          "status": "open",
-          "total": 695,
-          "candidates": 19,
-          "relevant": 4,
-          "ms": 76352
-        },
-        "power-networks": {
-          "status": "closed",
-          "total": 16,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 2255
-        },
-        "mace": {
-          "status": "closed",
-          "total": 255,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 4808
-        },
-        "awepeople": {
-          "status": "open",
-          "total": 15,
-          "candidates": 15,
-          "relevant": 1,
-          "ms": 22298
-        },
-        "job-boards": {
-          "status": "closed",
-          "total": 435,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 510
-        },
-        "deutsche-bank": {
-          "status": "closed",
-          "total": 1171,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 95987
-        },
-        "wtw": {
-          "status": "closed",
-          "total": 658,
-          "candidates": 10,
-          "relevant": 0,
-          "ms": 50950
-        },
-        "transport-for-london": {
-          "status": "closed",
-          "total": 40,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1502
-        },
-        "bdo": {
-          "status": "closed",
-          "total": 29,
-          "candidates": 24,
-          "relevant": 0,
-          "ms": 41838
-        },
-        "jet2": {
-          "status": "closed",
-          "total": 47,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 2406
-        },
-        "wwl-nhs": {
-          "status": "manual",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 0
-        },
-        "manchester-airports": {
-          "status": "closed",
-          "total": 47,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1485
-        },
-        "dwp": {
-          "status": "closed",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1499
-        },
-        "anglian-water": {
-          "status": "closed",
-          "total": 64,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 6382
-        },
         "stfc": {
           "status": "closed",
           "total": 27,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1688
+          "ms": 1815
         },
-        "stoke-on-trent-city-council": {
+        "transunion": {
+          "status": "closed",
+          "total": 238,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 17805
+        },
+        "home-office": {
           "status": "manual",
           "total": null,
           "candidates": 0,
@@ -891,328 +948,273 @@
           "total": 48,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1794
-        },
-        "transunion": {
-          "status": "closed",
-          "total": 241,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 18924
-        },
-        "travis-perkins": {
-          "status": "closed",
-          "total": 273,
-          "candidates": 12,
-          "relevant": 0,
-          "ms": 19022
-        },
-        "home-office": {
-          "status": "manual",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 0
-        },
-        "qinetiq": {
-          "status": "closed",
-          "total": 164,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1787
-        },
-        "balfour-beatty": {
-          "status": "closed",
-          "total": 100,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1407
-        },
-        "whitbread": {
-          "status": "manual",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 0
-        },
-        "pfizer": {
-          "status": "closed",
-          "total": 20,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1374
+          "ms": 2114
         },
         "dstl": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 500
+          "ms": 1343
         },
-        "mbda": {
+        "travis-perkins": {
           "status": "closed",
-          "total": 223,
-          "candidates": 7,
+          "total": 278,
+          "candidates": 12,
           "relevant": 0,
-          "ms": 28139
+          "ms": 19379
+        },
+        "pwc": {
+          "status": "closed",
+          "total": 338,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 6557
         },
         "astrazeneca": {
           "status": "closed",
-          "total": 796,
+          "total": 780,
           "candidates": 0,
           "relevant": 0,
-          "ms": 120158
+          "ms": 117281
         },
         "rolls-royce": {
           "status": "closed",
           "total": 7,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2693
+          "ms": 2804
         },
-        "babcock-international": {
-          "status": "open",
-          "total": 307,
-          "candidates": 36,
-          "relevant": 2,
-          "ms": 55434
-        },
-        "pwc": {
+        "asda": {
           "status": "closed",
-          "total": 345,
+          "total": 442,
           "candidates": 0,
           "relevant": 0,
-          "ms": 5542
+          "ms": 34359
         },
         "admiral": {
           "status": "closed",
           "total": 8,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1093
+          "ms": 1344
         },
         "sellafield": {
           "status": "closed",
-          "total": 12,
+          "total": 14,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1752
+          "ms": 1783
         },
-        "dxc-technology": {
-          "status": "closed",
-          "total": 1183,
+        "rsm": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 99816
+          "ms": 759,
+          "error": "Blocked at https://rsm-careers.tal.net/vx/candidate/jobboard/vacancy/2/adv/?start=0: matched Quick check needed"
         },
         "northumbrian-water": {
           "status": "closed",
-          "total": 16,
+          "total": 15,
           "candidates": 0,
           "relevant": 0,
-          "ms": 3036
+          "ms": 1462
         },
         "met-office": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1155
+          "ms": 996
         },
         "cummins": {
           "status": "closed",
-          "total": 146,
+          "total": 145,
           "candidates": 1,
           "relevant": 0,
-          "ms": 3018
+          "ms": 2589
         },
         "hydrographic-office": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 4110
-        },
-        "hitachi": {
-          "status": "closed",
-          "total": 2000,
-          "candidates": 8,
-          "relevant": 0,
-          "ms": 124260
-        },
-        "unilever": {
-          "status": "closed",
-          "total": 224,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 46236
+          "ms": 4350
         },
         "legal-and-general": {
           "status": "closed",
-          "total": 39,
+          "total": 38,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1063
+          "ms": 1427
+        },
+        "bp": {
+          "status": "closed",
+          "total": 321,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 17146
         },
         "thales": {
           "status": "open",
           "total": 175,
           "candidates": 46,
           "relevant": 9,
-          "ms": 58268
+          "ms": 60103
         },
         "rps": {
           "status": "manual",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 0
+          "ms": 1
         },
         "united-utilities": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 791
-        },
-        "sse": {
-          "status": "closed",
-          "total": 118,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1805
-        },
-        "british-airways": {
-          "status": "closed",
-          "total": 42,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 664
+          "ms": 631
         },
         "edf": {
           "status": "closed",
-          "total": 61,
+          "total": 58,
           "candidates": 4,
           "relevant": 0,
-          "ms": 7154
+          "ms": 7404
+        },
+        "dxc-technology": {
+          "status": "closed",
+          "total": 1180,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 89516
         },
         "bt": {
           "status": "closed",
-          "total": 216,
-          "candidates": 3,
+          "total": 203,
+          "candidates": 2,
           "relevant": 0,
-          "ms": 5891
-        },
-        "dhl": {
-          "status": "closed",
-          "total": 257,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 4823
+          "ms": 4301
         },
         "mi5": {
           "status": "open",
-          "total": 5,
+          "total": 6,
           "candidates": 2,
           "relevant": 2,
-          "ms": 1244
+          "ms": 1319
         },
-        "volkswagen": {
+        "dhl": {
           "status": "closed",
-          "total": 14,
+          "total": 258,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1204
+          "ms": 4620
+        },
+        "unilever": {
+          "status": "closed",
+          "total": 222,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 46855
         },
         "eon": {
           "status": "closed",
-          "total": 275,
+          "total": 268,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1750
+          "ms": 1637
+        },
+        "volkswagen": {
+          "status": "closed",
+          "total": 3,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1366
         },
         "thames-water": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 345
-        },
-        "gsk": {
-          "status": "closed",
-          "total": 664,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 55933
+          "ms": 353
         },
         "national-highways": {
           "status": "closed",
-          "total": 49,
+          "total": 37,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2167
+          "ms": 2094
         },
         "tfgm": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1724
+          "ms": 2020
         },
         "nexus": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1145
+          "ms": 981
         },
         "network-rail": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2888
+          "ms": 2691
         },
         "kier": {
           "status": "closed",
-          "total": 357,
+          "total": 362,
           "candidates": 1,
           "relevant": 0,
-          "ms": 6349
+          "ms": 7194
         },
-        "bp": {
+        "british-airways": {
+          "status": "open",
+          "total": 58,
+          "candidates": 11,
+          "relevant": 1,
+          "ms": 17319
+        },
+        "gsk": {
           "status": "closed",
-          "total": 340,
+          "total": 762,
           "candidates": 0,
           "relevant": 0,
-          "ms": 27668
+          "ms": 63805
         },
         "royal-mail": {
           "status": "closed",
-          "total": 960,
+          "total": 954,
           "candidates": 2,
           "relevant": 0,
-          "ms": 17708
+          "ms": 17681
         },
-        "rsm": {
-          "status": "open",
-          "total": 122,
-          "candidates": 51,
-          "relevant": 5,
-          "ms": 172230
+        "hitachi": {
+          "status": "closed",
+          "total": 2000,
+          "candidates": 8,
+          "relevant": 0,
+          "ms": 124832
         }
       }
     },
     "total": {
-      "raw": 653,
-      "relevant": 209,
-      "listings": 145,
-      "inserted": 3,
-      "updated": 142,
+      "raw": 632,
+      "relevant": 213,
+      "listings": 147,
+      "inserted": 4,
+      "updated": 143,
       "deactivated": 1,
-      "matchedExisting": 45,
-      "multiSource": 28,
-      "requests": 1468
+      "matchedExisting": 43,
+      "multiSource": 32,
+      "requests": 1491
     }
   }
 }
