@@ -1,46 +1,48 @@
 {
-  "date": "2026-11-15",
-  "finished_at": "2026-11-15T14:19:24.190Z",
+  "date": "2026-11-16",
+  "finished_at": "2026-11-16T16:16:29.137Z",
   "status": "ok",
   "trigger": "schedule",
   "stats": {
-    "employersAdded": [],
+    "employersAdded": [
+      "eoce"
+    ],
     "faa": {
       "vacancies": 3546,
       "pages": 36,
-      "relevant": 62,
-      "detailFetched": 0,
+      "relevant": 67,
+      "detailFetched": 5,
       "detailErrors": 0,
       "invalid": 0,
-      "fetched": 62,
-      "ms": 70625
+      "fetched": 67,
+      "ms": 80177
     },
     "higherin": {
-      "sitemapJobs": 1954,
+      "sitemapJobs": 1910,
       "carded": 66,
       "candidates": 74,
-      "pagesFetched": 0,
+      "pagesFetched": 1,
       "pageErrors": 0,
       "categoryErrors": 0,
       "capped": "no",
       "fetched": 74,
-      "ms": 13334
+      "ms": 14389
     },
     "reed": {
-      "results": 207,
+      "results": 203,
       "kept": 4,
       "detailFetched": 0,
       "errors": 0,
       "fetched": 4,
-      "ms": 9370
+      "ms": 9400
     },
     "adzuna": {
       "days": 3,
       "calls": 8,
       "errors": 0,
-      "results": 52,
-      "fetched": 52,
-      "ms": 21541
+      "results": 46,
+      "fetched": 46,
+      "ms": 21694
     },
     "scot": {
       "scope": "all GA + MA keyword search",
@@ -55,31 +57,31 @@
       "invalid": 0,
       "capped": "no",
       "fetched": 3,
-      "ms": 2190
+      "ms": 2339
     },
     "wales": {
       "scope": "sector 10 + keyword \"data\"",
       "calls": 2,
-      "vacancies": 5,
+      "vacancies": 4,
       "relevant": 0,
       "detailFetched": 0,
       "detailErrors": 0,
       "errors": 0,
       "invalid": 0,
       "fetched": 0,
-      "ms": 1798
+      "ms": 1825
     },
     "ni": {
-      "sectorTotal": 17,
-      "keywordTotal": 17,
+      "sectorTotal": 16,
+      "keywordTotal": 16,
       "pages": 4,
-      "vacancies": 17,
+      "vacancies": 16,
       "relevant": 0,
       "detailFetched": 0,
       "detailErrors": 0,
       "errors": 0,
       "fetched": 0,
-      "ms": 5548
+      "ms": 5404
     },
     "amazing": {
       "pdf": "https://www.amazingapprenticeships.com/wp-content/uploads/2026/10/HD-Listing-October-2026-1.pdf",
@@ -87,7 +89,7 @@
       "checked": "no",
       "lastCheck": "2026-11-12",
       "fetched": 50,
-      "ms": 441
+      "ms": 481
     },
     "ngtu": {
       "total": 82,
@@ -97,80 +99,87 @@
       "detailErrors": 0,
       "capped": "no",
       "fetched": 7,
-      "ms": 781
+      "ms": 834
     },
     "google_jobs": {
-      "queries": 5,
-      "results": 6,
+      "queries": 7,
+      "results": 9,
       "errors": 1,
       "budgetStop": "no",
-      "fetched": 6,
-      "ms": 186266
+      "fetched": 9,
+      "ms": 147016
     },
     "web_search": {
       "queries": 10,
-      "newUrls": 15,
-      "fetched": 4,
-      "listings": 4,
-      "suggestions": 6,
+      "newUrls": 9,
+      "fetched": 2,
+      "listings": 2,
+      "suggestions": 0,
       "budgetStop": "no",
-      "ms": 30270
+      "ms": 31916
     },
     "manual": {
       "jobs": 1,
       "unread": 1,
       "fetched": 1,
-      "ms": 460
+      "ms": 549
     },
     "discovery": {
       "added": 1,
-      "auto": 1,
-      "updated": 1
+      "auto": 0,
+      "updated": 0
     },
     "links": {
-      "checked": 17,
-      "dead": 4,
+      "checked": 58,
+      "dead": 7,
       "closed": 0,
       "applyClosed": 0
     },
     "openedEmployers": [],
     "employers": {
-      "checked": 169,
+      "checked": 170,
       "manual": 15,
-      "closed": 129,
-      "open": 21,
+      "open": 17,
+      "closed": 93,
+      "blocked": 42,
       "error": 3,
-      "blocked": 1,
       "byId": {
         "deloitte": {
           "status": "manual",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 8
+          "ms": 6
         },
-        "microsoft": {
-          "status": "closed",
-          "total": 0,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 827
-        },
-        "hsbc": {
-          "status": "closed",
-          "total": 34,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1497
+        "gors": {
+          "status": "open",
+          "total": null,
+          "candidates": 1,
+          "relevant": 1,
+          "ms": 480
         },
         "bank-of-england": {
           "status": "closed",
           "total": 12,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1864
+          "ms": 1604
+        },
+        "hsbc": {
+          "status": "closed",
+          "total": 37,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1807
         },
         "kpmg": {
+          "status": "manual",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1
+        },
+        "stoke-on-trent-city-council": {
           "status": "manual",
           "total": null,
           "candidates": 0,
@@ -182,14 +191,15 @@
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1572
+          "ms": 1650
         },
-        "motability-operations": {
-          "status": "closed",
-          "total": 9,
+        "fca": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 972
+          "ms": 932,
+          "error": "Blocked at https://fca.wd3.myworkdayjobs.com/wday/cxs/fca/FCA_Careers/jobs: cf-mitigated: challenge"
         },
         "rps": {
           "status": "manual",
@@ -198,61 +208,55 @@
           "relevant": 0,
           "ms": 0
         },
-        "fca": {
+        "motability-operations": {
           "status": "closed",
-          "total": 28,
+          "total": 10,
           "candidates": 0,
           "relevant": 0,
-          "ms": 3615
+          "ms": 1098
         },
-        "bt": {
-          "status": "closed",
-          "total": 152,
-          "candidates": 2,
+        "santander": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 5135
+          "ms": 863,
+          "error": "Blocked at https://santander.wd3.myworkdayjobs.com/wday/cxs/santander/SantanderCareers/jobs: cf-mitigated: challenge"
         },
         "experian": {
           "status": "closed",
           "total": 33,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2537
+          "ms": 1748
         },
         "channel-4": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 893
+          "ms": 1706
+        },
+        "bt": {
+          "status": "closed",
+          "total": 159,
+          "candidates": 3,
+          "relevant": 0,
+          "ms": 5668
         },
         "capgemini": {
           "status": "open",
-          "total": 466,
+          "total": 464,
           "candidates": 5,
           "relevant": 3,
           "ms": 6170
         },
-        "stoke-on-trent-city-council": {
-          "status": "manual",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 0
-        },
-        "gors": {
-          "status": "open",
-          "total": null,
-          "candidates": 1,
-          "relevant": 1,
-          "ms": 381
-        },
-        "homes-england": {
+        "dwp": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 322
+          "ms": 1754
         },
         "nhsbsa": {
           "status": "manual",
@@ -261,33 +265,26 @@
           "relevant": 0,
           "ms": 0
         },
-        "dwp": {
+        "homes-england": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1443
-        },
-        "bnp-paribas": {
-          "status": "closed",
-          "total": 2,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 2571
+          "ms": 290
         },
         "hydrographic-office": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2556
+          "ms": 3549
         },
-        "natwest": {
+        "bnp-paribas": {
           "status": "closed",
-          "total": 75,
+          "total": 0,
           "candidates": 0,
           "relevant": 0,
-          "ms": 6517
+          "ms": 2601
         },
         "nhs-england": {
           "status": "manual",
@@ -296,96 +293,108 @@
           "relevant": 0,
           "ms": 0
         },
-        "hmrc": {
-          "status": "open",
-          "total": 38,
-          "candidates": 1,
-          "relevant": 1,
-          "ms": 5816
-        },
-        "jpmorgan-chase": {
-          "status": "closed",
-          "total": 611,
+        "deutsche-bank": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 5504
+          "ms": 849,
+          "error": "Blocked at https://db.wd3.myworkdayjobs.com/wday/cxs/db/DBWebsite/jobs: cf-mitigated: challenge"
+        },
+        "natwest": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 909,
+          "error": "Blocked at https://rbs.wd3.myworkdayjobs.com/wday/cxs/rbs/RBS/jobs: cf-mitigated: challenge"
         },
         "nationwide": {
           "status": "closed",
-          "total": 143,
+          "total": 158,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2878
+          "ms": 3515
         },
         "st-jamess-place": {
           "status": "closed",
           "total": 22,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1651
+          "ms": 1560
         },
-        "ey": {
+        "jpmorgan-chase": {
           "status": "closed",
-          "total": null,
+          "total": 610,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1476
+          "ms": 5416
         },
         "ministry-of-defence": {
           "status": "open",
           "total": null,
           "candidates": 2,
           "relevant": 2,
-          "ms": 1070
+          "ms": 992
+        },
+        "hmrc": {
+          "status": "open",
+          "total": 45,
+          "candidates": 1,
+          "relevant": 1,
+          "ms": 6635
+        },
+        "unilever": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 892,
+          "error": "Blocked at https://unilever.wd3.myworkdayjobs.com/wday/cxs/unilever/Unilever_Experienced_Professionals/jobs: cf-mitigated: challenge"
         },
         "mi5": {
           "status": "closed",
           "total": 5,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1633
+          "ms": 1556
         },
-        "entain": {
-          "status": "closed",
-          "total": 225,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 3411
+        "legal-and-general": {
+          "status": "open",
+          "total": 35,
+          "candidates": 1,
+          "relevant": 1,
+          "ms": 2398
         },
         "admiral": {
           "status": "closed",
-          "total": 21,
+          "total": 20,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1385
+          "ms": 948
         },
-        "arcadis": {
+        "entain": {
           "status": "closed",
-          "total": 204,
-          "candidates": 1,
+          "total": 218,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 6238
+          "ms": 3509
         },
-        "mha": {
-          "status": "closed",
-          "total": 139,
-          "candidates": 31,
+        "asda": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 48049
-        },
-        "bbc": {
-          "status": "open",
-          "total": 204,
-          "candidates": 156,
-          "relevant": 21,
-          "ms": 61505
+          "ms": 930,
+          "error": "Blocked at https://asda.wd103.myworkdayjobs.com/wday/cxs/asda/AsdaJobs/jobs: cf-mitigated: challenge"
         },
         "grant-thornton": {
-          "status": "closed",
-          "total": 9,
-          "candidates": 6,
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 10006
+          "ms": 912,
+          "error": "Blocked at https://ukgrantt.wd3.myworkdayjobs.com/wday/cxs/ukgrantt/TraineeCareersGrantThornton/jobs: cf-mitigated: challenge"
         },
         "cgi": {
           "status": "manual",
@@ -394,96 +403,101 @@
           "relevant": 0,
           "ms": 0
         },
-        "morgan-stanley": {
-          "status": "closed",
-          "total": 68,
-          "candidates": 6,
-          "relevant": 0,
-          "ms": 71861
+        "amazon": {
+          "status": "open",
+          "total": 775,
+          "candidates": 60,
+          "relevant": 8,
+          "ms": 12570
         },
         "arm": {
           "status": "closed",
-          "total": 470,
+          "total": 455,
           "candidates": 0,
           "relevant": 0,
-          "ms": 804
+          "ms": 730
         },
         "audit-wales": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1099
+          "ms": 1328
         },
-        "amazon": {
-          "status": "open",
-          "total": 778,
-          "candidates": 60,
-          "relevant": 8,
-          "ms": 12183
+        "arcadis": {
+          "status": "closed",
+          "total": 212,
+          "candidates": 9,
+          "relevant": 0,
+          "ms": 18771
         },
         "met-office": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1266
+          "ms": 1770
         },
         "pearson": {
           "status": "closed",
-          "total": 90,
+          "total": 87,
           "candidates": 1,
           "relevant": 0,
-          "ms": 2462
-        },
-        "asda": {
-          "status": "closed",
-          "total": 443,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 34072
-        },
-        "bloomberg": {
-          "status": "closed",
-          "total": 337,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 43585
-        },
-        "clarionhg": {
-          "status": "closed",
-          "total": 32,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 2698
+          "ms": 2148
         },
         "mars": {
           "status": "closed",
-          "total": 42,
+          "total": 41,
           "candidates": 9,
           "relevant": 0,
-          "ms": 14949
+          "ms": 16014
         },
-        "deutsche-bank": {
+        "mha": {
           "status": "closed",
-          "total": 1182,
-          "candidates": 1,
+          "total": 141,
+          "candidates": 31,
           "relevant": 0,
-          "ms": 95434
+          "ms": 47815
         },
-        "transunion": {
-          "status": "closed",
-          "total": 200,
+        "clarionhg": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 14875
+          "ms": 913,
+          "error": "Blocked at https://clarionhg.wd3.myworkdayjobs.com/wday/cxs/clarionhg/Clarion_External_Careers/jobs: cf-mitigated: challenge"
         },
         "ofcom": {
-          "status": "closed",
-          "total": 8,
-          "candidates": 4,
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 7030
+          "ms": 886,
+          "error": "Blocked at https://ofcom.wd3.myworkdayjobs.com/wday/cxs/ofcom/Ofcom_Careers/jobs: cf-mitigated: challenge"
+        },
+        "transunion": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 4746,
+          "error": "Blocked at https://transunion.wd5.myworkdayjobs.com/wday/cxs/transunion/TransUnion/jobs: cf-mitigated: challenge"
+        },
+        "hyperiongrp": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 941,
+          "error": "Blocked at https://hyperiongrp.wd3.myworkdayjobs.com/wday/cxs/hyperiongrp/hyperion_external/jobs: cf-mitigated: challenge"
+        },
+        "sanofi": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 893,
+          "error": "Blocked at https://sanofi.wd3.myworkdayjobs.com/wday/cxs/sanofi/SanofiCareers/jobs: cf-mitigated: challenge"
         },
         "auto-trader": {
           "status": "closed",
@@ -499,6 +513,13 @@
           "relevant": 0,
           "ms": 0
         },
+        "bloomberg": {
+          "status": "closed",
+          "total": 338,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 44038
+        },
         "micron": {
           "status": "error",
           "total": null,
@@ -507,26 +528,41 @@
           "ms": 1,
           "error": "[\n  {\n    \"expected\": \"string\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"domain\"\n    ],\n    \"message\": \"Invalid input: expected string, received undefined\"\n  }\n]"
         },
-        "santander": {
-          "status": "closed",
-          "total": 1022,
+        "prysmiangroup": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 116476
+          "ms": 932,
+          "error": "Blocked at https://prysmiangroup.wd3.myworkdayjobs.com/wday/cxs/prysmiangroup/Careers/jobs: cf-mitigated: challenge"
         },
         "thg": {
           "status": "closed",
-          "total": 110,
+          "total": 104,
           "candidates": 0,
           "relevant": 0,
-          "ms": 302
+          "ms": 168
+        },
+        "bbc": {
+          "status": "open",
+          "total": 205,
+          "candidates": 156,
+          "relevant": 21,
+          "ms": 61258
+        },
+        "bae-systems": {
+          "status": "closed",
+          "total": 258,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 6261
         },
         "zurich": {
           "status": "closed",
-          "total": 744,
+          "total": 749,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1905
+          "ms": 987
         },
         "acas": {
           "status": "manual",
@@ -535,159 +571,189 @@
           "relevant": 0,
           "ms": 0
         },
-        "hyperiongrp": {
-          "status": "closed",
-          "total": 326,
-          "candidates": 5,
+        "rolls-royce": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 32455
+          "ms": 945,
+          "error": "Blocked at https://rollsroyce.wd3.myworkdayjobs.com/wday/cxs/rollsroyce/Apprentice/jobs: cf-mitigated: challenge"
+        },
+        "schneider-electric": {
+          "status": "closed",
+          "total": 67,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1046
         },
         "gchq": {
           "status": "closed",
           "total": 1,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1012
+          "ms": 1029
+        },
+        "gsk": {
+          "status": "closed",
+          "total": 822,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1641
+        },
+        "allianz": {
+          "status": "closed",
+          "total": 80,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1222
         },
         "corndel": {
           "status": "closed",
           "total": 5,
           "candidates": 0,
           "relevant": 0,
-          "ms": 928
-        },
-        "tesco": {
-          "status": "closed",
-          "total": 2018,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 6052
-        },
-        "ministry-of-justice": {
-          "status": "closed",
-          "total": 398,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 62271
-        },
-        "allianz": {
-          "status": "closed",
-          "total": 79,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1109
+          "ms": 836
         },
         "dstl": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 850
+          "ms": 1092
         },
-        "prysmiangroup": {
+        "tesco": {
           "status": "closed",
-          "total": 597,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 49102
-        },
-        "unilever": {
-          "status": "closed",
-          "total": 244,
+          "total": 1939,
           "candidates": 0,
           "relevant": 0,
-          "ms": 49062
+          "ms": 6113
+        },
+        "leonardo": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 918,
+          "error": "Blocked at https://leonardocompany.wd3.myworkdayjobs.com/wday/cxs/leonardocompany/LeonardoCareerSite/jobs: cf-mitigated: challenge"
+        },
+        "bmw": {
+          "status": "closed",
+          "total": 735,
+          "candidates": 6,
+          "relevant": 0,
+          "ms": 10872
+        },
+        "anglian-water": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 892,
+          "error": "Blocked at https://awg.wd3.myworkdayjobs.com/wday/cxs/awg/AW/jobs: cf-mitigated: challenge"
         },
         "marks-and-spencer": {
           "status": "closed",
           "total": 56,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1452
+          "ms": 1310
         },
-        "babcock-international": {
-          "status": "open",
-          "total": 275,
-          "candidates": 25,
-          "relevant": 1,
-          "ms": 38997
-        },
-        "aviva": {
-          "status": "closed",
-          "total": 141,
+        "mbda": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 11854
+          "ms": 915,
+          "error": "Blocked at https://mbda.wd3.myworkdayjobs.com/wday/cxs/mbda/MBDA-UK/jobs: cf-mitigated: challenge"
         },
         "cummins": {
           "status": "closed",
-          "total": 77,
+          "total": 85,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1946
+          "ms": 2166
         },
         "bank-of-america": {
           "status": "closed",
-          "total": 18,
+          "total": 13,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1417
+          "ms": 1151
+        },
+        "aviva": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 6205,
+          "error": "Blocked at https://aviva.wd1.myworkdayjobs.com/wday/cxs/aviva/External/jobs: cf-mitigated: challenge"
+        },
+        "dxc-technology": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 123,
+          "error": "Blocked at https://dxctechnology.wd1.myworkdayjobs.com/wday/cxs/dxctechnology/DXCJobs/jobs: cf-mitigated: challenge"
+        },
+        "bakerhughes": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1634,
+          "error": "Blocked at https://bakerhughes.wd5.myworkdayjobs.com/wday/cxs/bakerhughes/BakerHughes/jobs: cf-mitigated: challenge"
+        },
+        "pfizer": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 188,
+          "error": "Blocked at https://pfizer.wd1.myworkdayjobs.com/wday/cxs/pfizer/PfizerCareers/jobs: cf-mitigated: challenge"
         },
         "qinetiq": {
           "status": "closed",
-          "total": 158,
+          "total": 159,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1566
+          "ms": 1475
         },
-        "rolls-royce": {
+        "thames-water": {
           "status": "closed",
-          "total": 6,
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1753
+          "ms": 845
         },
-        "bmw": {
-          "status": "closed",
-          "total": 754,
-          "candidates": 6,
-          "relevant": 0,
-          "ms": 10747
-        },
-        "transport-for-london": {
-          "status": "closed",
-          "total": 26,
+        "eon": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1180
-        },
-        "pfizer": {
-          "status": "closed",
-          "total": 10,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1230
-        },
-        "ubs": {
-          "status": "closed",
-          "total": 85,
-          "candidates": 5,
-          "relevant": 0,
-          "ms": 3560
+          "ms": 1659,
+          "error": "Blocked at https://careers.eon.com/search/?q=&locationsearch=United%20Kingdom&startrow=0&sortColumn=referencedate&sortDirection=desc: cf-mitigated: challenge"
         },
         "environment-agency": {
           "status": "closed",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1373
+          "ms": 1173
         },
-        "computacenter": {
+        "yorkshire-water": {
           "status": "closed",
-          "total": 117,
+          "total": 34,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1327
+          "ms": 1394
+        },
+        "morgan-stanley": {
+          "status": "closed",
+          "total": 66,
+          "candidates": 6,
+          "relevant": 0,
+          "ms": 71855
         },
         "wwl-nhs": {
           "status": "manual",
@@ -696,196 +762,166 @@
           "relevant": 0,
           "ms": 0
         },
-        "gsk": {
+        "computacenter": {
           "status": "closed",
-          "total": 834,
+          "total": 117,
           "candidates": 0,
           "relevant": 0,
-          "ms": 67052
+          "ms": 1358
         },
-        "sanofi": {
+        "ubs": {
           "status": "closed",
-          "total": 1412,
+          "total": 84,
+          "candidates": 5,
+          "relevant": 0,
+          "ms": 3581
+        },
+        "national-highways": {
+          "status": "closed",
+          "total": 33,
           "candidates": 0,
           "relevant": 0,
-          "ms": 97634
-        },
-        "mbda": {
-          "status": "open",
-          "total": 227,
-          "candidates": 21,
-          "relevant": 4,
-          "ms": 43049
-        },
-        "bakerhughes": {
-          "status": "closed",
-          "total": 649,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 50275
-        },
-        "pa-consulting": {
-          "status": "open",
-          "total": 49,
-          "candidates": 6,
-          "relevant": 5,
-          "ms": 1590
-        },
-        "ageas": {
-          "status": "closed",
-          "total": 6,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1048
-        },
-        "volkswagen": {
-          "status": "closed",
-          "total": 6,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 957
-        },
-        "wtw": {
-          "status": "closed",
-          "total": 623,
-          "candidates": 4,
-          "relevant": 0,
-          "ms": 21492
-        },
-        "yunex-traffic": {
-          "status": "open",
-          "total": 133,
-          "candidates": 12,
-          "relevant": 2,
-          "ms": 18838
-        },
-        "royal-london": {
-          "status": "closed",
-          "total": 38,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1202
-        },
-        "cardinalhealth": {
-          "status": "closed",
-          "total": 865,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 65802
-        },
-        "anglian-water": {
-          "status": "closed",
-          "total": 58,
-          "candidates": 3,
-          "relevant": 0,
-          "ms": 8551
-        },
-        "john-lewis-partnership": {
-          "status": "closed",
-          "total": 50,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 4906
-        },
-        "virgin-media-o2": {
-          "status": "closed",
-          "total": 165,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 33597
-        },
-        "eon": {
-          "status": "blocked",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1668,
-          "error": "Blocked at https://careers.eon.com/search/?q=&locationsearch=United%20Kingdom&startrow=0&sortColumn=referencedate&sortDirection=desc: cf-mitigated: challenge"
-        },
-        "thames-water": {
-          "status": "closed",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 788
-        },
-        "dxc-technology": {
-          "status": "closed",
-          "total": 1354,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 96478
-        },
-        "kier": {
-          "status": "closed",
-          "total": 352,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 6083
-        },
-        "balfour-beatty": {
-          "status": "closed",
-          "total": 100,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1227
-        },
-        "job-boards": {
-          "status": "closed",
-          "total": 479,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 531
-        },
-        "bp": {
-          "status": "closed",
-          "total": 236,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 20494
-        },
-        "carrier": {
-          "status": "closed",
-          "total": 980,
-          "candidates": 2,
-          "relevant": 0,
-          "ms": 77911
-        },
-        "dhl": {
-          "status": "closed",
-          "total": 234,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 4399
+          "ms": 1545
         },
         "network-rail": {
           "status": "error",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2359,
+          "ms": 1389,
           "error": "HTTP 404 for https://www.earlycareers.networkrail.co.uk/scheme/level-6-apprenticeship-digital-and-technology-solutions-professional/: <!doctype html>\n<html lang=\"en-US\">\n\n<head>\n\t<meta charset=\"UTF-8\""
         },
-        "awepeople": {
+        "dhl": {
           "status": "closed",
-          "total": 9,
-          "candidates": 9,
+          "total": 226,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 14719
+          "ms": 4301
         },
-        "goldman-sachs": {
+        "cardinalhealth": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 123,
+          "error": "Blocked at https://cardinalhealth.wd1.myworkdayjobs.com/wday/cxs/cardinalhealth/EXT/jobs: cf-mitigated: challenge"
+        },
+        "carrier": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 130,
+          "error": "Blocked at https://carrier.wd5.myworkdayjobs.com/wday/cxs/carrier/jobs/jobs: cf-mitigated: challenge"
+        },
+        "transport-for-london": {
           "status": "closed",
-          "total": 194,
-          "candidates": 3,
+          "total": 26,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 1628
+          "ms": 1408
         },
-        "siemens-energy": {
+        "ageas": {
+          "status": "closed",
+          "total": 8,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1072
+        },
+        "volkswagen": {
+          "status": "closed",
+          "total": 3,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 949
+        },
+        "pa-consulting": {
           "status": "open",
-          "total": 142,
-          "candidates": 9,
+          "total": 49,
+          "candidates": 6,
+          "relevant": 5,
+          "ms": 1465
+        },
+        "yunex-traffic": {
+          "status": "open",
+          "total": 132,
+          "candidates": 12,
+          "relevant": 2,
+          "ms": 16109
+        },
+        "ministry-of-justice": {
+          "status": "closed",
+          "total": 426,
+          "candidates": 1,
+          "relevant": 0,
+          "ms": 62300
+        },
+        "john-lewis-partnership": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 870,
+          "error": "Blocked at https://jlp.wd3.myworkdayjobs.com/wday/cxs/jlp/JLPjobs_careers/jobs: cf-mitigated: challenge"
+        },
+        "royal-london": {
+          "status": "closed",
+          "total": 38,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1376
+        },
+        "bp": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 922,
+          "error": "Blocked at https://bpinternational.wd3.myworkdayjobs.com/wday/cxs/bpinternational/bpCareers/jobs: cf-mitigated: challenge"
+        },
+        "hitachi": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 186,
+          "error": "Blocked at https://hitachi.wd1.myworkdayjobs.com/wday/cxs/hitachi/hitachi/jobs: cf-mitigated: challenge"
+        },
+        "babcock-international": {
+          "status": "open",
+          "total": 276,
+          "candidates": 25,
           "relevant": 1,
-          "ms": 32786
+          "ms": 37489
+        },
+        "balfour-beatty": {
+          "status": "closed",
+          "total": 100,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1224
+        },
+        "job-boards": {
+          "status": "closed",
+          "total": 472,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 493
+        },
+        "wtw": {
+          "status": "closed",
+          "total": 617,
+          "candidates": 4,
+          "relevant": 0,
+          "ms": 21623
+        },
+        "awepeople": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 870,
+          "error": "Blocked at https://awepeople.wd3.myworkdayjobs.com/wday/cxs/awepeople/Apprentice_Careers/jobs: cf-mitigated: challenge"
         },
         "eaton": {
           "status": "error",
@@ -895,103 +931,107 @@
           "ms": 0,
           "error": "[\n  {\n    \"expected\": \"string\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"domain\"\n    ],\n    \"message\": \"Invalid input: expected string, received undefined\"\n  }\n]"
         },
-        "schneider-electric": {
+        "microsoft": {
           "status": "closed",
-          "total": 67,
+          "total": 0,
           "candidates": 0,
           "relevant": 0,
-          "ms": 721
-        },
-        "manchester-airports": {
-          "status": "closed",
-          "total": 33,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1498
+          "ms": 810
         },
         "northeastern": {
-          "status": "closed",
-          "total": 477,
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 35732
+          "ms": 195,
+          "error": "Blocked at https://northeastern.wd1.myworkdayjobs.com/wday/cxs/northeastern/careers/jobs: cf-mitigated: challenge"
         },
-        "bae-systems": {
+        "kier": {
           "status": "closed",
-          "total": 272,
+          "total": 345,
+          "candidates": 1,
+          "relevant": 0,
+          "ms": 5694
+        },
+        "ey": {
+          "status": "closed",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 5965
+          "ms": 3830
+        },
+        "goldman-sachs": {
+          "status": "closed",
+          "total": 193,
+          "candidates": 3,
+          "relevant": 0,
+          "ms": 1581
+        },
+        "bdo": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 909,
+          "error": "Blocked at https://bdouk.wd3.myworkdayjobs.com/wday/cxs/bdouk/BDO_Early_in_Career/jobs: cf-mitigated: challenge"
+        },
+        "virgin-media-o2": {
+          "status": "closed",
+          "total": 167,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 33650
+        },
+        "nestle": {
+          "status": "closed",
+          "total": 2100,
+          "candidates": 9,
+          "relevant": 0,
+          "ms": 14725
+        },
+        "eoce": {
+          "status": "closed",
+          "total": 118,
+          "candidates": 2,
+          "relevant": 0,
+          "ms": 5604
         },
         "ons": {
           "status": "open",
           "total": null,
           "candidates": 4,
           "relevant": 4,
-          "ms": 1135
-        },
-        "yorkshire-water": {
-          "status": "closed",
-          "total": 36,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1563
-        },
-        "national-highways": {
-          "status": "closed",
-          "total": 27,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1842
-        },
-        "bdo": {
-          "status": "closed",
-          "total": 8,
-          "candidates": 5,
-          "relevant": 0,
-          "ms": 9947
-        },
-        "leonardo": {
-          "status": "open",
-          "total": 842,
-          "candidates": 30,
-          "relevant": 4,
-          "ms": 102974
+          "ms": 1171
         },
         "stfc": {
           "status": "closed",
-          "total": 28,
+          "total": 23,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1556
+          "ms": 1342
         },
-        "legal-and-general": {
-          "status": "open",
-          "total": 35,
-          "candidates": 1,
-          "relevant": 1,
-          "ms": 2401
-        },
-        "nestle": {
+        "manchester-airports": {
           "status": "closed",
-          "total": 2167,
-          "candidates": 9,
-          "relevant": 0,
-          "ms": 14802
-        },
-        "lloyds-of-london": {
-          "status": "closed",
-          "total": 8,
+          "total": 29,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2921
+          "ms": 1472
         },
-        "united-utilities": {
-          "status": "closed",
+        "london-stock-exchange": {
+          "status": "blocked",
           "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 933
+          "ms": 877,
+          "error": "Blocked at https://lseg.wd3.myworkdayjobs.com/wday/cxs/lseg/Careers/jobs: cf-mitigated: challenge"
+        },
+        "lloyds-of-london": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 852,
+          "error": "Blocked at https://lloyds.wd3.myworkdayjobs.com/wday/cxs/lloyds/Lloyds-of-London/jobs: cf-mitigated: challenge"
         },
         "ibm": {
           "status": "manual",
@@ -1007,19 +1047,20 @@
           "relevant": 0,
           "ms": 0
         },
-        "rsm": {
-          "status": "open",
-          "total": 106,
-          "candidates": 48,
-          "relevant": 5,
-          "ms": 171131
-        },
-        "northumbrian-water": {
+        "united-utilities": {
           "status": "closed",
-          "total": 29,
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1286
+          "ms": 643
+        },
+        "lloyds-banking-group": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 956,
+          "error": "Blocked at https://lbg.wd3.myworkdayjobs.com/wday/cxs/lbg/LBG_Careers/jobs: cf-mitigated: challenge"
         },
         "scottishpower": {
           "status": "manual",
@@ -1028,26 +1069,27 @@
           "relevant": 0,
           "ms": 0
         },
+        "northumbrian-water": {
+          "status": "closed",
+          "total": 31,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 1404
+        },
         "jaguar-land-rover": {
           "status": "closed",
-          "total": 32,
+          "total": 31,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1586
+          "ms": 1697
         },
-        "wd3": {
-          "status": "closed",
-          "total": 846,
+        "shell": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 77496
-        },
-        "severn-trent": {
-          "status": "closed",
-          "total": 68,
-          "candidates": 1,
-          "relevant": 0,
-          "ms": 2588
+          "ms": 834,
+          "error": "Blocked at https://shell.wd3.myworkdayjobs.com/wday/cxs/shell/ShellCareers/jobs: cf-mitigated: challenge"
         },
         "home-office": {
           "status": "manual",
@@ -1056,117 +1098,121 @@
           "relevant": 0,
           "ms": 0
         },
-        "vodafonethree": {
+        "severn-trent": {
           "status": "closed",
-          "total": 1284,
-          "candidates": 4,
-          "relevant": 0,
-          "ms": 7332
-        },
-        "shell": {
-          "status": "closed",
-          "total": 146,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 12247
-        },
-        "hitachi": {
-          "status": "closed",
-          "total": 2000,
+          "total": 65,
           "candidates": 1,
           "relevant": 0,
-          "ms": 116984
+          "ms": 2520
+        },
+        "siemens-energy": {
+          "status": "open",
+          "total": 142,
+          "candidates": 10,
+          "relevant": 1,
+          "ms": 35851
+        },
+        "vodafonethree": {
+          "status": "closed",
+          "total": 1251,
+          "candidates": 4,
+          "relevant": 0,
+          "ms": 7527
         },
         "newcastle-building-society": {
-          "status": "closed",
-          "total": 5,
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1487
+          "ms": 946,
+          "error": "Blocked at https://newcastle.wd3.myworkdayjobs.com/wday/cxs/newcastle/NBSCareers/jobs: cf-mitigated: challenge"
         },
         "travis-perkins": {
           "status": "closed",
-          "total": 270,
+          "total": 267,
           "candidates": 6,
           "relevant": 0,
-          "ms": 9928
+          "ms": 9908
         },
         "co-op": {
           "status": "closed",
-          "total": 235,
+          "total": 262,
           "candidates": 0,
           "relevant": 0,
-          "ms": 4270
+          "ms": 3833
         },
-        "london-stock-exchange": {
-          "status": "closed",
-          "total": 690,
+        "saputo": {
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 55037
+          "ms": 1680,
+          "error": "Blocked at https://saputo.wd5.myworkdayjobs.com/wday/cxs/saputo/Saputo_External_Careers/jobs: cf-mitigated: challenge"
         },
         "lidl-gb": {
           "status": "closed",
-          "total": 212,
+          "total": 197,
           "candidates": 0,
           "relevant": 0,
-          "ms": 7135
+          "ms": 5779
         },
         "howdenjoinerylimited": {
-          "status": "closed",
-          "total": 83,
-          "candidates": 5,
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 14544
+          "ms": 902,
+          "error": "Blocked at https://howdenjoinerylimited.wd103.myworkdayjobs.com/wday/cxs/howdenjoinerylimited/HowdensCareers/jobs: cf-mitigated: challenge"
         },
         "aspire-defence-services": {
           "status": "closed",
-          "total": 24,
+          "total": 23,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1131
+          "ms": 1029
+        },
+        "fujitsu": {
+          "status": "closed",
+          "total": 704,
+          "candidates": 1,
+          "relevant": 0,
+          "ms": 4295
         },
         "puzzel": {
           "status": "closed",
           "total": 11,
           "candidates": 0,
           "relevant": 0,
-          "ms": 962
+          "ms": 994
         },
-        "lloyds-banking-group": {
-          "status": "open",
-          "total": 136,
-          "candidates": 48,
-          "relevant": 14,
-          "ms": 62683
-        },
-        "astrazeneca": {
+        "royal-mail": {
           "status": "closed",
-          "total": 802,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 121307
-        },
-        "fujitsu": {
-          "status": "closed",
-          "total": 705,
+          "total": 715,
           "candidates": 2,
           "relevant": 0,
-          "ms": 25936
-        },
-        "saputo": {
-          "status": "closed",
-          "total": 311,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 26237
+          "ms": 14744
         },
         "british-airways": {
           "status": "open",
-          "total": 66,
+          "total": 57,
           "candidates": 10,
           "relevant": 1,
-          "ms": 15446
+          "ms": 16415
+        },
+        "barclays": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 912,
+          "error": "Blocked at https://barclays.wd3.myworkdayjobs.com/wday/cxs/barclays/External_Career_Site_Barclays/jobs: cf-mitigated: challenge"
+        },
+        "nexus": {
+          "status": "closed",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 172
         },
         "hse": {
           "status": "manual",
@@ -1177,170 +1223,174 @@
         },
         "ashbyhq": {
           "status": "closed",
-          "total": 13,
+          "total": 12,
           "candidates": 0,
           "relevant": 0,
-          "ms": 131
-        },
-        "nexus": {
-          "status": "closed",
-          "total": null,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 1170
+          "ms": 97
         },
         "mace": {
           "status": "closed",
-          "total": 256,
+          "total": 255,
           "candidates": 0,
           "relevant": 0,
-          "ms": 4234
+          "ms": 4493
         },
         "bentley-motors": {
           "status": "closed",
           "total": 0,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2829
+          "ms": 2900
         },
         "sse": {
           "status": "closed",
-          "total": 108,
+          "total": 110,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1175
+          "ms": 873
         },
         "jet2": {
           "status": "closed",
           "total": 32,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2176
+          "ms": 2169
+        },
+        "airbus": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 884,
+          "error": "Blocked at https://ag.wd3.myworkdayjobs.com/wday/cxs/ag/Airbus/jobs: cf-mitigated: challenge"
+        },
+        "wd3": {
+          "status": "closed",
+          "total": 840,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 76288
         },
         "power-networks": {
           "status": "closed",
-          "total": 13,
+          "total": 14,
           "candidates": 1,
           "relevant": 0,
-          "ms": 2182
+          "ms": 2323
         },
-        "royal-mail": {
-          "status": "closed",
-          "total": 728,
-          "candidates": 2,
+        "centrica-british-gas": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 14587
+          "ms": 937,
+          "error": "Blocked at https://centrica.wd3.myworkdayjobs.com/wday/cxs/centrica/Centrica/jobs: cf-mitigated: challenge"
         },
         "edf": {
           "status": "closed",
-          "total": 32,
+          "total": 26,
           "candidates": 0,
           "relevant": 0,
-          "ms": 823
+          "ms": 881
         },
-        "centrica-british-gas": {
-          "status": "closed",
-          "total": 57,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 4539
+        "thales": {
+          "status": "open",
+          "total": 182,
+          "candidates": 40,
+          "relevant": 11,
+          "ms": 45767
         },
         "sellafield": {
           "status": "closed",
           "total": 8,
           "candidates": 0,
           "relevant": 0,
-          "ms": 1347
+          "ms": 1501
         },
         "grosvenor": {
-          "status": "closed",
-          "total": 4,
+          "status": "blocked",
+          "total": null,
           "candidates": 0,
           "relevant": 0,
-          "ms": 2702
+          "ms": 930,
+          "error": "Blocked at https://grosvenor.wd3.myworkdayjobs.com/wday/cxs/grosvenor/External_careers_site_Grosvenor/jobs: cf-mitigated: challenge"
         },
         "rightathomesuttonandepsom": {
           "status": "closed",
           "total": 3,
           "candidates": 0,
           "relevant": 0,
-          "ms": 987
+          "ms": 877
         },
-        "thales": {
-          "status": "open",
-          "total": 180,
-          "candidates": 46,
-          "relevant": 9,
-          "ms": 60830
+        "m-and-g": {
+          "status": "blocked",
+          "total": null,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 889,
+          "error": "Blocked at https://mgpru.wd3.myworkdayjobs.com/wday/cxs/mgpru/mandgprudential/jobs: cf-mitigated: challenge"
         },
         "accenture": {
           "status": "open",
-          "total": 15,
-          "candidates": 5,
+          "total": 14,
+          "candidates": 4,
           "relevant": 1,
-          "ms": 1038
-        },
-        "m-and-g": {
-          "status": "closed",
-          "total": 133,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 10516
-        },
-        "pwc": {
-          "status": "closed",
-          "total": 326,
-          "candidates": 0,
-          "relevant": 0,
-          "ms": 5716
+          "ms": 1262
         },
         "sky": {
           "status": "closed",
           "total": 77,
           "candidates": 0,
           "relevant": 0,
-          "ms": 620
+          "ms": 824
         },
-        "airbus": {
+        "pwc": {
           "status": "closed",
-          "total": 129,
-          "candidates": 18,
+          "total": 323,
+          "candidates": 0,
           "relevant": 0,
-          "ms": 38595
+          "ms": 5445
         },
-        "barclays": {
-          "status": "open",
-          "total": 648,
-          "candidates": 20,
-          "relevant": 4,
-          "ms": 74610
+        "astrazeneca": {
+          "status": "closed",
+          "total": 784,
+          "candidates": 0,
+          "relevant": 0,
+          "ms": 118467
         },
         "national-grid": {
           "status": "open",
-          "total": 321,
-          "candidates": 74,
+          "total": 338,
+          "candidates": 80,
           "relevant": 1,
-          "ms": 60830
+          "ms": 60751
+        },
+        "rsm": {
+          "status": "open",
+          "total": 107,
+          "candidates": 48,
+          "relevant": 5,
+          "ms": 171513
         },
         "totalenergies": {
           "status": "closed",
           "total": 785,
-          "candidates": 0,
+          "candidates": 1,
           "relevant": 0,
-          "ms": 101174
+          "ms": 112806
         }
       }
     },
     "total": {
-      "raw": 1004,
-      "relevant": 286,
-      "listings": 173,
-      "inserted": 0,
-      "updated": 173,
-      "deactivated": 1,
-      "matchedExisting": 88,
-      "multiSource": 49,
-      "requests": 1874
+      "raw": 834,
+      "relevant": 269,
+      "listings": 167,
+      "inserted": 5,
+      "updated": 162,
+      "deactivated": 2,
+      "matchedExisting": 83,
+      "multiSource": 45,
+      "requests": 924
     }
   }
 }
