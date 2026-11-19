@@ -204,16 +204,28 @@ export async function gatherDigest(
   ).length;
 
   const health: string[] = [];
-  const erroring = must<Array<{ name: string }>>(
-    await db().from('employers').select('name').eq('watch', true).eq('status', 'error'),
+  const unchecked = must<Array<{ name: string; status: string }>>(
+    await db()
+      .from('employers')
+      .select('name,status')
+      .eq('watch', true)
+      .in('status', ['error', 'blocked']),
     'erroring employers',
   );
+  const names = (rows: Array<{ name: string }>) =>
+    `${rows
+      .slice(0, 6)
+      .map((x) => x.name)
+      .join(', ')}${rows.length > 6 ? '…' : ''}`;
+  const erroring = unchecked.filter((x) => x.status === 'error');
+  const blocked = unchecked.filter((x) => x.status === 'blocked');
   if (erroring.length)
     health.push(
-      `${plural(erroring.length, 'company site')} couldn't be checked: ${erroring
-        .slice(0, 6)
-        .map((x) => x.name)
-        .join(', ')}${erroring.length > 6 ? '…' : ''} (see Health).`,
+      `${plural(erroring.length, 'company site')} couldn't be checked: ${names(erroring)} (see Health).`,
+    );
+  if (blocked.length)
+    health.push(
+      `${plural(blocked.length, 'company site')} blocked the scraper: ${names(blocked)} (see Health).`,
     );
   for (const [key, label] of [
     ['budget:serpapi', 'Google Jobs (SerpApi)'],
@@ -249,8 +261,9 @@ export async function gatherDigest(
     if (run.status && run.status !== 'ok')
       health.push(`Last scrape was ${run.status}${run.error ? `: ${run.error}` : ''}.`);
     for (const [source, st] of Object.entries(run.stats ?? {})) {
-      if (st && typeof st === 'object' && 'error' in st)
-        health.push(`${source}: ${String(st.error).slice(0, 160)}`);
+      // A failed source stores its message; `employers.error` is a count, already reported above.
+      if (st && typeof st === 'object' && typeof st.error === 'string')
+        health.push(`${source}: ${st.error.slice(0, 160)}`);
     }
   }
 
