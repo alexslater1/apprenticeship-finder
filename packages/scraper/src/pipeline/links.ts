@@ -40,11 +40,37 @@ const GONE =
 
 export type LinkStatus = 'ok' | 'dead' | 'unknown';
 
+/**
+ * Drop page parts that are hidden until a script shows them. Phenom career sites (Marsh, Thales,
+ * PwC, Cisco) ship every job page with a hidden "the job you are trying to apply for has been
+ * filled" block; a job that has really gone answers 410 instead.
+ */
+export function stripHiddenStates(html: string): string {
+  const open = /<(div|section)\b[^>]*\bph-page-state=["']expired["'][^>]*>/gi;
+  let out = html;
+  for (let m = open.exec(out); m; m = open.exec(out)) {
+    const tag = new RegExp(`<(/?)${m[1]}\\b[^>]*>`, 'gi');
+    tag.lastIndex = m.index + m[0].length;
+    let depth = 1;
+    let end = out.length;
+    for (let t = tag.exec(out); t; t = tag.exec(out)) {
+      depth += t[1] ? -1 : 1;
+      if (!depth) {
+        end = t.index + t[0].length;
+        break;
+      }
+    }
+    out = out.slice(0, m.index) + ' ' + out.slice(end);
+    open.lastIndex = m.index;
+  }
+  return out;
+}
+
 /** Does this response say the job has gone? */
 export function looksGone(url: string, finalUrl: string, status: number, html: string): boolean {
   if (status === 404 || status === 410) return true;
   const text = htmlToText(
-    html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' '),
+    stripHiddenStates(html).replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' '),
   ).slice(0, 30_000);
   if (GONE.test(text)) return true;
   // A job link that lands on a home or search page means the job went away.

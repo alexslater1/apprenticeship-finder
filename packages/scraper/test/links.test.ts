@@ -20,6 +20,12 @@ describe('looksGone', () => {
     expect(looksGone(job, job, 200, live)).toBe(false);
     expect(looksGone(job, `${job}?ref=1`, 200, live)).toBe(false);
   });
+  it("ignores Phenom's hidden expired-job block", () => {
+    const phenom = `<div ph-page-state="expired" class="hide"><section><div><h2><span>We're sorry… the job you are trying to apply for has been filled.</span></h2></div></section></div>
+      <div ph-page-state="exists"><h1>Data &amp; Analytics Apprenticeship</h1><p>Closing date for applications is 12th March 2027.</p></div>`;
+    expect(looksGone(job, job, 200, phenom)).toBe(false);
+    expect(looksGone(job, job, 410, phenom)).toBe(true);
+  });
 });
 
 describe('jobPageOf', () => {
