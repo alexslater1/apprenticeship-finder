@@ -6598,14 +6598,14 @@
     "sector": "Transport & Infrastructure",
     "relevance": "core",
     "confidence": "verified",
-    "early_careers_url": "https://www.earlycareers.networkrail.co.uk/programme/apprenticeships/",
+    "early_careers_url": "https://www.earlycareers.networkrail.co.uk/role-category/apprenticeships/",
     "job_search_url": "https://networkrailcandidate.ambertrack.global/ryiearlycareers/CandidateLogin.aspx",
     "ats_family": "Amberjack/AmberTrack",
     "ats_host": "networkrailcandidate.ambertrack.global/ryiearlycareers",
     "connector": "pagehash",
     "connector_config": {
-      "url": "https://www.earlycareers.networkrail.co.uk/scheme/level-6-apprenticeship-digital-and-technology-solutions-professional/",
-      "selector": "main"
+      "url": "https://www.earlycareers.networkrail.co.uk/role-category/level-6-apprenticeships/",
+      "selector": ".component-role-categories"
     },
     "data_schemes": [
       "Level 6 Digital and Technology Solutions Apprenticeship (BSc; rotations incl. data analysis)",
