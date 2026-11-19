@@ -6918,5 +6918,59 @@
       "uk": 41,
       "apprentice": 0
     }
+  },
+  {
+    "id": "cisco",
+    "name": "Cisco",
+    "aliases": [
+      "Cisco International Limited",
+      "Cisco Systems"
+    ],
+    "sector": "Technology",
+    "relevance": "adjacent",
+    "confidence": "verified",
+    "early_careers_url": "https://careers.cisco.com/global/en/job/2031877/Cisco-IT-Degree-Apprentice-Level-6",
+    "connector": "phenom",
+    "connector_config": {
+      "host": "careers.cisco.com",
+      "cc": "global",
+      "lang": "en",
+      "pageId": "page13",
+      "countryValue": "United Kingdom"
+    },
+    "data_schemes": [
+      "Cisco IT Degree Apprentice (Level 6)"
+    ],
+    "locations": [],
+    "notes_md": "Found via the Suggested tab (Find an Apprenticeship 2000064161). Phenom widget, UK facet: 57 jobs on 19 Nov 2026."
+  },
+  {
+    "id": "marsh-mclennan",
+    "name": "Marsh McLennan",
+    "aliases": [
+      "Oliver Wyman",
+      "Marsh",
+      "Mercer",
+      "Guy Carpenter"
+    ],
+    "sector": "Financial Services",
+    "relevance": "core",
+    "confidence": "verified",
+    "early_careers_url": "https://careers.marsh.com/global/en/job/R_369738/Oliver-Wyman-Data-Analytics-Apprenticeship-2027-Newcastle",
+    "connector": "phenom",
+    "connector_config": {
+      "host": "careers.marsh.com",
+      "cc": "global",
+      "lang": "en",
+      "pageId": "page22",
+      "countryValue": "United Kingdom"
+    },
+    "data_schemes": [
+      "Oliver Wyman Data & Analytics Apprenticeship 2027 (Newcastle)"
+    ],
+    "locations": [
+      "Newcastle upon Tyne"
+    ],
+    "notes_md": "Found via the Suggested tab. Phenom widget, UK facet: 151 jobs on 19 Nov 2026, including R_369738 Oliver Wyman Data & Analytics Apprenticeship 2027."
   }
 ]
