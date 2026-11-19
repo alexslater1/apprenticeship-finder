@@ -117,6 +117,17 @@ describe('learning employers from listings', () => {
     });
     expect(normaliseEmployerName('3631 Airbus Operations Limited')).toBe('airbus operations');
   });
+  it("doesn't read a place at the end of a title as an employer", () => {
+    const match = employerMatcher([
+      { id: 'newcastle-building-society', name: 'Newcastle Building Society', aliases: [] },
+    ]);
+    const title = 'Oliver Wyman - Data & Analytics Apprenticeship 2027 - Newcastle';
+    const l = normalise({ ...base, employerName: 'Marsh McLennan', title })!;
+    attributeToEmployer(l, match, () => 'Newcastle Building Society');
+    expect(l.employerId).toBeNull();
+    expect(l.title).toBe(title);
+    expect(match('newcastle')).toBe('newcastle-building-society');
+  });
   it('picks a free employer id', () => {
     expect(freeId('Acme Analytics Ltd', new Set(['acme-analytics']))).toBe('acme-analytics-2');
   });

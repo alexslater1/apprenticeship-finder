@@ -84,7 +84,8 @@ export async function loadEmployers(): Promise<Employer[]> {
 /**
  * Finds which watchlist employer a listing's employer name refers to: exact name/alias match,
  * or a word-prefix match for longer names ('barclays' ~ 'barclays bank'). Short names only match
- * exactly so 'sky' doesn't swallow 'sky betting and gaming'.
+ * exactly so 'sky' doesn't swallow 'sky betting and gaming'. With `shorter` false, a name can't
+ * stand for a longer employer name ('newcastle' is a place, not 'newcastle building society').
  */
 export function employerMatcher(employers: Array<Pick<Employer, 'id' | 'name' | 'aliases'>>) {
   const names = employers.flatMap((e) =>
@@ -92,12 +93,12 @@ export function employerMatcher(employers: Array<Pick<Employer, 'id' | 'name' | 
   );
   const exact = new Map(names.map((n) => [n.norm, n.id]));
   const prefixable = names.filter((n) => n.norm.length >= 6 || n.norm.includes(' '));
-  return (norm: string): string | null => {
+  return (norm: string, shorter = true): string | null => {
     const hit = exact.get(norm);
     if (hit) return hit;
     let best: { id: string; len: number } | null = null;
     for (const n of prefixable) {
-      if (norm.startsWith(`${n.norm} `) || n.norm.startsWith(`${norm} `)) {
+      if (norm.startsWith(`${n.norm} `) || (shorter && n.norm.startsWith(`${norm} `))) {
         if (!best || n.norm.length > best.len) best = { id: n.id, len: n.norm.length };
       }
     }
@@ -113,7 +114,7 @@ export function employerMatcher(employers: Array<Pick<Employer, 'id' | 'name' | 
  */
 export function attributeToEmployer(
   l: NormalisedListing,
-  match: (norm: string) => string | null,
+  match: (norm: string, shorter?: boolean) => string | null,
   nameOf: (id: string) => string | undefined,
 ): void {
   if (l.employerId) return;
@@ -124,7 +125,8 @@ export function attributeToEmployer(
   }
   const m = /^(.+?)\s+[-–|]\s+([^-–|]+)$/.exec(l.title) ?? /^(.+?)\s+\(([^()]+)\)$/.exec(l.title);
   if (!m) return;
-  const client = match(normaliseEmployerName(m[2]!));
+  // Title segments are often places ('… - Newcastle'), so they must name the whole employer.
+  const client = match(normaliseEmployerName(m[2]!), false);
   const name = client ? nameOf(client) : undefined;
   if (!client || !name) return;
   l.providerName ??= l.employerName;
