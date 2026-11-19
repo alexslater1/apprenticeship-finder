@@ -194,11 +194,15 @@ export const eightfold = defineConnector({
       },
     };
   },
+  // The API needs the company's email domain, which only the page says (its links carry
+  // `domain=eaton.com`): without the page there's nothing to configure, so detectConnector fetches it.
   detect(url, html) {
+    const domain = /[?&]domain=([a-z0-9-]+(?:\.[a-z0-9-]+)+)/i.exec(html ?? '')?.[1];
+    if (!domain) return null;
     const m = /\/\/([\w-]+\.eightfold\.ai)\b/.exec(url);
-    if (m) return { host: m[1] };
+    if (m) return { host: m[1], domain };
     if (/eightfold/i.test(html ?? '') && /\/careers(\/job\/\d+)?/.test(url))
-      return { host: new URL(url).host };
+      return { host: new URL(url).host, domain };
     return null;
   },
 });

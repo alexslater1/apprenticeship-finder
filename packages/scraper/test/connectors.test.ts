@@ -310,6 +310,15 @@ describe('detection and employer matching', () => {
   ])('%s → %s', (url, connector) => {
     expect(detectFrom(url)?.connector).toBe(connector);
   });
+  it('reads an eightfold domain from the page, not just the link', () => {
+    const url = 'https://eaton.eightfold.ai/careers/job/687237544888';
+    expect(detectFrom(url)).toBeNull();
+    const html = '<a href="/careers?domain=eaton.com&amp;pid=1">Jobs</a>';
+    expect(detectFrom(url, html)?.config).toEqual({
+      host: 'eaton.eightfold.ai',
+      domain: 'eaton.com',
+    });
+  });
   it('matches legal names and aliases to watchlist employers', () => {
     const match = employerMatcher([
       { id: 'barclays', name: 'Barclays', aliases: [] },
