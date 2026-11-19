@@ -55,10 +55,16 @@ export default function Health() {
   const employers = useEmployers();
   const budgets = useBudgets();
   // Failing now, or failed on the last check while keeping yesterday's status (an outage).
+  // Workday's Cloudflare challenges every scraper; those companies' jobs still arrive through
+  // Find an Apprenticeship, Adzuna and the other boards, so they get one line, not a row each.
+  const workdayBlocked = (employers.data ?? []).filter(
+    (e) => e.watch && e.status === 'blocked' && e.connector === 'workday',
+  );
   const problem = (employers.data ?? []).filter(
     (e) =>
       e.watch &&
       e.status !== 'manual' &&
+      !workdayBlocked.includes(e) &&
       (e.status === 'error' ||
         e.status === 'blocked' ||
         (!!e.last_error && (!e.last_ok_at || (e.last_checked_at ?? '') > e.last_ok_at))),
@@ -172,6 +178,13 @@ export default function Health() {
                     </Link>
                   </span>
                 ))}
+              </p>
+            )}
+            {workdayBlocked.length > 0 && (
+              <p className="text-sm text-muted-foreground">
+                {workdayBlocked.length} Workday company sites turn the scraper away (Workday's
+                Cloudflare check). Their jobs still come in through Find an Apprenticeship, Adzuna
+                and the other job boards.
               </p>
             )}
           </section>

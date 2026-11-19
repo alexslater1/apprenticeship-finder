@@ -204,10 +204,10 @@ export async function gatherDigest(
   ).length;
 
   const health: string[] = [];
-  const unchecked = must<Array<{ name: string; status: string }>>(
+  const unchecked = must<Array<{ name: string; status: string; connector: string }>>(
     await db()
       .from('employers')
-      .select('name,status')
+      .select('name,status,connector')
       .eq('watch', true)
       .in('status', ['error', 'blocked']),
     'erroring employers',
@@ -218,7 +218,9 @@ export async function gatherDigest(
       .map((x) => x.name)
       .join(', ')}${rows.length > 6 ? '…' : ''}`;
   const erroring = unchecked.filter((x) => x.status === 'error');
-  const blocked = unchecked.filter((x) => x.status === 'blocked');
+  // Workday's Cloudflare challenges every scraper (since Nov 2026); those companies' jobs still
+  // arrive through Find an Apprenticeship, Adzuna and the other boards, so that isn't news.
+  const blocked = unchecked.filter((x) => x.status === 'blocked' && x.connector !== 'workday');
   if (erroring.length)
     health.push(
       `${plural(erroring.length, 'company site')} couldn't be checked: ${names(erroring)} (see Health).`,
